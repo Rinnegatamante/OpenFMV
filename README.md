@@ -23,5 +23,31 @@ This repository does not contain any copyrighted asset coming from the games and
 | [The Shapeshifting Detective](https://store.steampowered.com/app/898650/The_Shapeshifting_Detective/)     | 0% | 0% |0% |
 | [Who Pressed Mute on Uncle Marcus?](https://store.steampowered.com/app/1628130/Who_Pressed_Mute_on_Uncle_Marcus/)     | 0% | 0% |0% |
 
+## Building the source
+Assuming a standard vitasdk installation is properly set up on your machine. You can compile each game with the following commands:<br>
+Late Shift: `make LATE_SHIFT=1`<br>
+Five Dates: `make FIVE_DATES=1`
+
+## Setting up the game
+### Late Shift
+- Install `lateshift.vpk`.
+- Place the content of `data/Late Shift` (provided in the Release inside a .zip file) in `ux0:data/Late Shift`.
+- Grab the `Subtitles` folder from your purchased copy of the game and place it in `ux0:data/Late Shift`.
+- Place `scripts/video_process.bat` inside the folder of your purchased copy of the game and run it (you'll need to install ffmpeg if you don't have it already).
+- Install [Total Commander](https://www.ghisler.com/download.htm) and its [PSARC plugin](http://totalcmd.net/plugring/PSARC.html).
+- Launch Total Commander and navigate up to your purchased copy of the game main folder.
+- Right click on `Converted` folder; it will turn red.
+- Click on `File -> Pack`.
+- Set `psarc` as Compressor and then click on `Configure` button right below.
+- Set `PSARC Version` to `1.3`, `Compression` to `ZLIB` and `Ratio` to `0` and press `OK`.
+- Press `OK` to launch the compression, it will create a file in `C:\Converted.psarc`. (If you get an error, manually change the location in the command line string `psarc: DESTINATIONFOLDER\Converted.psarc`).
+- Place the resulting psarc file in `ux0:data/Late Shift` named as `Videos.psarc`.
+- Download and install [AssetStudio](https://github.com/Perfare/AssetStudio/releases/tag/v0.16.47)
+- Launch AssetStudioGUI and click on `File -> Load File`.
+- Open the file `LateShift_Data/StreamingAssets/AssetBundles/audio` with it.
+- Click on `Export -> All assets` and select an empty folder where to extract the assets.
+- Place `scripts/audio_process.bat` in the same folder where you extracted the assets and run it.
+- Copy the resulting `oggs` folder in `ux0:data/Late Shift`.
+
 ## Credits
 - hatoving: Helping with setting up tools and giving an hand with initial Late Shift rewrite.
