@@ -150,10 +150,11 @@ sequence *seg121() { game_vars.cctv_seg = 123; return &sequences[10]; }
 sequence *seg128() { game_vars.cctv_seg = 130; return &sequences[14]; }
 sequence *seg122_a_122_b() { return &sequences[16]; }
 sequence *seg138_a_138_b() { game_vars.elo_thinks = LOSER_THINKS; return &sequences[21]; }
+sequence *seg141() { game_vars.elo_thinks = HERO_THINKS; return &sequences[18]; }
 sequence *eval_has_pepper() { return game_vars.has_pepper_spray ? &sequences[18] : &sequences[19]; }
+sequence *eval_has_pepper_def() { return game_vars.has_pepper_spray ? seg141() : seg138_a_138_b(); }
 sequence *seg133_swipe() { return &sequences[22]; }
 sequence *seg134_1() { game_vars.has_pepper_spray = 1; return &sequences[23]; }
-sequence *seg141() { game_vars.elo_thinks = HERO_THINKS; return &sequences[18]; }
 sequence *seg140() { return &sequences[25]; }
 sequence *seg123() { return &sequences[26]; }
 sequence *seg123_tap_130_tap() { return &sequences[27]; }
@@ -660,224 +661,224 @@ void fill_sequences() {
 	
 	// Creating sequences links
 	// OPENING
-	fill_sequence(&sequences[0], selfless, selfish, NULL, seg102_a, seg102_b, NULL, 74583, 80250, 76875); // seg101
-	fill_sequence(&sequences[1], NULL, NULL, NULL, seg106, NULL, NULL, 0, 0, 0); // seg102_a
-	fill_sequence(&sequences[2], NULL, NULL, NULL, seg106, NULL, NULL, 0, 0, 0); // seg102_b
-	fill_sequence(&sequences[3], board, help, NULL, seg107_a, seg107_b, NULL, 18625, 23125, 22375); // seg106
-	fill_sequence(&sequences[4], NULL, NULL, NULL, seg109_110_b_111, NULL, NULL, 0, 0, 0); // seg107a
-	fill_sequence(&sequences[5], NULL, NULL, NULL, seg109_110_b_111, NULL, NULL, 0, 0, 0); // seg107b
+	fill_sequence(&sequences[0], seg102_a, selfless, selfish, NULL, seg102_a, seg102_b, NULL, 74583, 80250, 76875); // seg101
+	fill_sequence(&sequences[1], seg106, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg102_a
+	fill_sequence(&sequences[2], seg106, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg102_b
+	fill_sequence(&sequences[3], seg107_a, board, help, NULL, seg107_a, seg107_b, NULL, 18625, 23125, 22375); // seg106
+	fill_sequence(&sequences[4], seg109_110_b_111, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg107a
+	fill_sequence(&sequences[5], seg109_110_b_111, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg107b
 	// EPISODE 1
-	fill_sequence(&sequences[6], yes, no, why, seg113_116, seg114, seg115, 213625, 219125, 217792); // seg109_110_b_111
-	fill_sequence(&sequences[7], okay, not_good_enough, NULL, seg117, seg115, NULL, 15500, 20000, 15500); // seg113_116
-	fill_sequence(&sequences[8], no, okay, why_at_all, seg121, seg117, seg115, 16667, 21208, 16667); // seg114
-	fill_sequence(&sequences[9], ok, two_hundred, forget_it, seg117, seg118, seg121, 29375, 33875, 29375); // seg115
-	fill_sequence(&sequences[10], ignore, check_cctv, NULL, seg122_a_122_b, seg123, NULL, 9917, 14417, 12792); // seg121
-	fill_sequence(&sequences[11], deal, three_hundred, NULL, seg119, seg120, NULL, 2458, 6958, 2458); // seg118
-	fill_sequence(&sequences[12], NULL, NULL, NULL, seg128, NULL, NULL, 0, 0, 0); // seg119
-	fill_sequence(&sequences[13], NULL, NULL, NULL, seg128, NULL, NULL, 0, 0, 0); // seg117
-	fill_sequence(&sequences[14], nevermind, check_cctv, NULL, seg129, seg123, NULL, 7208, 11708, 9750); // seg128
-	fill_sequence(&sequences[15], NULL, NULL, NULL, seg133_swipe, NULL, NULL, 0, 0, 0); // seg129
-	fill_sequence(&sequences[16], go_check, call_police, NULL, seg127, seg126, NULL, 38458, 42458, 42458); // seg122_a_122_b
-	fill_sequence(&sequences[17], NULL, NULL, NULL, seg137, NULL, NULL, 0, 0, 0); // seg136
-	fill_sequence(&sequences[18], NULL, NULL, NULL, seg144, NULL, NULL, 0, 0, 0); // seg141
-	fill_sequence(&sequences[19], okay, no, NULL, seg138_a_138_b, seg140, NULL, 8375, 11875, 10333); // seg139
-	fill_sequence(&sequences[20], okay, text_has_pepper, NULL, seg138_a_138_b, eval_has_pepper, NULL, 24792, 29000, 27958); // seg137
-	fill_sequence(&sequences[21], NULL, NULL, NULL, seg144, NULL, NULL, 0, 0, 0); // seg138_a_138_b
-	fill_sequence(&sequences[22], call_police, go_there, take_pepper_spray, seg136, seg134_2, seg134_1, 1417, 5417, 1417); // seg133_swipe
-	fill_sequence(&sequences[23], NULL, NULL, NULL, seg137, NULL, NULL, 0, 0, 0);  // seg134_1
-	fill_sequence(&sequences[24], okay, forget_it, NULL, seg119, seg121, NULL, 19917, 24417, 19917); // seg120
-	fill_sequence(&sequences[25], NULL, NULL, NULL, seg138_a_138_b, NULL, NULL, 0, 0, 0); // seg140
-	fill_sequence(&sequences[26], NULL, NULL, NULL, seg123_tap_130_tap, NULL, NULL, 0, 0, 0); // seg123
-	fill_sequence(&sequences[27], all_clear, go_check, NULL, eval_cctv_seg, seg125, NULL, 5000, 9542, 5000); // seg123_tap_130_tap
-	fill_sequence(&sequences[28], keep_pepper_spray, drop_it, NULL, seg142, seg143, NULL, 32542, 35542, 35542); // seg135
-	fill_sequence(&sequences[29], NULL, NULL, NULL, seg135, NULL, NULL, 0, 0, 0); // seg127
-	fill_sequence(&sequences[30], NULL, NULL, NULL, seg143, NULL, NULL, 0, 0, 0); // seg142
-	fill_sequence(&sequences[31], NULL, NULL, NULL, seg144, NULL, NULL, 0, 0, 0); // seg143
-	fill_sequence(&sequences[32], NULL, NULL, NULL, seg145_swipe, NULL, NULL, 0, 0, 0); // seg144
-	fill_sequence(&sequences[33], drive, run, NULL, seg148_b, seg146_a, NULL, 2000, 6542, 2000); // seg145_swipe
-	fill_sequence(&sequences[34], NULL, NULL, NULL, seg201, NULL, NULL, 0, 0, 0); // seg148_b (END OF EPISODE -> 02)
-	fill_sequence(&sequences[35], turn_back, keep_going, NULL, seg147_a_148_a, seg147_b, NULL, 7625, 12000, 11625); // seg146_a
-	fill_sequence(&sequences[36], NULL, NULL, NULL, seg148_b, NULL, NULL, 0, 0, 0); // seg147_a_148_a
-	fill_sequence(&sequences[37], NULL, NULL, NULL, seg202, NULL, NULL, 0, 0, 0); // seg147_b (END OF EPISODE -> 02)
-	fill_sequence(&sequences[38], NULL, NULL, NULL, seg135, NULL, NULL, 0, 0, 0); // seg126
-	fill_sequence(&sequences[39], NULL, NULL, NULL, seg137, NULL, NULL, 0, 0, 0); // seg134_2
-	fill_sequence(&sequences[40], NULL, NULL, NULL, seg135, NULL, NULL, 0, 0, 0); // seg125
+	fill_sequence(&sequences[6], seg112_1, yes, no, why, seg113_116, seg114, seg115, 213625, 219125, 217792); // seg109_110_b_111
+	fill_sequence(&sequences[7], seg115, okay, not_good_enough, NULL, seg117, seg115, NULL, 15500, 20000, 15500); // seg113_116
+	fill_sequence(&sequences[8], seg121, no, okay, why_at_all, seg121, seg117, seg115, 16667, 21208, 16667); // seg114
+	fill_sequence(&sequences[9], seg121, ok, two_hundred, forget_it, seg117, seg118, seg121, 29375, 33875, 29375); // seg115
+	fill_sequence(&sequences[10], seg122_a_122_b, ignore, check_cctv, NULL, seg122_a_122_b, seg123, NULL, 9917, 14417, 12792); // seg121
+	fill_sequence(&sequences[11], seg120, deal, three_hundred, NULL, seg119, seg120, NULL, 2458, 6958, 2458); // seg118
+	fill_sequence(&sequences[12], seg128, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg119
+	fill_sequence(&sequences[13], seg128, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg117
+	fill_sequence(&sequences[14], seg129, nevermind, check_cctv, NULL, seg129, seg123, NULL, 7208, 11708, 9750); // seg128
+	fill_sequence(&sequences[15], seg133_swipe, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg129
+	fill_sequence(&sequences[16], seg126, go_check, call_police, NULL, seg127, seg126, NULL, 38458, 42458, 42458); // seg122_a_122_b
+	fill_sequence(&sequences[17], seg137, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg136
+	fill_sequence(&sequences[18], seg144, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg141
+	fill_sequence(&sequences[19], seg138_a_138_b, okay, no, NULL, seg138_a_138_b, seg140, NULL, 8375, 11875, 10333); // seg139
+	fill_sequence(&sequences[20], eval_has_pepper_def, okay, text_has_pepper, NULL, seg138_a_138_b, eval_has_pepper, NULL, 24792, 29000, 27958); // seg137
+	fill_sequence(&sequences[21], seg144, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg138_a_138_b
+	fill_sequence(&sequences[22], seg134_2, call_police, go_there, take_pepper_spray, seg136, seg134_2, seg134_1, 1417, 5417, 1417); // seg133_swipe
+	fill_sequence(&sequences[23], seg137, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0);  // seg134_1
+	fill_sequence(&sequences[24], seg121, okay, forget_it, NULL, seg119, seg121, NULL, 19917, 24417, 19917); // seg120
+	fill_sequence(&sequences[25], seg138_a_138_b, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg140
+	fill_sequence(&sequences[26], seg123_tap_130_tap, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg123
+	fill_sequence(&sequences[27], eval_cctv_seg, all_clear, go_check, NULL, eval_cctv_seg, seg125, NULL, 5000, 9542, 5000); // seg123_tap_130_tap
+	fill_sequence(&sequences[28], seg143, keep_pepper_spray, drop_it, NULL, seg142, seg143, NULL, 32542, 35542, 35542); // seg135
+	fill_sequence(&sequences[29], seg135, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg127
+	fill_sequence(&sequences[30], seg143, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg142
+	fill_sequence(&sequences[31], seg144, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg143
+	fill_sequence(&sequences[32], seg145_swipe, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg144
+	fill_sequence(&sequences[33], seg148_b, drive, run, NULL, seg148_b, seg146_a, NULL, 2000, 6542, 2000); // seg145_swipe
+	fill_sequence(&sequences[34], seg201, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg148_b (END OF EPISODE -> 02)
+	fill_sequence(&sequences[35], seg147_a_148_a, turn_back, keep_going, NULL, seg147_a_148_a, seg147_b, NULL, 7625, 12000, 11625); // seg146_a
+	fill_sequence(&sequences[36], seg148_b, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg147_a_148_a
+	fill_sequence(&sequences[37], seg202, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg147_b (END OF EPISODE -> 02)
+	fill_sequence(&sequences[38], seg135, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg126
+	fill_sequence(&sequences[39], seg137, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg134_2
+	fill_sequence(&sequences[40], seg135, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg125
 	// EPISODE 2
-	fill_sequence(&sequences[41], no, do_it, NULL, seg203, seg206, NULL, 30375, 34917, 32667); // seg201
-	fill_sequence(&sequences[42], okay, no, NULL, seg207, seg202_1, NULL, 17583, 19958, 21333); // seg202
-	fill_sequence(&sequences[43], go, no_go, NULL, seg204, seg205, NULL, 12667, 17208, 14417); // seg203
-	fill_sequence(&sequences[44], NULL, NULL, NULL, seg212, NULL, NULL, 0, 0, 0); // seg204
-	fill_sequence(&sequences[45], NULL, NULL, NULL, seg212, NULL, NULL, 0, 0, 0); // seg205
-	fill_sequence(&sequences[46], NULL, NULL, NULL, seg212, NULL, NULL, 0, 0, 0); // seg206
-	fill_sequence(&sequences[47], NULL, NULL, NULL, seg208_213_214, NULL, NULL, 0, 0, 0); // seg207
-	fill_sequence(&sequences[48], do_it, leg_it, NULL, seg210, seg209, NULL, 6875, 11458, 11458); // seg202_1
-	fill_sequence(&sequences[49], NULL, NULL, NULL, seg208_213_214, NULL, NULL, 0, 0, 0); // seg209
-	fill_sequence(&sequences[50], NULL, NULL, NULL, seg208_213_214, NULL, NULL, 0, 0, 0); // seg210
-	fill_sequence(&sequences[51], NULL, NULL, NULL, seg215, NULL, NULL, 0, 0, 0); // seg208_213_214
-	fill_sequence(&sequences[52], contradict, play_cool, NULL, seg216, seg217, NULL, 34792, 38833, 35958); // seg215
-	fill_sequence(&sequences[53], NULL, NULL, NULL, seg217, NULL, NULL, 0, 0, 0); // seg216
-	fill_sequence(&sequences[54], protest, steal_away, NULL, seg218, seg219, NULL, 5375, 8917, 8917); // seg217
-	fill_sequence(&sequences[55], protest, hold_still, NULL, seg220_1, seg223, NULL, 5083, 8625, 7833); // seg218
-	fill_sequence(&sequences[56], stay_calm, make_suggestion, NULL, seg223, seg224, NULL, 8542, 12667, 12667); // seg219
-	fill_sequence(&sequences[57], NULL, NULL, NULL, seg220_2, NULL, NULL, 0, 0, 0); // seg220_1
-	fill_sequence(&sequences[58], okay, whats_in, no_way, seg230, seg228, seg227, 20625, 25167, 22792); // seg220_2
-	fill_sequence(&sequences[59], NULL, NULL, NULL, seg220_2, NULL, NULL, 0, 0, 0); // seg223
-	fill_sequence(&sequences[60], NULL, NULL, NULL, seg225, NULL, NULL, 0, 0, 0); // seg224
-	fill_sequence(&sequences[61], push_it, okay, NULL, seg231, seg226_1, NULL, 27708, 31333, 30083); // seg225
-	fill_sequence(&sequences[62], NULL, NULL, NULL, seg226, NULL, NULL, 0, 0, 0); // seg226_1
-	fill_sequence(&sequences[63], NULL, NULL, NULL, seg301_1_301_2, NULL, NULL, 0, 0, 0); // seg226 (END OF EPISODE -> 03)
-	fill_sequence(&sequences[64], NULL, NULL, NULL, seg215, NULL, NULL, 0, 0, 0); // seg212
-	fill_sequence(&sequences[65], NULL, NULL, NULL, seg226, NULL, NULL, 0, 0, 0); // seg230
-	fill_sequence(&sequences[66], okay, push_it, NULL, seg230, eval_coming_from_seg223, NULL, 4833, 8500, 7292); // seg228
-	fill_sequence(&sequences[67], fair_enough, keep_pushing, NULL, seg230, seg231, NULL, 6292, 9875, 8708); // seg229
-	fill_sequence(&sequences[68], NULL, NULL, NULL, seg226, NULL, NULL, 0, 0, 0); // seg227
-	fill_sequence(&sequences[69], NULL, NULL, NULL, seg301_1_301_2, NULL, NULL, 0, 0, 0); // seg231 (END OF EPISODE -> 03)
+	fill_sequence(&sequences[41], seg206, no, do_it, NULL, seg203, seg206, NULL, 30375, 34917, 32667); // seg201
+	fill_sequence(&sequences[42], seg207, okay, no, NULL, seg207, seg202_1, NULL, 17583, 19958, 21333); // seg202
+	fill_sequence(&sequences[43], seg205, go, no_go, NULL, seg204, seg205, NULL, 12667, 17208, 14417); // seg203
+	fill_sequence(&sequences[44], seg212, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg204
+	fill_sequence(&sequences[45], seg212, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg205
+	fill_sequence(&sequences[46], seg212, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg206
+	fill_sequence(&sequences[47], seg208_213_214, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg207
+	fill_sequence(&sequences[48], seg210, do_it, leg_it, NULL, seg210, seg209, NULL, 6875, 11458, 11458); // seg202_1
+	fill_sequence(&sequences[49], seg208_213_214, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg209
+	fill_sequence(&sequences[50], seg208_213_214, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg210
+	fill_sequence(&sequences[51], seg215, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg208_213_214
+	fill_sequence(&sequences[52], seg217, contradict, play_cool, NULL, seg216, seg217, NULL, 34792, 38833, 35958); // seg215
+	fill_sequence(&sequences[53], seg217, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg216
+	fill_sequence(&sequences[54], seg219, protest, steal_away, NULL, seg218, seg219, NULL, 5375, 8917, 8917); // seg217
+	fill_sequence(&sequences[55], seg223, protest, hold_still, NULL, seg220_1, seg223, NULL, 5083, 8625, 7833); // seg218
+	fill_sequence(&sequences[56], seg223, stay_calm, make_suggestion, NULL, seg223, seg224, NULL, 8542, 12667, 12667); // seg219
+	fill_sequence(&sequences[57], seg220_2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg220_1
+	fill_sequence(&sequences[58], seg230, okay, whats_in, no_way, seg230, seg228, seg227, 20625, 25167, 22792); // seg220_2
+	fill_sequence(&sequences[59], seg220_2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg223
+	fill_sequence(&sequences[60], seg225, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg224
+	fill_sequence(&sequences[61], seg226_1, push_it, okay, NULL, seg231, seg226_1, NULL, 27708, 31333, 30083); // seg225
+	fill_sequence(&sequences[62], seg226, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg226_1
+	fill_sequence(&sequences[63], seg301_1_301_2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg226 (END OF EPISODE -> 03)
+	fill_sequence(&sequences[64], seg215, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg212
+	fill_sequence(&sequences[65], seg226, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg230
+	fill_sequence(&sequences[66], seg230, okay, push_it, NULL, seg230, eval_coming_from_seg223, NULL, 4833, 8500, 7292); // seg228
+	fill_sequence(&sequences[67], seg230, fair_enough, keep_pushing, NULL, seg230, seg231, NULL, 6292, 9875, 8708); // seg229
+	fill_sequence(&sequences[68], seg226, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg227
+	fill_sequence(&sequences[69], seg301_1_301_2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg231 (END OF EPISODE -> 03)
 	// EPISODE 3
-	fill_sequence(&sequences[70], agree, disagree, NULL, seg302_a, seg302_b, NULL, 99542, 102583, 102583); // seg301_1_301_2
-	fill_sequence(&sequences[71], NULL, NULL, NULL, seg303_310, NULL, NULL, 0, 0, 0); // seg302_a
-	fill_sequence(&sequences[72], NULL, NULL, NULL, seg303_310, NULL, NULL, 0, 0, 0); // seg302_b
-	fill_sequence(&sequences[73], let_her, intervene, NULL, seg311, seg312, NULL, 192458, 197000, 197000); // seg303_310
-	fill_sequence(&sequences[74], let_her, intervene, NULL, seg313, seg314_2, NULL, 70667, 75625, 73417); // seg311
-	fill_sequence(&sequences[75], NULL, NULL, NULL, seg315, NULL, NULL, 0, 0, 0); // seg312
-	fill_sequence(&sequences[76], NULL, NULL, NULL, seg314, NULL, NULL, 0, 0, 0); // seg314_1
-	fill_sequence(&sequences[77], NULL, NULL, NULL, seg314, NULL, NULL, 0, 0, 0); // seg314_2
-	fill_sequence(&sequences[78], NULL, NULL, NULL, seg315, NULL, NULL, 0, 0, 0); // seg313
-	fill_sequence(&sequences[79], NULL, NULL, NULL, eval_intervened, NULL, NULL, 0, 0, 0); // seg315
-	fill_sequence(&sequences[80], prevent, do_as_told, NULL, seg317, seg318, NULL, 10125, 14375, 14375); // seg316_b
-	fill_sequence(&sequences[81], prevent, do_as_told, NULL, seg317, seg318, NULL, 10208, 14458, 14458); // seg316_c
-	fill_sequence(&sequences[82], up, down, NULL, seg319, seg318, NULL, 9750, 14292, 12083); // seg317
-	fill_sequence(&sequences[83], NULL, NULL, NULL, eval_intervened2, NULL, NULL, 0, 0, 0); // seg318
-	fill_sequence(&sequences[84], NULL, NULL, NULL, seg345, NULL, NULL, 0, 0, 0); // seg343_344_a
-	fill_sequence(&sequences[85], NULL, NULL, NULL, seg345, NULL, NULL, 0, 0, 0); // seg343_344_b
-	fill_sequence(&sequences[86], NULL, NULL, NULL, seg315, NULL, NULL, 0, 0, 0); // seg314
-	fill_sequence(&sequences[87], guard, play_along, NULL, seg346_350_352, seg349_355_356, NULL, 31667, 36208, 36208); // seg345
-	fill_sequence(&sequences[88], NULL, NULL, NULL, seg320_swipe, NULL, NULL, 0, 0, 0); // seg319
-	fill_sequence(&sequences[89], enter_offices, go_downstairs, NULL, seg322, seg321_324, NULL, 542, 9542, 542); // seg320_swipe
-	fill_sequence(&sequences[90], NULL, NULL, NULL, seg322_tap, NULL, NULL, 0, 0, 0); // seg322
-	fill_sequence(&sequences[91], alert_staff, make_call, NULL, seg326_324, seg327, NULL, 833, 7500, 833); // seg322_tap
-	fill_sequence(&sequences[92], squeal, keep_quiet, NULL, seg325_a, seg325_b, NULL, 31583, 35333, 35333); // seg326_324
-	fill_sequence(&sequences[93], explain, lie, dial_999, seg328, seg329, seg334, 10167, 14208, 14208); // seg327
-	fill_sequence(&sequences[94], squeal, give_hint, NULL, seg333, seg330, NULL, 10333, 20333, 20333); // seg328
-	fill_sequence(&sequences[95], squeal, keep_quiet, NULL, seg333, seg329_1, NULL, 16708, 21208, 21208); // seg329
-	fill_sequence(&sequences[96], NULL, NULL, NULL, seg331, NULL, NULL, 0, 0, 0); // seg329_1
-	fill_sequence(&sequences[97], NULL, NULL, NULL, seg335, NULL, NULL, 0, 0, 0); // seg331
-	fill_sequence(&sequences[98], NULL, NULL, NULL, seg331, NULL, NULL, 0, 0, 0); // seg333
-	fill_sequence(&sequences[99], let_it_be, pick_it_up, NULL, seg360, seg354, NULL, 60000, 65250, 64750); // seg346_350_352
-	fill_sequence(&sequences[100], all_clear, warning, NULL, seg363, seg365_366_double, NULL, 3542, 7667, 5708); // seg354
-	fill_sequence(&sequences[101], NULL, NULL, NULL, seg342, NULL, NULL, 0, 0, 0); // seg365_366
-	fill_sequence(&sequences[102], NULL, NULL, NULL, eval_ep4_start, NULL, NULL, 0, 0, 0); // seg342 (END OF EPISODE -> 04)
-	fill_sequence(&sequences[103], NULL, NULL, NULL, eval_security_alert, NULL, NULL, 0, 0, 0); // seg335
-	fill_sequence(&sequences[104], NULL, NULL, NULL, seg342, NULL, NULL, 0, 0, 0); // seg341
-	fill_sequence(&sequences[105], ignore, answer, NULL, seg340, seg339, NULL, 6917, 10292, 9667); // seg338
-	fill_sequence(&sequences[106], NULL, NULL, NULL, seg340, NULL, NULL, 0, 0, 0); // seg339
-	fill_sequence(&sequences[107], NULL, NULL, NULL, eval_ep4_start, NULL, NULL, 0, 0, 0); // seg340 (END OF EPISODE -> 04)
-	fill_sequence(&sequences[108], NULL, NULL, NULL, seg335, NULL, NULL, 0, 0, 0); // seg330
-	fill_sequence(&sequences[109], dont, _do, NULL, seg358_359, seg357, NULL, 31667, 36208, 36208); // seg349_355_356
-	fill_sequence(&sequences[110], NULL, NULL, NULL, seg358_359, NULL, NULL, 0, 0, 0); // seg357
-	fill_sequence(&sequences[111], NULL, NULL, NULL, eval_sabotage, NULL, NULL, 0, 0, 0); // seg358_359
-	fill_sequence(&sequences[112], enter_correct_key, enter_wrong_key, NULL, seg369_1k, seg369_2k, NULL, 20125, 24542, 24542); // seg364_367_a_368
-	fill_sequence(&sequences[113], enter_correct_key, enter_wrong_key, NULL, seg369_1k, seg369_2k, NULL, 17250, 21958, 21958); // seg364_367_b_368
-	fill_sequence(&sequences[114], squeal, keep_quiet, NULL, seg325_a, seg325_b, NULL, 34125, 37875, 37875); // seg321_324
-	fill_sequence(&sequences[115], NULL, NULL, NULL, seg335, NULL, NULL, 0, 0, 0); // seg325_a
-	fill_sequence(&sequences[116], NULL, NULL, NULL, seg335, NULL, NULL, 0, 0, 0); // seg325_b
-	fill_sequence(&sequences[117], keep_quiet, squeal, NULL, seg336, seg337, NULL, 16875, 20625, 20625); // seg334
-	fill_sequence(&sequences[118], NULL, NULL, NULL, seg331, NULL, NULL, 0, 0, 0); // seg336
-	fill_sequence(&sequences[119], NULL, NULL, NULL, seg331, NULL, NULL, 0, 0, 0); // seg337
-	fill_sequence(&sequences[120], let_it_be, pick_it_up, NULL, seg362, seg361, NULL, 4375, 8917, 8917); // seg360
-	fill_sequence(&sequences[121], all_clear, warning, NULL, seg363, seg365_366, NULL, 2875, 7000, 7000); // seg361
-	fill_sequence(&sequences[122], NULL, NULL, NULL, eval_sabotage, NULL, NULL, 0, 0, 0); // seg362
-	fill_sequence(&sequences[123], NULL, NULL, NULL, eval_sabotage, NULL, NULL, 0, 0, 0); // seg363
-	fill_sequence(&sequences[124], NULL, NULL, NULL, seg370_375, NULL, NULL, 0, 0, 0); // seg369_1k
-	fill_sequence(&sequences[125], NULL, NULL, NULL, seg373_374_366, NULL, NULL, 0, 0, 0); // seg369_2k
-	fill_sequence(&sequences[126], NULL, NULL, NULL, eval_ep4_start, NULL, NULL, 0, 0, 0); // seg370_375 (END OF EPISODE -> 04)
-	fill_sequence(&sequences[127], NULL, NULL, NULL, seg342, NULL, NULL, 0, 0, 0); // seg373_374_366
+	fill_sequence(&sequences[70], seg302_a, agree, disagree, NULL, seg302_a, seg302_b, NULL, 99542, 102583, 102583); // seg301_1_301_2
+	fill_sequence(&sequences[71], seg303_310, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg302_a
+	fill_sequence(&sequences[72], seg303_310, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg302_b
+	fill_sequence(&sequences[73], seg312, let_her, intervene, NULL, seg311, seg312, NULL, 192458, 197000, 197000); // seg303_310
+	fill_sequence(&sequences[74], seg313, let_her, intervene, NULL, seg313, seg314_2, NULL, 70667, 75625, 73417); // seg311
+	fill_sequence(&sequences[75], seg315, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg312
+	fill_sequence(&sequences[76], seg314, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg314_1
+	fill_sequence(&sequences[77], seg314, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg314_2
+	fill_sequence(&sequences[78], seg315, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg313
+	fill_sequence(&sequences[79], eval_intervened, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg315
+	fill_sequence(&sequences[80], seg318, prevent, do_as_told, NULL, seg317, seg318, NULL, 10125, 14375, 14375); // seg316_b
+	fill_sequence(&sequences[81], seg318, prevent, do_as_told, NULL, seg317, seg318, NULL, 10208, 14458, 14458); // seg316_c
+	fill_sequence(&sequences[82], seg318, up, down, NULL, seg319, seg318, NULL, 9750, 14292, 12083); // seg317
+	fill_sequence(&sequences[83], eval_intervened2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg318
+	fill_sequence(&sequences[84], seg345, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg343_344_a
+	fill_sequence(&sequences[85], seg345, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg343_344_b
+	fill_sequence(&sequences[86], seg315, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg314
+	fill_sequence(&sequences[87], seg349_355_356, guard, play_along, NULL, seg346_350_352, seg349_355_356, NULL, 31667, 36208, 36208); // seg345
+	fill_sequence(&sequences[88], seg320_swipe, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg319
+	fill_sequence(&sequences[89], seg322, enter_offices, go_downstairs, NULL, seg322, seg321_324, NULL, 542, 9542, 542); // seg320_swipe
+	fill_sequence(&sequences[90], seg322_tap, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg322
+	fill_sequence(&sequences[91], seg326_324, alert_staff, make_call, NULL, seg326_324, seg327, NULL, 833, 7500, 833); // seg322_tap
+	fill_sequence(&sequences[92], seg325_b, squeal, keep_quiet, NULL, seg325_a, seg325_b, NULL, 31583, 35333, 35333); // seg326_324
+	fill_sequence(&sequences[93], seg329, explain, lie, dial_999, seg328, seg329, seg334, 10167, 14208, 14208); // seg327
+	fill_sequence(&sequences[94], seg330, squeal, give_hint, NULL, seg333, seg330, NULL, 10333, 20333, 20333); // seg328
+	fill_sequence(&sequences[95], seg329_1, squeal, keep_quiet, NULL, seg333, seg329_1, NULL, 16708, 21208, 21208); // seg329
+	fill_sequence(&sequences[96], seg331, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg329_1
+	fill_sequence(&sequences[97], seg335, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg331
+	fill_sequence(&sequences[98], seg331, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg333
+	fill_sequence(&sequences[99], seg360, let_it_be, pick_it_up, NULL, seg360, seg354, NULL, 60000, 65250, 64750); // seg346_350_352
+	fill_sequence(&sequences[100], seg363, all_clear, warning, NULL, seg363, seg365_366_double, NULL, 3542, 7667, 5708); // seg354
+	fill_sequence(&sequences[101], seg342, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg365_366
+	fill_sequence(&sequences[102], eval_ep4_start, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg342 (END OF EPISODE -> 04)
+	fill_sequence(&sequences[103], eval_security_alert, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg335
+	fill_sequence(&sequences[104], seg342, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg341
+	fill_sequence(&sequences[105], seg340, ignore, answer, NULL, seg340, seg339, NULL, 6917, 10292, 9667); // seg338
+	fill_sequence(&sequences[106], seg340, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg339
+	fill_sequence(&sequences[107], eval_ep4_start, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg340 (END OF EPISODE -> 04)
+	fill_sequence(&sequences[108], seg335, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg330
+	fill_sequence(&sequences[109], seg358_359, dont, _do, NULL, seg358_359, seg357, NULL, 31667, 36208, 36208); // seg349_355_356
+	fill_sequence(&sequences[110], seg358_359, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg357
+	fill_sequence(&sequences[111], eval_sabotage, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg358_359
+	fill_sequence(&sequences[112], seg369_1k, enter_correct_key, enter_wrong_key, NULL, seg369_1k, seg369_2k, NULL, 20125, 24542, 24542); // seg364_367_a_368
+	fill_sequence(&sequences[113], seg369_1k, enter_correct_key, enter_wrong_key, NULL, seg369_1k, seg369_2k, NULL, 17250, 21958, 21958); // seg364_367_b_368
+	fill_sequence(&sequences[114], seg325_b, squeal, keep_quiet, NULL, seg325_a, seg325_b, NULL, 34125, 37875, 37875); // seg321_324
+	fill_sequence(&sequences[115], seg335, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg325_a
+	fill_sequence(&sequences[116], seg335, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg325_b
+	fill_sequence(&sequences[117], seg336, keep_quiet, squeal, NULL, seg336, seg337, NULL, 16875, 20625, 20625); // seg334
+	fill_sequence(&sequences[118], seg331, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg336
+	fill_sequence(&sequences[119], seg331, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg337
+	fill_sequence(&sequences[120], seg361, let_it_be, pick_it_up, NULL, seg362, seg361, NULL, 4375, 8917, 8917); // seg360
+	fill_sequence(&sequences[121], seg363, all_clear, warning, NULL, seg363, seg365_366, NULL, 2875, 7000, 7000); // seg361
+	fill_sequence(&sequences[122], eval_sabotage, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg362
+	fill_sequence(&sequences[123], eval_sabotage, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg363
+	fill_sequence(&sequences[124], seg370_375, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg369_1k
+	fill_sequence(&sequences[125], seg373_374_366, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg369_2k
+	fill_sequence(&sequences[126], eval_ep4_start, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg370_375 (END OF EPISODE -> 04)
+	fill_sequence(&sequences[127], seg342, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg373_374_366
 	// EPISODE 4
-	fill_sequence(&sequences[128], keep_quiet, speak_up, NULL, seg417_b, seg419, NULL, 20917, 25417, 25417); // seg415_418
-	fill_sequence(&sequences[129], speak_up, keep_quiet, NULL, seg417_a, seg417_b, NULL, 18875, 23417, 23417); // seg415_416
-	fill_sequence(&sequences[130], speak_up, keep_quiet, NULL, seg403_a, seg403_b, NULL, 28375, 29500, 29500); // seg402
-	fill_sequence(&sequences[131], NULL, NULL, NULL, eval_low_sabotage, NULL, NULL, 0, 0, 0); // seg406
-	fill_sequence(&sequences[132], high_five, refuse, NULL, seg408, seg410, NULL, 12000, 15958, 15958); // seg407_a
-	fill_sequence(&sequences[133], smile, disagree, NULL, seg407_c, seg412, NULL, 10417, 14958, 14958); // seg407_b
-	fill_sequence(&sequences[134], right, not_at_all, NULL, seg409, seg410, NULL, 12375, 16500, 15958); // seg408
-	fill_sequence(&sequences[135], disagree, take_the_point, NULL, seg404_a, seg404_b, NULL, 13875, 17917, 14417); // seg403_a
-	fill_sequence(&sequences[136], reply, keep_quiet, NULL, seg405, seg411_a, NULL, 17625, 22125, 19458); // seg403_b
-	fill_sequence(&sequences[137], NULL, NULL, NULL, seg414, NULL, NULL, 0, 0, 0); // seg404_a
-	fill_sequence(&sequences[138], NULL, NULL, NULL, seg414, NULL, NULL, 0, 0, 0); // seg404_b
-	fill_sequence(&sequences[139], high_five, refuse, NULL, seg408, seg410, NULL, 4042, 8000, 8000); // seg407_c
-	fill_sequence(&sequences[140], NULL, NULL, NULL, seg414, NULL, NULL, 0, 0, 0); // seg409
-	fill_sequence(&sequences[141], keep_quiet, reply, NULL, seg411_a, seg411_b, NULL, 21542, 26083, 25583); // seg410
-	fill_sequence(&sequences[142], NULL, NULL, NULL, seg414, NULL, NULL, 0, 0, 0); // seg411_a
-	fill_sequence(&sequences[143], NULL, NULL, NULL, seg414, NULL, NULL, 0, 0, 0); // seg411_b
-	fill_sequence(&sequences[144], dont_go_there, reply, NULL, seg410, seg413, NULL, 4833, 9375, 9375); // seg412
-	fill_sequence(&sequences[145], NULL, NULL, NULL, seg414, NULL, NULL, 0, 0, 0); // seg413
-	fill_sequence(&sequences[146], NULL, NULL, NULL, seg420, NULL, NULL, 0, 0, 0); // seg417_a
-	fill_sequence(&sequences[147], NULL, NULL, NULL, seg420, NULL, NULL, 0, 0, 0); // seg417_b
-	fill_sequence(&sequences[148], NULL, NULL, NULL, seg414, NULL, NULL, 0, 0, 0); // seg405
-	fill_sequence(&sequences[149], NULL, NULL, NULL, seg420, NULL, NULL, 0, 0, 0); // seg419
-	fill_sequence(&sequences[150], NULL, NULL, NULL, seg434, NULL, NULL, 0, 0, 0); // seg414
-	fill_sequence(&sequences[151], NULL, NULL, NULL, seg421_a, NULL, NULL, 0, 0, 0); // seg420
-	fill_sequence(&sequences[152], NULL, NULL, NULL, seg434, NULL, NULL, 0, 0, 0); // seg421_a
-	fill_sequence(&sequences[153], speak_up, keep_quiet, NULL, seg435_b, seg435_c, NULL, 32042, 36542, 35333); // seg434
-	fill_sequence(&sequences[154], NULL, NULL, NULL, seg436_437, NULL, NULL, 0, 0, 0); // seg435_a
-	fill_sequence(&sequences[155], NULL, NULL, NULL, seg436_437, NULL, NULL, 0, 0, 0); // seg435_b
-	fill_sequence(&sequences[156], NULL, NULL, NULL, seg436_437, NULL, NULL, 0, 0, 0); // seg435_c
-	fill_sequence(&sequences[157], mr_woe, police, NULL, seg438, seg440, NULL, 118458, 123000, 120625); // seg436_437
-	fill_sequence(&sequences[158], leave_her, convince_her, NULL, seg439_a, seg439_b, NULL, 15833, 19875, 19500); // seg438
-	fill_sequence(&sequences[159], NULL, NULL, NULL, seg447, NULL, NULL, 0, 0, 0); // seg439_a
-	fill_sequence(&sequences[160], leave_her, take_her, NULL, seg439_a, seg439_c, NULL, 6833, 10083, 9792); // seg439_b
-	fill_sequence(&sequences[161], NULL, NULL, NULL, seg447, NULL, NULL, 0, 0, 0); // seg439_c
-	fill_sequence(&sequences[162], unsure, yes, NULL, seg442_1, seg441, NULL, 14542, 18583, 17583); // seg440
-	fill_sequence(&sequences[163], why_not, im_going, NULL, seg442, seg445_1, NULL, 7500, 11542, 10375); // seg441
-	fill_sequence(&sequences[164], NULL, NULL, NULL, seg443, NULL, NULL, 0, 0, 0); // seg442
-	fill_sequence(&sequences[165], unsure, disagree, NULL, seg444, seg445_1, NULL, 8875, 12917, 10125); // seg443
-	fill_sequence(&sequences[166], woe, police, NULL, seg446, seg445, NULL, 14042, 19083, 19083); // seg444
-	fill_sequence(&sequences[167], NULL, NULL, NULL, seg554, NULL, NULL, 0, 0, 0); // seg445 (END OF EPISODE -> 05B)
-	fill_sequence(&sequences[168], NULL, NULL, NULL, seg445, NULL, NULL, 0, 0, 0); // seg445_1
-	fill_sequence(&sequences[169], NULL, NULL, NULL, seg447, NULL, NULL, 0, 0, 0); // seg446
-	fill_sequence(&sequences[170], NULL, NULL, NULL, seg501_507, NULL, NULL, 0, 0, 0); // seg447 (END OF EPISODE -> 05A)
-	fill_sequence(&sequences[171], NULL, NULL, NULL, seg443, NULL, NULL, 0, 0, 0); // seg442_1
+	fill_sequence(&sequences[128], seg417_b, keep_quiet, speak_up, NULL, seg417_b, seg419, NULL, 20917, 25417, 25417); // seg415_418
+	fill_sequence(&sequences[129], seg417_b, speak_up, keep_quiet, NULL, seg417_a, seg417_b, NULL, 18875, 23417, 23417); // seg415_416
+	fill_sequence(&sequences[130], seg403_b, speak_up, keep_quiet, NULL, seg403_a, seg403_b, NULL, 28375, 29500, 29500); // seg402
+	fill_sequence(&sequences[131], eval_low_sabotage, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg406
+	fill_sequence(&sequences[132], seg410, high_five, refuse, NULL, seg408, seg410, NULL, 12000, 15958, 15958); // seg407_a
+	fill_sequence(&sequences[133], seg412, smile, disagree, NULL, seg407_c, seg412, NULL, 10417, 14958, 14958); // seg407_b
+	fill_sequence(&sequences[134], seg410, right, not_at_all, NULL, seg409, seg410, NULL, 12375, 16500, 15958); // seg408
+	fill_sequence(&sequences[135], seg404_a, disagree, take_the_point, NULL, seg404_a, seg404_b, NULL, 13875, 17917, 14417); // seg403_a
+	fill_sequence(&sequences[136], seg411_a, reply, keep_quiet, NULL, seg405, seg411_a, NULL, 17625, 22125, 19458); // seg403_b
+	fill_sequence(&sequences[137], seg414, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg404_a
+	fill_sequence(&sequences[138], seg414, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg404_b
+	fill_sequence(&sequences[139], seg410, high_five, refuse, NULL, seg408, seg410, NULL, 4042, 8000, 8000); // seg407_c
+	fill_sequence(&sequences[140], seg414, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg409
+	fill_sequence(&sequences[141], seg411_a, keep_quiet, reply, NULL, seg411_a, seg411_b, NULL, 21542, 26083, 25583); // seg410
+	fill_sequence(&sequences[142], seg414, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg411_a
+	fill_sequence(&sequences[143], seg414, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg411_b
+	fill_sequence(&sequences[144], seg410, dont_go_there, reply, NULL, seg410, seg413, NULL, 4833, 9375, 9375); // seg412
+	fill_sequence(&sequences[145], seg414, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg413
+	fill_sequence(&sequences[146], seg420, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg417_a
+	fill_sequence(&sequences[147], seg420, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg417_b
+	fill_sequence(&sequences[148], seg414, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg405
+	fill_sequence(&sequences[149], seg420, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg419
+	fill_sequence(&sequences[150], seg434, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg414
+	fill_sequence(&sequences[151], seg421_a, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg420
+	fill_sequence(&sequences[152], seg434, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg421_a
+	fill_sequence(&sequences[153], seg435_c, speak_up, keep_quiet, NULL, seg435_b, seg435_c, NULL, 32042, 36542, 35333); // seg434
+	fill_sequence(&sequences[154], seg436_437, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg435_a
+	fill_sequence(&sequences[155], seg436_437, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg435_b
+	fill_sequence(&sequences[156], seg436_437, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg435_c
+	fill_sequence(&sequences[157], seg440, mr_woe, police, NULL, seg438, seg440, NULL, 118458, 123000, 120625); // seg436_437
+	fill_sequence(&sequences[158], seg439_a, leave_her, convince_her, NULL, seg439_a, seg439_b, NULL, 15833, 19875, 19500); // seg438
+	fill_sequence(&sequences[159], seg447, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg439_a
+	fill_sequence(&sequences[160], seg439_a, leave_her, take_her, NULL, seg439_a, seg439_c, NULL, 6833, 10083, 9792); // seg439_b
+	fill_sequence(&sequences[161], seg447, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg439_c
+	fill_sequence(&sequences[162], seg441, unsure, yes, NULL, seg442_1, seg441, NULL, 14542, 18583, 17583); // seg440
+	fill_sequence(&sequences[163], seg445_1, why_not, im_going, NULL, seg442, seg445_1, NULL, 7500, 11542, 10375); // seg441
+	fill_sequence(&sequences[164], seg443, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg442
+	fill_sequence(&sequences[165], seg445_1, unsure, disagree, NULL, seg444, seg445_1, NULL, 8875, 12917, 10125); // seg443
+	fill_sequence(&sequences[166], seg445, woe, police, NULL, seg446, seg445, NULL, 14042, 19083, 19083); // seg444
+	fill_sequence(&sequences[167], seg554, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg445 (END OF EPISODE -> 05B)
+	fill_sequence(&sequences[168], seg445, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg445_1
+	fill_sequence(&sequences[169], seg447, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg446
+	fill_sequence(&sequences[170], seg501_507, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg447 (END OF EPISODE -> 05A)
+	fill_sequence(&sequences[171], seg443, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg442_1
 	// EPISODE 5A
-	fill_sequence(&sequences[172], fortune_cookie, follow_him, NULL, seg508_1, seg509_511, NULL, 81083, 85458, 83333); // seg501_507
-	fill_sequence(&sequences[173], refuse, take_one, NULL, seg508_2, seg508_3, NULL, 17958, 21000, 20375); // seg508_1
-	fill_sequence(&sequences[174], NULL, NULL, NULL, seg517, NULL, NULL, 0, 0, 0); // seg508_2
-	fill_sequence(&sequences[175], NULL, NULL, NULL, seg517, NULL, NULL, 0, 0, 0); // seg508_3
-	fill_sequence(&sequences[176], NULL, NULL, NULL, seg516, NULL, NULL, 0, 0, 0); // seg509_511
-	fill_sequence(&sequences[177], believe, disbelieve, NULL, seg522, seg519, NULL, 108083, 112625, 110833); // seg516
-	fill_sequence(&sequences[178], NULL, NULL, NULL, seg516, NULL, NULL, 0, 0, 0); // seg517
-	fill_sequence(&sequences[179], accept, object, NULL, seg522, seg520, NULL, 20917, 25500, 20917); // seg519
-	fill_sequence(&sequences[180], NULL, NULL, NULL, eval_cookie, NULL, NULL, 0, 0, 0); // seg520
-	fill_sequence(&sequences[181], NULL, NULL, NULL, eval_cookie, NULL, NULL, 0, 0, 0); // seg522
-	fill_sequence(&sequences[182], NULL, NULL, NULL, seg525, NULL, NULL, 0, 0, 0); // seg524_a
-	fill_sequence(&sequences[183], NULL, NULL, NULL, seg525, NULL, NULL, 0, 0, 0); // seg524_b
-	fill_sequence(&sequences[184], NULL, NULL, NULL, seg525, NULL, NULL, 0, 0, 0); // seg524_c
-	fill_sequence(&sequences[185], better_plan, okay, NULL, seg526, seg529_a, NULL, 23667, 28208, 26667); // seg525
-	fill_sequence(&sequences[186], go_to_police, follow_her, NULL, seg527, seg529_b, NULL, 52375, 56917, 56417); // seg526
-	fill_sequence(&sequences[187], go_to_police, follow_her, NULL, seg528_b, seg528_a, NULL, 10208, 14750, 14750); // seg527
-	fill_sequence(&sequences[188], NULL, NULL, NULL, seg530, NULL, NULL, 0, 0, 0); // seg528_a
-	fill_sequence(&sequences[189], NULL, NULL, NULL, seg551, NULL, NULL, 0, 0, 0); // seg528_b (END OF EPISODE -> 05B)
-	fill_sequence(&sequences[190], NULL, NULL, NULL, seg530, NULL, NULL, 0, 0, 0); // seg529_a
-	fill_sequence(&sequences[191], NULL, NULL, NULL, seg530, NULL, NULL, 0, 0, 0); // seg529_b
-	fill_sequence(&sequences[192], NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg530 (END OF EPISODE -> 06A)
+	fill_sequence(&sequences[172], seg508_1, fortune_cookie, follow_him, NULL, seg508_1, seg509_511, NULL, 81083, 85458, 83333); // seg501_507
+	fill_sequence(&sequences[173], seg508_2, refuse, take_one, NULL, seg508_2, seg508_3, NULL, 17958, 21000, 20375); // seg508_1
+	fill_sequence(&sequences[174], seg517, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg508_2
+	fill_sequence(&sequences[175], seg517, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg508_3
+	fill_sequence(&sequences[176], seg516, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg509_511
+	fill_sequence(&sequences[177], seg522, believe, disbelieve, NULL, seg522, seg519, NULL, 108083, 112625, 110833); // seg516
+	fill_sequence(&sequences[178], seg516, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg517
+	fill_sequence(&sequences[179], seg522, accept, object, NULL, seg522, seg520, NULL, 20917, 25500, 20917); // seg519
+	fill_sequence(&sequences[180], eval_cookie, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg520
+	fill_sequence(&sequences[181], eval_cookie, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg522
+	fill_sequence(&sequences[182], seg525, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg524_a
+	fill_sequence(&sequences[183], seg525, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg524_b
+	fill_sequence(&sequences[184], seg525, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg524_c
+	fill_sequence(&sequences[185], seg529_a, better_plan, okay, NULL, seg526, seg529_a, NULL, 23667, 28208, 26667); // seg525
+	fill_sequence(&sequences[186], seg527, go_to_police, follow_her, NULL, seg527, seg529_b, NULL, 52375, 56917, 56417); // seg526
+	fill_sequence(&sequences[187], seg528_b, go_to_police, follow_her, NULL, seg528_b, seg528_a, NULL, 10208, 14750, 14750); // seg527
+	fill_sequence(&sequences[188], seg530, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg528_a
+	fill_sequence(&sequences[189], seg551, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg528_b (END OF EPISODE -> 05B)
+	fill_sequence(&sequences[190], seg530, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg529_a
+	fill_sequence(&sequences[191], seg530, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg529_b
+	fill_sequence(&sequences[192], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg530 (END OF EPISODE -> 06A)
 	// EPISODE 5B
-	fill_sequence(&sequences[193], NULL, NULL, NULL, seg554, NULL, NULL, 0, 0, 0); // seg551
-	fill_sequence(&sequences[194], NULL, NULL, NULL, eval_gone_to_woe, NULL, NULL, 0, 0, 0); // seg554
-	fill_sequence(&sequences[195], dont_mention_may, mention_may, NULL, seg562_a, seg562_b, NULL, 42958, 47333, 46083); // seg561
-	fill_sequence(&sequences[196], NULL, NULL, NULL, eval_sabotage2, NULL, NULL, 0, 0, 0); // seg555
-	fill_sequence(&sequences[197], NULL, NULL, NULL, seg557, NULL, NULL, 0, 0, 0); // seg556_a
-	fill_sequence(&sequences[198], NULL, NULL, NULL, seg557, NULL, NULL, 0, 0, 0); // seg556_b
-	fill_sequence(&sequences[199], keep_quiet, mention_may, NULL, seg558_a, seg558_b, NULL, 20042, 24083, 21500); // seg557
-	fill_sequence(&sequences[200], NULL, NULL, NULL, seg560, NULL, NULL, 0, 0, 0); // seg558_a
-	fill_sequence(&sequences[201], NULL, NULL, NULL, seg560, NULL, NULL, 0, 0, 0); // seg558_b
-	fill_sequence(&sequences[202], NULL, NULL, NULL, seg565, NULL, NULL, 0, 0, 0); // seg560
-	fill_sequence(&sequences[203], NULL, NULL, NULL, seg563, NULL, NULL, 0, 0, 0); // seg562_a
-	fill_sequence(&sequences[204], NULL, NULL, NULL, seg563, NULL, NULL, 0, 0, 0); // seg562_b
-	fill_sequence(&sequences[205], yes, no, NULL, seg564_a, seg564_b, NULL, 27083, 30792, 27708); // seg563
-	fill_sequence(&sequences[206], NULL, NULL, NULL, seg565, NULL, NULL, 0, 0, 0); // seg564_A
-	fill_sequence(&sequences[207], NULL, NULL, NULL, seg565, NULL, NULL, 0, 0, 0); // seg564_b
-	fill_sequence(&sequences[208], NULL, NULL, NULL, eval_gone_to_woe2, NULL, NULL, 0, 0, 0); // seg565
-	fill_sequence(&sequences[209], NULL, NULL, NULL, seg570_571, NULL, NULL, 0, 0, 0); // seg568_b
-	fill_sequence(&sequences[210], NULL, NULL, NULL, seg570_571, NULL, NULL, 0, 0, 0); // seg568_a
-	fill_sequence(&sequences[211], NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg570_571 (END OF EPISODE -> 06B)
+	fill_sequence(&sequences[193], seg554, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg551
+	fill_sequence(&sequences[194], eval_gone_to_woe, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg554
+	fill_sequence(&sequences[195], seg562_b, dont_mention_may, mention_may, NULL, seg562_a, seg562_b, NULL, 42958, 47333, 46083); // seg561
+	fill_sequence(&sequences[196], eval_sabotage2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg555
+	fill_sequence(&sequences[197], seg557, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg556_a
+	fill_sequence(&sequences[198], seg557, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg556_b
+	fill_sequence(&sequences[199], seg558_a, keep_quiet, mention_may, NULL, seg558_a, seg558_b, NULL, 20042, 24083, 21500); // seg557
+	fill_sequence(&sequences[200], seg560, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg558_a
+	fill_sequence(&sequences[201], seg560, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg558_b
+	fill_sequence(&sequences[202], seg565, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg560
+	fill_sequence(&sequences[203], seg563, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg562_a
+	fill_sequence(&sequences[204], seg563, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg562_b
+	fill_sequence(&sequences[205], seg564_a, yes, no, NULL, seg564_a, seg564_b, NULL, 27083, 30792, 27708); // seg563
+	fill_sequence(&sequences[206], seg565, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg564_A
+	fill_sequence(&sequences[207], seg565, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg564_b
+	fill_sequence(&sequences[208], eval_gone_to_woe2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg565
+	fill_sequence(&sequences[209], seg570_571, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg568_b
+	fill_sequence(&sequences[210], seg570_571, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg568_a
+	fill_sequence(&sequences[211], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg570_571 (END OF EPISODE -> 06B)
 	// EPISODE 6A
 	
 	fill_events();

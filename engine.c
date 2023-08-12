@@ -32,7 +32,8 @@ theme colors;
 void *snd_click;
 void *snd_hover;
 
-void fill_sequence(sequence *s, char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump) {
+void fill_sequence(sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump) {
+	s->d = d;
 	s->l = l;
 	s->r = r;
 	s->e = e;

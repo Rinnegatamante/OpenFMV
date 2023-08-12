@@ -8,7 +8,7 @@ extern "C" {
 #include "games.h"
 #include "unzip.h"
 
-#define ENGINE_VER "0.9.2"
+#define ENGINE_VER "0.9.3"
 
 #define Color4(x) ImVec4(x[0], x[1], x[2], x[3])
 #define set_theme_color(x, a, b, c, d) \
@@ -76,6 +76,7 @@ typedef struct {
 
 typedef struct sequence {
 	char hash[64];
+	struct sequence *(*d)();
 	struct sequence *(*l)();
 	struct sequence *(*r)();
 	struct sequence *(*e)();
@@ -130,7 +131,7 @@ extern void *snd_click;
 extern void *snd_hover;
 
 void load_animated_bg(const char *fname, int needs_hash); 
-void fill_sequence(sequence *s, char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump);
+void fill_sequence(sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump);
 void start_sequence(sequence *s);
 void install_timed_event(sequence *t, uint32_t start, uint32_t end, uint8_t type, sequence *(*s)());
 

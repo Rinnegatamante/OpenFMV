@@ -320,9 +320,9 @@ handle_event:
 			}
 		}
 		
-		// Auto-select left choice if player gives no input
+		// Auto-select default choice if player gives no input
 		if (player_state == PLAYER_INACTIVE) {
-			start_sequence(cur_seq->l());
+			start_sequence(cur_seq->d());
 		}
 		
 		oldpad = pad.buttons;
