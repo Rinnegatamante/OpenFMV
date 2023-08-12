@@ -160,7 +160,7 @@ void video_open(const char *path, int looping) {
 	playerInit.basePriority = 0xA0;
 	playerInit.numOutputVideoFrameBuffers = 5;
 	playerInit.autoStart = 1;
-#if 1
+#if 0
 	playerInit.debugLevel = 3;
 #endif
 

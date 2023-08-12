@@ -37,6 +37,7 @@ typedef struct {
 	uint8_t gone_to_woe;
 	uint8_t has_cookie;
 	uint8_t report_to_police;
+	uint8_t matt_escape;
 } gamestate;
 
 extern gamestate game_vars;
