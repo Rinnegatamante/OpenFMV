@@ -24,6 +24,14 @@ DATA_FILES := "data/Late Shift"
 TITLEID := LATESHIFT
 endif
 
+ifeq ($(FIVE_DATES),1)
+CFLAGS += -DFIVE_DATES
+TARGET := fivedates
+APP_NAME := "Five Dates"
+DATA_FILES := "data/Five Dates"
+TITLEID := FIVEDATES
+endif
+
 CXXFLAGS  = $(CFLAGS) -fno-exceptions -std=gnu++11 -fpermissive
 ASFLAGS = $(CFLAGS)
 

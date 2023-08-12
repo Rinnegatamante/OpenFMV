@@ -44,10 +44,10 @@ extern gamestate game_vars;
 void fill_sequences();
 void load_localization_files(int lang);
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif
 
 #endif

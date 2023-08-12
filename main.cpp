@@ -8,7 +8,7 @@
 #include "audio.h"
 #include "draw.h"
 #include "engine.h"
-#include "late_shift.h"
+#include "games.h"
 #include "fios.h"
 #include "player.h"
 #include "unzip.h"

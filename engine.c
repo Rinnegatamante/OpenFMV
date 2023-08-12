@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include "audio.h"
 #include "engine.h"
-#include "late_shift.h"
+#include "games.h"
 #include "player.h"
 #include "unzip.h"
 

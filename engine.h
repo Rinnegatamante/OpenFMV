@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include "late_shift.h"
+#include "games.h"
 #include "unzip.h"
 
 #define ENGINE_VER "0.9.2"
