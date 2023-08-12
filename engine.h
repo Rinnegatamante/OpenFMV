@@ -111,6 +111,9 @@ extern uint32_t cur_delta;
 extern unzFile sub_handle;
 extern engine config;
 
+extern void *snd_click;
+extern void *snd_hover;
+
 void load_animated_bg(const char *fname, int needs_hash); 
 void fill_sequence(sequence *s, char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump);
 void start_sequence(sequence *s);

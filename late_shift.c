@@ -345,22 +345,22 @@ sequence *seg570_571() { return &sequences[211]; }
 void *bgm[32];
 int bgm_handle[32];
 sequence *seg435_a_event() { if (game_vars.may_likes_matt >= 4) { return seg435_a(); } return NULL; }
-sequence *start_op_bgm() { bgm[0] = audio_play("EP01 Opening", 0, 0.20033f, &bgm_handle[0]); return NULL; }
-sequence *fade_op_vol_1() { audio_set_volume(bgm_handle[0], 0.125887f); return NULL; }
-sequence *fade_op_vol_2() { audio_set_volume(bgm_handle[0], 0.198939f); return NULL; }
-sequence *fade_op_vol_3() { audio_set_volume(bgm_handle[0], 0.126269f); return NULL; }
-sequence *fade_op_vol_4() { audio_set_volume(bgm_handle[0], 0.199322f); return NULL; }
-sequence *fade_op_vol_5() { audio_set_volume(bgm_handle[0], 0.124558f); return NULL; }
-sequence *fade_op_vol_6() { audio_set_volume(bgm_handle[0], 0.198644f); return NULL; }
-sequence *start_atmo_station() { bgm[1] = audio_play("EP01 Atmo Int Tube Station", 0, 1.0f, &bgm_handle[1]); return NULL; }
-sequence *start_selfish_title() { bgm[2] = audio_play("EP01 Titles SelfFish", 0, 0.3178015f, &bgm_handle[2]); return NULL; }
-sequence *start_selfless_title() { bgm[2] = audio_play("EP01 Titles SelfLess", 0, 0.3161767f, &bgm_handle[2]); return NULL; }
-sequence *fade_out_op() { audio_fade(bgm_handle[0], 0.198644f, 0.0f, 10750, 14750); return NULL; }
-sequence *fade_out_op2() { audio_fade(bgm_handle[0], 0.198644f, 0.0f, 0, 4000); return NULL; }
-sequence *fade_out_atmo_station() { audio_fade(bgm_handle[1], 1.0f, 0.0f, 19417, 24500); return NULL; }
-sequence *fade_out_atmo_station2() { audio_fade(bgm_handle[1], 1.0f, 0.0f, 17792, 23000); return NULL; }
-sequence *stop_op() { audio_stop(bgm[0]); }
-sequence *stop_atmo_station() { audio_stop(bgm[1]); }
+sequence *start_op_bgm() { bgm[0] = audio_track_play("EP01 Opening", 0, 0.20033f, &bgm_handle[0]); return NULL; }
+sequence *fade_op_vol_1() { audio_track_set_volume(bgm_handle[0], 0.125887f); return NULL; }
+sequence *fade_op_vol_2() { audio_track_set_volume(bgm_handle[0], 0.198939f); return NULL; }
+sequence *fade_op_vol_3() { audio_track_set_volume(bgm_handle[0], 0.126269f); return NULL; }
+sequence *fade_op_vol_4() { audio_track_set_volume(bgm_handle[0], 0.199322f); return NULL; }
+sequence *fade_op_vol_5() { audio_track_set_volume(bgm_handle[0], 0.124558f); return NULL; }
+sequence *fade_op_vol_6() { audio_track_set_volume(bgm_handle[0], 0.198644f); return NULL; }
+sequence *start_atmo_station() { bgm[1] = audio_track_play("EP01 Atmo Int Tube Station", 0, 1.0f, &bgm_handle[1]); return NULL; }
+sequence *start_selfish_title() { bgm[2] = audio_track_play("EP01 Titles SelfFish", 0, 0.3178015f, &bgm_handle[2]); return NULL; }
+sequence *start_selfless_title() { bgm[2] = audio_track_play("EP01 Titles SelfLess", 0, 0.3161767f, &bgm_handle[2]); return NULL; }
+sequence *fade_out_op() { audio_track_fade(bgm_handle[0], 0.198644f, 0.0f, 10750, 14750); return NULL; }
+sequence *fade_out_op2() { audio_track_fade(bgm_handle[0], 0.198644f, 0.0f, 0, 4000); return NULL; }
+sequence *fade_out_atmo_station() { audio_track_fade(bgm_handle[1], 1.0f, 0.0f, 19417, 24500); return NULL; }
+sequence *fade_out_atmo_station2() { audio_track_fade(bgm_handle[1], 1.0f, 0.0f, 17792, 23000); return NULL; }
+sequence *stop_op() { audio_track_stop(bgm[0]); }
+sequence *stop_atmo_station() { audio_track_stop(bgm[1]); }
 
 void fill_events() {
 	// seg101
@@ -994,7 +994,7 @@ void game_main_menu() {
 	// Loading animated background and audio background
 	load_animated_bg("000_MenuBackground", 1);
 	int bg_audio_handle;
-	void *bg_audio = audio_play("EP01 Car Park Melody", 1, 1.0f, &bg_audio_handle);
+	void *bg_audio = audio_track_play("EP01 Car Park Melody", 1, 1.0f, &bg_audio_handle);
 	
 	SceIoStat st;
 	int has_save = sceIoGetstat("ux0:data/Late Shift/progress.sav", &st) ? 0 : 1;
@@ -1089,7 +1089,7 @@ void game_main_menu() {
 		}
 	}
 	
-	audio_stop(bg_audio);
+	audio_track_stop(bg_audio);
 	start_sequence(out);
 }
 

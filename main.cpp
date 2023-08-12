@@ -50,8 +50,10 @@ int main(int argc, char *argv[]) {
 	vglInitWithCustomThreshold(0, 960, 544, 16 * 1024 * 1024, 32 * 1024 * 1024, 0, 0, SCE_GXM_MULTISAMPLE_NONE);
 	sceSysmoduleLoadModule(SCE_SYSMODULE_AVPLAYER);
 	
-	// Initing audio player
+	// Initing audio player and menu audio sounds
 	audio_init();
+	snd_hover = audio_sound_load("app0:data/menu_move.ogg");
+	snd_click = audio_sound_load("app0:data/menu_click.ogg");
 	
 	// Initializing dear ImGui
 	static const ImWchar compact_ranges[] = { // All languages except chinese
@@ -76,12 +78,7 @@ int main(int argc, char *argv[]) {
 	style.FrameRounding = 5.0f;
 	style.ItemSpacing.y = 16.0f;
 	style.ItemSpacing.x = 32.0f;
-	style.Colors[ImGuiCol_ButtonHovered] = Color4(colors.btn_hover_bg);
-	style.Colors[ImGuiCol_Button] = Color4(colors.btn_bg);
-	style.Colors[ImGuiCol_FrameBg] = Color4(colors.bar_bg);
-	style.Colors[ImGuiCol_PlotHistogram] = Color4(colors.bar);
 	style.Colors[ImGuiCol_NavHighlight] = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);
-	style.Colors[ImGuiCol_Text] = Color4(colors.text);
 	ImGui::GetIO().MouseDrawCursor = false;
 	ImGui::GetCurrentContext()->NavDisableMouseHover = false;
 	ImGui_ImplVitaGL_TouchUsage(false);
@@ -101,7 +98,6 @@ int main(int argc, char *argv[]) {
 	style.Colors[ImGuiCol_Button] = Color4(colors.btn_bg);
 	style.Colors[ImGuiCol_FrameBg] = Color4(colors.bar_bg);
 	style.Colors[ImGuiCol_PlotHistogram] = Color4(colors.bar);
-	style.Colors[ImGuiCol_NavHighlight] = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);
 	style.Colors[ImGuiCol_Text] = Color4(colors.text);
 	
 	// Main Menu
@@ -115,7 +111,6 @@ int main(int argc, char *argv[]) {
 	style.Colors[ImGuiCol_Button] = Color4(colors.btn_bg);
 	style.Colors[ImGuiCol_FrameBg] = Color4(colors.bar_bg);
 	style.Colors[ImGuiCol_PlotHistogram] = Color4(colors.bar);
-	style.Colors[ImGuiCol_NavHighlight] = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);
 	style.Colors[ImGuiCol_Text] = Color4(colors.text);
 	
 	// Main Loop

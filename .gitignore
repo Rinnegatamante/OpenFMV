@@ -7,3 +7,4 @@ sce_sys/*
 *.bin
 data/*.ttf
 data/lang
+data/*.ogg

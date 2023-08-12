@@ -4,6 +4,7 @@
 #include <imgui_internal.h>
 #include <malloc.h>
 #include <stdio.h>
+#include "audio.h"
 #include "draw.h"
 #include "engine.h"
 #include "fios.h"
@@ -90,6 +91,9 @@ int draw_button(float x, float y, const char *label, int *state) {
 		*state = 0;
 	}
 	ImGui::PopStyleColor(2);
+	if (r) {
+		audio_sound_play(snd_click);
+	}
 	return r;
 }
 
@@ -112,6 +116,7 @@ int draw_selector(float x, float y, const char *label, int *state, int *select, 
 					*select = max - 1;
 				res = 1;
 				last_change_tick = tick;
+				audio_sound_play(snd_hover);
 			}
 		} else if (pad.buttons & SCE_CTRL_RIGHT) {
 			uint32_t tick = sceKernelGetProcessTimeLow();
@@ -119,6 +124,7 @@ int draw_selector(float x, float y, const char *label, int *state, int *select, 
 				*select = (*select + 1) % max;
 				res = 1;
 				last_change_tick = tick;
+				audio_sound_play(snd_hover);
 			}
 		}
 	} else {
@@ -167,6 +173,13 @@ void init_ui_frame() {
 }
 
 void end_ui_frame() {
+	static ImGuiID old_id = 0;
+	ImGuiID cur_id = ImGui::GetCurrentContext()->NavId;
+	if (cur_id != old_id && cur_id != 0 && old_id != 0) {
+		audio_sound_play(snd_hover);
+	}
+	old_id = cur_id;
+	
 	glViewport(0, 0, static_cast<int>(ImGui::GetIO().DisplaySize.x), static_cast<int>(ImGui::GetIO().DisplaySize.y));
 	ImGui::Render();
 	ImGui_ImplVitaGL_RenderDrawData(ImGui::GetDrawData());
