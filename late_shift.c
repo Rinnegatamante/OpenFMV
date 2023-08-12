@@ -175,6 +175,8 @@ sequence *seg137() { return &sequences[20]; }
 sequence *seg136() { return &sequences[17]; }
 sequence *seg134_2() { return &sequences[39]; }
 sequence *seg125() { game_vars.elo_thinks = FREAK_THINKS; return &sequences[40]; }
+sequence *seg112_2_122_b() { return &sequences[213]; }
+sequence *seg112_1() { return &sequences[212]; }
 // EPISODE 2
 sequence *seg201() { trigger_save = 1; return &sequences[41]; }
 sequence *seg202() { trigger_save = 1; return &sequences[42]; }
@@ -481,6 +483,8 @@ void fill_sequences() {
 	resolve_hash("seg126", sequences[38].hash);
 	resolve_hash("seg134_2", sequences[39].hash);
 	resolve_hash("seg125", sequences[40].hash);
+	resolve_hash("seg112_1", sequences[212].hash);
+	resolve_hash("seg112_2_122_b", sequences[213].hash);
 	// EPISODE 2
 	resolve_hash("seg201", sequences[41].hash);
 	resolve_hash("seg202", sequences[42].hash);
@@ -703,6 +707,8 @@ void fill_sequences() {
 	fill_sequence(&sequences[38], seg135, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg126
 	fill_sequence(&sequences[39], seg137, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg134_2
 	fill_sequence(&sequences[40], seg135, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg125
+	fill_sequence(&sequences[212], seg112_2_122_b, yes, no, NULL, seg113_116, seg114, NULL, 7625, 11750, 8208); // seg112_1
+	fill_sequence(&sequences[213], seg126, go_check, call_police, NULL, seg127, seg126, NULL, 22833, 26833, 26833); // seg112_2_122_b
 	// EPISODE 2
 	fill_sequence(&sequences[41], seg206, no, do_it, NULL, seg203, seg206, NULL, 30375, 34917, 32667); // seg201
 	fill_sequence(&sequences[42], seg207, okay, no, NULL, seg207, seg202_1, NULL, 17583, 19958, 21333); // seg202
