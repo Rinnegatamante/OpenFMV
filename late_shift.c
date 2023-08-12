@@ -358,8 +358,8 @@ sequence *fade_out_op() { audio_track_fade(mus[0]->handle, 0.198644f, 0.0f, 1075
 sequence *fade_out_op2() { audio_track_fade(mus[0]->handle, 0.198644f, 0.0f, 0, 4000); return NULL; }
 sequence *fade_out_atmo_station() { audio_track_fade(mus[1]->handle, 1.0f, 0.0f, 19417, 24500); return NULL; }
 sequence *fade_out_atmo_station2() { audio_track_fade(mus[1]->handle, 1.0f, 0.0f, 17792, 23000); return NULL; }
-sequence *stop_op() { audio_sample_stop(mus[0]); }
-sequence *stop_atmo_station() { audio_sample_stop(mus[1]); }
+sequence *stop_op() { audio_sample_stop(mus[0]); return NULL; }
+sequence *stop_atmo_station() { audio_sample_stop(mus[1]); return NULL; }
 
 void fill_events() {
 	// seg101
@@ -987,6 +987,7 @@ void menu_setup() {
 	set_theme_color(colors.text, 1.0f, 1.0f, 1.0f, 1.0f);
 	set_theme_color(colors.btn_text, 0.18431f, 0.18431f, 0.18431f, 1.0f);
 	set_theme_color(colors.btn_hover_text, 1.0f, 1.0f, 1.0f, 1.0f);
+	set_theme_color(colors.popup_bg, 0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 void game_pause_menu(int *first_call) {
@@ -1046,8 +1047,9 @@ void game_main_menu() {
 	
 	SceIoStat st;
 	int has_save = sceIoGetstat("ux0:data/Late Shift/progress.sav", &st) ? 0 : 1;
-	int btns_state[8];
+	int btns_state[10];
 	int in_options = 0;
+	int request_new_game = 0;
 	
 	char version_text[256];
 	sprintf(version_text, "OpenFMV v.%s (LS v.%s)", ENGINE_VER, GAME_VER);
@@ -1067,6 +1069,7 @@ void game_main_menu() {
 			float x_subtitles = calc_centered_button_pos(subtitles_text);
 			sprintf(lang_text, "%s: %s###lang", game_strings[17], game_strings[18]);
 			float x_lang = calc_centered_button_pos(lang_text);
+			float x_newgame_warn = calc_centered_button_pos(game_strings[5]);
 			
 			init_menu(0.0f, 0.0f, 0.0f, 960.0f, 544.0f, "##main_menu");
 			if (!in_options) {
@@ -1091,19 +1094,11 @@ void game_main_menu() {
 						}
 					}
 					if (draw_button(x_newgame, 250, game_strings[4], &btns_state[1])) {
-						// Starting new game
-						printf("Booting first sequence\n");
-						// trigger_save = 1;
-						out = &sequences[0];
-						memset(&game_vars, 0, sizeof(gamestate));
+						request_new_game = 1;
 					}
 				} else {
 					if (draw_main_button(x_newgame, 250, game_strings[4], &btns_state[1])) {
-						// Starting new game
-						printf("Booting first sequence\n");
-						// trigger_save = 1;
-						out = &sequences[0];
-						memset(&game_vars, 0, sizeof(gamestate));
+						request_new_game = 1;
 					}
 				}
 				if (draw_button(x_options, 300, game_strings[9], &btns_state[2])) {
@@ -1129,6 +1124,29 @@ void game_main_menu() {
 						fclose(f);
 					}
 					end_menu();
+			} else if (request_new_game) {
+				if (has_save) {
+					float w = 960.0f - x_newgame_warn * 2;
+					init_menu(1.0f, x_newgame_warn, 200.0f, w, 100.0f, "##warning");
+					draw_centered_text(5.0f, game_strings[5]);
+					if (draw_main_button(w / 4, 60.0f, game_strings[2], &btns_state[7])) {
+						// Starting new game
+						printf("Booting first sequence\n");
+						trigger_save = 1;
+						out = &sequences[0];
+						memset(&game_vars, 0, sizeof(gamestate));
+					}
+					if (draw_button(w - w / 4 - (960.0f - 2 * x_back), 60.0f, game_strings[3], &btns_state[8])) {
+						request_new_game = 0;
+					}
+					end_menu();
+				} else {
+					// Starting new game
+					printf("Booting first sequence\n");
+					trigger_save = 1;
+					out = &sequences[0];
+					memset(&game_vars, 0, sizeof(gamestate));
+				}
 			}
 			
 			end_ui_frame();
@@ -1149,6 +1167,7 @@ void game_setup() {
 	set_theme_color(colors.text, 1.0f, 1.0f, 1.0f, 1.0f);
 	set_theme_color(colors.btn_text, 1.0f, 1.0f, 1.0f, 1.0f);
 	set_theme_color(colors.btn_hover_text, 0.0f, 0.0f, 0.0f, 1.0f);
+	set_theme_color(colors.popup_bg, 0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 #endif

@@ -30,6 +30,7 @@ void reload_theme() {
 	style.Colors[ImGuiCol_FrameBg] = Color4(colors.bar_bg);
 	style.Colors[ImGuiCol_PlotHistogram] = Color4(colors.bar);
 	style.Colors[ImGuiCol_Text] = Color4(colors.text);
+	style.Colors[ImGuiCol_WindowBg] = Color4(colors.popup_bg);
 }
 
 int main(int argc, char *argv[]) {

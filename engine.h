@@ -97,6 +97,7 @@ typedef struct {
 	float text[4];
 	float btn_text[4];
 	float btn_hover_text[4];
+	float popup_bg[4];
 } theme;
 
 enum {

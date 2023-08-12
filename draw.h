@@ -9,6 +9,7 @@ int draw_video_frame();
 int draw_button(float x, float y, const char *label, int *state);
 int draw_main_button(float x, float y, const char *label, int *state);
 void draw_text(float x, float y, const char *label, float *clr);
+void draw_centered_text(float y, const char *label);
 int draw_selector(float x, float y, const char *label, int *state, int *select, int max);
 
 float calc_centered_button_pos(const char *label);
