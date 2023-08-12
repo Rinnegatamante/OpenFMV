@@ -153,8 +153,10 @@ audio_sample *audio_sample_start(const char *fname, int looping, float vol) {
 }
 
 void audio_sample_stop(audio_sample *s) {
-	audio_track_stop(s->src);
-	s->active = 0;
+	if (s) {
+		audio_track_stop(s->src);
+		s->active = 0;
+	}
 }
 
 void audio_sample_stop_all() {

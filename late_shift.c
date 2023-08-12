@@ -345,10 +345,10 @@ sequence *seg570_571() { return &sequences[211]; }
 // EPISODE 6A
 
 // Game event funcs
-audio_sample *opening, *atmo_station, *opening2, *carpark, *atmo_garage, *carpark_melody, *lee_noise;
-audio_sample *carpark_deal, *scream_close, *elodie_escape, *lee_stinger, *garage_parkfield, *cable_tie;
-audio_sample *scream_far, *cctv, *rope_lee_stinger, *weapon_stinger, *carpark_nodeal, *inside_car, *matt_escape;
-audio_sample *gutted_stinger;
+audio_sample *opening = NULL, *atmo_station = NULL, *opening2 = NULL, *carpark = NULL, *atmo_garage = NULL, *carpark_melody = NULL, *lee_noise = NULL;
+audio_sample *carpark_deal = NULL, *scream_close = NULL, *elodie_escape = NULL, *lee_stinger = NULL, *garage_parkfield = NULL, *cable_tie = NULL;
+audio_sample *scream_far = NULL, *cctv = NULL, *rope_lee_stinger = NULL, *weapon_stinger = NULL, *carpark_nodeal = NULL, *inside_car = NULL, *matt_escape = NULL;
+audio_sample *gutted_stinger = NULL;
 sequence *seg435_a_event() { if (game_vars.may_likes_matt >= 4) { return seg435_a(); } return NULL; }
 sequence *start_op_bgm() { opening = audio_sample_start("EP01 Opening", 0, 0.20033f); return NULL; }
 sequence *fade_op_vol_1() { audio_track_set_volume(opening->handle, 0.125887f); return NULL; }
