@@ -358,8 +358,12 @@ sequence *fade_out_op() { audio_track_fade(mus[0]->handle, 0.198644f, 0.0f, 1075
 sequence *fade_out_op2() { audio_track_fade(mus[0]->handle, 0.198644f, 0.0f, 0, 4000); return NULL; }
 sequence *fade_out_atmo_station() { audio_track_fade(mus[1]->handle, 1.0f, 0.0f, 19417, 24500); return NULL; }
 sequence *fade_out_atmo_station2() { audio_track_fade(mus[1]->handle, 1.0f, 0.0f, 17792, 23000); return NULL; }
-sequence *stop_op() { audio_sample_stop(mus[0]); return NULL; }
-sequence *stop_atmo_station() { audio_sample_stop(mus[1]); return NULL; }
+sequence *stop_mus0() { audio_sample_stop(mus[0]); return NULL; }
+sequence *stop_mus1() { audio_sample_stop(mus[1]); return NULL; }
+sequence *start_loneliness_carpark() { mus[0] = audio_sample_start("EP01 Loneliness Carpark Neu", 0, 0.1110497f); return NULL; }
+sequence *start_garage_atmo() { mus[1] = audio_sample_start("EP01 Atmo Int Garage Hut", 1, 1.0f); return NULL; }
+sequence *start_car_park_melody() { mus[1] = audio_sample_start("EP01 Car Park Melody", 1, 0.1767543f); return NULL; }
+sequence *stop_mus2() { audio_sample_stop(mus[2]); return NULL; }
 
 void fill_events() {
 	// seg101
@@ -370,20 +374,62 @@ void fill_events() {
 	install_timed_event(&sequences[0], 26208, 0, EVENT_ONESHOT, fade_op_vol_4);
 	install_timed_event(&sequences[0], 27417, 0, EVENT_ONESHOT, fade_op_vol_5);
 	install_timed_event(&sequences[0], 30458, 0, EVENT_ONESHOT, fade_op_vol_6);
+	// seg102_a (empty)
+	// seg102_b (empty)
 	// seg106
 	install_timed_event(&sequences[3], 8083, 0, EVENT_ONESHOT, start_atmo_station);
 	// seg107_a
-	install_timed_event(&sequences[4], 8083, 0, EVENT_ONESHOT, start_selfish_title);
+	install_timed_event(&sequences[4], 0, 0, EVENT_ONESHOT, start_selfish_title);
 	install_timed_event(&sequences[4], 10750, 14750, EVENT_DURATION, fade_out_op);
-	install_timed_event(&sequences[4], 14750, 0, EVENT_ONESHOT, stop_op);
+	install_timed_event(&sequences[4], 14750, 0, EVENT_ONESHOT, stop_mus0);
 	install_timed_event(&sequences[4], 19417, 24500, EVENT_DURATION, fade_out_atmo_station);
-	install_timed_event(&sequences[4], 24500, 0, EVENT_ONESHOT, stop_atmo_station);
+	install_timed_event(&sequences[4], 24500, 0, EVENT_ONESHOT, stop_mus1);
 	// seg107_b
 	install_timed_event(&sequences[5], 0, 0, EVENT_ONESHOT, start_selfless_title);
 	install_timed_event(&sequences[5], 0, 4000, EVENT_DURATION, fade_out_op2);
-	install_timed_event(&sequences[5], 4000, 0, EVENT_ONESHOT, stop_op);
-	install_timed_event(&sequences[5], 19417, 24500, EVENT_DURATION, fade_out_atmo_station2);
-	install_timed_event(&sequences[5], 24500, 0, EVENT_ONESHOT, stop_atmo_station);
+	install_timed_event(&sequences[5], 4000, 0, EVENT_ONESHOT, stop_mus0);
+	install_timed_event(&sequences[5], 17792, 23000, EVENT_DURATION, fade_out_atmo_station2);
+	install_timed_event(&sequences[5], 23000, 0, EVENT_ONESHOT, stop_mus1);
+	// seg109_110_b_111
+	install_timed_event(&sequences[6], 0, 0, EVENT_ONESHOT, stop_mus2);
+	install_timed_event(&sequences[6], 108958, 0, EVENT_ONESHOT, start_loneliness_carpark);
+	install_timed_event(&sequences[6], 128417, 0, EVENT_ONESHOT, start_garage_atmo);
+	install_timed_event(&sequences[6], 128917, 0, EVENT_ONESHOT, stop_mus1);
+	install_timed_event(&sequences[6], 185583, 0, EVENT_ONESHOT, start_car_park_melody);
+	// seg113_116 (empty)
+	// seg114 (empty)
+	// seg115
+	// seg121
+	// seg118
+	// seg119
+	// seg117
+	// seg128
+	// seg129
+	// seg122_a_122_b
+	// seg136
+	// seg141
+	// seg139
+	// seg137
+	// seg138_a_138_b
+	// seg133_swipe
+	// seg134_1
+	// seg120
+	// seg140
+	// seg123
+	// seg123_tap_130_tap
+	// seg135
+	// seg127
+	// seg142
+	// seg143
+	// seg144
+	// seg145_swipe
+	// seg148_b
+	// seg146_a
+	// seg147_a_148_a
+	// seg147_b
+	// seg126
+	// seg134_2
+	// seg125
 	// seg311
 	install_timed_event(&sequences[74], 70667, 73417, EVENT_DURATION, seg314_1);
 	// seg434
