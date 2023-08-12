@@ -1,0 +1,9 @@
+*.o
+sce_sys/*
+*.elf
+*.velf
+*.vpk
+*.sfo
+*.bin
+data/*.ttf
+data/lang

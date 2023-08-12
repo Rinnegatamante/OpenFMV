@@ -1,0 +1,42 @@
+#include <malloc.h>
+#include <stdio.h>
+#include "soloud.h"
+#include "soloud_wavstream.h"
+#include "late_shift.h"
+
+SoLoud::Soloud soloud;
+
+extern "C" {
+	
+void audio_init() {
+	soloud.init(SoLoud::Soloud::CLIP_ROUNDOFF);
+}
+
+void *audio_play(const char *fname, int looping, float vol, int *handle) {
+	char path[256];
+	sprintf(path, "%s/%s.wav.ogg", AUDIO_FOLDER, fname);
+	auto *w = new SoLoud::WavStream;
+	w->load(path);
+	w->setVolume(vol);
+	w->setLooping(looping ? true : false);
+	int h = soloud.play(*w, vol);
+	if (h)
+		*handle = h;
+	return w;
+}
+
+void audio_stop(void *s) {
+	auto *w = (SoLoud::WavStream *)s;
+	w->stop();
+	delete w;
+}
+
+void audio_set_volume(int h, float vol) {
+	soloud.setVolume(h, vol);
+}
+
+float audio_get_volume(int h) {
+	return soloud.getVolume(h);
+}
+
+}
