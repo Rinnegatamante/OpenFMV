@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include "audio.h"
 #include "engine.h"
 #include "late_shift.h"
 #include "player.h"
@@ -19,9 +20,11 @@ uint32_t cur_delta;
 int trigger_save = 0;
 int chosen_path = 0;
 int cur_event = 0;
+int game_state;
 gamestate game_vars;
 subtitle subs[128];
 sequence sequences[NUM_SEQUENCES];
+audio_sample bgm[NUM_AUDIO_SAMPLES];
 
 sequence *cur_seq;
 subtitle *cur_sub;
@@ -134,4 +137,29 @@ void load_animated_bg(const char *fname, int needs_hash) {
 
 void resolve_hash(const char *src, char *dst) {
 	spooky_hash128(src, strlen(src), dst);
+}
+
+audio_sample *audio_sample_start(const char *fname, int looping, float vol) {
+	audio_sample *r = NULL;
+	for (int i = 0; i < NUM_AUDIO_SAMPLES; i++) {
+		if (!bgm[i].active) {
+			r = &bgm[i];
+			break;
+		}
+	}
+	r->src = audio_track_play(fname, looping, vol, &r->handle);
+	r->active = 1;
+}
+
+void audio_sample_stop(audio_sample *s) {
+	audio_track_stop(s->src);
+	s->active = 0;
+}
+
+void audio_sample_stop_all() {
+	for (int i = 0; i < NUM_AUDIO_SAMPLES; i++) {
+		if (bgm[i].active) {
+			audio_sample_stop(&bgm[i]);
+		}
+	}
 }

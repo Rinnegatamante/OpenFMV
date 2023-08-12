@@ -342,25 +342,24 @@ sequence *seg570_571() { return &sequences[211]; }
 // EPISODE 6A
 
 // Game event funcs
-void *bgm[32];
-int bgm_handle[32];
+audio_sample *mus[32];
 sequence *seg435_a_event() { if (game_vars.may_likes_matt >= 4) { return seg435_a(); } return NULL; }
-sequence *start_op_bgm() { bgm[0] = audio_track_play("EP01 Opening", 0, 0.20033f, &bgm_handle[0]); return NULL; }
-sequence *fade_op_vol_1() { audio_track_set_volume(bgm_handle[0], 0.125887f); return NULL; }
-sequence *fade_op_vol_2() { audio_track_set_volume(bgm_handle[0], 0.198939f); return NULL; }
-sequence *fade_op_vol_3() { audio_track_set_volume(bgm_handle[0], 0.126269f); return NULL; }
-sequence *fade_op_vol_4() { audio_track_set_volume(bgm_handle[0], 0.199322f); return NULL; }
-sequence *fade_op_vol_5() { audio_track_set_volume(bgm_handle[0], 0.124558f); return NULL; }
-sequence *fade_op_vol_6() { audio_track_set_volume(bgm_handle[0], 0.198644f); return NULL; }
-sequence *start_atmo_station() { bgm[1] = audio_track_play("EP01 Atmo Int Tube Station", 0, 1.0f, &bgm_handle[1]); return NULL; }
-sequence *start_selfish_title() { bgm[2] = audio_track_play("EP01 Titles SelfFish", 0, 0.3178015f, &bgm_handle[2]); return NULL; }
-sequence *start_selfless_title() { bgm[2] = audio_track_play("EP01 Titles SelfLess", 0, 0.3161767f, &bgm_handle[2]); return NULL; }
-sequence *fade_out_op() { audio_track_fade(bgm_handle[0], 0.198644f, 0.0f, 10750, 14750); return NULL; }
-sequence *fade_out_op2() { audio_track_fade(bgm_handle[0], 0.198644f, 0.0f, 0, 4000); return NULL; }
-sequence *fade_out_atmo_station() { audio_track_fade(bgm_handle[1], 1.0f, 0.0f, 19417, 24500); return NULL; }
-sequence *fade_out_atmo_station2() { audio_track_fade(bgm_handle[1], 1.0f, 0.0f, 17792, 23000); return NULL; }
-sequence *stop_op() { audio_track_stop(bgm[0]); }
-sequence *stop_atmo_station() { audio_track_stop(bgm[1]); }
+sequence *start_op_bgm() { mus[0] = audio_sample_start("EP01 Opening", 0, 0.20033f); return NULL; }
+sequence *fade_op_vol_1() { audio_track_set_volume(mus[0]->handle, 0.125887f); return NULL; }
+sequence *fade_op_vol_2() { audio_track_set_volume(mus[0]->handle, 0.198939f); return NULL; }
+sequence *fade_op_vol_3() { audio_track_set_volume(mus[0]->handle, 0.126269f); return NULL; }
+sequence *fade_op_vol_4() { audio_track_set_volume(mus[0]->handle, 0.199322f); return NULL; }
+sequence *fade_op_vol_5() { audio_track_set_volume(mus[0]->handle, 0.124558f); return NULL; }
+sequence *fade_op_vol_6() { audio_track_set_volume(mus[0]->handle, 0.198644f); return NULL; }
+sequence *start_atmo_station() { mus[1] = audio_sample_start("EP01 Atmo Int Tube Station", 0, 1.0f); return NULL; }
+sequence *start_selfish_title() { mus[2] = audio_sample_start("EP01 Titles SelfFish", 0, 0.3178015f); return NULL; }
+sequence *start_selfless_title() { mus[2] = audio_sample_start("EP01 Titles SelfLess", 0, 0.3161767f); return NULL; }
+sequence *fade_out_op() { audio_track_fade(mus[0]->handle, 0.198644f, 0.0f, 10750, 14750); return NULL; }
+sequence *fade_out_op2() { audio_track_fade(mus[0]->handle, 0.198644f, 0.0f, 0, 4000); return NULL; }
+sequence *fade_out_atmo_station() { audio_track_fade(mus[1]->handle, 1.0f, 0.0f, 19417, 24500); return NULL; }
+sequence *fade_out_atmo_station2() { audio_track_fade(mus[1]->handle, 1.0f, 0.0f, 17792, 23000); return NULL; }
+sequence *stop_op() { audio_sample_stop(mus[0]); }
+sequence *stop_atmo_station() { audio_sample_stop(mus[1]); }
 
 void fill_events() {
 	// seg101
@@ -990,6 +989,55 @@ void menu_setup() {
 	set_theme_color(colors.btn_hover_text, 1.0f, 1.0f, 1.0f, 1.0f);
 }
 
+void game_pause_menu(int *first_call) {
+	static int in_options;
+	static int btns_state[8];
+	
+	if (*first_call) {
+		*first_call = 0;
+		in_options = 0;
+		memset(btns_state, 0, sizeof(int) * 8);
+	}
+	
+	// Calculating button centering positions
+	float x_resume = calc_centered_button_pos(game_strings[22]);
+	float x_exitgame = calc_centered_button_pos(game_strings[23]);
+	float x_options = calc_centered_button_pos(game_strings[9]);
+	float x_back = calc_centered_button_pos(game_strings[3]);
+	char subtitles_text[256], lang_text[256];
+	sprintf(subtitles_text, "%s: %s###sub", game_strings[16], config.subtitles ? game_strings[0] : game_strings[1]);
+	float x_subtitles = calc_centered_button_pos(subtitles_text);
+	sprintf(lang_text, "%s: %s###lang", game_strings[17], game_strings[18]);
+	float x_lang = calc_centered_button_pos(lang_text);
+	
+	if (!in_options) {
+		init_menu(0.9f, 0.0f, 0.0f, 960.0f, 544.0f, "##pause_menu");
+		if (draw_main_button(x_resume, 200, game_strings[22], &btns_state[0])) {
+			game_state = GAME_RESUMING;
+		}
+		if (draw_button(x_options, 250, game_strings[9], &btns_state[1])) {
+			in_options = 1;
+		}
+		if (draw_button(x_exitgame, 300, game_strings[10], &btns_state[2])) {
+			game_state = GAME_EXITING;
+		}
+		end_menu();
+	} else {
+		init_menu(0.9f, 0.0f, 0.0f, 960.0f, 544.0f, "##options");
+		if (draw_selector(x_lang, 200, lang_text, &btns_state[4], &current_lang, sizeof(available_lang) / sizeof(*available_lang))) {
+			load_localization_files(available_lang[current_lang]);
+		}
+		draw_selector(x_subtitles, 250, subtitles_text, &btns_state[5], &config.subtitles, 2);
+		if (draw_button(x_back, 300, game_strings[3], &btns_state[6])) {
+			in_options = 0;
+			FILE *f = fopen(CONFIG_FILE, "wb");
+			fwrite(&config, 1, sizeof(engine), f);
+			fclose(f);
+		}
+		end_menu();
+	}
+}
+
 void game_main_menu() {
 	// Loading animated background and audio background
 	load_animated_bg("000_MenuBackground", 1);
@@ -1014,7 +1062,6 @@ void game_main_menu() {
 			float x_options = calc_centered_button_pos(game_strings[9]);
 			float x_exitgame = calc_centered_button_pos(game_strings[10]);
 			float x_back = calc_centered_button_pos(game_strings[3]);
-			
 			char subtitles_text[256], lang_text[256];
 			sprintf(subtitles_text, "%s: %s###sub", game_strings[16], config.subtitles ? game_strings[0] : game_strings[1]);
 			float x_subtitles = calc_centered_button_pos(subtitles_text);

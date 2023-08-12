@@ -10,7 +10,6 @@ extern "C" {
 enum {
 	PLAYER_INACTIVE,
 	PLAYER_ACTIVE,
-	PLAYER_STOP,
 	PLAYER_PAUSED,
 };
 
@@ -20,6 +19,8 @@ void video_open(const char *path, int looping);
 GLuint video_get_frame(int *width, int *height);
 uint32_t video_get_current_time();
 void video_close();
+void video_pause();
+void video_resume();
 
 #ifdef __cplusplus
 }

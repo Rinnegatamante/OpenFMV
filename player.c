@@ -50,7 +50,7 @@ int video_audio_thread(SceSize args, void *argp) {
 	SceAvPlayerFrameInfo frame;
 	sceClibMemset(&frame, 0, sizeof(SceAvPlayerFrameInfo));
 
-	while (player_state == PLAYER_ACTIVE && sceAvPlayerIsActive(movie_player)) {
+	while (player_state != PLAYER_INACTIVE && sceAvPlayerIsActive(movie_player)) {
 		if (sceAvPlayerGetAudioData(movie_player, &frame)) {
 			sceAudioOutSetConfig(audio_port, 1024, frame.details.audio.sampleRate, frame.details.audio.channelCount == 1 ? SCE_AUDIO_OUT_MODE_MONO : SCE_AUDIO_OUT_MODE_STEREO);
 			sceAudioOutOutput(audio_port, frame.pData);
@@ -97,7 +97,7 @@ void video_close() {
 	if (player_state == PLAYER_ACTIVE) {
 		sceAvPlayerStop(movie_player);
 		sceAvPlayerClose(movie_player);
-		player_state = PLAYER_STOP;
+		player_state = PLAYER_INACTIVE;
 	}
 }
 
@@ -201,7 +201,19 @@ GLuint video_get_frame(int *width, int *height) {
 			return first_frame ? 0xDEADBEEF : movie_frame[movie_frame_idx];
 		} else if (!first_frame)
 			video_close();
+	} else if (player_state == PLAYER_PAUSED) {
+		return movie_frame[movie_frame_idx];
 	}
 	
 	return 0xDEADBEEF;
+}
+
+void video_pause() {
+	sceAvPlayerPause(movie_player);
+	player_state = PLAYER_PAUSED;
+}
+
+void video_resume() {
+	sceAvPlayerResume(movie_player);
+	player_state = PLAYER_ACTIVE;
 }

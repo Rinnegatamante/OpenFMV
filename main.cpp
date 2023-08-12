@@ -23,6 +23,15 @@ void ImGui_TextCentered(char *text) {
     ImGui::Text(text);
 }
 
+void reload_theme() {
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.Colors[ImGuiCol_ButtonHovered] = Color4(colors.btn_hover_bg);
+	style.Colors[ImGuiCol_Button] = Color4(colors.btn_bg);
+	style.Colors[ImGuiCol_FrameBg] = Color4(colors.bar_bg);
+	style.Colors[ImGuiCol_PlotHistogram] = Color4(colors.bar);
+	style.Colors[ImGuiCol_Text] = Color4(colors.text);
+}
+
 int main(int argc, char *argv[]) {
 	// Mounting PSARC archive for videos
 	fios_init();
@@ -88,32 +97,25 @@ int main(int argc, char *argv[]) {
 	bool btn1_hovered = false;
 	bool btn2_hovered = false;
 	bool btn3_hovered = false;
+	int pause_menu_triggered = 0;
 	
 	// Populating sequences tree
 	fill_sequences();
 	
-	// Loading main menu engine theme
+	// Loading menu engine theme
+main_menu:
 	menu_setup();
-	style.Colors[ImGuiCol_ButtonHovered] = Color4(colors.btn_hover_bg);
-	style.Colors[ImGuiCol_Button] = Color4(colors.btn_bg);
-	style.Colors[ImGuiCol_FrameBg] = Color4(colors.bar_bg);
-	style.Colors[ImGuiCol_PlotHistogram] = Color4(colors.bar);
-	style.Colors[ImGuiCol_Text] = Color4(colors.text);
+	reload_theme();
 	
 	// Main Menu
 	game_main_menu();
 	
-	// Initializing game
-	game_setup();
-	
 	// Loading in-game engine theme
-	style.Colors[ImGuiCol_ButtonHovered] = Color4(colors.btn_hover_bg);
-	style.Colors[ImGuiCol_Button] = Color4(colors.btn_bg);
-	style.Colors[ImGuiCol_FrameBg] = Color4(colors.bar_bg);
-	style.Colors[ImGuiCol_PlotHistogram] = Color4(colors.bar);
-	style.Colors[ImGuiCol_Text] = Color4(colors.text);
+	game_setup();
+	reload_theme();
 	
 	// Main Loop
+	game_state = GAME_ACTIVE;
 	ImVec2 btn1_size = ImVec2(0, 0);
 	ImVec2 btn2_size = ImVec2(0, 0);
 	ImVec2 btn3_size = ImVec2(0, 0);
@@ -122,6 +124,16 @@ int main(int argc, char *argv[]) {
 		static uint32_t oldpad = 0;
 		SceCtrlData pad;
 		sceCtrlPeekBufferPositive(0, &pad, 1);
+		if ((pad.buttons & SCE_CTRL_START) && !(oldpad & SCE_CTRL_START)) {
+			if (player_state == PLAYER_ACTIVE) {
+				video_pause();
+				audio_pause();
+				pause_menu_triggered = 1;
+			} else {
+				video_resume();
+				audio_resume();
+			}
+		}
 		
 		// Draw current video frame
 		if (draw_video_frame()) {
@@ -233,12 +245,37 @@ subtitle_draw:
 					ImGui::End();
 				}
 			}
+			
+			// Draw pause menu
+			if (player_state == PLAYER_PAUSED) {
+				menu_setup();
+				reload_theme();
+				game_pause_menu(&pause_menu_triggered);
+				game_setup();
+				reload_theme();
+			}
 
 			// Update display
 			glViewport(0, 0, static_cast<int>(ImGui::GetIO().DisplaySize.x), static_cast<int>(ImGui::GetIO().DisplaySize.y));
 			ImGui::Render();
 			ImGui_ImplVitaGL_RenderDrawData(ImGui::GetDrawData());
 			vglSwapBuffers(GL_FALSE);
+			
+			// Handle game state changes
+			switch (game_state) {
+			case GAME_EXITING:
+				audio_sample_stop_all();
+				video_resume();
+				video_close();
+				goto main_menu;
+			case GAME_RESUMING:
+				video_resume();
+				audio_resume();
+				game_state = GAME_ACTIVE;
+				break;
+			default:
+				break;
+			}
 			
 			// Handle timed events
 handle_event:
@@ -283,7 +320,7 @@ handle_event:
 		}
 		
 		// Auto-select left choice if player gives no input
-		if (player_state != PLAYER_ACTIVE) {
+		if (player_state == PLAYER_INACTIVE) {
 			start_sequence(cur_seq->l());
 		}
 		

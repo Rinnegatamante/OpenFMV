@@ -4,12 +4,13 @@
 #ifdef LATE_SHIFT
 #define NUM_SEQUENCES 508
 #define NUM_GAME_STRINGS 443
+#define NUM_AUDIO_SAMPLES 32
 #define SAVE_FILE "ux0:data/Late Shift/progress.sav"
 #define CONFIG_FILE "ux0:data/Late Shift/config.sav"
 #define VIDEOS_FILE "ux0:data/Late Shift/Videos.psarc"
 #define AUDIO_FOLDER "ux0:data/Late Shift/oggs"
 
-#define GAME_VER "0.5.0"
+#define GAME_VER "0.5.1"
 
 #ifdef __cplusplus
 extern "C" {

@@ -8,7 +8,7 @@ extern "C" {
 #include "late_shift.h"
 #include "unzip.h"
 
-#define ENGINE_VER "0.9.0"
+#define ENGINE_VER "0.9.2"
 
 #define Color4(x) ImVec4(x[0], x[1], x[2], x[3])
 #define set_theme_color(x, a, b, c, d) \
@@ -40,6 +40,12 @@ enum {
 	LANG_HU,
 	LANG_AR
 };
+
+typedef struct {
+	void *src;
+	int handle;
+	uint8_t active;
+} audio_sample;
 
 typedef struct {
 	int subtitles;
@@ -98,15 +104,23 @@ enum {
 	BTNS_CALC_SIZE
 };
 
+enum {
+	GAME_ACTIVE,
+	GAME_EXITING,
+	GAME_RESUMING
+};
+
 extern theme colors;
 extern sequence sequences[NUM_SEQUENCES];
 extern char game_strings[NUM_GAME_STRINGS][128];
+extern audio_sample bgm[NUM_AUDIO_SAMPLES];
 extern sequence *cur_seq;
 extern subtitle *cur_sub;
 extern int chosen_path;
 extern int trigger_save;
 extern int btns_state;
 extern int cur_event;
+extern int game_state;
 extern uint32_t cur_delta;
 extern unzFile sub_handle;
 extern engine config;
@@ -124,7 +138,12 @@ void resolve_hash(const char *src, char *dst);
 
 void menu_setup();
 void game_main_menu();
+void game_pause_menu(int *state);
 void game_setup();
+
+audio_sample *audio_sample_start(const char *fname, int looping, float vol);
+void audio_sample_stop(audio_sample *s);
+void audio_sample_stop_all();
 
 #ifdef __cplusplus
 }

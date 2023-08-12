@@ -13,6 +13,14 @@ void audio_init() {
 	soloud.init(SoLoud::Soloud::CLIP_ROUNDOFF);
 }
 
+void audio_pause() {
+	soloud.setPauseAll(1);
+}
+
+void audio_resume() {
+	soloud.setPauseAll(0);
+}
+
 void *audio_track_play(const char *fname, int looping, float vol, int *handle) {
 	char path[256];
 	sprintf(path, "%s/%s.wav.ogg", AUDIO_FOLDER, fname);

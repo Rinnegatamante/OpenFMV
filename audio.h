@@ -6,6 +6,8 @@ extern "C" {
 #endif
 
 void audio_init();
+void audio_pause();
+void audio_resume();
 
 void *audio_track_play(const char *fname, int looping, float vol, int *h);
 void audio_track_stop(void *s);
