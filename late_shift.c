@@ -1224,7 +1224,7 @@ void game_main_menu() {
 			float x_lang = calc_centered_button_pos(lang_text);
 			float x_newgame_warn = calc_centered_button_pos(game_strings[5]);
 			
-			init_menu(0.0f, 0.0f, 0.0f, 960.0f, 544.0f, "##main_menu");
+			init_menu(0.0f, 0.0f, 0.0f, 960.0f, 600.0f, "##main_menu");
 			if (!in_options) {
 				if (has_save) {
 					if (draw_main_button(x_resume, 200, game_strings[6], &btns_state[0])) {
