@@ -10,7 +10,7 @@
 #define VIDEOS_FILE "ux0:data/Late Shift/Videos.psarc"
 #define AUDIO_FOLDER "ux0:data/Late Shift/oggs"
 
-#define GAME_VER "0.5.8"
+#define GAME_VER "0.5.9"
 
 #ifdef __cplusplus
 extern "C" {

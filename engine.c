@@ -45,25 +45,7 @@ void fill_sequence(sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtex
 	s->jump_time = jump;
 }
 
-void start_sequence(sequence *s) {
-#ifdef DBG_SAVE
-	trigger_save = 1;
-#endif
-
-#if 1
-	printf("Launching %s\n", s->hash);
-#endif
-
-	// Updating progress save
-	if (trigger_save) {
-		FILE *f = fopen("ux0:data/Late Shift/progress.sav", "w");
-		fwrite(s->hash, 1, 32, f);
-		fwrite(&game_vars, 1, sizeof(gamestate), f);
-		fclose(f);
-		trigger_save = 0;
-	}
-	
-	// Loading subtitles
+int load_subtitles(sequence *s) {
 	unz_file_info file_info;
 	sprintf(generic_buf, "%s.srt", s->hash);
 	int sub_idx = 0;
@@ -103,7 +85,29 @@ void start_sequence(sequence *s) {
 			sub_idx++;
 		}
 	}
-	if (sub_idx > 0)
+	return sub_idx;
+}
+
+void start_sequence(sequence *s) {
+#ifdef DBG_SAVE
+	trigger_save = 1;
+#endif
+
+#if 1
+	printf("Launching %s\n", s->hash);
+#endif
+
+	// Updating progress save
+	if (trigger_save) {
+		FILE *f = fopen("ux0:data/Late Shift/progress.sav", "w");
+		fwrite(s->hash, 1, 32, f);
+		fwrite(&game_vars, 1, sizeof(gamestate), f);
+		fclose(f);
+		trigger_save = 0;
+	}
+	
+	// Loading subtitles
+	if (load_subtitles(s) > 0)
 		cur_sub = &subs[0];
 	else
 		cur_sub = NULL;

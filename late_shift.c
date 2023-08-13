@@ -156,6 +156,20 @@ enum {
 	MATT_ESCAPE,
 	GUTTED_STINGER,
 	// Episode 2
+	ATMO_TRAIN,
+	ATMO_TRAIN_STATION,
+	LEE_LINE,
+	JEFF_GUN,
+	ATMO_HOUSE,
+	SHOWDOWN_RISER,
+	LETS_GO,
+	ATMO_EXT_HOUSE,
+	PUSHING_YOUR_CHANCE,
+	ANY_SUGGESTIONS,
+	LEG_IT,
+	ONE_LESS_PROBLEM,
+	JEFF_LINE,
+	// Episode 3
 };
 audio_sample *mus[NUM_AUDIO_SOURCES];
 
@@ -558,6 +572,35 @@ void fill_events() {
 	install_timed_event(&sequences[213], 42, 7042, EVENT_DURATION, fade_car_park_melody5);
 	install_timed_event(&sequences[213], 7042, 0, EVENT_ONESHOT, stop_carpark_melody);
 	// EPISODE 2
+	// seg201
+	// seg202
+	// seg203
+	// seg204
+	// seg205
+	// seg206
+	// seg207
+	// seg202_1
+	// seg209
+	// seg210
+	// seg208_213_214
+	// seg215
+	// seg216
+	// seg217
+	// seg218
+	// seg219
+	// seg220_1
+	// seg220_2
+	// seg223
+	// seg224
+	// seg225
+	// seg226_1
+	// seg226
+	// seg212
+	// seg230
+	// seg228
+	// seg229
+	// seg227
+	// seg231
 	// EPISODE 3
 	// seg311
 	install_timed_event(&sequences[74], 70667, 73417, EVENT_DURATION, seg314_1);
@@ -1213,6 +1256,7 @@ void game_pause_menu(int *first_call) {
 		init_menu(0.9f, 0.0f, 0.0f, 960.0f, 544.0f, "##options");
 		if (draw_selector(x_lang, 200, lang_text, &btns_state[4], &current_lang, sizeof(available_lang) / sizeof(*available_lang))) {
 			load_localization_files(available_lang[current_lang]);
+			load_subtitles(cur_seq); // Reloading current sequence subtitles
 		}
 		draw_selector(x_subtitles, 250, subtitles_text, &btns_state[5], &config.subtitles, 2);
 		if (draw_button(x_back, 300, game_strings[3], &btns_state[6])) {
