@@ -169,7 +169,7 @@ void audio_sample_reset_volume_all();
 #define audio_sample_set_volume(s, v) \
 	if (s) { \
 		audio_track_set_volume(s->handle, v); \
-		s->volume = v; \	
+		s->volume = v; \
 	}
 
 #define audio_sample_stop_and_free(s) \

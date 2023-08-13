@@ -337,7 +337,12 @@ handle_event:
 		
 		// Auto-select default choice if player gives no input
 		if (player_state == PLAYER_INACTIVE) {
-			start_sequence(cur_seq->d());
+			if (cur_seq->d()) {
+				start_sequence(cur_seq->d());
+			} else { // If no default choice is set, we return to main menu
+				audio_sample_stop_all();
+				goto main_menu;
+			}
 		}
 		
 		oldpad = pad.buttons;
