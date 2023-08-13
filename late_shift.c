@@ -1360,6 +1360,7 @@ void game_pause_menu(int *first_call) {
 	static int btns_state[8];
 	
 	if (*first_call) {
+		audio_sound_play(snd_pause);
 		*first_call = 0;
 		in_options = 0;
 		memset(btns_state, 0, sizeof(int) * 8);
@@ -1382,12 +1383,14 @@ void game_pause_menu(int *first_call) {
 		init_menu(0.9f, 0.0f, 0.0f, 960.0f, 544.0f, "##pause_menu");
 		if (draw_main_button(x_resume, 200, game_strings[22], &btns_state[0])) {
 			game_state = GAME_RESUMING;
+			audio_sound_play(snd_unpause);
 		}
 		if (draw_button(x_options, 250, game_strings[9], &btns_state[1])) {
 			in_options = 1;
 		}
 		if (draw_button(x_exitgame, 300, game_strings[10], &btns_state[2])) {
 			game_state = GAME_EXITING;
+			audio_sound_play(snd_unpause);
 		}
 		end_menu();
 	} else {

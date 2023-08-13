@@ -29,8 +29,7 @@ audio_sample bgm[NUM_AUDIO_SAMPLES];
 sequence *cur_seq;
 subtitle *cur_sub;
 theme colors;
-void *snd_click;
-void *snd_hover;
+void *snd_click, *snd_hover, *snd_pause, *snd_unpause;
 
 void fill_sequence(sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump) {
 	s->d = d;

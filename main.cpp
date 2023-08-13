@@ -66,6 +66,8 @@ int main(int argc, char *argv[]) {
 	audio_init();
 	snd_hover = audio_sound_load("app0:data/menu_move.ogg");
 	snd_click = audio_sound_load("app0:data/menu_click.ogg");
+	snd_pause = audio_sound_load("app0:data/menu_pause.ogg");
+	snd_unpause = audio_sound_load("app0:data/menu_unpause.ogg");
 	
 	// Initializing dear ImGui
 	static const ImWchar compact_ranges[] = { // All languages except chinese

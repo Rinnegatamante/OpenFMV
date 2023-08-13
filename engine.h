@@ -139,6 +139,8 @@ extern engine config;
 
 extern void *snd_click;
 extern void *snd_hover;
+extern void *snd_pause;
+extern void *snd_unpause;
 
 void load_animated_bg(const char *fname, int needs_hash); 
 void fill_sequence(sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump);
