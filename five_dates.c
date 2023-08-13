@@ -153,5 +153,8 @@ void game_setup() {
 	set_theme_color(colors.btn_hover_text, 0.0f, 0.0f, 0.0f, 1.0f);
 }
 
+void game_prepare() {
+}
+
 #endif
 

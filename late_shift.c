@@ -344,70 +344,92 @@ sequence *eval_gone_to_woe2() { return game_vars.gone_to_woe ? &sequences[209] :
 sequence *seg570_571() { return &sequences[211]; }
 // EPISODE 6A
 
+// Game audio samples references
+enum {
+	OPENING,
+	ATMO_STATION,
+	OPENING2,
+	CAR_PARK,
+	ATMO_GARAGE,
+	CAR_PARK_MELODY,
+	LEE_NOISE,
+	CAR_PARK_DEAL,
+	SCREAM_CLOSE,
+	ELODIE_ESCAPE,
+	LEE_STINGER,
+	GARAGE_PARKFIELD,
+	CABLE_TIE,
+	SCREAM_FAR,
+	CCTV,
+	ROPE_LEE_STINGER,
+	WEAPON_STINGER,
+	CAR_PARK_NO_DEAL,
+	INSIDE_CAR,
+	MATT_ESCAPE,
+	GUTTED_STINGER,
+};
+audio_sample *mus[NUM_AUDIO_SOURCES];
+
 // Game event funcs
-audio_sample *opening = NULL, *atmo_station = NULL, *opening2 = NULL, *carpark = NULL, *atmo_garage = NULL, *carpark_melody = NULL, *lee_noise = NULL;
-audio_sample *carpark_deal = NULL, *scream_close = NULL, *elodie_escape = NULL, *lee_stinger = NULL, *garage_parkfield = NULL, *cable_tie = NULL;
-audio_sample *scream_far = NULL, *cctv = NULL, *rope_lee_stinger = NULL, *weapon_stinger = NULL, *carpark_nodeal = NULL, *inside_car = NULL, *matt_escape = NULL;
-audio_sample *gutted_stinger = NULL;
 sequence *seg435_a_event() { if (game_vars.may_likes_matt >= 4) { return seg435_a(); } return NULL; }
-sequence *start_op_bgm() { opening = audio_sample_start("EP01 Opening", 0, 0.20033f); return NULL; }
-sequence *fade_op_vol_1() { audio_track_set_volume(opening->handle, 0.125887f); return NULL; }
-sequence *fade_op_vol_2() { audio_track_set_volume(opening->handle, 0.198939f); return NULL; }
-sequence *fade_op_vol_3() { audio_track_set_volume(opening->handle, 0.126269f); return NULL; }
-sequence *fade_op_vol_4() { audio_track_set_volume(opening->handle, 0.199322f); return NULL; }
-sequence *fade_op_vol_5() { audio_track_set_volume(opening->handle, 0.124558f); return NULL; }
-sequence *fade_op_vol_6() { audio_track_set_volume(opening->handle, 0.198644f); return NULL; }
-sequence *start_atmo_station() { atmo_station = audio_sample_start("EP01 Atmo Int Tube Station", 0, 1.0f); return NULL; }
-sequence *start_selfish_title() { opening2 = audio_sample_start("EP01 Titles SelfFish", 0, 0.3178015f); return NULL; }
-sequence *start_selfless_title() { opening2 = audio_sample_start("EP01 Titles SelfLess", 0, 0.3161767f); return NULL; }
-sequence *fade_out_op() { audio_track_fade(opening->handle, 0.198644f, 0.0f, 10750, 14750); return NULL; }
-sequence *fade_out_op2() { audio_track_fade(opening->handle, 0.198644f, 0.0f, 0, 4000); return NULL; }
-sequence *fade_out_atmo_station() { audio_track_fade(atmo_station->handle, 1.0f, 0.0f, 19417, 24500); return NULL; }
-sequence *fade_out_atmo_station2() { audio_track_fade(atmo_station->handle, 1.0f, 0.0f, 17792, 23000); return NULL; }
-sequence *stop_opening() { audio_sample_stop(opening); return NULL; }
-sequence *stop_atmo_station() { audio_sample_stop(atmo_station); return NULL; }
-sequence *start_loneliness_carpark() { carpark = audio_sample_start("EP01 Loneliness Carpark Neu", 0, 0.1110497f); return NULL; }
-sequence *start_garage_atmo() { atmo_garage = audio_sample_start("EP01 Atmo Int Garage Hut", 1, 1.0f); return NULL; }
-sequence *stop_atmo_garage() { audio_sample_stop(atmo_garage); return NULL; }
-sequence *start_car_park_melody() { carpark_melody = audio_sample_start("EP01 Car Park Melody", 0, 0.1767543f); return NULL; }
-sequence *stop_opening2() { audio_sample_stop(opening2); return NULL; }
-sequence *fade_car_park_melody() { audio_track_fade(carpark_melody->handle, 0.1767543f, 0.0f, 2333, 7750); return NULL; }
-sequence *fade_car_park_melody2() { audio_track_fade(carpark_melody->handle, 0.1767543f, 0.0f, 10875, 18875); return NULL; }
-sequence *fade_car_park_melody3() { audio_track_fade(carpark_melody->handle, 0.1767543f, 0.0f, 4667, 12667); return NULL; }
-sequence *fade_car_park_melody4() { audio_track_fade(carpark_melody->handle, 0.1767543f, 0.0f, 41, 3625); return NULL; }
-sequence *fade_car_park_melody5() { audio_track_fade(carpark_melody->handle, 0.1767543f, 0.0f, 42, 7042); return NULL; }
-sequence *start_lee_noise() { lee_noise = audio_sample_start("EP01 Lee's Noise", 0, 0.2506548f); return NULL; }
-sequence *start_lee_noise2() { lee_noise = audio_sample_start("EP01 Lee's Noise", 0, 0.2514759f); return NULL; }
-sequence *start_lee_noise3() { lee_noise = audio_sample_start("EP01 Lee's Noise", 0, 0.2517725f); return NULL; }
-sequence *stop_carpark_melody() { audio_sample_stop(carpark_melody); return NULL; }
-sequence *start_carpark_deal() { carpark_deal = audio_sample_start("EP01 Carpark Deal", 0, 0.1579017f); return NULL; }
-sequence *start_scream_close() { scream_close = audio_sample_start("EP01 Atmo Scream Close", 0, 0.1635859f); return NULL; }
-sequence *stop_carpark_deal() { audio_sample_stop(carpark_deal); return NULL; }
-sequence *start_elodie_escape() { elodie_escape = audio_sample_start("EP01 Elodie Escape", 0, 0.1770804f); return NULL; }
-sequence *start_elodie_escape2() { elodie_escape = audio_sample_start("EP01 Elodie Escape", 0, 0.1769967f); return NULL; }
-sequence *fade_car_park_deal() { audio_track_fade(carpark_deal->handle, 0.1579017f, 0.0f, 6917, 7917); return NULL; }
-sequence *fade_car_park_deal2() { audio_track_fade(carpark_deal->handle, 0.1579017f, 0.0f, 11500, 12500); return NULL; }
-sequence *start_lee_stinger() { lee_stinger = audio_sample_start("EP01 Lee Stinger", 0, 0.1989933f); return NULL; }
-sequence *start_garage_parkfield() { garage_parkfield = audio_sample_start("EP01 Atmo Int Garage Parkfield", 1, 1.0f); return NULL; }
-sequence *start_cable_tie() { cable_tie = audio_sample_start("EP01 Cable Tie Stinger", 0, 0.1998071f); return NULL; }
-sequence *start_scream_far() { scream_far = audio_sample_start("EP01 Atmo Scream Far", 0, 1.0f); return NULL; }
-sequence *start_cctv() { cctv = audio_sample_start("EP01 CCTV", 0, 0.2512645f); return NULL; }
-sequence *start_rope_lee_stinger() { rope_lee_stinger = audio_sample_start("EP01 Rope Lee Stinger", 0, 0.1274621f); return NULL; }
-sequence *start_weapon_stinger() { weapon_stinger = audio_sample_start("EP01 Weapon Stinger", 0, 0.1760814f); return NULL; }
-sequence *start_weapon_stinger2() { weapon_stinger = audio_sample_start("EP01 Weapon Stinger", 0, 0.1752229f); return NULL; }
-sequence *start_carpark_nodeal() { carpark_nodeal = audio_sample_start("EP01 Carpark NoDeal", 0, 0.1246213f); return NULL; }
-sequence *start_carpark_nodeal2() { carpark_nodeal = audio_sample_start("EP01 Carpark NoDeal", 0, 0.1274091f); return NULL; }
-sequence *start_carpark_nodeal3() { carpark_nodeal = audio_sample_start("EP01 Carpark NoDeal", 0, 0.1262329f); return NULL; }
-sequence *fade_garage_parkfield() { audio_track_fade(garage_parkfield->handle, 1.0f, 0.0f, 19958, 22250); return NULL; }
-sequence *stop_garage_parkfield() { audio_sample_stop(garage_parkfield); return NULL; }
-sequence *stop_carpark_nodeal() { audio_sample_stop(carpark_nodeal); return NULL; }
-sequence *stop_elodie_escape() { audio_sample_stop(elodie_escape); return NULL; }
-sequence *start_inside_car() { inside_car = audio_sample_start("EP01 Inside Car", 0, 0.2504064f); return NULL; }
-sequence *start_matt_escape() { matt_escape = audio_sample_start("EP01 Matt Escape", 0, 0.1586634f); return NULL; }
-sequence *stop_inside_car() { audio_sample_stop(inside_car); return NULL; }
-sequence *fade_inside_car() { audio_track_fade(inside_car->handle, 0.2504064f, 0.0f, 41, 3042); return NULL; }
-sequence *fade_inside_car2() { audio_track_fade(inside_car->handle, 0.2504064f, 0.0f, 0, 3000); return NULL; }
-sequence *start_gutted_stinger() { gutted_stinger = audio_sample_start("EP01 Gutted Stinger", 0, 0.177706f); return NULL; }
+sequence *start_op_bgm() { mus[OPENING] = audio_sample_start("EP01 Opening", 0, 0.20033f); return NULL; }
+sequence *fade_op_vol_1() { audio_sample_set_volume(mus[OPENING], 0.125887f); return NULL; }
+sequence *fade_op_vol_2() { audio_sample_set_volume(mus[OPENING], 0.198939f); return NULL; }
+sequence *fade_op_vol_3() { audio_sample_set_volume(mus[OPENING], 0.126269f); return NULL; }
+sequence *fade_op_vol_4() { audio_sample_set_volume(mus[OPENING], 0.199322f); return NULL; }
+sequence *fade_op_vol_5() { audio_sample_set_volume(mus[OPENING], 0.124558f); return NULL; }
+sequence *fade_op_vol_6() { audio_sample_set_volume(mus[OPENING], 0.198644f); return NULL; }
+sequence *start_atmo_station() { mus[ATMO_STATION] = audio_sample_start("EP01 Atmo Int Tube Station", 0, 1.0f); return NULL; }
+sequence *start_selfish_title() { mus[OPENING2] = audio_sample_start("EP01 Titles SelfFish", 0, 0.3178015f); return NULL; }
+sequence *start_selfless_title() { mus[OPENING2] = audio_sample_start("EP01 Titles SelfLess", 0, 0.3161767f); return NULL; }
+sequence *fade_out_op() { audio_sample_fade(mus[OPENING], 0.198644f, 0.0f, 10750, 14750); return NULL; }
+sequence *fade_out_op2() { audio_sample_fade(mus[OPENING], 0.198644f, 0.0f, 0, 4000); return NULL; }
+sequence *fade_out_atmo_station() { audio_sample_fade(mus[ATMO_STATION], 1.0f, 0.0f, 19417, 24500); return NULL; }
+sequence *fade_out_atmo_station2() { audio_sample_fade(mus[ATMO_STATION], 1.0f, 0.0f, 17792, 23000); return NULL; }
+sequence *stop_opening() { audio_sample_stop(mus[OPENING]); return NULL; }
+sequence *stop_atmo_station() { audio_sample_stop(mus[ATMO_STATION]); return NULL; }
+sequence *start_loneliness_carpark() { mus[CAR_PARK] = audio_sample_start("EP01 Loneliness Carpark Neu", 0, 0.1110497f); return NULL; }
+sequence *start_garage_atmo() { mus[ATMO_GARAGE] = audio_sample_start("EP01 Atmo Int Garage Hut", 1, 1.0f); return NULL; }
+sequence *stop_atmo_garage() { audio_sample_stop(mus[ATMO_GARAGE]); return NULL; }
+sequence *start_car_park_melody() { mus[CAR_PARK_MELODY] = audio_sample_start("EP01 Car Park Melody", 0, 0.1767543f); return NULL; }
+sequence *stop_opening2() { audio_sample_stop(mus[OPENING2]); return NULL; }
+sequence *fade_car_park_melody() { audio_sample_fade(mus[CAR_PARK_MELODY], 0.1767543f, 0.0f, 2333, 7750); return NULL; }
+sequence *fade_car_park_melody2() { audio_sample_fade(mus[CAR_PARK_MELODY], 0.1767543f, 0.0f, 10875, 18875); return NULL; }
+sequence *fade_car_park_melody3() { audio_sample_fade(mus[CAR_PARK_MELODY], 0.1767543f, 0.0f, 4667, 12667); return NULL; }
+sequence *fade_car_park_melody4() { audio_sample_fade(mus[CAR_PARK_MELODY], 0.1767543f, 0.0f, 41, 3625); return NULL; }
+sequence *fade_car_park_melody5() { audio_sample_fade(mus[CAR_PARK_MELODY], 0.1767543f, 0.0f, 42, 7042); return NULL; }
+sequence *start_lee_noise() { mus[LEE_NOISE] = audio_sample_start("EP01 Lee's Noise", 0, 0.2506548f); return NULL; }
+sequence *start_lee_noise2() { mus[LEE_NOISE] = audio_sample_start("EP01 Lee's Noise", 0, 0.2514759f); return NULL; }
+sequence *start_lee_noise3() { mus[LEE_NOISE] = audio_sample_start("EP01 Lee's Noise", 0, 0.2517725f); return NULL; }
+sequence *stop_carpark_melody() { audio_sample_stop(mus[CAR_PARK_MELODY]); return NULL; }
+sequence *start_carpark_deal() { mus[CAR_PARK_DEAL] = audio_sample_start("EP01 Carpark Deal", 0, 0.1579017f); return NULL; }
+sequence *start_scream_close() { mus[SCREAM_CLOSE] = audio_sample_start("EP01 Atmo Scream Close", 0, 0.1635859f); return NULL; }
+sequence *stop_carpark_deal() { audio_sample_stop(mus[CAR_PARK_DEAL]); return NULL; }
+sequence *start_elodie_escape() { mus[ELODIE_ESCAPE] = audio_sample_start("EP01 Elodie Escape", 0, 0.1770804f); return NULL; }
+sequence *start_elodie_escape2() { mus[ELODIE_ESCAPE] = audio_sample_start("EP01 Elodie Escape", 0, 0.1769967f); return NULL; }
+sequence *fade_car_park_deal() { audio_sample_fade(mus[CAR_PARK_DEAL], 0.1579017f, 0.0f, 6917, 7917); return NULL; }
+sequence *fade_car_park_deal2() { audio_sample_fade(mus[CAR_PARK_DEAL], 0.1579017f, 0.0f, 11500, 12500); return NULL; }
+sequence *start_lee_stinger() { mus[LEE_STINGER] = audio_sample_start("EP01 Lee Stinger", 0, 0.1989933f); return NULL; }
+sequence *start_garage_parkfield() { mus[GARAGE_PARKFIELD] = audio_sample_start("EP01 Atmo Int Garage Parkfield", 1, 1.0f); return NULL; }
+sequence *start_cable_tie() { mus[CABLE_TIE] = audio_sample_start("EP01 Cable Tie Stinger", 0, 0.1998071f); return NULL; }
+sequence *start_scream_far() { mus[SCREAM_FAR] = audio_sample_start("EP01 Atmo Scream Far", 0, 1.0f); return NULL; }
+sequence *start_cctv() { mus[CCTV] = audio_sample_start("EP01 CCTV", 0, 0.2512645f); return NULL; }
+sequence *start_rope_lee_stinger() { mus[ROPE_LEE_STINGER] = audio_sample_start("EP01 Rope Lee Stinger", 0, 0.1274621f); return NULL; }
+sequence *start_weapon_stinger() { mus[WEAPON_STINGER] = audio_sample_start("EP01 Weapon Stinger", 0, 0.1760814f); return NULL; }
+sequence *start_weapon_stinger2() { mus[WEAPON_STINGER] = audio_sample_start("EP01 Weapon Stinger", 0, 0.1752229f); return NULL; }
+sequence *start_carpark_nodeal() { mus[CAR_PARK_NO_DEAL] = audio_sample_start("EP01 Carpark NoDeal", 0, 0.1246213f); return NULL; }
+sequence *start_carpark_nodeal2() { mus[CAR_PARK_NO_DEAL] = audio_sample_start("EP01 Carpark NoDeal", 0, 0.1274091f); return NULL; }
+sequence *start_carpark_nodeal3() { mus[CAR_PARK_NO_DEAL] = audio_sample_start("EP01 Carpark NoDeal", 0, 0.1262329f); return NULL; }
+sequence *fade_garage_parkfield() { audio_sample_fade(mus[GARAGE_PARKFIELD], 1.0f, 0.0f, 19958, 22250); return NULL; }
+sequence *stop_garage_parkfield() { audio_sample_stop(mus[GARAGE_PARKFIELD]); return NULL; }
+sequence *stop_carpark_nodeal() { audio_sample_stop(mus[CAR_PARK_NO_DEAL]); return NULL; }
+sequence *stop_elodie_escape() { audio_sample_stop(mus[ELODIE_ESCAPE]); return NULL; }
+sequence *start_inside_car() { mus[INSIDE_CAR] = audio_sample_start("EP01 Inside Car", 0, 0.2504064f); return NULL; }
+sequence *start_matt_escape() { mus[MATT_ESCAPE] = audio_sample_start("EP01 Matt Escape", 0, 0.1586634f); return NULL; }
+sequence *stop_inside_car() { audio_sample_stop(mus[INSIDE_CAR]); return NULL; }
+sequence *fade_inside_car() { audio_sample_fade(mus[INSIDE_CAR], 0.2504064f, 0.0f, 41, 3042); return NULL; }
+sequence *fade_inside_car2() { audio_sample_fade(mus[INSIDE_CAR], 0.2504064f, 0.0f, 0, 3000); return NULL; }
+sequence *start_gutted_stinger() { mus[GUTTED_STINGER] = audio_sample_start("EP01 Gutted Stinger", 0, 0.177706f); return NULL; }
 
 void fill_events() {
 	// OPENING
@@ -1321,6 +1343,12 @@ void game_setup() {
 	set_theme_color(colors.btn_text, 1.0f, 1.0f, 1.0f, 1.0f);
 	set_theme_color(colors.btn_hover_text, 0.0f, 0.0f, 0.0f, 1.0f);
 	set_theme_color(colors.popup_bg, 0.0f, 0.0f, 0.0f, 0.0f);
+}
+
+void game_prepare() {
+	for (int i = 0; i < NUM_AUDIO_SOURCES; i++) {
+		mus[i] = NULL;
+	}
 }
 
 #endif

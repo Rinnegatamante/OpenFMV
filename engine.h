@@ -8,7 +8,9 @@ extern "C" {
 #include "games.h"
 #include "unzip.h"
 
-#define ENGINE_VER "0.9.3"
+#define ENGINE_VER "0.9.4"
+
+#define NUM_AUDIO_SAMPLES 32
 
 #define Color4(x) ImVec4(x[0], x[1], x[2], x[3])
 #define set_theme_color(x, a, b, c, d) \
@@ -142,10 +144,19 @@ void menu_setup();
 void game_main_menu();
 void game_pause_menu(int *state);
 void game_setup();
+void game_prepare();
 
 audio_sample *audio_sample_start(const char *fname, int looping, float vol);
 void audio_sample_stop(audio_sample *s);
 void audio_sample_stop_all();
+
+#define audio_sample_fade(s, vs, vd, ts, td) \
+	if (s) \
+		audio_track_fade(s->handle, vs, vd, ts, td)
+		
+#define audio_sample_set_volume(s, v) \
+	if (s) \
+		audio_track_set_volume(s->handle, v)
 
 #ifdef __cplusplus
 }

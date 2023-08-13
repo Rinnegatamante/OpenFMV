@@ -111,9 +111,10 @@ main_menu:
 	// Main Menu
 	game_main_menu();
 	
-	// Loading in-game engine theme
+	// Loading in-game engine theme and setting up game for boot
 	game_setup();
 	reload_theme();
+	game_prepare();
 	
 	// Main Loop
 	game_state = GAME_ACTIVE;
