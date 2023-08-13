@@ -68,6 +68,11 @@ enum {
 	EVENT_DURATION
 };
 
+enum {
+	BAR_DEFAULT,
+	BAR_CENTER_FILL
+};
+
 struct sequence;
 typedef struct {
 	uint32_t start;
@@ -101,6 +106,7 @@ typedef struct {
 	float btn_text[4];
 	float btn_hover_text[4];
 	float popup_bg[4];
+	uint8_t bar_type;
 } theme;
 
 enum {
@@ -136,7 +142,7 @@ void load_animated_bg(const char *fname, int needs_hash);
 void fill_sequence(sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump);
 void start_sequence(sequence *s);
 void install_timed_event(sequence *t, uint32_t start, uint32_t end, uint8_t type, sequence *(*s)());
-void load_subtitles(sequence *s);
+int load_subtitles(sequence *s);
 
 void spooky_hash128(const void *buf, int len, char *out);
 void resolve_hash(const char *src, char *dst);

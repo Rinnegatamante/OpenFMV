@@ -1217,6 +1217,7 @@ void menu_setup() {
 	set_theme_color(colors.btn_text, 0.18431f, 0.18431f, 0.18431f, 1.0f);
 	set_theme_color(colors.btn_hover_text, 1.0f, 1.0f, 1.0f, 1.0f);
 	set_theme_color(colors.popup_bg, 0.0f, 0.0f, 0.0f, 0.0f);
+	colors.bar_type = BAR_DEFAULT;
 }
 
 void game_pause_menu(int *first_call) {
@@ -1398,6 +1399,7 @@ void game_setup() {
 	set_theme_color(colors.btn_text, 1.0f, 1.0f, 1.0f, 1.0f);
 	set_theme_color(colors.btn_hover_text, 0.0f, 0.0f, 0.0f, 1.0f);
 	set_theme_color(colors.popup_bg, 0.0f, 0.0f, 0.0f, 0.0f);
+	colors.bar_type = BAR_CENTER_FILL;
 }
 
 void game_prepare() {

@@ -242,8 +242,20 @@ subtitle_draw:
 					ImGui::GetCurrentContext()->NavDisableHighlight = false;
 					
 					// Draw remaining time bar
-					ImGui::SetCursorPosX(239);
-					ImGui::ProgressBar((float)(cur_delta - cur_seq->start) / (float)(cur_seq->end - cur_seq->start), ImVec2(480, 6), "");
+					if (colors.bar_type == BAR_DEFAULT) {
+						ImGui::SetCursorPosX(239);
+						ImGui::ProgressBar((float)(cur_delta - cur_seq->start) / (float)(cur_seq->end - cur_seq->start), ImVec2(480, 6), "");
+					} else {
+						float progress = (float)(cur_delta - cur_seq->start) / (float)(cur_seq->end - cur_seq->start);
+						ImGui::SetCursorPosX(239 + 239);
+						ImGui::ProgressBar(progress, ImVec2(240, 6), "##p1");
+						ImGui::SameLine();
+						ImGui::SetCursorPosX(240);
+						ImGui::PushStyleColor(ImGuiCol_FrameBg, Color4(colors.bar));
+						ImGui::PushStyleColor(ImGuiCol_PlotHistogram, Color4(colors.bar_bg));
+						ImGui::ProgressBar(1.0f - progress, ImVec2(240, 6), "##p2");
+						ImGui::PopStyleColor(2);
+					}
 					ImGui::End();
 				}
 			}
