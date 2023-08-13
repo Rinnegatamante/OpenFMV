@@ -104,6 +104,9 @@ int main(int argc, char *argv[]) {
 	bool btn3_hovered = false;
 	int pause_menu_triggered = 0;
 	
+	// Starting subtitles loader worker thread
+	start_subs_loader();
+	
 	// Populating sequences tree
 	fill_sequences();
 	

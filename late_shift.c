@@ -186,15 +186,19 @@ audio_sample *mus[NUM_AUDIO_SOURCES];
 
 // Audio source purge lists per episode for non cross-episodic sounds that aren't explicitly freed by the game
 void purge_from_ep1() {
-	for (int i = CAR_PARK; i <= GUTTED_STINGER; i++) {
-		if (i != MATT_ESCAPE)
-			audio_sample_stop_and_free(mus[i]);
+	if (!fake_pass) {
+		for (int i = CAR_PARK; i <= GUTTED_STINGER; i++) {
+			if (i != MATT_ESCAPE)
+				audio_sample_stop_and_free(mus[i]);
+		}
 	}
 }
 void purge_from_ep2() {
-	for (int i = ATMO_TRAIN; i <= JEFF_LINE; i++) {
-		if (i != LETS_GO)
-			audio_sample_stop_and_free(mus[i]);
+	if (!fake_pass) {
+		for (int i = ATMO_TRAIN; i <= JEFF_LINE; i++) {
+			if (i != LETS_GO)
+				audio_sample_stop_and_free(mus[i]);
+		}
 	}
 }
 
@@ -1358,11 +1362,13 @@ void menu_setup() {
 void game_pause_menu(int *first_call) {
 	static int in_options;
 	static int btns_state[8];
+	static int lang_changed = 0;
 	
 	if (*first_call) {
 		audio_sound_play(snd_pause);
 		*first_call = 0;
 		in_options = 0;
+		lang_changed = 0;
 		memset(btns_state, 0, sizeof(int) * 8);
 	}
 	
@@ -1384,6 +1390,8 @@ void game_pause_menu(int *first_call) {
 		if (draw_main_button(x_resume, 200, game_strings[22], &btns_state[0])) {
 			game_state = GAME_RESUMING;
 			audio_sound_play(snd_unpause);
+			if (lang_changed)
+				reload_subtitles(cur_seq); // Reloading current sequence subtitles
 		}
 		if (draw_button(x_options, 250, game_strings[9], &btns_state[1])) {
 			in_options = 1;
@@ -1397,7 +1405,7 @@ void game_pause_menu(int *first_call) {
 		init_menu(0.9f, 0.0f, 0.0f, 960.0f, 544.0f, "##options");
 		if (draw_selector(x_lang, 170, lang_text, &btns_state[4], &current_lang, sizeof(available_lang) / sizeof(*available_lang))) {
 			load_localization_files(available_lang[current_lang]);
-			load_subtitles(cur_seq); // Reloading current sequence subtitles
+			lang_changed = 1;
 		}
 		draw_selector(x_subtitles, 210, subtitles_text, &btns_state[5], &config.subtitles, 2);
 		int vol = (int)(config.master_volume * 255.0f);
@@ -1549,7 +1557,7 @@ void game_main_menu() {
 	}
 	
 	audio_track_stop(bg_audio);
-	start_sequence(out);
+	start_first_sequence(out);
 }
 
 void game_setup() {

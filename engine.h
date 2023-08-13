@@ -8,7 +8,7 @@ extern "C" {
 #include "games.h"
 #include "unzip.h"
 
-#define ENGINE_VER "0.9.5"
+#define ENGINE_VER "0.9.6"
 
 #define NUM_AUDIO_SAMPLES 32
 
@@ -85,6 +85,7 @@ typedef struct {
 
 typedef struct sequence {
 	char hash[64];
+	struct sequence *links[8];
 	struct sequence *(*d)();
 	struct sequence *(*l)();
 	struct sequence *(*r)();
@@ -96,6 +97,9 @@ typedef struct sequence {
 	uint32_t start;
 	uint32_t end;
 	timed_event events[64];
+	subtitle subs[128];
+	int sub_lang;
+	int num_subs;
 	int num_events;
 } sequence;
 
@@ -128,6 +132,7 @@ extern char game_strings[NUM_GAME_STRINGS][128];
 extern audio_sample bgm[NUM_AUDIO_SAMPLES];
 extern sequence *cur_seq;
 extern subtitle *cur_sub;
+extern int fake_pass;
 extern int chosen_path;
 extern int trigger_save;
 extern int btns_state;
@@ -145,8 +150,11 @@ extern void *snd_unpause;
 void load_animated_bg(const char *fname, int needs_hash); 
 void fill_sequence(sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump);
 void start_sequence(sequence *s);
+void start_first_sequence(sequence *s);
 void install_timed_event(sequence *t, uint32_t start, uint32_t end, uint8_t type, sequence *(*s)());
-int load_subtitles(sequence *s);
+void load_subtitles(sequence *s);
+void reload_subtitles(sequence *s);
+void start_subs_loader();
 
 void spooky_hash128(const void *buf, int len, char *out);
 void resolve_hash(const char *src, char *dst);
