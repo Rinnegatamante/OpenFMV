@@ -158,6 +158,9 @@ void audio_sample_stop_all();
 	if (s) \
 		audio_track_set_volume(s->handle, v)
 
+#define audio_sample_stop_and_free(s) \
+	audio_sample_stop(s); s = NULL; \
+
 #ifdef __cplusplus
 }
 #endif
