@@ -49,9 +49,11 @@ int main(int argc, char *argv[]) {
 		fclose(f);
 	} else {
 		config.subtitles = 1;
-		config.game_volume = 255;
+		config.master_volume = 1.0f;
+		config.music_volume = 1.0f;
 		sceAppUtilSystemParamGetInt(SCE_SYSTEM_PARAM_ID_LANG, &config.language);
 	}
+	audio_set_global_volume(config.master_volume);
 	load_localization_files(config.language);
 	
 	// Initing vitaGL and video player

@@ -8,7 +8,7 @@ extern "C" {
 #include "games.h"
 #include "unzip.h"
 
-#define ENGINE_VER "0.9.4"
+#define ENGINE_VER "0.9.5"
 
 #define NUM_AUDIO_SAMPLES 32
 
@@ -45,13 +45,15 @@ enum {
 
 typedef struct {
 	void *src;
+	float volume;
 	int handle;
 	uint8_t active;
 } audio_sample;
 
 typedef struct {
 	int subtitles;
-	int game_volume;
+	float master_volume;
+	float music_volume;
 	int language;
 } engine;
 
@@ -156,14 +158,19 @@ void game_prepare();
 audio_sample *audio_sample_start(const char *fname, int looping, float vol);
 void audio_sample_stop(audio_sample *s);
 void audio_sample_stop_all();
+void audio_sample_reset_volume_all();
 
 #define audio_sample_fade(s, vs, vd, ts, td) \
-	if (s) \
-		audio_track_fade(s->handle, vs, vd, ts, td)
+	if (s) { \
+		float new_vol = audio_track_fade(s->handle, vs, vd, ts, td); \
+		s->volume = new_vol; \
+	}
 		
 #define audio_sample_set_volume(s, v) \
-	if (s) \
-		audio_track_set_volume(s->handle, v)
+	if (s) { \
+		audio_track_set_volume(s->handle, v); \
+		s->volume = v; \	
+	}
 
 #define audio_sample_stop_and_free(s) \
 	audio_sample_stop(s); s = NULL; \

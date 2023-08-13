@@ -141,6 +141,55 @@ int draw_selector(float x, float y, const char *label, int *state, int *select, 
 	return res;
 }
 
+int draw_fast_selector(float x, float y, const char *label, int *state, int *select, int max) {
+	int res = 0;
+	SceCtrlData pad;
+	sceCtrlPeekBufferPositive(0, &pad, 1);
+	ImGui::SetCursorPos(ImVec2(x, y));
+	ImGui::PushStyleColor(ImGuiCol_Text, *state ? Color4(colors.btn_hover_text) : Color4(colors.btn_text));
+	ImGui::PushStyleColor(ImGuiCol_Button, *state ? Color4(colors.btn_hover_bg) : Color4(colors.btn_bg));
+	ImGui::Button(label, ImVec2(ImGui::CalcTextSize(label).x + 20.0f, 0.0f));
+	if (ImGui::IsItemFocused()) {
+		*state = 1;
+		if (pad.buttons & SCE_CTRL_LEFT) {
+			*select = *select - 1;
+			if (*select < 0) {
+				*select = 0;
+			} else {
+				res = 1;
+				audio_sound_play(snd_hover);
+			}
+		} else if (pad.buttons & SCE_CTRL_RIGHT) {
+			*select = *select + 1;
+			if (*select > max) {
+				*select = max;
+			} else {
+				res = 1;
+				audio_sound_play(snd_hover);
+			}
+		}
+	} else {
+		*state = 0; 
+	}
+	ImGui::PopStyleColor(2);
+	return res;
+}
+
+void draw_progressbar(float x, float y, float w, float h, float val, char *label) {
+	if (colors.bar_type == BAR_DEFAULT) {
+		ImGui::SetCursorPos(ImVec2(x, y));
+		ImGui::ProgressBar(val, ImVec2(w, h), label);
+	} else {
+		ImGui::SetCursorPos(ImVec2(x - 1.0f + x * 0.5, y));
+		ImGui::ProgressBar(val, ImVec2(w / 2, h), label);
+		ImGui::SetCursorPos(ImVec2(x + 1.0f + x * 0.5, y));
+		ImGui::PushStyleColor(ImGuiCol_FrameBg, Color4(colors.bar));
+		ImGui::PushStyleColor(ImGuiCol_PlotHistogram, Color4(colors.bar_bg));
+		ImGui::ProgressBar(1.0f - val, ImVec2(w, h), label);
+		ImGui::PopStyleColor(2);
+	}
+}
+
 int draw_main_button(float x, float y, const char *label, int *state) {
 	int r = draw_button(x, y, label, state);
 	if (!ImGui::IsAnyItemFocused()) {

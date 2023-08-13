@@ -37,6 +37,7 @@ void video_audio_init(void) {
 	// Configure the audio port (either new or old)
 	if (audio_port == -1) {
 		audio_port = sceAudioOutOpenPort(SCE_AUDIO_OUT_PORT_TYPE_MAIN, 1024, 48000, SCE_AUDIO_OUT_MODE_STEREO);
+		video_set_volume(config.master_volume);
 		audio_new = 1;
 	} else {
 		audio_len = sceAudioOutGetConfig(audio_port, SCE_AUDIO_OUT_CONFIG_TYPE_LEN);
@@ -216,4 +217,9 @@ void video_pause() {
 void video_resume() {
 	sceAvPlayerResume(movie_player);
 	player_state = PLAYER_ACTIVE;
+}
+
+void video_set_volume(float vol) {
+	int vols[2] = {(int)(vol * 32767.0f), (int)(vol * 32767.0f)};
+	sceAudioOutSetVolume(audio_port, SCE_AUDIO_VOLUME_FLAG_L_CH | SCE_AUDIO_VOLUME_FLAG_R_CH, vols);
 }

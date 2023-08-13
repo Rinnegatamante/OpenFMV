@@ -153,6 +153,7 @@ audio_sample *audio_sample_start(const char *fname, int looping, float vol) {
 		}
 	}
 	r->src = audio_track_play(fname, looping, vol, &r->handle);
+	r->volume = vol;
 	r->active = 1;
 }
 
@@ -167,6 +168,15 @@ void audio_sample_stop_all() {
 	for (int i = 0; i < NUM_AUDIO_SAMPLES; i++) {
 		if (bgm[i].active) {
 			audio_sample_stop(&bgm[i]);
+		}
+	}
+}
+
+void audio_sample_reset_volume_all() {
+	for (int i = 0; i < NUM_AUDIO_SAMPLES; i++) {
+		if (bgm[i].active) {
+			audio_sample *s = &bgm[i];
+			audio_sample_set_volume(s, bgm[i].volume);
 		}
 	}
 }

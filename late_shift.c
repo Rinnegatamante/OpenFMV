@@ -6,6 +6,7 @@
 #include "audio.h"
 #include "draw.h"
 #include "engine.h"
+#include "player.h"
 #include "late_shift.h"
 
 #ifdef LATE_SHIFT
@@ -132,11 +133,11 @@ enum {
 
 // Game audio samples references
 enum {
-	// Opening
+	// OPENING
 	OPENING,
 	ATMO_STATION,
 	OPENING2,
-	// Episode 1
+	// EPISODE 1
 	CAR_PARK,
 	ATMO_GARAGE,
 	CAR_PARK_MELODY,
@@ -155,7 +156,7 @@ enum {
 	INSIDE_CAR,
 	MATT_ESCAPE,
 	GUTTED_STINGER,
-	// Episode 2
+	// EPISODE 2
 	ATMO_TRAIN,
 	ATMO_TRAIN_STATION,
 	LEE_LINE,
@@ -169,7 +170,17 @@ enum {
 	LEG_IT,
 	ONE_LESS_PROBLEM,
 	JEFF_LINE,
-	// Episode 3
+	// EPISODE 3
+	// EPISODE 4
+	// EPISODE 5A
+	// EPISODE 5B
+	// EPISODE 6A
+	// EPISODE 6B
+	// EPISODE 7
+	// EPISODE 9A
+	// EPISODE 9B
+	// EPISODE 10
+	// EPISODE 11
 };
 audio_sample *mus[NUM_AUDIO_SOURCES];
 
@@ -400,6 +411,12 @@ sequence *seg565() { return &sequences[208]; }
 sequence *eval_gone_to_woe2() { return game_vars.gone_to_woe ? &sequences[209] : &sequences[210]; }
 sequence *seg570_571() { return &sequences[211]; }
 // EPISODE 6A
+// EPISODE 6B
+// EPISODE 7
+// EPISODE 9A
+// EPISODE 9B
+// EPISODE 10
+// EPISODE 11
 
 // Game event funcs
 sequence *seg435_a_event() { if (game_vars.may_likes_matt >= 4) { return seg435_a(); } return NULL; }
@@ -714,6 +731,11 @@ void fill_events() {
 	// EPISODE 5B
 	// EPISODE 6A
 	// EPISODE 6B
+	// EPISODE 7
+	// EPISODE 9A
+	// EPISODE 9B
+	// EPISODE 10
+	// EPISODE 11
 }
 
 void fill_sequences() {
@@ -940,6 +962,11 @@ void fill_sequences() {
 	resolve_hash("seg570_571", sequences[211].hash);
 	// EPISODE 6A
 	// EPISODE 6B
+	// EPISODE 7
+	// EPISODE 9A
+	// EPISODE 9B
+	// EPISODE 10
+	// EPISODE 11
 	
 	// Creating sequences links
 	// OPENING
@@ -1165,6 +1192,11 @@ void fill_sequences() {
 	fill_sequence(&sequences[211], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg570_571 (END OF EPISODE -> 06B)
 	// EPISODE 6A
 	// EPISODE 6B
+	// EPISODE 7
+	// EPISODE 9A
+	// EPISODE 9B
+	// EPISODE 10
+	// EPISODE 11
 	
 	fill_events();
 }
@@ -1338,6 +1370,8 @@ void game_pause_menu(int *first_call) {
 	float x_exitgame = calc_centered_button_pos(game_strings[23]);
 	float x_options = calc_centered_button_pos(game_strings[9]);
 	float x_back = calc_centered_button_pos(game_strings[3]);
+	float x_volume = calc_centered_button_pos(game_strings[14]);
+	float x_music_volume = calc_centered_button_pos(game_strings[15]);
 	char subtitles_text[256], lang_text[256];
 	sprintf(subtitles_text, "%s: %s###sub", game_strings[16], config.subtitles ? game_strings[0] : game_strings[1]);
 	float x_subtitles = calc_centered_button_pos(subtitles_text);
@@ -1358,16 +1392,27 @@ void game_pause_menu(int *first_call) {
 		end_menu();
 	} else {
 		init_menu(0.9f, 0.0f, 0.0f, 960.0f, 544.0f, "##options");
-		if (draw_selector(x_lang, 200, lang_text, &btns_state[4], &current_lang, sizeof(available_lang) / sizeof(*available_lang))) {
+		if (draw_selector(x_lang, 170, lang_text, &btns_state[4], &current_lang, sizeof(available_lang) / sizeof(*available_lang))) {
 			load_localization_files(available_lang[current_lang]);
 			load_subtitles(cur_seq); // Reloading current sequence subtitles
 		}
-		draw_selector(x_subtitles, 250, subtitles_text, &btns_state[5], &config.subtitles, 2);
-		if (draw_button(x_back, 300, game_strings[3], &btns_state[6])) {
+		draw_selector(x_subtitles, 210, subtitles_text, &btns_state[5], &config.subtitles, 2);
+		int vol = (int)(config.master_volume * 255.0f);
+		draw_fast_selector(x_volume, 245, game_strings[14], &btns_state[9], &vol, 255);
+		config.master_volume = (float)vol / 255.0f;
+		draw_progressbar(352, 275, 256, 6, config.master_volume, "##barvol");
+		int mus_vol = (int)(config.music_volume * 255.0f);
+		draw_fast_selector(x_music_volume, 285, game_strings[15], &btns_state[10], &mus_vol, 255);
+		config.music_volume = (float)mus_vol / 255.0f;
+		draw_progressbar(352, 315, 256, 6, config.music_volume, "##barmusvol");
+		audio_set_global_volume(config.master_volume);
+		if (draw_button(x_back, 325, game_strings[3], &btns_state[6])) {
 			in_options = 0;
 			FILE *f = fopen(CONFIG_FILE, "wb");
 			fwrite(&config, 1, sizeof(engine), f);
 			fclose(f);
+			video_set_volume(config.master_volume);
+			audio_sample_reset_volume_all();
 		}
 		end_menu();
 	}
@@ -1398,6 +1443,8 @@ void game_main_menu() {
 			float x_options = calc_centered_button_pos(game_strings[9]);
 			float x_exitgame = calc_centered_button_pos(game_strings[10]);
 			float x_back = calc_centered_button_pos(game_strings[3]);
+			float x_volume = calc_centered_button_pos(game_strings[14]);
+			float x_music_volume = calc_centered_button_pos(game_strings[15]);
 			char subtitles_text[256], lang_text[256];
 			sprintf(subtitles_text, "%s: %s###sub", game_strings[16], config.subtitles ? game_strings[0] : game_strings[1]);
 			float x_subtitles = calc_centered_button_pos(subtitles_text);
@@ -1447,11 +1494,21 @@ void game_main_menu() {
 			
 			if (in_options) {
 					init_menu(0.8f, 0.0f, 0.0f, 960.0f, 544.0f, "##options");
-					if (draw_selector(x_lang, 200, lang_text, &btns_state[4], &current_lang, sizeof(available_lang) / sizeof(*available_lang))) {
+					if (draw_selector(x_lang, 170, lang_text, &btns_state[4], &current_lang, sizeof(available_lang) / sizeof(*available_lang))) {
 						load_localization_files(available_lang[current_lang]);
 					}
-					draw_selector(x_subtitles, 250, subtitles_text, &btns_state[5], &config.subtitles, 2);
-					if (draw_button(x_back, 300, game_strings[3], &btns_state[6])) {
+					draw_selector(x_subtitles, 210, subtitles_text, &btns_state[5], &config.subtitles, 2);
+					int vol = (int)(config.master_volume * 255.0f);
+					draw_fast_selector(x_volume, 245, game_strings[14], &btns_state[9], &vol, 255);
+					config.master_volume = (float)vol / 255.0f;
+					draw_progressbar(352, 275, 256, 6, config.master_volume, "##barvol");
+					int mus_vol = (int)(config.music_volume * 255.0f);
+					draw_fast_selector(x_music_volume, 285, game_strings[15], &btns_state[10], &mus_vol, 255);
+					config.music_volume = (float)mus_vol / 255.0f;
+					draw_progressbar(352, 315, 256, 6, config.music_volume, "##barmusvol");
+					audio_set_global_volume(config.master_volume);
+					audio_track_set_volume(bg_audio_handle, 1.0f);
+					if (draw_button(x_back, 325, game_strings[3], &btns_state[6])) {
 						in_options = 0;
 						FILE *f = fopen(CONFIG_FILE, "wb");
 						fwrite(&config, 1, sizeof(engine), f);
