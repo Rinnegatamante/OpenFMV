@@ -455,6 +455,29 @@ sequence *stop_inside_car() { audio_sample_stop_and_free(mus[INSIDE_CAR]); retur
 sequence *fade_inside_car() { audio_sample_fade(mus[INSIDE_CAR], 0.2504064f, 0.0f, 41, 3042); return NULL; }
 sequence *fade_inside_car2() { audio_sample_fade(mus[INSIDE_CAR], 0.2504064f, 0.0f, 0, 3000); return NULL; }
 sequence *start_gutted_stinger() { mus[GUTTED_STINGER] = audio_sample_start("EP01 Gutted Stinger", 0, 0.177706f); return NULL; }
+sequence *start_lee_line() { mus[LEE_LINE] = audio_sample_start("EP02 Leeline", 0, 0.07848254f); return NULL; }
+sequence *start_atmo_ext_house() { mus[ATMO_EXT_HOUSE] = audio_sample_start("EP02 Atmo Ext House", 0, 1.0f); return NULL; }
+sequence *fade_matt_escape() { audio_sample_fade(mus[MATT_ESCAPE], 0.1586634f, 0.0f, 500, 7000); return NULL; }
+sequence *fade_lee_line() { audio_sample_fade(mus[LEE_LINE], 0.07848254f, 0.06439577f, 16833, 18875); return NULL; }
+sequence *stop_matt_escape() { audio_sample_stop_and_free(mus[MATT_ESCAPE]); return NULL; }
+sequence *maybe_start_matt_escape() { if (!game_vars.matt_escape) { mus[MATT_ESCAPE] = audio_sample_start("EP01 Matt Escape", 0, 0.1586634f); } game_vars.matt_escape = 0; return NULL; }
+sequence *start_atmo_train_station() { mus[ATMO_TRAIN_STATION] = audio_sample_start("EP02 Atmo Ext Train Station", 1, 1.0f); return NULL; }
+sequence *start_atmo_train() { mus[ATMO_TRAIN] = audio_sample_start("EP02 Atmo Ext Train", 0, 1.0f); return NULL; }
+sequence *fade_matt_escape2() { audio_sample_set_volume(mus[MATT_ESCAPE], 0.1098583f); return NULL; }
+sequence *fade_matt_escape3() { audio_sample_set_volume(mus[MATT_ESCAPE], 0.2363281f); return NULL; }
+sequence *fade_matt_escape4() { audio_sample_fade(mus[MATT_ESCAPE], 0.1098583f, 0.0f, 7667, 11667); return NULL; }
+sequence *fade_matt_escape5() { audio_sample_fade(mus[MATT_ESCAPE], 0.1098583f, 0.0f, 0, 4000); return NULL; }
+sequence *fade_lee_line2() { audio_sample_fade(mus[LEE_LINE], 0.06439577f, 0.09268466f, 500, 2000); return NULL; }
+sequence *stop_atmo_ext_house() { audio_sample_stop_and_free(mus[ATMO_EXT_HOUSE]); return NULL; }
+sequence *start_showdown_riser() { mus[SHOWDOWN_RISER] = audio_sample_start("EP11 Showdown Riser", 0, 0.1749866f); return NULL; }
+sequence *stop_atmo_train_station() { audio_sample_stop_and_free(mus[ATMO_TRAIN_STATION]); return NULL; }
+sequence *start_jeff_line() { mus[JEFF_LINE] = audio_sample_start("EP02 Jeffline", 0, 0.04032431f); return NULL; }
+sequence *fade_jeff_line() { audio_sample_fade(mus[JEFF_LINE], 0.04032431f, 0.0750012f, 36375, 48375); return NULL; }
+sequence *fade_jeff_line2() { audio_sample_fade(mus[JEFF_LINE], 0.04032431f, 0.09360203f, 20875, 24375); return NULL; }
+sequence *start_jeff_gun() { mus[JEFF_GUN] = audio_sample_start("EP02 Jeffgun", 0, 0.2502597f); return NULL; }
+sequence *start_leg_it() { mus[LEG_IT] = audio_sample_start("EP02 Leg it", 0, 0.2508919f); return NULL; }
+sequence *start_atmo_house() { mus[ATMO_HOUSE] = audio_sample_start("EP02 Atmo Int House", 1, 1.0f); return NULL; }
+sequence *start_any_suggestions() { mus[ANY_SUGGESTIONS] = audio_sample_start("EP02 Any Suggestions", 0, 0.2505929f); return NULL; }
 
 void fill_events() {
 	// OPENING
@@ -573,17 +596,51 @@ void fill_events() {
 	install_timed_event(&sequences[213], 7042, 0, EVENT_ONESHOT, stop_carpark_melody);
 	// EPISODE 2
 	// seg201
+	install_timed_event(&sequences[41], 0, 0, EVENT_ONESHOT, start_lee_line);
+	install_timed_event(&sequences[41], 500, 0, EVENT_ONESHOT, start_atmo_ext_house);
+	install_timed_event(&sequences[41], 500, 7000, EVENT_DURATION, fade_matt_escape);
+	install_timed_event(&sequences[41], 7000, 0, EVENT_ONESHOT, stop_matt_escape);
+	install_timed_event(&sequences[41], 16833, 18875, EVENT_DURATION, fade_lee_line);
 	// seg202
-	// seg203
+	install_timed_event(&sequences[42], 0, 0, EVENT_ONESHOT, maybe_start_matt_escape);
+	install_timed_event(&sequences[42], 0, 0, EVENT_ONESHOT, start_atmo_train_station);
+	install_timed_event(&sequences[42], 11500, 0, EVENT_ONESHOT, fade_matt_escape2);
+	install_timed_event(&sequences[42], 12458, 0, EVENT_ONESHOT, fade_matt_escape3);
+	install_timed_event(&sequences[42], 15292, 0, EVENT_ONESHOT, fade_matt_escape2);
+	install_timed_event(&sequences[42], 15292, 0, EVENT_ONESHOT, start_atmo_train);
+	install_timed_event(&sequences[42], 17417, 0, EVENT_ONESHOT, fade_matt_escape3);
+	// seg203 (empty)
 	// seg204
+	install_timed_event(&sequences[44], 500, 2000, EVENT_DURATION, fade_lee_line2);
+	install_timed_event(&sequences[44], 2000, 0, EVENT_ONESHOT, start_showdown_riser);
+	install_timed_event(&sequences[44], 24000, 0, EVENT_ONESHOT, stop_atmo_ext_house);
 	// seg205
+	install_timed_event(&sequences[45], 8400, 0, EVENT_ONESHOT, stop_atmo_ext_house);
 	// seg206
+	install_timed_event(&sequences[46], 7200, 0, EVENT_ONESHOT, stop_atmo_ext_house);
 	// seg207
+	install_timed_event(&sequences[47], 7667, 11667, EVENT_DURATION, fade_matt_escape4);
+	install_timed_event(&sequences[47], 11667, 0, EVENT_ONESHOT, stop_matt_escape);
+	install_timed_event(&sequences[47], 18625, 0, EVENT_ONESHOT, stop_atmo_train_station);
+	install_timed_event(&sequences[47], 31417, 0, EVENT_ONESHOT, start_jeff_line);
+	install_timed_event(&sequences[47], 36375, 48375, EVENT_DURATION, fade_jeff_line);
 	// seg202_1
+	install_timed_event(&sequences[48], 208, 0, EVENT_ONESHOT, start_jeff_gun);
 	// seg209
+	install_timed_event(&sequences[49], 0, 0, EVENT_ONESHOT, start_leg_it);
+	install_timed_event(&sequences[49], 1000, 0, EVENT_ONESHOT, stop_matt_escape);
+	install_timed_event(&sequences[49], 19958, 0, EVENT_ONESHOT, start_jeff_line);
+	install_timed_event(&sequences[49], 26500, 0, EVENT_ONESHOT, stop_atmo_train_station);
 	// seg210
+	install_timed_event(&sequences[50], 0, 4000, EVENT_DURATION, fade_matt_escape5);
+	install_timed_event(&sequences[50], 4000, 0, EVENT_ONESHOT, stop_matt_escape);
+	install_timed_event(&sequences[50], 12917, 0, EVENT_ONESHOT, start_jeff_line);
+	install_timed_event(&sequences[50], 21500, 0, EVENT_ONESHOT, stop_atmo_train_station);
 	// seg208_213_214
+	install_timed_event(&sequences[51], 20875, 24375, EVENT_DURATION, fade_jeff_line2);
+	install_timed_event(&sequences[51], 60917, 0, EVENT_ONESHOT, start_atmo_house);
 	// seg215
+	install_timed_event(&sequences[52], 26250, 0, EVENT_ONESHOT, start_any_suggestions);
 	// seg216
 	// seg217
 	// seg218
