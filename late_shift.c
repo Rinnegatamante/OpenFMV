@@ -181,9 +181,66 @@ enum {
 	ONE_LESS_PROBLEM,
 	JEFF_LINE,
 	// EPISODE 3
+	ATMO_BASEMENT_SEBASTIEN,
+	CAR_PARK_ELEVATOR,
+	HAIMSWORTH_STAIRS,
+	ATMO_INSIDE_OFFICE,
+	GET_AWAY_LONG,
+	BIDDING_RISER_INTERVENE_1,
+	BIDDING_RISER_INTERVENE_2,
+	AWARENESS,
+	BRUTAL_RISER,
+	BRUTAL_CONSEQUENCE_1,
+	BRUTAL_CONSEQUENCE_2,
+	BRUTAL_CONSEQUENCE_3,
+	HAIMSWORTH_ELEVATOR,
+	ATMO_OUTSIDE_OFFICE,
+	DANCE_CHERRY_BLOSSOMS,
+	HAINSWORTH_OFFICE,
+	ATMO_BASEMENT_GUARD,
+	ATMO_AUCTION,
+	ATMO_FREIGHT_LIFT_PING,
+	VO_MATT_NO_MONEY,
+	AWARENESS_DOWNLIFTER,
+	BIDDING_RISER_LET_HER,
+	BRUTAL_CONSEQUENCE_KEYPAD,
+	ATMO_ENTRANCE,
+	VO_MATT_MONEY,
+	AUCTION_GUY,
+	BIDDING_FLACHE,
+	BOWL_AUCTION,
+	GET_AWAY_RISER,
+	HAINSWORTH_LOBBY,
+	ATMO_ALARM,
+	ATMO_HALL,
+	TAKING_SEATS,
 	// EPISODE 4
+	ATMO_FORD_TRANSIT,
+	AFTER_CRASH,
+	ATMO_SIREN,
+	ATMO_SIREN_2,
+	ATMO_SIREN_3,
+	GET_AWAY_SHORT,
+	ATMO_BMW_M5,
+	ATMO_BMW_I8,
+	ATMO_LONDON,
+	GET_AWAY_RISER_NEW,
+	ATMO_FIRE,
 	// EPISODE 5A
+	ATMO_WOE_OFFICE,
+	WOE_DARK,
+	POLICE_EVERYWHERE,
+	WOES_RESTO,
+	PUSHING_YOUR_CHANCES,
+	ATMO_HONG_KONG_BACK_DOOR,
+	WOE_BOWL_MUSIC,
+	ATMO_HONG_KONG_CITY,
+	WOE_DARK_END,
 	// EPISODE 5B
+	SHOWDOWN_AND_VIOLENCE,
+	RADIO_PLAY,
+	TENSENESS,
+	ATMO_POLICE_STATION,
 	// EPISODE 6A
 	ATMO_HOTEL_ROOM,
 	TSCHOI_STAB,
@@ -192,7 +249,6 @@ enum {
 	ATMO_TV_BG_PART3,
 	ATMO_TV_BG_TRANS,
 	ATMO_STAIRWAY,
-	RADIOPLAY,
 	ATMO_BACKYARD,
 	ON_THE_NEWS,
 	HOTEL_ROMANCE,
@@ -557,13 +613,41 @@ sequence *stop_one_less_problem() { audio_sample_stop_and_free(mus[ONE_LESS_PROB
 sequence *fade_one_less_problem2() { audio_sample_fade(mus[ONE_LESS_PROBLEM], 0.2497907f, 0.0f, 16292, 20292); return NULL; }
 sequence *start_lets_go() { mus[LETS_GO] = audio_sample_start("EP02 Let's go", 0, 0.0234771f); return NULL; }
 sequence *stop_pushing() { audio_sample_stop_and_free(mus[PUSHING_YOUR_CHANCE]); return NULL; }
-sequence *fade_lets_go() { audio_sample_set_volume(mus[PUSHING_YOUR_CHANCE], 0.09779948f); return NULL; }
+sequence *fade_lets_go() { audio_sample_set_volume(mus[LETS_GO], 0.09779948f); return NULL; }
 sequence *stop_atmo_house() { audio_sample_stop_and_free(mus[ATMO_HOUSE]); return NULL; }
 sequence *stop_lee_line() { audio_sample_stop_and_free(mus[LEE_LINE]); return NULL; }
 sequence *fade_pushing() { audio_sample_fade(mus[PUSHING_YOUR_CHANCE], 0.2500465f, 0.0f, 10292, 19292); return NULL; }
 sequence *start_lets_go2() { mus[LETS_GO] = audio_sample_start("EP02 Let's go", 0, 0.02562345f); return NULL; }
 sequence *fade_lets_go2() { audio_sample_fade(mus[LETS_GO], 0.02562345f, 0.09779948f, 10292, 19292); return NULL; }
-
+sequence *start_dance() { mus[DANCE_CHERRY_BLOSSOMS] = audio_sample_start("EP03 Dance of the Cherry Blossoms", 1, 0.0f); return NULL; }
+sequence *start_atmo_entrance() { mus[ATMO_ENTRANCE] = audio_sample_start("EP03 Atmo Ext Entrance", 1, 1.0f); return NULL; }
+sequence *start_auction_guy() { mus[AUCTION_GUY] = audio_sample_start("EP07 Auction Guy", 0, 0.09981957f); return NULL; }
+sequence *fade_lets_go3() { audio_sample_set_volume(mus[LETS_GO], 0.07045589f); return NULL; }
+sequence *fade_lets_go4() { audio_sample_fade(mus[LETS_GO], 0.07045589f, 0.1091634f, 17000, 18000); return NULL; }
+sequence *fade_dance() { audio_sample_fade(mus[DANCE_CHERRY_BLOSSOMS], 0.0f, 0.1775957f, 73958, 79958); return NULL; }
+sequence *start_matt_vo() { if (game_vars.respect_earned) { mus[VO_MATT_NO_MONEY] = audio_sample_start("EP03 VO Matt No Money Taken", 0, 0.02562345f); } else { mus[VO_MATT_MONEY] = audio_sample_start("EP03 VO Matt Money Taken", 0, 0.02562345f); } return NULL; }
+sequence *stop_auction_guy() { audio_sample_stop_and_free(mus[AUCTION_GUY]); return NULL; }
+sequence *stop_atmo_entrance() { audio_sample_stop_and_free(mus[ATMO_ENTRANCE]); return NULL; }
+sequence *change_dance() { audio_sample_set_volume(mus[DANCE_CHERRY_BLOSSOMS], 0.1420184f); return NULL; }
+sequence *start_atmo_auction() { mus[ATMO_AUCTION] = audio_sample_start("EP03 Atmo Int Auction", 1, 1.0f); return NULL; }
+sequence *change_dance2() { audio_sample_set_volume(mus[DANCE_CHERRY_BLOSSOMS], 0.07851835f); return NULL; }
+sequence *start_taking_seats() { mus[TAKING_SEATS] = audio_sample_start("EP03 Taking Seats", 0, 0.1574344f); return NULL; }
+sequence *stop_taking_seats() { audio_sample_stop_and_free(mus[TAKING_SEATS]); return NULL; }
+sequence *stop_dance() { audio_sample_stop_and_free(mus[DANCE_CHERRY_BLOSSOMS]); return NULL; }
+sequence *fade_taking_seats() { audio_sample_fade(mus[TAKING_SEATS], 0.1574344f, 0.0f, 69083, 79083); return NULL; }
+sequence *start_bowl_auction() { mus[BOWL_AUCTION] = audio_sample_start("EP03 Bowl Auction", 0, 0.1023089f); return NULL; }
+sequence *fade_bowl_auction() { audio_sample_fade(mus[BOWL_AUCTION], 0.1023089f, 0.1303438f, 90917, 92917); return NULL; }
+sequence *fade_bidding_flache() { audio_sample_fade(mus[BIDDING_FLACHE], 0.422129f, 0.2513284f, 158625, 160625); return NULL; }
+sequence *start_bidding_flache() { mus[BIDDING_FLACHE] = audio_sample_start("EP03 Bidding Flache Nu", 0, 0.422129f); return NULL; }
+sequence *start_bidding_riser_1() { mus[BIDDING_RISER_INTERVENE_1] = audio_sample_start("EP03 Bidding Riser Intervene I", 0, 0.1186769f); return NULL; }
+sequence *stop_atmo_auction() { audio_sample_stop_and_free(mus[ATMO_AUCTION]); return NULL; }
+sequence *start_atmo_hall() { mus[ATMO_HALL] = audio_sample_start("EP03 Atmo Int Hall", 1, 1.0f); return NULL; }
+sequence *stop_bidding_flache() { audio_sample_stop_and_free(mus[BIDDING_FLACHE]); return NULL; }
+sequence *start_dance2() { mus[DANCE_CHERRY_BLOSSOMS] = audio_sample_start("EP03 Dance of the Cherry Blossoms", 0, 0.2655425f); return NULL; }
+sequence *fade_bidding_riser_1() { audio_sample_fade(mus[BIDDING_RISER_INTERVENE_1], 0.1186769f, 0.0f, 39750, 45250); return NULL; }
+sequence *stop_bidding_riser_1() { audio_sample_stop_and_free(mus[BIDDING_RISER_INTERVENE_1]); return NULL; }
+sequence *start_bidding_riser_2() { mus[BIDDING_RISER_INTERVENE_2] = audio_sample_start("EP03 Bidding Riser Intervene II", 0, 0.09432838f); return NULL; }
+	
 void fill_events() {
 	// OPENING
 	// seg101
@@ -767,8 +851,97 @@ void fill_events() {
 	install_timed_event(&sequences[69], 20292, 21625, EVENT_DURATION, fade_lets_go2);
 	install_timed_event(&sequences[69], 21625, 0, EVENT_ONESHOT, stop_atmo_house);
 	// EPISODE 3
+	// seg301_1_301_2
+	install_timed_event(&sequences[70], 10625, 0, EVENT_ONESHOT, start_matt_vo);
+	install_timed_event(&sequences[70], 11000, 0, EVENT_ONESHOT, fade_lets_go3);
+	install_timed_event(&sequences[70], 17000, 18000, EVENT_DURATION, fade_lets_go4);
+	install_timed_event(&sequences[70], 25750, 0, EVENT_ONESHOT, start_atmo_entrance);
+	install_timed_event(&sequences[70], 26875, 0, EVENT_ONESHOT, start_auction_guy);
+	install_timed_event(&sequences[70], 73958, 0, EVENT_ONESHOT, start_dance);
+	install_timed_event(&sequences[70], 73958, 79958, EVENT_DURATION, fade_dance);
+	install_timed_event(&sequences[70], 80583, 0, EVENT_ONESHOT, stop_auction_guy);
+	// seg302_a
+	install_timed_event(&sequences[71], 9500, 0, EVENT_ONESHOT, stop_atmo_entrance);
+	// seg302_b
+	install_timed_event(&sequences[72], 7500, 0, EVENT_ONESHOT, stop_atmo_entrance);
+	// seg303_310
+	install_timed_event(&sequences[73], 0, 0, EVENT_ONESHOT, change_dance);
+	install_timed_event(&sequences[73], 17958, 0, EVENT_ONESHOT, change_dance2);
+	install_timed_event(&sequences[73], 18458, 0, EVENT_ONESHOT, start_atmo_auction);
+	install_timed_event(&sequences[73], 25542, 0, EVENT_ONESHOT, start_taking_seats);
+	install_timed_event(&sequences[73], 69083, 79083, EVENT_DURATION, fade_taking_seats);
+	install_timed_event(&sequences[73], 79083, 0, EVENT_ONESHOT, stop_taking_seats);
+	install_timed_event(&sequences[73], 80542, 0, EVENT_ONESHOT, stop_dance);
+	install_timed_event(&sequences[73], 82333, 0, EVENT_ONESHOT, start_bowl_auction);
+	install_timed_event(&sequences[73], 90917, 92917, EVENT_DURATION, fade_bowl_auction);
+	install_timed_event(&sequences[73], 148625, 0, EVENT_ONESHOT, start_bidding_flache);
+	install_timed_event(&sequences[73], 158625, 160625, EVENT_DURATION, fade_bidding_flache);
 	// seg311
 	install_timed_event(&sequences[74], 70667, 73417, EVENT_DURATION, seg314_1);
+	// seg312
+	install_timed_event(&sequences[75], 0, 0, EVENT_ONESHOT, start_bidding_riser_1);
+	install_timed_event(&sequences[75], 39417, 0, EVENT_ONESHOT, start_dance2);
+	install_timed_event(&sequences[75], 39458, 0, EVENT_ONESHOT, stop_atmo_auction);
+	install_timed_event(&sequences[75], 39750, 0, EVENT_ONESHOT, start_atmo_hall);
+	install_timed_event(&sequences[75], 39750, 45250, EVENT_DURATION, fade_bidding_riser_1);
+	install_timed_event(&sequences[75], 45250, 0, EVENT_ONESHOT, stop_bidding_flache);
+	install_timed_event(&sequences[75], 45250, 0, EVENT_ONESHOT, stop_bidding_riser_1);
+	// seg314_1
+	install_timed_event(&sequences[76], 0, 0, EVENT_ONESHOT, start_bidding_riser_2);
+	install_timed_event(&sequences[76], 2000, 0, EVENT_ONESHOT, stop_bidding_flache);
+	// seg314_2
+	install_timed_event(&sequences[77], 0, 0, EVENT_ONESHOT, start_bidding_riser_2);
+	install_timed_event(&sequences[77], 2000, 0, EVENT_ONESHOT, stop_bidding_flache);
+	// seg313
+	// seg315
+	// seg316_b
+	// seg316_c
+	// seg317
+	// seg318
+	// seg343_344_a
+	// seg343_344_b
+	// seg314
+	// seg345
+	// seg319
+	// seg320_k
+	// seg322
+	// seg322_tap
+	// seg326_324
+	// seg327
+	// seg328
+	// seg329
+	// seg329_1
+	// seg331
+	// seg333
+	// seg346_350_352
+	// seg354
+	// seg365_366
+	// seg342
+	// seg335
+	// seg341
+	// seg338
+	// seg339
+	// seg340
+	// seg330
+	// seg349_355_356
+	// seg357
+	// seg358_359
+	// seg364_367_a_368
+	// seg364_367_b_368
+	// seg321_324
+	// seg325_a
+	// seg325_b
+	// seg334
+	// seg336
+	// seg337
+	// seg360
+	// seg361
+	// seg362
+	// seg363
+	// seg369_1k
+	// seg369_2k
+	// seg370_375
+	// seg373_374_366
 	// EPISODE 4
 	// seg434
 	install_timed_event(&sequences[153], 31083, 32042, EVENT_DURATION, seg435_a_event);
