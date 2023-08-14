@@ -177,7 +177,7 @@ void start_sequence(sequence *s) {
 	
 	// Updating progress save
 	if (trigger_save) {
-		FILE *f = fopen("ux0:data/Late Shift/progress.sav", "w");
+		FILE *f = fopen(SAVE_FILE, "w");
 		fwrite(s->hash, 1, 32, f);
 		fwrite(&game_vars, 1, sizeof(gamestate), f);
 		fclose(f);
