@@ -16,11 +16,23 @@
 int _newlib_heap_size_user = 256 * 1024 * 1024;
 
 void ImGui_TextCentered(char *text) {
-    auto windowWidth = ImGui::GetWindowSize().x;
-    auto textWidth   = ImGui::CalcTextSize(text).x;
-
-    ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
-    ImGui::Text(text);
+    auto wS = ImGui::GetWindowSize();
+    auto tS = ImGui::CalcTextSize(text);
+	
+	char *newline = strstr(text, "\n");
+	if (newline) {
+		newline[0] = 0;
+		auto lX = ImGui::CalcTextSize(text);
+		ImGui::SetCursorPos(ImVec2((wS.x - lX.x) * 0.5f, (wS.y - tS.y) * 0.5f));
+		ImGui::Text(text);
+		auto lX2 = ImGui::CalcTextSize(&newline[1]);
+		ImGui::SetCursorPos(ImVec2((wS.x - lX2.x) * 0.5f, (wS.y - tS.y) * 0.5f + lX.y));
+		ImGui::Text(&newline[1]);
+		newline[0] = '\n';
+	} else {
+		ImGui::SetCursorPos(ImVec2((wS.x - tS.x) * 0.5f, (wS.y - tS.y) * 0.5f));
+		ImGui::Text(text);
+	}
 }
 
 void reload_theme() {
@@ -170,8 +182,8 @@ subtitle_draw:
 					
 					// Draw current subtitle
 					ImGui::SetNextWindowBgAlpha(0.0f);
-					ImGui::SetNextWindowPos(ImVec2(0, 485), ImGuiSetCond_Always);
-					ImGui::SetNextWindowSize(ImVec2(960, 80), ImGuiSetCond_Always);
+					ImGui::SetNextWindowPos(ImVec2(subs_win.x, subs_win.y), ImGuiSetCond_Always);
+					ImGui::SetNextWindowSize(ImVec2(subs_win.w, subs_win.h), ImGuiSetCond_Always);
 					ImGui::Begin("##sub", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBringToFrontOnFocus);
 					ImGui::PushFont(cur_sub->is_italic ? fnt_italic : fnt_normal);
 					ImGui_TextCentered(cur_sub->text);

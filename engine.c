@@ -26,6 +26,7 @@ int game_state;
 gamestate game_vars;
 sequence sequences[NUM_SEQUENCES];
 audio_sample bgm[NUM_AUDIO_SAMPLES];
+subs_window subs_win;
 
 sequence *cur_seq;
 subtitle *cur_sub;
@@ -278,4 +279,11 @@ void start_subs_loader() {
 	subs_delivered_mutex = sceKernelCreateSema("subs delivery", 0, 1, 1, NULL);
 	SceUID subs_loader_thd = sceKernelCreateThread("subs loader", &subs_loader, 0x10000100, 0x10000, 0, 0, NULL);
 	sceKernelStartThread(subs_loader_thd, 0, NULL);
+}
+
+void set_subs_window(float x, float y, float w, float h) {
+	subs_win.x = x;
+	subs_win.y = y;
+	subs_win.w = w;
+	subs_win.h = h;
 }

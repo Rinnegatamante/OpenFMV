@@ -12,8 +12,6 @@
 
 #define MENU_INPUT_DELAY (300000) // Input delay in microseconds between two key presses
 
-extern void ImGui_TextCentered(char *text);
-
 float *draw_attributes = NULL;
 int draw_video_frame() {
 	if (!draw_attributes)
@@ -84,7 +82,11 @@ void draw_text(float x, float y, const char *label, float *clr) {
 
 void draw_centered_text(float y, const char *label) {
 	ImGui::SetCursorPosY(y);
-	ImGui_TextCentered(label);
+	auto windowWidth = ImGui::GetWindowSize().x;
+	auto textWidth   = ImGui::CalcTextSize(label).x;
+
+	ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
+	ImGui::Text(label);
 }
 
 int draw_button(float x, float y, const char *label, int *state) {

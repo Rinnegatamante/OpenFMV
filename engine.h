@@ -65,6 +65,13 @@ typedef struct subtitle {
 	struct subtitle *next;
 } subtitle;
 
+typedef struct subs_window {
+	float x;
+	float y;
+	float w;
+	float h;
+} subs_window;
+
 enum {
 	EVENT_ONESHOT,
 	EVENT_DURATION
@@ -141,6 +148,7 @@ extern int game_state;
 extern uint32_t cur_delta;
 extern unzFile sub_handle;
 extern engine config;
+extern subs_window subs_win;
 
 extern void *snd_click;
 extern void *snd_hover;
@@ -155,6 +163,7 @@ void install_timed_event(sequence *t, uint32_t start, uint32_t end, uint8_t type
 void load_subtitles(sequence *s);
 void reload_subtitles(sequence *s);
 void start_subs_loader();
+void set_subs_window(float x, float y, float w, float h);
 
 void spooky_hash128(const void *buf, int len, char *out);
 void resolve_hash(const char *src, char *dst);
