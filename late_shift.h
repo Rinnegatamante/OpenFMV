@@ -10,6 +10,8 @@
 #define VIDEOS_FILE "ux0:data/Late Shift/Videos.psarc"
 #define AUDIO_FOLDER "ux0:data/Late Shift/oggs"
 
+#define SUBTITLE_NEWLINE "\n\n"
+
 #define GAME_VER "0.6.5"
 
 #ifdef __cplusplus

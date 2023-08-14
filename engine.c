@@ -63,7 +63,10 @@ void load_subtitles(sequence *s) {
 			} else {
 				s->subs[s->num_subs].is_italic = 0;
 			}
-			char *end = strstr(start, "\n");
+			char *end = strstr(start, SUBTITLE_NEWLINE);
+			if (!end) {
+				end = &generic_mem_buffer[strlen(generic_mem_buffer) - 2];
+			}
 			strncpy(s->subs[s->num_subs].text, start, end - start);
 			s->subs[s->num_subs].text[end - start] = 0;
 			s->subs[s->num_subs].next = NULL;

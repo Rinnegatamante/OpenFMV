@@ -10,6 +10,8 @@
 #define VIDEOS_FILE "ux0:data/Five Dates/Videos.psarc"
 #define AUDIO_FOLDER "ux0:data/Five Dates/oggs"
 
+#define SUBTITLE_NEWLINE "\n\n"
+
 #define GAME_VER "0.0.1"
 
 #ifdef __cplusplus
