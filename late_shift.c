@@ -117,6 +117,16 @@ char *go_to_police() { return game_strings[202]; }
 char *follow_her() { return game_strings[203]; }
 char *dont_mention_may() { return game_strings[209]; }
 char *mention_may() { return game_strings[210]; }
+char *kiss() { return game_strings[214]; }
+char *withdraw() { return game_strings[215]; }
+char *ask() { return game_strings[217]; }
+char *open_window() { return game_strings[219]; }
+char *_continue() { return game_strings[224]; }
+char *upstairs() { return game_strings[220]; }
+char *break_it() { return game_strings[221]; }
+char *trust() { return game_strings[222]; }
+char *dont_trust() { return game_strings[223]; }
+char *go_back() { return game_strings[225]; }
 
 // Game possible variable values
 enum {
@@ -175,6 +185,17 @@ enum {
 	// EPISODE 5A
 	// EPISODE 5B
 	// EPISODE 6A
+	ATMO_HOTEL_ROOM,
+	TSCHOI_STAB,
+	ATMO_TV_BG_PART1,
+	ATMO_TV_BG_PART2,
+	ATMO_TV_BG_PART3,
+	ATMO_TV_BG_TRANS,
+	ATMO_STAIRWAY,
+	RADIOPLAY,
+	ATMO_BACKYARD,
+	ON_THE_NEWS,
+	HOTEL_ROMANCE,
 	// EPISODE 6B
 	// EPISODE 7
 	// EPISODE 9A
@@ -415,6 +436,26 @@ sequence *seg565() { return &sequences[208]; }
 sequence *eval_gone_to_woe2() { return game_vars.gone_to_woe ? &sequences[209] : &sequences[210]; }
 sequence *seg570_571() { return &sequences[211]; }
 // EPISODE 6A
+sequence *seg601_602_603() { /*purge_from_ep*/ trigger_save = 1; return &sequences[214]; }
+sequence *eval_blank_book() { return game_vars.blank_book ? &sequences[215] : &sequences[216]; }
+sequence *eval_may_likes_matt() { if (game_vars.may_likes_matt >= 4) { game_vars.may_kiss = 1; return &sequences[233]; } return &sequences[234]; }
+sequence *eval_may_kiss() { return game_vars.may_kiss ? &sequences[236] : &sequences[235]; }
+sequence *seg605_b() { return &sequences[217]; }
+sequence *seg606() { return &sequences[218]; }
+sequence *seg607() { return &sequences[219]; }
+sequence *seg610() { return &sequences[221]; }
+sequence *seg608() { return &sequences[220]; }
+sequence *seg614_b() { return &sequences[223]; }
+sequence *seg614_a() { return &sequences[222]; }
+sequence *seg615() { return &sequences[225]; }
+sequence *seg618() { return &sequences[224]; }
+sequence *seg619() { return &sequences[226]; }
+sequence *seg616_622() { return &sequences[228]; }
+sequence *seg620_621_622() { return &sequences[227]; }
+sequence *seg617() { return &sequences[229]; }
+sequence *seg623_a() { return &sequences[230]; }
+sequence *seg623_b() { return &sequences[231]; }
+sequence *seg624() { game_vars.radioplay_started = 1; return &sequences[232]; }
 // EPISODE 6B
 // EPISODE 7
 // EPISODE 9A
@@ -965,6 +1006,29 @@ void fill_sequences() {
 	resolve_hash("seg568_a", sequences[210].hash);
 	resolve_hash("seg570_571", sequences[211].hash);
 	// EPISODE 6A
+	resolve_hash("seg601_602_603", sequences[214].hash);
+	resolve_hash("seg604_c", sequences[215].hash);
+	resolve_hash("seg604_d", sequences[216].hash);
+	resolve_hash("seg605_b", sequences[217].hash);
+	resolve_hash("seg606", sequences[218].hash);
+	resolve_hash("seg607", sequences[219].hash);
+	resolve_hash("seg608", sequences[220].hash);
+	resolve_hash("seg610", sequences[221].hash);
+	resolve_hash("seg614_a", sequences[222].hash);
+	resolve_hash("seg614_b", sequences[223].hash);
+	resolve_hash("seg618", sequences[224].hash);
+	resolve_hash("seg615", sequences[225].hash);
+	resolve_hash("seg619", sequences[226].hash);
+	resolve_hash("seg620_621_622", sequences[227].hash);
+	resolve_hash("seg616_622", sequences[228].hash);
+	resolve_hash("seg617", sequences[229].hash);
+	resolve_hash("seg623_a", sequences[230].hash);
+	resolve_hash("seg623_b", sequences[231].hash);
+	resolve_hash("seg624", sequences[232].hash);
+	resolve_hash("seg604_a", sequences[233].hash);
+	resolve_hash("seg604_b", sequences[234].hash);
+	resolve_hash("seg609_a", sequences[235].hash);
+	resolve_hash("seg609_b", sequences[236].hash);
 	// EPISODE 6B
 	// EPISODE 7
 	// EPISODE 9A
@@ -1173,7 +1237,7 @@ void fill_sequences() {
 	fill_sequence(&sequences[189], seg551, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg528_b (END OF EPISODE -> 05B)
 	fill_sequence(&sequences[190], seg530, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg529_a
 	fill_sequence(&sequences[191], seg530, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg529_b
-	fill_sequence(&sequences[192], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg530 (END OF EPISODE -> 06A)
+	fill_sequence(&sequences[192], seg601_602_603, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg530 (END OF EPISODE -> 06A)
 	// EPISODE 5B
 	fill_sequence(&sequences[193], seg554, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg551
 	fill_sequence(&sequences[194], eval_gone_to_woe, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg554
@@ -1195,6 +1259,29 @@ void fill_sequences() {
 	fill_sequence(&sequences[210], seg570_571, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg568_a
 	fill_sequence(&sequences[211], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg570_571 (END OF EPISODE -> 06B)
 	// EPISODE 6A
+	fill_sequence(&sequences[214], eval_blank_book, kiss, withdraw, NULL, eval_may_likes_matt, eval_blank_book, NULL, 99333, 102917, 102917); // seg601_602_603
+	fill_sequence(&sequences[215], seg605_b, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg604_c
+	fill_sequence(&sequences[216], seg605_b, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg604_d
+	fill_sequence(&sequences[217], seg606, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg605_b
+	fill_sequence(&sequences[218], seg607, explain, ask, NULL, seg607, seg608, NULL, 44250, 48083, 45792); // seg606
+	fill_sequence(&sequences[219], seg610, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg607
+	fill_sequence(&sequences[220], eval_may_kiss, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg608
+	fill_sequence(&sequences[221], seg614_b, go_downstairs, open_window, NULL, seg618, seg614_a, NULL, 17292, 21833, 17292); // seg610
+	fill_sequence(&sequences[222], seg615, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg614_a
+	fill_sequence(&sequences[223], seg615, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg614_b
+	fill_sequence(&sequences[224], seg619, _continue, go_back, NULL, seg620_621_622, seg619, NULL, 4625, 8000, 6750); // seg618
+	fill_sequence(&sequences[225], seg616_622, upstairs, break_it, NULL, seg617, seg616_622, NULL, 250, 3792, 2792); // seg615
+	fill_sequence(&sequences[226], seg624, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg619
+	fill_sequence(&sequences[227], seg623_a, trust, dont_trust, NULL, seg623_a, seg623_b, NULL, 25500, 29292, 29292); // seg620_621_622
+	fill_sequence(&sequences[228], seg623_b, trust, dont_trust, NULL, seg623_a, seg623_b, NULL, 34500, 38250, 38250); // seg616_622
+	fill_sequence(&sequences[229], seg624, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg617
+	fill_sequence(&sequences[230], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg623_a (END OF EPISODE -> 07)
+	fill_sequence(&sequences[231], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg623_b (END OF EPISODE -> 06B)
+	fill_sequence(&sequences[232], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg624 (END OF EPISODE -> 06B)
+	fill_sequence(&sequences[233], seg606, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg604_a
+	fill_sequence(&sequences[234], seg605_b, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg604_b
+	fill_sequence(&sequences[235], seg610, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg609_a
+	fill_sequence(&sequences[236], seg610, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg609_b
 	// EPISODE 6B
 	// EPISODE 7
 	// EPISODE 9A

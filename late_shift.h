@@ -10,7 +10,7 @@
 #define VIDEOS_FILE "ux0:data/Late Shift/Videos.psarc"
 #define AUDIO_FOLDER "ux0:data/Late Shift/oggs"
 
-#define GAME_VER "0.6.0"
+#define GAME_VER "0.6.5"
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,6 +38,8 @@ typedef struct {
 	uint8_t has_cookie;
 	uint8_t report_to_police;
 	uint8_t matt_escape;
+	uint8_t radioplay_started;
+	uint8_t may_kiss;
 } gamestate;
 
 extern gamestate game_vars;

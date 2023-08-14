@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <vitasdk.h>
 #include "audio.h"
 #include "engine.h"
 #include "games.h"
@@ -86,7 +87,7 @@ int subs_loader(SceSize args, void *argp) {
 			if (!to_load[i]) {
 				break;
 			}
-			load_subtitles(to_load[i]);
+			load_subtitles((sequence *)to_load[i]);
 		}
 		sceKernelSignalSema(subs_delivered_mutex, 1);
 	}

@@ -14,7 +14,7 @@ This repository does not contain any copyrighted asset coming from the games and
 | [Bloodshore](https://store.steampowered.com/app/1490840/Bloodshore/)     | 0% | 0% |0% |
 | [Five Dates](https://store.steampowered.com/app/1353270/Five_Dates/)     | 0% | 0% |0.13% |
 | [I Saw Black Clouds](https://store.steampowered.com/app/1346830/I_Saw_Black_Clouds/)     | 0% | 0% |0% |
-| [Late Shift](https://store.steampowered.com/app/584980/Late_Shift/)     | 14.17% | 96.67% |41.93% |
+| [Late Shift](https://store.steampowered.com/app/584980/Late_Shift/)     | 14.17% | 96.67% |46.85% |
 | [Mia and the Dragon Princess](https://store.steampowered.com/app/1837580/Mia_and_the_Dragon_Princess/)     | 0% | 0% |0% |
 | [Night Book](https://store.steampowered.com/app/1477920/Night_Book/)     | 0% | 0% |0% |
 | [Ten Dates](https://store.steampowered.com/app/1946070/Ten_Dates/)     | 0% | 0% |0% |
