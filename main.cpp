@@ -143,6 +143,14 @@ main_menu:
 				audio_resume();
 			}
 		}
+#ifdef DEBUG
+		#define FAST_SKIP_MS 5000
+		if ((pad.buttons & SCE_CTRL_LTRIGGER) && !(oldpad & SCE_CTRL_LTRIGGER)) {
+			video_jump_to_time(cur_delta > FAST_SKIP_MS ? (cur_delta - FAST_SKIP_MS) : 0);
+		} else if ((pad.buttons & SCE_CTRL_RTRIGGER) && !(oldpad & SCE_CTRL_RTRIGGER)) {
+			video_jump_to_time(cur_delta + FAST_SKIP_MS);
+		}
+#endif
 		
 		// Draw current video frame
 		if (draw_video_frame()) {
@@ -334,7 +342,7 @@ handle_event:
 					start_sequence(cur_seq->e());
 					break;
 				default:
-					printf("Fatal Error: Invalid chosen path.\n");
+					debug_log("Fatal Error: Invalid chosen path.\n");
 					break;
 				}
 			}

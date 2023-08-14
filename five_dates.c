@@ -47,56 +47,56 @@ void load_localization_files(int lang) {
 	FILE *f;
 	switch (lang) {
 	/*case LANG_KO:
-		printf("Language: Korean\n");
+		debug_log("Language: Korean\n");
 		current_lang = 14;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/ko.zip");
 		f = fopen("app0:data/lang/ko.str", "r");
 		break;*/
 	case LANG_TR:
-		printf("Language: Turkish\n");
+		debug_log("Language: Turkish\n");
 		current_lang = 6;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/tr.zip");
 		f = fopen("app0:data/lang/tr.str", "r");
 		break;
 	case LANG_FR:
-		printf("Language: French\n");
+		debug_log("Language: French\n");
 		current_lang = 1;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/fr.zip");
 		f = fopen("app0:data/lang/fr.str", "r");
 		break;
 	case LANG_DE:
-		printf("Language: German\n");
+		debug_log("Language: German\n");
 		current_lang = 3;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/de.zip");
 		f = fopen("app0:data/lang/de.str", "r");
 		break;
 	case LANG_ES:
-		printf("Language: Spanish\n");
+		debug_log("Language: Spanish\n");
 		current_lang = 2;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/es.zip");
 		f = fopen("app0:data/lang/es.str", "r");
 		break;
 	/*case LANG_CH_S:
-		printf("Language: Simplified Chinese\n");
+		debug_log("Language: Simplified Chinese\n");
 		current_lang = 12;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/zhs.zip");
 		f = fopen("app0:data/lang/zhs.str", "r");
 		break;*/
 	case LANG_PT_BR:
 	case LANG_PT:
-		printf("Language: Portuguese\n");
+		debug_log("Language: Portuguese\n");
 		current_lang = 4;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/ptbr.zip");
 		f = fopen("app0:data/lang/ptbr.str", "r");
 		break;
 	case LANG_RU:
-		printf("Language: Russian\n");
+		debug_log("Language: Russian\n");
 		current_lang = 5;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/ru.zip");
 		f = fopen("app0:data/lang/ru.str", "r");
 		break;
 	default:
-		printf("Language: English\n");
+		debug_log("Language: English\n");
 		current_lang = 0;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/en.zip");
 		f = fopen("app0:data/lang/en.str", "r");
@@ -133,12 +133,12 @@ void game_main_menu() {
 	// TODO
 	
 	// Starting new game
-	printf("Booting first sequence\n");
+	debug_log("Booting first sequence\n");
 	// trigger_save = 1;
 	sequence *out = &sequences[0];
 	memset(&game_vars, 0, sizeof(gamestate));
 
-	start_sequence(out);
+	start_first_sequence(out);
 }
 
 void game_setup() {

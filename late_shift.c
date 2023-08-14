@@ -1322,98 +1322,98 @@ void load_localization_files(int lang) {
 	FILE *f;
 	switch (lang) {
 	case LANG_HU:
-		printf("Language: Hungarian\n");
+		debug_log("Language: Hungarian\n");
 		current_lang = 11;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/hu.zip");
 		f = fopen("app0:data/lang/hu.str", "r");
 		break;
 	case LANG_HE:
-		printf("Language: Hebrew\n");
+		debug_log("Language: Hebrew\n");
 		current_lang = 10;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/he.zip");
 		f = fopen("app0:data/lang/he.str", "r");
 		break;
 	case LANG_UK:
-		printf("Language: Ukrainian\n");
+		debug_log("Language: Ukrainian\n");
 		current_lang = 9;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/uk.zip");
 		f = fopen("app0:data/lang/uk.str", "r");
 		break;
 	/*case LANG_KO:
-		printf("Language: Korean\n");
+		debug_log("Language: Korean\n");
 		current_lang = 14;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/ko.zip");
 		f = fopen("app0:data/lang/ko.str", "r");
 		break;*/
 	case LANG_TR:
-		printf("Language: Turkish\n");
+		debug_log("Language: Turkish\n");
 		current_lang = 8;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/tr.zip");
 		f = fopen("app0:data/lang/tr.str", "r");
 		break;
 	case LANG_DA:
-		printf("Language: Danish\n");
+		debug_log("Language: Danish\n");
 		current_lang = 7;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/da.zip");
 		f = fopen("app0:data/lang/da.str", "r");
 		break;
 	/*case LANG_JA:
-		printf("Language: Japanese\n");
+		debug_log("Language: Japanese\n");
 		current_lang = 15;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/ja.zip");
 		f = fopen("app0:data/lang/ja.str", "r");
 		break;*/
 	case LANG_FR:
-		printf("Language: French\n");
+		debug_log("Language: French\n");
 		current_lang = 1;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/fr.zip");
 		f = fopen("app0:data/lang/fr.str", "r");
 		break;
 	case LANG_DE:
-		printf("Language: German\n");
+		debug_log("Language: German\n");
 		current_lang = 3;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/de.zip");
 		f = fopen("app0:data/lang/de.str", "r");
 		break;
 	case LANG_IT:
-		printf("Language: Italian\n");
+		debug_log("Language: Italian\n");
 		current_lang = 4;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/it.zip");
 		f = fopen("app0:data/lang/it.str", "r");
 		break;
 	case LANG_ES:
-		printf("Language: Spanish\n");
+		debug_log("Language: Spanish\n");
 		current_lang = 2;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/es.zip");
 		f = fopen("app0:data/lang/es.str", "r");
 		break;
 	/*case LANG_CH_S:
-		printf("Language: Simplified Chinese\n");
+		debug_log("Language: Simplified Chinese\n");
 		current_lang = 12;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/zhs.zip");
 		f = fopen("app0:data/lang/zhs.str", "r");
 		break;*/
 	/*case LANG_CH_T:
-		printf("Language: Traditional Chinese\n");
+		debug_log("Language: Traditional Chinese\n");
 		current_lang = 13;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/zht.zip");
 		f = fopen("app0:data/lang/zht.str", "r");		
 		break;*/
 	case LANG_PT_BR:
 	case LANG_PT:
-		printf("Language: Portuguese\n");
+		debug_log("Language: Portuguese\n");
 		current_lang = 5;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/ptbr.zip");
 		f = fopen("app0:data/lang/ptbr.str", "r");
 		break;
 	case LANG_RU:
-		printf("Language: Russian\n");
+		debug_log("Language: Russian\n");
 		current_lang = 6;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/ru.zip");
 		f = fopen("app0:data/lang/ru.str", "r");
 		break;
 	default:
-		printf("Language: English\n");
+		debug_log("Language: English\n");
 		current_lang = 0;
 		sub_handle = unzOpen("ux0:data/Late Shift/Subtitles/en.zip");
 		f = fopen("app0:data/lang/en.str", "r");
@@ -1523,7 +1523,7 @@ void game_main_menu() {
 	void *bg_audio = audio_track_play("EP01 Car Park Melody", 1, 1.0f, &bg_audio_handle);
 	
 	SceIoStat st;
-	int has_save = sceIoGetstat("ux0:data/Late Shift/progress.sav", &st) ? 0 : 1;
+	int has_save = sceIoGetstat(SAVE_FILE, &st) ? 0 : 1;
 	int btns_state[10];
 	int in_options = 0;
 	int request_new_game = 0;
@@ -1566,7 +1566,7 @@ void game_main_menu() {
 						// Resuming save
 						for (int i = 0; i < NUM_SEQUENCES; i++) {
 							if (!strcmp(hash, sequences[i].hash)) {
-								printf("Booting sequence #%d\n", i);
+								debug_log("Booting sequence #%d\n", i);
 								out = &sequences[i];
 								break;
 							}	
@@ -1620,7 +1620,7 @@ void game_main_menu() {
 					draw_centered_text(5.0f, game_strings[5]);
 					if (draw_main_button(w / 4, 60.0f, game_strings[2], &btns_state[7])) {
 						// Starting new game
-						printf("Booting first sequence\n");
+						debug_log("Booting first sequence\n");
 						trigger_save = 1;
 						out = &sequences[0];
 						memset(&game_vars, 0, sizeof(gamestate));
@@ -1631,7 +1631,7 @@ void game_main_menu() {
 					end_menu();
 				} else {
 					// Starting new game
-					printf("Booting first sequence\n");
+					debug_log("Booting first sequence\n");
 					trigger_save = 1;
 					out = &sequences[0];
 					memset(&game_vars, 0, sizeof(gamestate));

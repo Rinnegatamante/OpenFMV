@@ -33,7 +33,7 @@ theme colors;
 void *snd_click, *snd_hover, *snd_pause, *snd_unpause;
 
 void load_subtitles(sequence *s) {
-	printf("Loading subtitles for %s\n", s->hash);
+	debug_log("Loading subtitles for %s\n", s->hash);
 	unz_file_info file_info;
 	sprintf(subtitle_buf, "%s.srt", s->hash);
 	s->num_subs = 0;
@@ -153,9 +153,7 @@ void start_sequence(sequence *s) {
 	trigger_save = 1;
 #endif
 
-#if 1
-	printf("Launching %s\n", s->hash);
-#endif
+	debug_log("Launching %s\n", s->hash);
 	
 	// Dumping current gamestate
 	gamestate dump;

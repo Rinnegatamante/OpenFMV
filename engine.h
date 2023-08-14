@@ -170,6 +170,12 @@ void audio_sample_stop(audio_sample *s);
 void audio_sample_stop_all();
 void audio_sample_reset_volume_all();
 
+#ifdef DEBUG
+#define debug_log printf
+#else
+#define debug_log
+#endif
+
 #define audio_sample_fade(s, vs, vd, ts, td) \
 	if (s) { \
 		float new_vol = audio_track_fade(s->handle, vs, vd, ts, td); \

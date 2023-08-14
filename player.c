@@ -161,7 +161,7 @@ void video_open(const char *path, int looping) {
 	playerInit.basePriority = 0xA0;
 	playerInit.numOutputVideoFrameBuffers = 5;
 	playerInit.autoStart = 1;
-#if 0
+#if DEBUG
 	playerInit.debugLevel = 3;
 #endif
 
@@ -222,4 +222,14 @@ void video_resume() {
 void video_set_volume(float vol) {
 	int vols[2] = {(int)(vol * 32767.0f), (int)(vol * 32767.0f)};
 	sceAudioOutSetVolume(audio_port, SCE_AUDIO_VOLUME_FLAG_L_CH | SCE_AUDIO_VOLUME_FLAG_R_CH, vols);
+}
+
+void video_jump_to_time(uint64_t time) {
+	if (player_state == PLAYER_ACTIVE) { 
+		uint64_t old_time = sceAvPlayerCurrentTime(movie_player);
+		sceAvPlayerJumpToTime(movie_player, time);
+		while (sceAvPlayerCurrentTime(movie_player) == old_time) { // Wait for sceAvPlayer FileStream thread response after jump finished
+			sceKernelDelayThread(1000);
+		}
+	}
 }

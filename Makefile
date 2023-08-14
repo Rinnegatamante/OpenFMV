@@ -32,6 +32,10 @@ DATA_FILES := "data/Five Dates"
 TITLEID := FIVEDATES
 endif
 
+ifeq ($(DEBUG),1)
+CFLAGS += -DDEBUG
+endif
+
 CXXFLAGS  = $(CFLAGS) -fno-exceptions -std=gnu++11 -fpermissive
 ASFLAGS = $(CFLAGS)
 

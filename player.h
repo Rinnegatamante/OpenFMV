@@ -22,6 +22,7 @@ void video_close();
 void video_pause();
 void video_resume();
 void video_set_volume(float vol);
+void video_jump_to_time(uint64_t time);
 
 #ifdef __cplusplus
 }
