@@ -13,16 +13,17 @@
 #include "player.h"
 #include "unzip.h"
 
-auto ImGui_CircleBar(float radius, float thickness, float progress, ImVec4 color) -> void {
+void ImGui_CircleBar(float radius, float thickness, float progress, ImVec4 color) {
 	int num_segments = 20;
 	ImGuiWindow *window = ImGui::GetCurrentWindow();
-	const ImRect bb{window->DC.CursorPos, ImVec2(window->DC.CursorPos.x + radius * 2, window->DC.CursorPos.y + radius * 2)};
+	ImVec2 pos = window->DC.CursorPos;
+	const ImRect bb{window->DC.CursorPos, ImVec2(pos.x + radius * 2, pos.y + radius * 2)};
 	ImGui::ItemSize(bb);
 	if (!ImGui::ItemAdd(bb, 0))
 		return;
 	window->DrawList->PathClear();
 	const float a_max = progress * 6.5f;
-	const auto &&centre = ImVec2(window->DC.CursorPos.x + radius, window->DC.CursorPos.y + radius);
+	ImVec2 centre = ImVec2(pos.x + radius, pos.y + radius);
 	window->DrawList->PathArcTo(centre, radius - 0.5f, 4.71f, 4.71f + a_max, num_segments - 1);
 	window->DrawList->PathStroke(ImGui::GetColorU32(color), false, thickness);
 }
