@@ -659,7 +659,7 @@ sequence *start_auction_guy() { mus[AUCTION_GUY] = audio_sample_start("EP07 Auct
 sequence *fade_lets_go3() { audio_sample_set_volume(mus[LETS_GO], 0.07045589f); return NULL; }
 sequence *fade_lets_go4() { audio_sample_fade(mus[LETS_GO], 0.07045589f, 0.1091634f, 17000, 18000); return NULL; }
 sequence *fade_dance() { audio_sample_fade(mus[DANCE_CHERRY_BLOSSOMS], 0.0f, 0.1775957f, 73958, 79958); return NULL; }
-sequence *start_matt_vo() { if (game_vars.respect_earned) { mus[VO_MATT_NO_MONEY] = audio_sample_start("EP03 VO Matt No Money Taken", 0, 0.02562345f); } else { mus[VO_MATT_MONEY] = audio_sample_start("EP03 VO Matt Money Taken", 0, 0.02562345f); } return NULL; }
+sequence *start_matt_vo() { if (game_vars.respect_earned) { mus[VO_MATT_NO_MONEY] = audio_sample_start("EP03 VO Matt No Money Taken", 0, 1.0f); } else { mus[VO_MATT_MONEY] = audio_sample_start("EP03 VO Matt Money Taken", 0, 1.0f); } return NULL; }
 sequence *stop_auction_guy() { audio_sample_stop_and_free(mus[AUCTION_GUY]); return NULL; }
 sequence *stop_atmo_entrance() { audio_sample_stop_and_free(mus[ATMO_ENTRANCE]); return NULL; }
 sequence *change_dance() { audio_sample_set_volume(mus[DANCE_CHERRY_BLOSSOMS], 0.1420184f); return NULL; }
