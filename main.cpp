@@ -17,7 +17,7 @@ void ImGui_CircleBar(float radius, float thickness, float progress, ImVec4 color
 	int num_segments = 20;
 	ImGuiWindow *window = ImGui::GetCurrentWindow();
 	ImVec2 pos = window->DC.CursorPos;
-	const ImRect bb{window->DC.CursorPos, ImVec2(pos.x + radius * 2, pos.y + radius * 2)};
+	const ImRect bb{pos, ImVec2(pos.x + radius * 2, pos.y + radius * 2)};
 	ImGui::ItemSize(bb);
 	if (!ImGui::ItemAdd(bb, 0))
 		return;
@@ -403,7 +403,7 @@ handle_event:
 		
 		// Auto-select default choice if player gives no input
 		if (player_state == PLAYER_INACTIVE) {
-			if (cur_seq->d()) {
+			if (cur_seq->d) {
 				start_sequence(cur_seq->d());
 			} else { // If no default choice is set, we return to main menu
 				audio_sample_stop_all();
