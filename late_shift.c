@@ -695,9 +695,23 @@ sequence *fade_car_park_elevator() { audio_sample_fade(mus[CAR_PARK_ELEVATOR], 0
 sequence *stop_car_park_elevator() { audio_sample_stop_and_free(mus[CAR_PARK_ELEVATOR]); return NULL; }
 sequence *start_brutal_p1_2() { mus[BRUTAL_CONSEQUENCE_1] = audio_sample_start("EP03 Brutal Consequence Part I", 0, 0.07147954f); return NULL; }
 sequence *fade_car_park_elevator2() { audio_sample_fade(mus[CAR_PARK_ELEVATOR], 0.2932352f, 0.0f, 6333, 9333); return NULL; }
-sequence *start_dance4() { audio_sample_fade(mus[DANCE_CHERRY_BLOSSOMS], 0.2647797f, 0.0f, 18792, 18917); return NULL; }
+sequence *start_dance4() { mus[DANCE_CHERRY_BLOSSOMS] = audio_sample_start("EP03 Dance of the Cherry Blossoms", 0, 0.2647797f); return NULL; }
 sequence *fade_bidding_riser_2() { audio_sample_fade(mus[BIDDING_RISER_INTERVENE_2], 0.09432838f, 0.0f, 18833, 24833); return NULL; }
 sequence *stop_bidding_riser_2() { audio_sample_stop_and_free(mus[BIDDING_RISER_INTERVENE_2]); return NULL; }
+sequence *start_awareness_downlifter() { mus[AWARENESS_DOWNLIFTER] = audio_sample_start("EP03 Awareness Downlifter", 0, 0.1007423f); return NULL; }
+sequence *start_awareness() { mus[AWARENESS] = audio_sample_start("EP03 Awareness", 0, 0.1590764f); return NULL; }
+sequence *start_atmo_inside_office() { mus[ATMO_INSIDE_OFFICE] = audio_sample_start("EP03 Atmo Int Inside Office", 1, 1.0f); return NULL; }
+sequence *start_atmo_outside_office() { mus[ATMO_OUTSIDE_OFFICE] = audio_sample_start("EP03 Atmo Int Outside Office", 1, 1.0f); return NULL; }
+sequence *fade_car_park_elevator3() { audio_sample_fade(mus[CAR_PARK_ELEVATOR], 0.2932352f, 0.0f, 16000, 19000); return NULL; }
+sequence *stop_atmo_inside_office() { audio_sample_stop_and_free(mus[ATMO_INSIDE_OFFICE]); return NULL; }
+sequence *stop_awareness() { audio_sample_stop_and_free(mus[AWARENESS]); return NULL; }
+sequence *fade_awareness() { audio_sample_fade(mus[AWARENESS], 0.1590764f, 0.0f, 5083, 6792); return NULL; }
+sequence *start_hainsworth_office() { mus[HAINSWORTH_OFFICE] = audio_sample_start("EP03 Hainsworth Office", 0, 0.03639143f); return NULL; }
+sequence *fade_hainsworth_office() { audio_sample_fade(mus[HAINSWORTH_OFFICE], 0.03639143f, 0.1003858f, 10333, 20333); return NULL; }
+sequence *fade_hainsworth_office2() { audio_sample_fade(mus[HAINSWORTH_OFFICE], 0.03639143f, 0.1005293f, 13125, 21000); return NULL; }
+sequence *start_hainsworth_elevator() { mus[HAIMSWORTH_ELEVATOR] = audio_sample_start("EP03 Haimsworth Elevator", 0, 0.1580438f); return NULL; }
+sequence *stop_hainsworth_office() { audio_sample_stop_and_free(mus[HAINSWORTH_OFFICE]); return NULL; }
+sequence *fade_hainsworth_office3() { audio_sample_fade(mus[HAINSWORTH_OFFICE], 0.1005293f, 0.0f, 12583, 14500); return NULL; }
 
 void fill_events() {
 	// OPENING
@@ -980,16 +994,32 @@ void fill_events() {
 	install_timed_event(&sequences[86], 24883, 0, EVENT_ONESHOT, stop_bidding_riser_2);
 	// seg345 (empty)
 	// seg319
-	// seg320_k
+	install_timed_event(&sequences[88], 16000, 0, EVENT_ONESHOT, start_awareness);
+	install_timed_event(&sequences[88], 16000, 19000, EVENT_DURATION, fade_car_park_elevator3);
+	install_timed_event(&sequences[88], 19000, 0, EVENT_ONESHOT, stop_car_park_elevator);
+	// seg320_k (empty)
 	// seg322
-	// seg322_tap
+	install_timed_event(&sequences[90], 7625, 0, EVENT_ONESHOT, start_atmo_inside_office);
+	// seg322_tap (empty)
 	// seg326_324
+	install_timed_event(&sequences[92], 22375, 0, EVENT_ONESHOT, stop_atmo_inside_office);
+	install_timed_event(&sequences[92], 22417, 0, EVENT_ONESHOT, start_atmo_outside_office);
 	// seg327
+	install_timed_event(&sequences[93], 5083, 0, EVENT_ONESHOT, start_awareness_downlifter);
+	install_timed_event(&sequences[93], 5083, 6792, EVENT_DURATION, fade_awareness);
+	install_timed_event(&sequences[93], 6792, 0, EVENT_ONESHOT, stop_awareness);
+	install_timed_event(&sequences[93], 12000, 0, EVENT_ONESHOT, start_hainsworth_office);
 	// seg328
+	install_timed_event(&sequences[94], 10333, 20333, EVENT_DURATION, fade_hainsworth_office);
 	// seg329
-	// seg329_1
+	install_timed_event(&sequences[95], 13125, 21000, EVENT_DURATION, fade_hainsworth_office2);
+	// seg329_1 (empty)
 	// seg331
-	// seg333
+	install_timed_event(&sequences[97], 167, 0, EVENT_ONESHOT, stop_atmo_inside_office);
+	install_timed_event(&sequences[97], 12583, 0, EVENT_ONESHOT, start_hainsworth_elevator);
+	install_timed_event(&sequences[97], 12583, 14500, EVENT_DURATION, fade_hainsworth_office3);
+	install_timed_event(&sequences[97], 14500, 0, EVENT_ONESHOT, stop_hainsworth_office);
+	// seg333 (empty)
 	// seg346_350_352
 	// seg354
 	// seg365_366

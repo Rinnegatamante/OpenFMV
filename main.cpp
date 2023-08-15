@@ -357,8 +357,8 @@ subtitle_draw:
 				break;
 			}
 			
-			// Handle timed events
 handle_event:
+			// Handle timed events
 			if (cur_event < cur_seq->num_events) {
 				if (cur_delta >= cur_seq->events[cur_event].start) {
 					if (cur_seq->events[cur_event].type == EVENT_ONESHOT) {
