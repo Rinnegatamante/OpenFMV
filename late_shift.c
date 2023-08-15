@@ -1972,6 +1972,12 @@ void game_setup() {
 	set_theme_color(colors.btn_text, 1.0f, 1.0f, 1.0f, 1.0f);
 	set_theme_color(colors.btn_hover_text, 0.0f, 0.0f, 0.0f, 1.0f);
 	set_theme_color(colors.popup_bg, 0.0f, 0.0f, 0.0f, 0.0f);
+	colors.choice1[1] = colors.choice2[1] = colors.choice3[1] = 400.0f;
+	colors.choice_bar[0] = 239.0f;
+	colors.choice_bar[1] = 450.0f;
+	colors.choice_bar[2] = 480.0f;
+	colors.choice_bar[3] = 6.0f;
+	colors.choices_type = CHOICES_CENTER_POS;
 	colors.bar_type = BAR_CENTER_FILL;
 }
 
@@ -1982,4 +1988,3 @@ void game_prepare() {
 }
 
 #endif
-

@@ -13,6 +13,20 @@
 #include "player.h"
 #include "unzip.h"
 
+auto ImGui_CircleBar(float radius, float thickness, float progress, ImVec4 color) -> void {
+	int num_segments = 20;
+	ImGuiWindow *window = ImGui::GetCurrentWindow();
+	const ImRect bb{window->DC.CursorPos, ImVec2(window->DC.CursorPos.x + radius * 2, window->DC.CursorPos.y + radius * 2)};
+	ImGui::ItemSize(bb);
+	if (!ImGui::ItemAdd(bb, 0))
+		return;
+	window->DrawList->PathClear();
+	const float a_max = progress * 6.5f;
+	const auto &&centre = ImVec2(window->DC.CursorPos.x + radius, window->DC.CursorPos.y + radius);
+	window->DrawList->PathArcTo(centre, radius - 0.5f, 4.71f, 4.71f + a_max, num_segments - 1);
+	window->DrawList->PathStroke(ImGui::GetColorU32(color), false, thickness);
+}
+
 int _newlib_heap_size_user = 256 * 1024 * 1024;
 
 void ImGui_TextCentered(char *text) {
@@ -195,7 +209,7 @@ subtitle_draw:
 			// Draw choice
 			if (cur_seq->start) {
 				// Precalculate once buttons sizes for properly centering them
-				if (btns_state == BTNS_CALC_SIZE) {
+				if (btns_state == BTNS_CALC_SIZE && colors.choices_type == CHOICES_CENTER_POS) {
 					ImGui::Begin("##fake", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBringToFrontOnFocus);
 					ImGui::SetCursorPosX(-10000.0f);
 					ImGui::Button(cur_seq->ltext(), ImVec2(ImGui::CalcTextSize(cur_seq->ltext()).x + 20.0f, 1.0f));
@@ -218,13 +232,17 @@ subtitle_draw:
 				if (cur_delta > cur_seq->start && cur_delta < cur_seq->end && !chosen_path) {		
 					ImGui::SetNextWindowFocus();				
 					ImGui::SetNextWindowBgAlpha(0.0f);
-					ImGui::SetNextWindowPos(ImVec2(0, 400), ImGuiSetCond_Always);
-					ImGui::SetNextWindowSize(ImVec2(960, 80), ImGuiSetCond_Always);
+					ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_Always);
+					ImGui::SetNextWindowSize(ImVec2(960, 544), ImGuiSetCond_Always);
 					ImGui::Begin("##choice", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar);
 					ImGui::PushFont(fnt_normal);
 					
 					// Draw buttons
-					ImGui::SetCursorPos(ImVec2((ImGui::GetWindowSize().x - (btn1_size.x + btn2_size.x + btn3_size.x + style.ItemSpacing.x)) * 0.5f, 8.0f));
+					if (colors.choices_type == CHOICES_CENTER_POS) {
+						ImGui::SetCursorPos(ImVec2((ImGui::GetWindowSize().x - (btn1_size.x + btn2_size.x + btn3_size.x + style.ItemSpacing.x)) * 0.5f, colors.choice1[1]));
+					} else {
+						ImGui::SetCursorPos(ImVec2(colors.choice1[0], colors.choice1[1]));
+					}
 					ImGui::PushStyleColor(ImGuiCol_Text, btn1_hovered ? Color4(colors.btn_hover_text) : Color4(colors.btn_text));
 					ImGui::PushStyleColor(ImGuiCol_Button, btn1_hovered ? Color4(colors.btn_hover_bg) : Color4(colors.btn_bg));
 					if (ImGui::Button(cur_seq->ltext(), ImVec2(ImGui::CalcTextSize(cur_seq->ltext()).x + 20.0f, 40.0f))) {
@@ -241,7 +259,11 @@ subtitle_draw:
 						ImGui::GetCurrentContext()->NavId = ImGui::GetCurrentContext()->CurrentWindow->DC.LastItemId;
 					}
 					ImGui::PopStyleColor(2);
-					ImGui::SameLine();
+					if (colors.choices_type == CHOICES_CENTER_POS) {
+						ImGui::SameLine();
+					} else {
+						ImGui::SetCursorPos(ImVec2(colors.choice2[0], colors.choice2[1]));
+					}
 					ImGui::PushStyleColor(ImGuiCol_Text, btn2_hovered ? Color4(colors.btn_hover_text) : Color4(colors.btn_text));
 					if (ImGui::Button(cur_seq->rtext(), ImVec2(ImGui::CalcTextSize(cur_seq->rtext()).x + 20.0f, 40.0f))) {
 						chosen_path = 2;
@@ -253,7 +275,11 @@ subtitle_draw:
 					}
 					ImGui::PopStyleColor();
 					if (cur_seq->e) {
-						ImGui::SameLine();
+						if (colors.choices_type == CHOICES_CENTER_POS) {
+							ImGui::SameLine();
+						} else {
+							ImGui::SetCursorPos(ImVec2(colors.choice3[0], colors.choice3[1]));
+						}
 						ImGui::PushStyleColor(ImGuiCol_Text, btn3_hovered ? Color4(colors.btn_hover_text) : Color4(colors.btn_text));
 						if (ImGui::Button(cur_seq->etext(), ImVec2(ImGui::CalcTextSize(cur_seq->etext()).x + 20.0f, 40.0f))) {
 							chosen_path = 3;
@@ -269,19 +295,32 @@ subtitle_draw:
 					ImGui::GetCurrentContext()->NavDisableHighlight = false;
 					
 					// Draw remaining time bar
-					if (colors.bar_type == BAR_DEFAULT) {
-						ImGui::SetCursorPosX(239);
-						ImGui::ProgressBar((float)(cur_delta - cur_seq->start) / (float)(cur_seq->end - cur_seq->start), ImVec2(480, 6), "");
-					} else {
-						float progress = (float)(cur_delta - cur_seq->start) / (float)(cur_seq->end - cur_seq->start);
-						ImGui::SetCursorPosX(239 + 239);
-						ImGui::ProgressBar(progress, ImVec2(240, 6), "##p1");
+					float progress = (float)(cur_delta - cur_seq->start) / (float)(cur_seq->end - cur_seq->start);
+					float half_width;
+					switch (colors.bar_type) {
+					case BAR_DEFAULT:
+						ImGui::SetCursorPos(ImVec2(colors.choice_bar[0], colors.choice_bar[1]));
+						ImGui::ProgressBar(progress, ImVec2(colors.choice_bar[2], colors.choice_bar[3]), "");
+						break;
+					case BAR_CENTER_FILL:
+						half_width = colors.choice_bar[2] / 2.0f;
+						ImGui::SetCursorPos(ImVec2(colors.choice_bar[0] + (half_width - 1.0f), colors.choice_bar[1]));
+						ImGui::ProgressBar(progress, ImVec2(half_width, colors.choice_bar[3]), "##p1");
 						ImGui::SameLine();
-						ImGui::SetCursorPosX(240);
+						ImGui::SetCursorPosX(colors.choice_bar[0]);
 						ImGui::PushStyleColor(ImGuiCol_FrameBg, Color4(colors.bar));
 						ImGui::PushStyleColor(ImGuiCol_PlotHistogram, Color4(colors.bar_bg));
-						ImGui::ProgressBar(1.0f - progress, ImVec2(240, 6), "##p2");
+						ImGui::ProgressBar(1.0f - progress, ImVec2(half_width, colors.choice_bar[3]), "##p2");
 						ImGui::PopStyleColor(2);
+						break;
+					case BAR_CIRCULAR:
+						ImGui::SetCursorPos(ImVec2(colors.choice_bar[0], colors.choice_bar[1]));
+						ImGui_CircleBar(colors.choice_bar[2], colors.choice_bar[3], 1.0f, Color4(colors.bar_bg));
+						ImGui_CircleBar(colors.choice_bar[2], colors.choice_bar[3], progress, Color4(colors.bar));
+						break;
+					default:
+						debug_log("Fatal Error: Invalid bar type\n");
+						break;
 					}
 					ImGui::End();
 				}

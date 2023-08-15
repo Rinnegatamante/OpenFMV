@@ -79,7 +79,13 @@ enum {
 
 enum {
 	BAR_DEFAULT,
-	BAR_CENTER_FILL
+	BAR_CENTER_FILL,
+	BAR_CIRCULAR
+};
+
+enum {
+	CHOICES_CENTER_POS,
+	CHOICES_FIXED_POS
 };
 
 struct sequence;
@@ -120,6 +126,11 @@ typedef struct {
 	float btn_hover_text[4];
 	float popup_bg[4];
 	uint8_t bar_type;
+	uint8_t choices_type;
+	float choice1[2]; // x, y
+	float choice2[2]; // x, y
+	float choice3[2]; // x, y
+	float choice_bar[4]; // x, y, len/radius, thickness
 } theme;
 
 enum {
