@@ -647,7 +647,24 @@ sequence *start_dance2() { mus[DANCE_CHERRY_BLOSSOMS] = audio_sample_start("EP03
 sequence *fade_bidding_riser_1() { audio_sample_fade(mus[BIDDING_RISER_INTERVENE_1], 0.1186769f, 0.0f, 39750, 45250); return NULL; }
 sequence *stop_bidding_riser_1() { audio_sample_stop_and_free(mus[BIDDING_RISER_INTERVENE_1]); return NULL; }
 sequence *start_bidding_riser_2() { mus[BIDDING_RISER_INTERVENE_2] = audio_sample_start("EP03 Bidding Riser Intervene II", 0, 0.09432838f); return NULL; }
-	
+sequence *start_bidding_riser_let_her() { mus[BIDDING_RISER_LET_HER] = audio_sample_start("EP03 Bidding Riser Let Her", 0, 0.1192486f); return NULL; }
+sequence *stop_bidding_riser_let_her() { audio_sample_stop_and_free(mus[BIDDING_RISER_LET_HER]); return NULL; }
+sequence *fade_bidding_riser_let_her() { audio_sample_fade(mus[BIDDING_RISER_LET_HER], 0.1192486f, 0.0f, 57912, 62250); return NULL; }
+sequence *start_dance3() { mus[DANCE_CHERRY_BLOSSOMS] = audio_sample_start("EP03 Dance of the Cherry Blossoms", 0, 0.26361f); return NULL; }
+sequence *fade_bidding_flache2() { audio_sample_fade(mus[BIDDING_FLACHE], 0.2513284f, 0.0f, 0, 5250); return NULL; }
+sequence *fade_dance2() { audio_sample_fade(mus[DANCE_CHERRY_BLOSSOMS], 0.26361f, 0.0f, 6750, 10250); return NULL; }
+sequence *start_car_park_elevator() { mus[CAR_PARK_ELEVATOR] = audio_sample_start("EP03 Carpark Elevator Edit", 0, 0.2932352f); return NULL; }
+sequence *stop_atmo_hall() { audio_sample_stop_and_free(mus[ATMO_HALL]); return NULL; }
+sequence *start_atmo_basement() { mus[ATMO_BASEMENT_GUARD] = audio_sample_start("EP03 Atmo Int Basement Guard", 1, 1.0f); return NULL; }
+sequence *start_brutal_p1() { mus[BRUTAL_CONSEQUENCE_1] = audio_sample_start("EP03 Brutal Consequence Part I", 0, 0.07070678f); return NULL; }
+sequence *fade_car_park_elevator() { audio_sample_fade(mus[CAR_PARK_ELEVATOR], 0.2932352f, 0.0f, 7500, 10500); return NULL; }
+sequence *stop_car_park_elevator() { audio_sample_stop_and_free(mus[CAR_PARK_ELEVATOR]); return NULL; }
+sequence *start_brutal_p1_2() { mus[BRUTAL_CONSEQUENCE_1] = audio_sample_start("EP03 Brutal Consequence Part I", 0, 0.07147954f); return NULL; }
+sequence *fade_car_park_elevator2() { audio_sample_fade(mus[CAR_PARK_ELEVATOR], 0.2932352f, 0.0f, 6333, 9333); return NULL; }
+sequence *start_dance4() { audio_sample_fade(mus[DANCE_CHERRY_BLOSSOMS], 0.2647797f, 0.0f, 18792, 18917); return NULL; }
+sequence *fade_bidding_riser_2() { audio_sample_fade(mus[BIDDING_RISER_INTERVENE_2], 0.09432838f, 0.0f, 18833, 24833); return NULL; }
+sequence *stop_bidding_riser_2() { audio_sample_stop_and_free(mus[BIDDING_RISER_INTERVENE_2]); return NULL; }
+
 void fill_events() {
 	// OPENING
 	// seg101
@@ -893,15 +910,42 @@ void fill_events() {
 	install_timed_event(&sequences[77], 0, 0, EVENT_ONESHOT, start_bidding_riser_2);
 	install_timed_event(&sequences[77], 2000, 0, EVENT_ONESHOT, stop_bidding_flache);
 	// seg313
+	install_timed_event(&sequences[78], 0, 0, EVENT_ONESHOT, start_bidding_riser_let_her);
+	install_timed_event(&sequences[78], 57500, 0, EVENT_ONESHOT, start_dance3);
+	install_timed_event(&sequences[78], 57583, 0, EVENT_ONESHOT, stop_atmo_auction);
+	install_timed_event(&sequences[78], 57912, 0, EVENT_ONESHOT, start_atmo_hall);
+	install_timed_event(&sequences[78], 57912, 62250, EVENT_DURATION, fade_bidding_riser_let_her);
+	install_timed_event(&sequences[78], 62250, 0, EVENT_ONESHOT, stop_bidding_riser_let_her);
 	// seg315
+	install_timed_event(&sequences[79], 0, 5250, EVENT_DURATION, fade_bidding_flache2);
+	install_timed_event(&sequences[79], 5250, 0, EVENT_ONESHOT, stop_bidding_flache);
+	install_timed_event(&sequences[79], 6750, 0, EVENT_ONESHOT, start_car_park_elevator);
+	install_timed_event(&sequences[79], 6750, 10250, EVENT_DURATION, fade_dance2);
+	install_timed_event(&sequences[79], 10250, 0, EVENT_ONESHOT, stop_dance);
 	// seg316_b
+	install_timed_event(&sequences[80], 14200, 0, EVENT_ONESHOT, stop_atmo_hall);
 	// seg316_c
-	// seg317
-	// seg318
+	install_timed_event(&sequences[81], 14200, 0, EVENT_ONESHOT, stop_atmo_hall);
+	// seg317 (empty)
+	// seg318 (empty)
 	// seg343_344_a
+	install_timed_event(&sequences[84], 42, 0, EVENT_ONESHOT, start_atmo_basement);
+	install_timed_event(&sequences[84], 7500, 10500, EVENT_DURATION, fade_car_park_elevator);
+	install_timed_event(&sequences[84], 10500, 0, EVENT_ONESHOT, stop_car_park_elevator);
+	install_timed_event(&sequences[84], 12917, 0, EVENT_ONESHOT, start_brutal_p1);
 	// seg343_344_b
+	install_timed_event(&sequences[85], 0, 0, EVENT_ONESHOT, start_atmo_basement);
+	install_timed_event(&sequences[85], 6333, 9333, EVENT_DURATION, fade_car_park_elevator2);
+	install_timed_event(&sequences[85], 9333, 0, EVENT_ONESHOT, stop_car_park_elevator);
+	install_timed_event(&sequences[85], 10167, 0, EVENT_ONESHOT, start_brutal_p1_2);
 	// seg314
-	// seg345
+	install_timed_event(&sequences[86], 18667, 0, EVENT_ONESHOT, stop_atmo_auction);
+	install_timed_event(&sequences[86], 18750, 0, EVENT_ONESHOT, start_atmo_hall);
+	install_timed_event(&sequences[86], 18792, 0, EVENT_ONESHOT, start_dance4);
+	install_timed_event(&sequences[86], 18750, 0, EVENT_ONESHOT, start_atmo_hall);
+	install_timed_event(&sequences[86], 18833, 24833, EVENT_DURATION, fade_bidding_riser_2);
+	install_timed_event(&sequences[86], 24883, 0, EVENT_ONESHOT, stop_bidding_riser_2);
+	// seg345 (empty)
 	// seg319
 	// seg320_k
 	// seg322
