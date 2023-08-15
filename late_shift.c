@@ -127,6 +127,13 @@ char *break_it() { return game_strings[221]; }
 char *trust() { return game_strings[222]; }
 char *dont_trust() { return game_strings[223]; }
 char *go_back() { return game_strings[225]; }
+char *long_one() { return game_strings[231]; }
+char *short_one() { return game_strings[232]; }
+char *protect_her() { return game_strings[233]; }
+char *save_yourself() { return game_strings[234]; }
+char *give_in() { return game_strings[235]; }
+char *say_nothing() { return game_strings[241]; }
+char *keep_protecting() { return game_strings[238]; }
 
 // Game possible variable values
 enum {
@@ -513,6 +520,33 @@ sequence *seg623_a() { return &sequences[230]; }
 sequence *seg623_b() { return &sequences[231]; }
 sequence *seg624() { game_vars.radioplay_started = 1; return &sequences[232]; }
 // EPISODE 6B
+sequence *seg651_1() { /*purge_from_ep*/ trigger_save = 1; return &sequences[237]; }
+sequence *eval_report_police() { return game_vars.report_to_police ? &sequences[238] : &sequences[239]; }
+sequence *seg651_3() { return &sequences[240]; }
+sequence *seg652_a() { return &sequences[241]; }
+sequence *seg652_b() { return &sequences[242]; }
+sequence *seg653() { game_vars.thumb_pain = 1; return &sequences[243]; }
+sequence *seg654() { return &sequences[244]; }
+sequence *seg655_a() { game_vars.knife_long = 0; return &sequences[245]; }
+sequence *seg655_b() { game_vars.knife_long = 1; return &sequences[246]; }
+sequence *seg655_c() { game_vars.knife_long = 1; return &sequences[247]; }
+sequence *seg656() { return &sequences[248]; }
+sequence *seg666_a() { return &sequences[249]; }
+sequence *seg657() { return &sequences[250]; }
+sequence *seg673() { return &sequences[254]; }
+sequence *eval_may_likes_matt2() { if (game_vars.may_likes_matt >= 1) return &sequences[251]; if (game_vars.knife_long) return &sequences[252]; return &sequences[253]; }
+sequence *eval_spit_in_the_face() { return game_vars.spit_in_the_face ? &sequences[255] : &sequences[256]; }
+sequence *seg672() { game_vars.matt_alone_playing = 1; return &sequences[257]; }
+sequence *seg661() { return &sequences[258]; }
+sequence *seg674() { game_vars.matt_alone_playing = 1; game_vars.may_stabbed = 1; return &sequences[259]; }
+sequence *seg675() { return &sequences[260]; }
+sequence *eval_may_likes_matt3() { if (game_vars.may_likes_matt >= 2) return &sequences[261]; if (game_vars.knife_long) return &sequences[252]; return &sequences[253]; }
+sequence *seg666_b() { return &sequences[262]; }
+sequence *seg663() { return &sequences[263]; }
+sequence *eval_may_likes_matt4() { if (game_vars.may_likes_matt >= 3) return &sequences[264]; if (game_vars.knife_long) return &sequences[252]; return &sequences[253]; }
+sequence *seg665() { game_vars.spit_in_the_face = 1; return &sequences[265]; }
+sequence *seg666_c() { return &sequences[266]; }
+sequence *eval_knife_long() { return game_vars.knife_long ? &sequences[267] : &sequences[268]; }
 // EPISODE 7
 // EPISODE 9A
 // EPISODE 9B
@@ -942,7 +976,6 @@ void fill_events() {
 	install_timed_event(&sequences[86], 18667, 0, EVENT_ONESHOT, stop_atmo_auction);
 	install_timed_event(&sequences[86], 18750, 0, EVENT_ONESHOT, start_atmo_hall);
 	install_timed_event(&sequences[86], 18792, 0, EVENT_ONESHOT, start_dance4);
-	install_timed_event(&sequences[86], 18750, 0, EVENT_ONESHOT, start_atmo_hall);
 	install_timed_event(&sequences[86], 18833, 24833, EVENT_DURATION, fade_bidding_riser_2);
 	install_timed_event(&sequences[86], 24883, 0, EVENT_ONESHOT, stop_bidding_riser_2);
 	// seg345 (empty)
@@ -1247,6 +1280,38 @@ void fill_sequences() {
 	resolve_hash("seg609_a", sequences[235].hash);
 	resolve_hash("seg609_b", sequences[236].hash);
 	// EPISODE 6B
+	resolve_hash("seg651_1", sequences[237].hash);
+	resolve_hash("seg651_2b", sequences[238].hash);
+	resolve_hash("seg651_2a", sequences[239].hash);
+	resolve_hash("seg651_3", sequences[240].hash);
+	resolve_hash("seg652_a", sequences[241].hash);
+	resolve_hash("seg652_b", sequences[242].hash);
+	resolve_hash("seg653", sequences[243].hash);
+	resolve_hash("seg654", sequences[244].hash);
+	resolve_hash("seg655_a", sequences[245].hash);
+	resolve_hash("seg655_b", sequences[246].hash);
+	resolve_hash("seg655_c", sequences[247].hash);
+	resolve_hash("seg656", sequences[248].hash);
+	resolve_hash("seg666_a", sequences[249].hash);
+	resolve_hash("seg657", sequences[250].hash);
+	resolve_hash("seg660", sequences[251].hash);
+	resolve_hash("seg667_669_670_a", sequences[252].hash);
+	resolve_hash("seg667_669_670_b", sequences[253].hash);
+	resolve_hash("seg673", sequences[254].hash);
+	resolve_hash("seg671_a", sequences[255].hash);
+	resolve_hash("seg671_b", sequences[256].hash);
+	resolve_hash("seg672", sequences[257].hash);
+	resolve_hash("seg661", sequences[258].hash);
+	resolve_hash("seg674", sequences[259].hash);
+	resolve_hash("seg675", sequences[260].hash);
+	resolve_hash("seg662", sequences[261].hash);
+	resolve_hash("seg666_b", sequences[262].hash);
+	resolve_hash("seg663", sequences[263].hash);
+	resolve_hash("seg664", sequences[264].hash);
+	resolve_hash("seg665", sequences[265].hash);
+	resolve_hash("seg666_c", sequences[266].hash);
+	resolve_hash("seg668_669_670_a", sequences[267].hash);
+	resolve_hash("seg668_669_670_b", sequences[268].hash);
 	// EPISODE 7
 	// EPISODE 9A
 	// EPISODE 9B
@@ -1474,7 +1539,7 @@ void fill_sequences() {
 	fill_sequence(&sequences[208], eval_gone_to_woe2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg565
 	fill_sequence(&sequences[209], seg570_571, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg568_b
 	fill_sequence(&sequences[210], seg570_571, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg568_a
-	fill_sequence(&sequences[211], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg570_571 (END OF EPISODE -> 06B)
+	fill_sequence(&sequences[211], seg651_1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg570_571 (END OF EPISODE -> 06B)
 	// EPISODE 6A
 	fill_sequence(&sequences[214], eval_blank_book, kiss, withdraw, NULL, eval_may_likes_matt, eval_blank_book, NULL, 99333, 102917, 102917); // seg601_602_603
 	fill_sequence(&sequences[215], seg605_b, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg604_c
@@ -1493,13 +1558,45 @@ void fill_sequences() {
 	fill_sequence(&sequences[228], seg623_b, trust, dont_trust, NULL, seg623_a, seg623_b, NULL, 34500, 38250, 38250); // seg616_622
 	fill_sequence(&sequences[229], seg624, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg617
 	fill_sequence(&sequences[230], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg623_a (END OF EPISODE -> 07)
-	fill_sequence(&sequences[231], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg623_b (END OF EPISODE -> 06B)
-	fill_sequence(&sequences[232], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg624 (END OF EPISODE -> 06B)
+	fill_sequence(&sequences[231], seg651_1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg623_b (END OF EPISODE -> 06B)
+	fill_sequence(&sequences[232], seg651_1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg624 (END OF EPISODE -> 06B)
 	fill_sequence(&sequences[233], seg606, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg604_a
 	fill_sequence(&sequences[234], seg605_b, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg604_b
 	fill_sequence(&sequences[235], seg610, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg609_a
 	fill_sequence(&sequences[236], seg610, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg609_b
 	// EPISODE 6B
+	fill_sequence(&sequences[237], eval_report_police, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg651_1
+	fill_sequence(&sequences[238], seg651_3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg651_2b
+	fill_sequence(&sequences[239], seg651_3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg651_2a
+	fill_sequence(&sequences[240], seg652_b, yes, no, NULL, seg652_a, seg652_b, NULL, 25750, 30292, 26458); // seg651_3
+	fill_sequence(&sequences[241], seg653, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg652_a
+	fill_sequence(&sequences[242], seg653, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg652_b
+	fill_sequence(&sequences[243], seg654, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg653
+	fill_sequence(&sequences[244], seg655_c, long_one, short_one, NULL, seg655_b, seg655_a, NULL, 542, 5542, 542); // seg654
+	fill_sequence(&sequences[245], seg656, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg655_a
+	fill_sequence(&sequences[246], seg656, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg655_b
+	fill_sequence(&sequences[247], seg656, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg655_c
+	fill_sequence(&sequences[248], seg657, protect_her, save_yourself, NULL, seg657, seg666_a, NULL, 13375, 17917, 14333); // seg656
+	fill_sequence(&sequences[249], seg673, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg666_a
+	fill_sequence(&sequences[250], eval_may_likes_matt2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg657
+	fill_sequence(&sequences[251], seg661, give_in, protect_her, NULL, seg666_a, seg661, NULL, 18708, 22917, 21000); // seg660
+	fill_sequence(&sequences[252], eval_spit_in_the_face, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg667_669_670_a
+	fill_sequence(&sequences[253], eval_spit_in_the_face, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg667_669_670_b
+	fill_sequence(&sequences[254], seg674, say_nothing, object, NULL, seg674, seg675, NULL, 28917, 33125, 33125); // seg673
+	fill_sequence(&sequences[255], seg672, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg671_a
+	fill_sequence(&sequences[256], seg672, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg671_b
+	fill_sequence(&sequences[257], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg672 (END OF EPISODE -> 07)
+	fill_sequence(&sequences[258], eval_may_likes_matt3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg661
+	fill_sequence(&sequences[259], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg674 (END OF EPISODE -> 07)
+	fill_sequence(&sequences[260], seg672, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg675
+	fill_sequence(&sequences[261], seg663, give_in, keep_protecting, NULL, seg666_b, seg663, NULL, 2208, 5875, 2208); // seg662
+	fill_sequence(&sequences[262], seg673, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg666_b
+	fill_sequence(&sequences[263], eval_may_likes_matt4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg663
+	fill_sequence(&sequences[264], seg665, give_in, keep_protecting, NULL, seg666_c, seg665, NULL, 27583, 31792, 30583); // seg664
+	fill_sequence(&sequences[265], eval_knife_long, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg665
+	fill_sequence(&sequences[266], seg673, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg666_c
+	fill_sequence(&sequences[267], eval_spit_in_the_face, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg668_669_670_a
+	fill_sequence(&sequences[268], eval_spit_in_the_face, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg668_669_670_b
 	// EPISODE 7
 	// EPISODE 9A
 	// EPISODE 9B

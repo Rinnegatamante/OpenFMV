@@ -42,6 +42,11 @@ typedef struct {
 	uint8_t matt_escape;
 	uint8_t radioplay_started;
 	uint8_t may_kiss;
+	uint8_t thumb_pain;
+	uint8_t knife_long;
+	uint8_t spit_in_the_face;
+	uint8_t matt_alone_playing;
+	uint8_t may_stabbed;
 } gamestate;
 
 extern gamestate game_vars;
