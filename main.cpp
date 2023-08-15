@@ -316,6 +316,7 @@ subtitle_draw:
 					case BAR_CIRCULAR:
 						ImGui::SetCursorPos(ImVec2(colors.choice_bar[0], colors.choice_bar[1]));
 						ImGui_CircleBar(colors.choice_bar[2], colors.choice_bar[3], 1.0f, Color4(colors.bar_bg));
+						ImGui::SetCursorPos(ImVec2(colors.choice_bar[0], colors.choice_bar[1]));
 						ImGui_CircleBar(colors.choice_bar[2], colors.choice_bar[3], progress, Color4(colors.bar));
 						break;
 					default:
