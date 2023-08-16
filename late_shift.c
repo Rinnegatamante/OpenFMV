@@ -279,8 +279,16 @@ void purge_from_ep1() {
 }
 void purge_from_ep2() {
 	if (!fake_pass) {
-		for (int i = ATMO_TRAIN; i <= JEFF_LINE; i++) {
+		for (int i = ATMO_BASEMENT_SEBASTIEN; i <= JEFF_LINE; i++) {
 			if (i != LETS_GO)
+				audio_sample_stop_and_free(mus[i]);
+		}
+	}
+}
+void purge_from_ep3() {
+	if (!fake_pass) {
+		for (int i = ATMO_TRAIN; i <= TAKING_SEATS; i++) {
+			if (i != GET_AWAY_LONG)
 				audio_sample_stop_and_free(mus[i]);
 		}
 	}
@@ -421,7 +429,7 @@ sequence *seg369_2k() { return &sequences[125]; }
 sequence *seg370_375() { game_vars.lockdown = 0; game_vars.get_away_long_playing = 1; return &sequences[126]; }
 sequence *seg373_374_366() { return &sequences[127]; }
 // EPISODE4
-sequence *eval_ep4_start() { trigger_save = 1; if (game_vars.lockdown) { return (game_vars.gone_upstairs || game_vars.sabotage >= 4) ? &sequences[128] : &sequences[129]; } else return game_vars.gone_upstairs ? &sequences[130] : &sequences[131]; }
+sequence *eval_ep4_start() { trigger_save = 1; purge_from_ep3(); if (game_vars.lockdown) { return (game_vars.gone_upstairs || game_vars.sabotage >= 4) ? &sequences[128] : &sequences[129]; } else return game_vars.gone_upstairs ? &sequences[130] : &sequences[131]; }
 sequence *eval_low_sabotage() { return game_vars.sabotage < 3 ? &sequences[132] : &sequences[133]; }
 sequence *seg408() { game_vars.may_likes_matt++; return &sequences[134]; }
 sequence *seg403_a() { return &sequences[135]; }
@@ -659,7 +667,7 @@ sequence *start_auction_guy() { mus[AUCTION_GUY] = audio_sample_start("EP07 Auct
 sequence *fade_lets_go3() { audio_sample_set_volume(mus[LETS_GO], 0.07045589f); return NULL; }
 sequence *fade_lets_go4() { audio_sample_fade(mus[LETS_GO], 0.07045589f, 0.1091634f, 17000, 18000); return NULL; }
 sequence *fade_dance() { audio_sample_fade(mus[DANCE_CHERRY_BLOSSOMS], 0.0f, 0.1775957f, 73958, 79958); return NULL; }
-sequence *start_matt_vo() { if (game_vars.respect_earned) { mus[VO_MATT_NO_MONEY] = audio_sample_start("EP03 VO Matt No Money Taken", 0, 1.0f); } else { mus[VO_MATT_MONEY] = audio_sample_start("EP03 VO Matt Money Taken", 0, 1.0f); } return NULL; }
+sequence *start_matt_vo() { if (game_vars.respect_earned) { mus[VO_MATT_NO_MONEY] = audio_voice_sample_start("EP03 VO Matt No Money Taken", 0, 1.0f); } else { mus[VO_MATT_MONEY] = audio_voice_sample_start("EP03 VO Matt Money Taken", 0, 1.0f); } return NULL; }
 sequence *stop_auction_guy() { audio_sample_stop_and_free(mus[AUCTION_GUY]); return NULL; }
 sequence *stop_atmo_entrance() { audio_sample_stop_and_free(mus[ATMO_ENTRANCE]); return NULL; }
 sequence *change_dance() { audio_sample_set_volume(mus[DANCE_CHERRY_BLOSSOMS], 0.1420184f); return NULL; }

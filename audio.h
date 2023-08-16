@@ -11,6 +11,7 @@ void audio_resume();
 void audio_set_global_volume(float vol);
 
 void *audio_track_play(const char *fname, int looping, float vol, int *h);
+void *audio_voice_track_play(const char *fname, int looping, float vol, int *h);
 void audio_track_stop(void *s);
 void audio_track_set_volume(int h, float vol);
 float audio_track_get_volume(int h);

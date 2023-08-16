@@ -186,6 +186,7 @@ void game_setup();
 void game_prepare();
 
 audio_sample *audio_sample_start(const char *fname, int looping, float vol);
+audio_sample *audio_voice_sample_start(const char *fname, int looping, float vol);
 void audio_sample_stop(audio_sample *s);
 void audio_sample_stop_all();
 void audio_sample_reset_volume_all();

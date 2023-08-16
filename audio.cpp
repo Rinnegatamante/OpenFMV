@@ -35,6 +35,19 @@ void *audio_track_play(const char *fname, int looping, float vol, int *handle) {
 	return w;
 }
 
+void *audio_voice_track_play(const char *fname, int looping, float vol, int *handle) {
+	char path[256];
+	sprintf(path, "%s/%s.wav.ogg", AUDIO_FOLDER, fname);
+	auto *w = new SoLoud::WavStream;
+	w->load(path);
+	w->setVolume(vol);
+	w->setLooping(looping ? true : false);
+	int h = soloud.play(*w, vol);
+	if (h)
+		*handle = h;
+	return w;
+}
+
 void audio_track_stop(void *s) {
 	auto *w = (SoLoud::WavStream *)s;
 	w->stop();

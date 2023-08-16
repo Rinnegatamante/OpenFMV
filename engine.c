@@ -250,6 +250,19 @@ audio_sample *audio_sample_start(const char *fname, int looping, float vol) {
 	r->active = 1;
 }
 
+audio_sample *audio_voice_sample_start(const char *fname, int looping, float vol) {
+	audio_sample *r = NULL;
+	for (int i = 0; i < NUM_AUDIO_SAMPLES; i++) {
+		if (!bgm[i].active) {
+			r = &bgm[i];
+			break;
+		}
+	}
+	r->src = audio_voice_track_play(fname, looping, vol, &r->handle);
+	r->volume = vol;
+	r->active = 1;
+}
+
 void audio_sample_stop(audio_sample *s) {
 	if (s) {
 		audio_track_stop(s->src);

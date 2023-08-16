@@ -12,7 +12,7 @@
 
 #define SUBTITLE_NEWLINE "\n\n"
 
-#define GAME_VER "0.6.5"
+#define GAME_VER "0.7.0"
 
 #ifdef __cplusplus
 extern "C" {
