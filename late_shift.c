@@ -384,7 +384,7 @@ sequence *seg319() { game_vars.sabotage++; game_vars.gone_upstairs = 1; return &
 sequence *seg320_swipe() { return &sequences[89]; }
 sequence *seg322() { return &sequences[90]; }
 sequence *seg322_tap() { return &sequences[91]; }
-sequence *seg326_324() { return &sequences[92]; }
+sequence *seg326_324() { game_vars.passed_by_seg326 = 1; return &sequences[92]; }
 sequence *seg327() { return &sequences[93]; }
 sequence *seg328() { return &sequences[94]; }
 sequence *seg329() { return &sequences[95]; }
@@ -418,7 +418,7 @@ sequence *seg362() { return &sequences[122]; }
 sequence *seg363() { return &sequences[123]; }
 sequence *seg369_1k() { return &sequences[124]; }
 sequence *seg369_2k() { return &sequences[125]; }
-sequence *seg370_375() { game_vars.lockdown = 0; return &sequences[126]; }
+sequence *seg370_375() { game_vars.lockdown = 0; game_vars.get_away_long_playing = 1; return &sequences[126]; }
 sequence *seg373_374_366() { return &sequences[127]; }
 // EPISODE4
 sequence *eval_ep4_start() { trigger_save = 1; if (game_vars.lockdown) { return (game_vars.gone_upstairs || game_vars.sabotage >= 4) ? &sequences[128] : &sequences[129]; } else return game_vars.gone_upstairs ? &sequences[130] : &sequences[131]; }
@@ -740,6 +740,30 @@ sequence *stop_hainsworth_elevator() { audio_sample_stop_and_free(mus[HAIMSWORTH
 sequence *stop_atmo_basement_sebastien() { audio_sample_stop_and_free(mus[ATMO_BASEMENT_SEBASTIEN]); return NULL; }
 sequence *maybe_start_get_away_riser() { if (game_vars.passed_by_seg341) { mus[GET_AWAY_RISER] = audio_sample_start("EP03 Get Away Riser", 0, 0.3176751f); } return NULL;}
 sequence *fade_multiple() { audio_sample_fade(mus[AWARENESS], 0.1590764f, 0.0f, 9625, 13167); audio_sample_fade(mus[HAIMSWORTH_ELEVATOR], 0.1580438f, 0.0f, 9625, 13167); return NULL; }
+sequence *stop_hainsworth_stairs() { audio_sample_stop_and_free(mus[HAIMSWORTH_STAIRS]); return NULL; }
+sequence *stop_atmo_outside_office() { audio_sample_stop_and_free(mus[ATMO_OUTSIDE_OFFICE]); return NULL; }
+sequence *stop_brutal_p2() { audio_sample_stop_and_free(mus[BRUTAL_CONSEQUENCE_2]); return NULL; }
+sequence *stop_brutal_keypad() { audio_sample_stop_and_free(mus[BRUTAL_CONSEQUENCE_KEYPAD]); return NULL; }
+sequence *fade_hainsworth_office4() { audio_sample_fade(mus[HAINSWORTH_OFFICE], 0.1005293f, 0.0f, 17625, 20000); return NULL; }
+sequence *fade_hainsworth_office5() { audio_sample_fade(mus[HAINSWORTH_OFFICE], 0.1005293f, 0.100406f, 8625, 18625); return NULL; }
+sequence *fade_brutal_p1_2() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_1], 0.1248198f, 0.124516f, 21208, 25458); return NULL; }
+sequence *fade_brutal_p1_3() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_1], 0.124516f, 0.0f, 34875, 42583); return NULL; }
+sequence *fade_awareness2() { audio_sample_fade(mus[AWARENESS], 0.1590764f, 0.0f, 3000, 6000); return NULL; }
+sequence *start_hainsworth_lobby3() { mus[HAINSWORTH_LOBBY] = audio_sample_start("EP03 Hainsworth Lobby", 0, 0.2511107f); return NULL; }
+sequence *start_hainsworth_elevator2() { mus[HAIMSWORTH_ELEVATOR] = audio_sample_start("EP03 Haimsworth Elevator", 0, 0.1577016f); return NULL; }
+sequence *start_awareness_downlifter3() { mus[AWARENESS_DOWNLIFTER] = audio_sample_start("EP03 Awareness Downlifter", 0, 0.1806578f); return NULL; }
+sequence *start_freight2() { mus[ATMO_FREIGHT_LIFT_PING] = audio_sample_start("EP03 Atmo Int Freight Lift Ping", 0, 0.503014f); return NULL; }
+sequence *start_brutal_p2_2() { mus[BRUTAL_CONSEQUENCE_2] = audio_sample_start("EP03 Brutal Consequence Part II nu", 0, 0.222277f); return NULL; }
+sequence *start_brutal_keypad() { mus[BRUTAL_CONSEQUENCE_KEYPAD] = audio_sample_start("EP03 Brutal Consequence Keypad", 0, 0.2525122f); return NULL; }
+sequence *start_brutal_keypad2() { mus[BRUTAL_CONSEQUENCE_KEYPAD] = audio_sample_start("EP03 Brutal Consequence Keypad", 0, 0.09980504f); return NULL; }
+sequence *start_hainsworth_stairs() { mus[HAIMSWORTH_STAIRS] = audio_sample_start("EP03 Haimsworth Stairs", 0, 0.1253717f); return NULL; }
+sequence *start_get_away_long2() { mus[GET_AWAY_LONG] = audio_sample_start("EP04 Get Away LONG", 0, 0.1575244f); return NULL; }
+sequence *fade_brutal_p2_5() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_2], 0.1576557f, 0.0f, 13500, 22500); return NULL; }
+sequence *fade_brutal_p2_6() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_2], 0.1576557f, 0.07212745f, 7000, 8000); return NULL; }
+sequence *fade_brutal_p2_7() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_2], 0.07212745f, 0.0f, 16667, 25667); return NULL; }
+sequence *fade_brutal_p2_8() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_2], 0.1576557f, 0.1229217f, 83, 3083); return NULL; }
+sequence *fade_brutal_p2_9() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_2], 0.1229217f, 0.0f, 9375, 17833); return NULL; }
+sequence *maybe_start_hainsworth_elevator() { if (game_vars.passed_by_seg326) { mus[HAIMSWORTH_ELEVATOR] = audio_sample_start("EP03 Haimsworth Elevator", 0, 0.1581205f); } return NULL; }
 
 void fill_events() {
 	// OPENING
@@ -1089,25 +1113,64 @@ void fill_events() {
 	install_timed_event(&sequences[107], 27667, 0, EVENT_ONESHOT, stop_atmo_basement_sebastien);
 	install_timed_event(&sequences[107], 27833, 0, EVENT_ONESHOT, stop_brutal_p3);
 	// seg330
+	install_timed_event(&sequences[108], 11708, 0, EVENT_ONESHOT, stop_atmo_inside_office);
+	install_timed_event(&sequences[108], 17625, 0, EVENT_ONESHOT, start_hainsworth_elevator2);
+	install_timed_event(&sequences[108], 17625, 20000, EVENT_DURATION, fade_hainsworth_office4);
+	install_timed_event(&sequences[108], 20000, 0, EVENT_ONESHOT, stop_hainsworth_office);
 	// seg349_355_356
-	// seg357
+	install_timed_event(&sequences[109], 21208, 0, EVENT_ONESHOT, start_awareness_downlifter3);
+	install_timed_event(&sequences[109], 21208, 25458, EVENT_DURATION, fade_brutal_p1_2);
+	install_timed_event(&sequences[109], 25458, 0, EVENT_ONESHOT, start_freight2);
+	install_timed_event(&sequences[109], 34875, 0, EVENT_ONESHOT, start_brutal_p2_2);
+	install_timed_event(&sequences[109], 34875, 42583, EVENT_DURATION, fade_brutal_p1_3);
+	install_timed_event(&sequences[109], 42583, 0, EVENT_ONESHOT, stop_brutal_p1);
+	// seg357 (empty)
 	// seg358_359
-	// seg364_367_a_368
-	// seg364_367_b_368
+	install_timed_event(&sequences[111], 13458, 0, EVENT_ONESHOT, start_brutal_keypad);
+	install_timed_event(&sequences[111], 13500, 22500, EVENT_DURATION, fade_brutal_p2_5);
+	install_timed_event(&sequences[111], 22500, 0, EVENT_ONESHOT, stop_brutal_p2);
+	// seg364_367_a_368 (empty)
+	// seg364_367_b_368 (empty)
 	// seg321_324
+	install_timed_event(&sequences[114], 0, 0, EVENT_ONESHOT, start_atmo_inside_office);
+	install_timed_event(&sequences[114], 3000, 0, EVENT_ONESHOT, start_hainsworth_stairs);
+	install_timed_event(&sequences[114], 3000, 6000, EVENT_DURATION, fade_awareness2);
+	install_timed_event(&sequences[114], 6000, 0, EVENT_ONESHOT, stop_awareness);
 	// seg325_a
+	install_timed_event(&sequences[115], 7833, 0, EVENT_ONESHOT, stop_atmo_outside_office);
+	install_timed_event(&sequences[115], 10292, 0, EVENT_ONESHOT, maybe_start_hainsworth_elevator);
+	install_timed_event(&sequences[115], 11000, 0, EVENT_ONESHOT, stop_hainsworth_stairs);
 	// seg325_b
+	install_timed_event(&sequences[116], 7042, 0, EVENT_ONESHOT, stop_atmo_outside_office);
+	install_timed_event(&sequences[116], 8958, 0, EVENT_ONESHOT, maybe_start_hainsworth_elevator);
+	install_timed_event(&sequences[116], 11000, 0, EVENT_ONESHOT, stop_hainsworth_stairs);
 	// seg334
-	// seg336
-	// seg337
-	// seg360
-	// seg361
+	install_timed_event(&sequences[117], 8625, 18625, EVENT_DURATION, fade_hainsworth_office5);
+	// seg336 (empty)
+	// seg337 (empty)
+	// seg360 (empty)
+	// seg361 (empty)
 	// seg362
+	install_timed_event(&sequences[122], 7000, 8000, EVENT_DURATION, fade_brutal_p2_6);
+	install_timed_event(&sequences[122], 15667, 0, EVENT_ONESHOT, start_brutal_keypad2);
+	install_timed_event(&sequences[122], 16667, 25667, EVENT_DURATION, fade_brutal_p2_7);
+	install_timed_event(&sequences[122], 25667, 0, EVENT_ONESHOT, stop_brutal_p2);
 	// seg363
-	// seg369_1k
-	// seg369_2k
+	install_timed_event(&sequences[123], 83, 3083, EVENT_DURATION, fade_brutal_p2_8);
+	install_timed_event(&sequences[123], 9375, 0, EVENT_ONESHOT, start_brutal_keypad);
+	install_timed_event(&sequences[123], 9375, 17833, EVENT_DURATION, fade_brutal_p2_9);
+	install_timed_event(&sequences[123], 17833, 0, EVENT_ONESHOT, stop_brutal_p2);
+	// seg369_1k (empty)
+	// seg369_2k (empty)
 	// seg370_375
+	install_timed_event(&sequences[126], 8250, 0, EVENT_ONESHOT, start_get_away_long2);
+	install_timed_event(&sequences[126], 9000, 0, EVENT_ONESHOT, stop_brutal_keypad);
+	install_timed_event(&sequences[126], 10125, 0, EVENT_ONESHOT, stop_atmo_basement_guard);
 	// seg373_374_366
+	install_timed_event(&sequences[127], 5667, 0, EVENT_ONESHOT, start_alarm);
+	install_timed_event(&sequences[127], 6000, 0, EVENT_ONESHOT, stop_brutal_keypad);
+	install_timed_event(&sequences[127], 28375, 0, EVENT_ONESHOT, start_hainsworth_lobby3);
+	install_timed_event(&sequences[127], 30500, 0, EVENT_ONESHOT, stop_atmo_basement_guard);
 	// EPISODE 4
 	// seg434
 	install_timed_event(&sequences[153], 31083, 32042, EVENT_DURATION, seg435_a_event);
