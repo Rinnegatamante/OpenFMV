@@ -13,6 +13,65 @@
 #define MENU_INPUT_DELAY (300000) // Input delay in microseconds between two key presses
 
 float *draw_attributes = NULL;
+void draw_image(uint32_t image, float x, float y, float w, float h) {
+	float x2 = x + w;
+	float y2 = y + h;
+	if (!draw_attributes)
+		draw_attributes = (float*)malloc(sizeof(float) * 22);
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, image);
+	glDisable(GL_DEPTH_TEST);
+	glDepthMask(GL_FALSE);
+	glEnable(GL_BLEND);
+	glDisable(GL_ALPHA_TEST);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	draw_attributes[0] = x;
+	draw_attributes[1] = y;
+	draw_attributes[2] = 0.0f;
+	draw_attributes[3] = x2;
+	draw_attributes[4] = y;
+	draw_attributes[5] = 0.0f;
+	draw_attributes[6] = x;
+	draw_attributes[7] = y2;
+	draw_attributes[8] = 0.0f;
+	draw_attributes[9] = x2;
+	draw_attributes[10] = y2;
+	draw_attributes[11] = 0.0f;
+	vglVertexPointerMapped(3, draw_attributes);
+	
+	draw_attributes[12] = 0.0f;
+	draw_attributes[13] = 0.0f;
+	draw_attributes[14] = 1.0f;
+	draw_attributes[15] = 0.0f;
+	draw_attributes[16] = 0.0f;
+	draw_attributes[17] = 1.0f;
+	draw_attributes[18] = 1.0f;
+	draw_attributes[19] = 1.0f;
+	vglTexCoordPointerMapped(&draw_attributes[12]);
+	
+	uint16_t *indices = (uint16_t*)&draw_attributes[20];
+	indices[0] = 0;
+	indices[1] = 1;
+	indices[2] = 2;
+	indices[3] = 3;
+	vglIndexPointerMapped(indices);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	//glEnableClientState(GL_COLOR_ARRAY);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrthof(0, 960, 544, 0, -1, 1);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+	vglDrawObjects(GL_TRIANGLE_STRIP, 4, GL_TRUE);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glDisableClientState(GL_COLOR_ARRAY);
+}
+
 int draw_video_frame() {
 	if (!draw_attributes)
 		draw_attributes = (float*)malloc(sizeof(float) * 22);

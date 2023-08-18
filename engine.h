@@ -8,7 +8,7 @@ extern "C" {
 #include "games.h"
 #include "unzip.h"
 
-#define ENGINE_VER "0.9.6"
+#define ENGINE_VER "0.9.7"
 
 #define NUM_AUDIO_SAMPLES 32
 
@@ -167,7 +167,9 @@ extern void *snd_hover;
 extern void *snd_pause;
 extern void *snd_unpause;
 
-void load_animated_bg(const char *fname, int needs_hash); 
+void load_animated_bg(const char *fname, int needs_hash);
+uint32_t load_image(const char *fname);
+void free_image(uint32_t image);
 void fill_sequence(sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump);
 void start_sequence(sequence *s);
 void start_first_sequence(sequence *s);

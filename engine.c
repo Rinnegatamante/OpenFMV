@@ -2,11 +2,15 @@
 #include <string.h>
 #include <ctype.h>
 #include <vitasdk.h>
+#include <vitaGL.h>
 #include "audio.h"
 #include "engine.h"
 #include "games.h"
 #include "player.h"
 #include "unzip.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 #define MEM_BUFFER_SIZE (2 * 1024 * 1024)
 //#define DBG_SAVE // Enable saving at each sequence change for debugging
@@ -231,6 +235,20 @@ void load_animated_bg(const char *fname, int needs_hash) {
 		fname = tmp;
 	}
 	video_open(fname, 1);
+}
+
+uint32_t load_image(const char *fname) {
+	uint32_t w, h, res;
+	uint8_t *data = stbi_load(fname, &w, &h, NULL, 4);
+	glGenTextures(1, &res);
+	glBindTexture(GL_TEXTURE_2D, res);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	free(data);
+	return res;
+}
+
+void free_image(uint32_t image) {
+	glDeleteTextures(1, &image);
 }
 
 void resolve_hash(const char *src, char *dst) {
