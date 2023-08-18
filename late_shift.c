@@ -279,7 +279,7 @@ void purge_from_ep1() {
 }
 void purge_from_ep2() {
 	if (!fake_pass) {
-		for (int i = ATMO_BASEMENT_SEBASTIEN; i <= JEFF_LINE; i++) {
+		for (int i = ATMO_TRAIN; i <= JEFF_LINE; i++) {
 			if (i != LETS_GO)
 				audio_sample_stop_and_free(mus[i]);
 		}
@@ -287,7 +287,7 @@ void purge_from_ep2() {
 }
 void purge_from_ep3() {
 	if (!fake_pass) {
-		for (int i = ATMO_TRAIN; i <= TAKING_SEATS; i++) {
+		for (int i = ATMO_BASEMENT_SEBASTIEN; i <= TAKING_SEATS; i++) {
 			if (i != GET_AWAY_LONG)
 				audio_sample_stop_and_free(mus[i]);
 		}
@@ -772,6 +772,23 @@ sequence *fade_brutal_p2_7() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_2], 0.07
 sequence *fade_brutal_p2_8() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_2], 0.1576557f, 0.1229217f, 83, 3083); return NULL; }
 sequence *fade_brutal_p2_9() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_2], 0.1229217f, 0.0f, 9375, 17833); return NULL; }
 sequence *maybe_start_hainsworth_elevator() { if (game_vars.passed_by_seg326) { mus[HAIMSWORTH_ELEVATOR] = audio_sample_start("EP03 Haimsworth Elevator", 0, 0.1581205f); } return NULL; }
+sequence *fade_bmw_m5() { audio_sample_fade(mus[ATMO_BMW_M5], 1.0f, 0.0f, 0, 2000); return NULL; }
+sequence *start_get_away_short() { mus[GET_AWAY_SHORT] = audio_sample_start("EP04 Get Away SHORT", 0, 0.1576156f); return NULL; }
+sequence *start_siren() { mus[ATMO_SIREN] = audio_sample_start("EP04 Atmo Ext Siren 1", 0, 0.503346f); return NULL; }
+sequence *start_bmw_i8() { mus[ATMO_BMW_I8] = audio_sample_start("EP04 Atmo Int BMW i8", 1, 1.0f); return NULL; }
+sequence *start_bmw_m5() { mus[ATMO_BMW_M5] = audio_sample_start("EP04 Atmo Int BMW M5", 1, 1.0f); return NULL; }
+sequence *stop_bmw_m5() { audio_sample_stop_and_free(mus[ATMO_BMW_M5]); return NULL; }
+sequence *change_get_away_short() { audio_sample_set_volume(mus[GET_AWAY_SHORT], 0.1126353f); return NULL; }
+sequence *change_get_away_short2() { audio_sample_set_volume(mus[GET_AWAY_SHORT], 0.1543445f); return NULL; }
+sequence *change_get_away_short3() { audio_sample_set_volume(mus[GET_AWAY_SHORT], 0.1130907f); return NULL; }
+sequence *change_get_away_short4() { audio_sample_set_volume(mus[GET_AWAY_SHORT], 0.1561145f); return NULL; }
+sequence *change_get_away_short5() { audio_sample_set_volume(mus[GET_AWAY_SHORT], 0.1112274f); return NULL; }
+sequence *change_get_away_short6() { audio_sample_set_volume(mus[GET_AWAY_SHORT], 0.1568132f); return NULL; }
+sequence *maybe_start_get_away_long2() { if (!game_vars.get_away_long_playing) { mus[GET_AWAY_LONG] = audio_sample_start("EP04 Get Away LONG", 0, 0.1588651f); } return NULL; }
+sequence *change_get_away_long() { audio_sample_set_volume(mus[GET_AWAY_LONG], 0.1109945f); return NULL; }
+sequence *change_get_away_long2() { audio_sample_set_volume(mus[GET_AWAY_LONG], 0.1564935f); return NULL; }
+sequence *change_get_away_long3() { audio_sample_set_volume(mus[GET_AWAY_LONG], 0.1120107f); return NULL; }
+sequence *change_get_away_long4() { audio_sample_set_volume(mus[GET_AWAY_LONG], 0.1581767f); return NULL; }
 
 void fill_events() {
 	// OPENING
@@ -1180,12 +1197,279 @@ void fill_events() {
 	install_timed_event(&sequences[127], 28375, 0, EVENT_ONESHOT, start_hainsworth_lobby3);
 	install_timed_event(&sequences[127], 30500, 0, EVENT_ONESHOT, stop_atmo_basement_guard);
 	// EPISODE 4
+	// seg415_418
+	install_timed_event(&sequences[128], 0, 0, EVENT_ONESHOT, start_get_away_short);
+	install_timed_event(&sequences[128], 42, 0, EVENT_ONESHOT, start_siren);
+	install_timed_event(&sequences[128], 12167, 0, EVENT_ONESHOT, change_get_away_short);
+	install_timed_event(&sequences[128], 13000, 0, EVENT_ONESHOT, change_get_away_short2);
+	install_timed_event(&sequences[128], 13667, 0, EVENT_ONESHOT, start_bmw_i8);
+	install_timed_event(&sequences[128], 14083, 0, EVENT_ONESHOT, change_get_away_short3);
+	install_timed_event(&sequences[128], 16333, 0, EVENT_ONESHOT, change_get_away_short4);
+	install_timed_event(&sequences[128], 18708, 0, EVENT_ONESHOT, change_get_away_short5);
+	install_timed_event(&sequences[128], 19875, 0, EVENT_ONESHOT, change_get_away_short6);
+	// seg415_416
+	install_timed_event(&sequences[129], 0, 0, EVENT_ONESHOT, start_get_away_short);
+	install_timed_event(&sequences[129], 42, 0, EVENT_ONESHOT, start_siren);
+	install_timed_event(&sequences[129], 12542, 0, EVENT_ONESHOT, change_get_away_short);
+	install_timed_event(&sequences[129], 13208, 0, EVENT_ONESHOT, change_get_away_short2);
+	install_timed_event(&sequences[129], 13667, 0, EVENT_ONESHOT, start_bmw_i8);
+	install_timed_event(&sequences[129], 15458, 0, EVENT_ONESHOT, change_get_away_short3);
+	install_timed_event(&sequences[129], 18542, 0, EVENT_ONESHOT, change_get_away_short4);
+	// seg402
+	install_timed_event(&sequences[130], 0, 0, EVENT_ONESHOT, maybe_start_get_away_long2);
+	install_timed_event(&sequences[130], 42, 0, EVENT_ONESHOT, start_siren);
+	install_timed_event(&sequences[130], 9833, 0, EVENT_ONESHOT, change_get_away_long);
+	install_timed_event(&sequences[130], 10542, 0, EVENT_ONESHOT, change_get_away_long2);
+	install_timed_event(&sequences[130], 22667, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[130], 24208, 0, EVENT_ONESHOT, change_get_away_long4);
+	// seg406
+	install_timed_event(&sequences[131], 0, 0, EVENT_ONESHOT, maybe_start_get_away_long2);
+	install_timed_event(&sequences[131], 42, 0, EVENT_ONESHOT, start_siren);
+	// seg407_a
+	install_timed_event(&sequences[132], 0, 0, EVENT_ONESHOT, start_bmw_m5);
+	install_timed_event(&sequences[132], 2250, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[132], 4667, 0, EVENT_ONESHOT, change_get_away_long4);
+	// seg407_b
+	install_timed_event(&sequences[133], 42, 0, EVENT_ONESHOT, start_bmw_m5);
+	install_timed_event(&sequences[133], 2542, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[133], 5333, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[133], 8375, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[133], 9708, 0, EVENT_ONESHOT, change_get_away_long4);
+	// seg408
+	install_timed_event(&sequences[134], 3708, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[134], 5208, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[134], 7417, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[134], 7375, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[134], 8333, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[134], 10583, 0, EVENT_ONESHOT, change_get_away_long4);
+	// seg403_a
+	install_timed_event(&sequences[135], 0, 0, EVENT_ONESHOT, start_bmw_m5);
+	install_timed_event(&sequences[135], 208, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[135], 1542, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[135], 2375, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[135], 3292, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[135], 8208, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[135], 10708, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[135], 11667, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[135], 13542, 0, EVENT_ONESHOT, change_get_away_long4);
+	// seg403_b
+	install_timed_event(&sequences[136], 0, 0, EVENT_ONESHOT, start_bmw_m5);
+	install_timed_event(&sequences[136], 5625, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[136], 6542, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[136], 8708, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[136], 11208, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[136], 13125, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[136], 17250, 0, EVENT_ONESHOT, change_get_away_long4);
+	// seg404_a
+	install_timed_event(&sequences[137], 58, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[137], 875, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[137], 1708, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[137], 2125, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[137], 8583, 0, EVENT_ONESHOT, stop_bmw_m5);
+	// seg404_b
+	install_timed_event(&sequences[138], 9833, 0, EVENT_ONESHOT, stop_bmw_m5);
+	// seg407_c (empty)
+	// seg409
+	install_timed_event(&sequences[140], 1625, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[140], 2458, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[140], 12250, 0, EVENT_ONESHOT, stop_bmw_m5);
+	// seg410
+	install_timed_event(&sequences[141], 9042, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[141], 9958, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[141], 12417, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[141], 14958, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[141], 16750, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[141], 18458, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[141], 20667, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[141], 20875, 0, EVENT_ONESHOT, change_get_away_long4);
+	// seg411_a
+	install_timed_event(&sequences[142], 5625, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[142], 6167, 0, EVENT_ONESHOT, change_get_away_long4);
+	// seg411_b
+	install_timed_event(&sequences[143], 58, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[143], 3417, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[143], 5958, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[143], 7042, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[143], 8625, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[143], 12000, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[143], 13250, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[143], 13958, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[143], 14917, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[143], 17708, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[143], 25208, 0, EVENT_ONESHOT, stop_bmw_m5);
+	// seg412
+	install_timed_event(&sequences[144], 17, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[144], 2667, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[144], 3708, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[144], 4542, 0, EVENT_ONESHOT, change_get_away_long4);
+	// seg413
+	install_timed_event(&sequences[145], 42, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[145], 3375, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[145], 4833, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[145], 6333, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[145], 7458, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[145], 13042, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[145], 18167, 0, EVENT_ONESHOT, stop_bmw_m5);
+	// seg417_a
+	install_timed_event(&sequences[146], 375, 0, EVENT_ONESHOT, change_get_away_short3);
+	install_timed_event(&sequences[146], 2375, 0, EVENT_ONESHOT, change_get_away_short4);
+	install_timed_event(&sequences[146], 3125, 0, EVENT_ONESHOT, change_get_away_short3);
+	install_timed_event(&sequences[146], 12542, 0, EVENT_ONESHOT, change_get_away_short4);
+	install_timed_event(&sequences[146], 14167, 0, EVENT_ONESHOT, change_get_away_short3);
+	install_timed_event(&sequences[146], 16708, 0, EVENT_ONESHOT, change_get_away_short4);
+	// seg417_b (empty)
+	// seg405
+	install_timed_event(&sequences[147], 42, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[147], 92, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[147], 1792, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[147], 3833, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[147], 4833, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[147], 8083, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[147], 8958, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[147], 9667, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[147], 10917, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[147], 11792, 0, EVENT_ONESHOT, change_get_away_long4);
+	// seg419
+	install_timed_event(&sequences[148], 333, 0, EVENT_ONESHOT, change_get_away_short3);
+	install_timed_event(&sequences[148], 792, 0, EVENT_ONESHOT, change_get_away_short4);
+	install_timed_event(&sequences[148], 1208, 0, EVENT_ONESHOT, change_get_away_short3);
+	install_timed_event(&sequences[148], 1625, 0, EVENT_ONESHOT, change_get_away_short4);
+	install_timed_event(&sequences[148], 2917, 0, EVENT_ONESHOT, change_get_away_short3);
+	install_timed_event(&sequences[148], 3417, 0, EVENT_ONESHOT, change_get_away_short4);
+	install_timed_event(&sequences[148], 6708, 0, EVENT_ONESHOT, change_get_away_short3);
+	install_timed_event(&sequences[148], 8583, 0, EVENT_ONESHOT, change_get_away_short4);
+	install_timed_event(&sequences[148], 9250, 0, EVENT_ONESHOT, change_get_away_short3);
+	install_timed_event(&sequences[148], 10333, 0, EVENT_ONESHOT, change_get_away_short4);
+	install_timed_event(&sequences[148], 12833, 0, EVENT_ONESHOT, change_get_away_short3);
+	install_timed_event(&sequences[148], 14042, 0, EVENT_ONESHOT, change_get_away_short4);
+	// seg414
+	install_timed_event(&sequences[145], 0, 2000, EVENT_DURATION, fade_bmw_m5);
+	install_timed_event(&sequences[145], 2000, 0, EVENT_ONESHOT, stop_bmw_m5);
+	install_timed_event(&sequences[147], 25000, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[147], 25250, 0, EVENT_ONESHOT, change_get_away_long4);
+	install_timed_event(&sequences[147], 25958, 0, EVENT_ONESHOT, change_get_away_long3);
+	install_timed_event(&sequences[147], 28250, 0, EVENT_ONESHOT, change_get_away_long4);
+	// seg420
+	// seg421_a
 	// seg434
 	install_timed_event(&sequences[153], 31083, 32042, EVENT_DURATION, seg435_a_event);
+	// seg435_a
+	// seg435_b
+	// seg435_c
+	// seg436_437
+	// seg438
+	// seg439_a
+	// seg439_b
+	// seg439_c
+	// seg440
+	// seg441
+	// seg442
+	// seg443
+	// seg444
+	// seg445
+	// seg445_1
+	// seg446
+	// seg447
+	// seg442_1
 	// EPISODE 5A
+	// seg501_507
+	// seg508_1
+	// seg508_2
+	// seg508_3
+	// seg509_511
+	// seg516
+	// seg517
+	// seg519
+	// seg520
+	// seg522
+	// seg524_a
+	// seg524_b
+	// seg524_c
+	// seg525
+	// seg526
+	// seg527
+	// seg528_a
+	// seg528_b
+	// seg529_a
+	// seg529_b
+	// seg530
 	// EPISODE 5B
+	// seg551
+	// seg554
+	// seg561
+	// seg555
+	// seg556_a
+	// seg556_b
+	// seg557
+	// seg558_a
+	// seg558_b
+	// seg560
+	// seg562_a
+	// seg562_b
+	// seg563
+	// seg564_a
+	// seg564_b
+	// seg565
+	// seg568_b
+	// seg568_a
+	// seg570_571
 	// EPISODE 6A
+	// seg601_602_603
+	// seg604_c
+	// seg604_d
+	// seg605_b
+	// seg606
+	// seg607
+	// seg608
+	// seg610
+	// seg614_a
+	// seg614_b
+	// seg618
+	// seg615
+	// seg619
+	// seg620_621_622
+	// seg616_622
+	// seg617
+	// seg623_a
+	// seg623_b
+	// seg624
+	// seg604_a
+	// seg604_b
+	// seg609_a
+	// seg609_b
 	// EPISODE 6B
+	// seg651_1
+	// seg651_2b
+	// seg651_2a
+	// seg651_3
+	// seg652_a
+	// seg652_b
+	// seg653
+	// seg654
+	// seg655_a
+	// seg655_b
+	// seg655_c
+	// seg656
+	// seg666_a
+	// seg657
+	// seg660
+	// seg667_669_670_a
+	// seg667_669_670_b
+	// seg673
+	// seg671_a
+	// seg671_b
+	// seg672
+	// seg661
+	// seg674
+	// seg675
+	// seg662
+	// seg666_b
+	// seg663
+	// seg664
+	// seg665
+	// seg666_c
+	// seg668_669_670_a
+	// seg668_669_670_b
 	// EPISODE 7
 	// EPISODE 9A
 	// EPISODE 9B
