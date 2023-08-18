@@ -58,6 +58,12 @@ void reload_theme() {
 	style.Colors[ImGuiCol_PlotHistogram] = Color4(colors.bar);
 	style.Colors[ImGuiCol_Text] = Color4(colors.text);
 	style.Colors[ImGuiCol_WindowBg] = Color4(colors.popup_bg);
+	uint32_t shadow_u32 = (uint32_t)(colors.shadow_text[0] * 255.0f) | (uint32_t)(colors.shadow_text[1] * 255.0f) << 8 | (uint32_t)(colors.shadow_text[2] * 255.0f) << 16 | (uint32_t)(colors.shadow_text[3] * 255.0f) << 24;
+	if (shadow_u32) {
+		ImGui::PushFontShadow(shadow_u32);
+	} else {
+		ImGui::PopFontShadow();
+	}
 }
 
 int main(int argc, char *argv[]) {

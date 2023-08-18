@@ -123,6 +123,7 @@ typedef struct {
 	float bar[4];
 	float text[4];
 	float btn_text[4];
+	float shadow_text[4];
 	float btn_hover_text[4];
 	float popup_bg[4];
 	uint8_t bar_type;
