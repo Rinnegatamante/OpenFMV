@@ -13,6 +13,8 @@
 #include "player.h"
 #include "unzip.h"
 
+static uint32_t shadow_u32 = 0;
+
 void ImGui_CircleBar(float radius, float thickness, float progress, ImVec4 color) {
 	int num_segments = 20;
 	ImGuiWindow *window = ImGui::GetCurrentWindow();
@@ -58,12 +60,7 @@ void reload_theme() {
 	style.Colors[ImGuiCol_PlotHistogram] = Color4(colors.bar);
 	style.Colors[ImGuiCol_Text] = Color4(colors.text);
 	style.Colors[ImGuiCol_WindowBg] = Color4(colors.popup_bg);
-	uint32_t shadow_u32 = (uint32_t)(colors.shadow_text[0] * 255.0f) | (uint32_t)(colors.shadow_text[1] * 255.0f) << 8 | (uint32_t)(colors.shadow_text[2] * 255.0f) << 16 | (uint32_t)(colors.shadow_text[3] * 255.0f) << 24;
-	if (shadow_u32) {
-		ImGui::PushFontShadow(shadow_u32);
-	} else {
-		ImGui::PopFontShadow();
-	}
+	shadow_u32 = (uint32_t)(colors.shadow_text[0] * 255.0f) | (uint32_t)(colors.shadow_text[1] * 255.0f) << 8 | (uint32_t)(colors.shadow_text[2] * 255.0f) << 16 | (uint32_t)(colors.shadow_text[3] * 255.0f) << 24;
 }
 
 int main(int argc, char *argv[]) {
@@ -193,6 +190,9 @@ main_menu:
 			ImGui_ImplVitaGL_NewFrame();
 subtitle_draw:
 			cur_delta = video_get_current_time();
+			if (shadow_u32) {
+				ImGui::PushFontShadow(shadow_u32);
+			}
 			if (config.subtitles && cur_sub) {
 				if (cur_delta > cur_sub->start) {
 					// Go to next subtitle
@@ -212,6 +212,7 @@ subtitle_draw:
 					ImGui::End();
 				}
 			}
+			ImGui::PopFontShadow();
 			
 			// Draw choice
 			if (cur_seq->start) {
