@@ -214,8 +214,8 @@ subtitle_draw:
 			}
 			ImGui::PopFontShadow();
 			
-			// Draw choice
-			if (cur_seq->start) {
+			// Draw choices
+			if (cur_seq->l) {
 				// Precalculate once buttons sizes for properly centering them
 				if (btns_state == BTNS_CALC_SIZE && colors.choices_type == CHOICES_CENTER_POS) {
 					ImGui::Begin("##fake", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBringToFrontOnFocus);
@@ -303,33 +303,35 @@ subtitle_draw:
 					ImGui::GetCurrentContext()->NavDisableHighlight = false;
 					
 					// Draw remaining time bar
-					float progress = (float)(cur_delta - cur_seq->start) / (float)(cur_seq->end - cur_seq->start);
-					float half_width;
-					switch (colors.bar_type) {
-					case BAR_DEFAULT:
-						ImGui::SetCursorPos(ImVec2(colors.choice_bar[0], colors.choice_bar[1]));
-						ImGui::ProgressBar(progress, ImVec2(colors.choice_bar[2], colors.choice_bar[3]), "");
-						break;
-					case BAR_CENTER_FILL:
-						half_width = colors.choice_bar[2] / 2.0f;
-						ImGui::SetCursorPos(ImVec2(colors.choice_bar[0] + (half_width - 1.0f), colors.choice_bar[1]));
-						ImGui::ProgressBar(progress, ImVec2(half_width, colors.choice_bar[3]), "##p1");
-						ImGui::SameLine();
-						ImGui::SetCursorPosX(colors.choice_bar[0]);
-						ImGui::PushStyleColor(ImGuiCol_FrameBg, Color4(colors.bar));
-						ImGui::PushStyleColor(ImGuiCol_PlotHistogram, Color4(colors.bar_bg));
-						ImGui::ProgressBar(1.0f - progress, ImVec2(half_width, colors.choice_bar[3]), "##p2");
-						ImGui::PopStyleColor(2);
-						break;
-					case BAR_CIRCULAR:
-						ImGui::SetCursorPos(ImVec2(colors.choice_bar[0], colors.choice_bar[1]));
-						ImGui_CircleBar(colors.choice_bar[2], colors.choice_bar[3], 1.0f, Color4(colors.bar_bg));
-						ImGui::SetCursorPos(ImVec2(colors.choice_bar[0], colors.choice_bar[1]));
-						ImGui_CircleBar(colors.choice_bar[2], colors.choice_bar[3], progress, Color4(colors.bar));
-						break;
-					default:
-						debug_log("Fatal Error: Invalid bar type\n");
-						break;
+					if (cur_seq->d != LOOP_SEQUENCE) {
+						float progress = (float)(cur_delta - cur_seq->start) / (float)(cur_seq->end - cur_seq->start);
+						float half_width;
+						switch (colors.bar_type) {
+						case BAR_DEFAULT:
+							ImGui::SetCursorPos(ImVec2(colors.choice_bar[0], colors.choice_bar[1]));
+							ImGui::ProgressBar(progress, ImVec2(colors.choice_bar[2], colors.choice_bar[3]), "");
+							break;
+						case BAR_CENTER_FILL:
+							half_width = colors.choice_bar[2] / 2.0f;
+							ImGui::SetCursorPos(ImVec2(colors.choice_bar[0] + (half_width - 1.0f), colors.choice_bar[1]));
+							ImGui::ProgressBar(progress, ImVec2(half_width, colors.choice_bar[3]), "##p1");
+							ImGui::SameLine();
+							ImGui::SetCursorPosX(colors.choice_bar[0]);
+							ImGui::PushStyleColor(ImGuiCol_FrameBg, Color4(colors.bar));
+							ImGui::PushStyleColor(ImGuiCol_PlotHistogram, Color4(colors.bar_bg));
+							ImGui::ProgressBar(1.0f - progress, ImVec2(half_width, colors.choice_bar[3]), "##p2");
+							ImGui::PopStyleColor(2);
+							break;
+						case BAR_CIRCULAR:
+							ImGui::SetCursorPos(ImVec2(colors.choice_bar[0], colors.choice_bar[1]));
+							ImGui_CircleBar(colors.choice_bar[2], colors.choice_bar[3], 1.0f, Color4(colors.bar_bg));
+							ImGui::SetCursorPos(ImVec2(colors.choice_bar[0], colors.choice_bar[1]));
+							ImGui_CircleBar(colors.choice_bar[2], colors.choice_bar[3], progress, Color4(colors.bar));
+							break;
+						default:
+							debug_log("Fatal Error: Invalid bar type\n");
+							break;
+						}
 					}
 					ImGui::End();
 				}

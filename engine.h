@@ -145,6 +145,8 @@ enum {
 	GAME_RESUMING
 };
 
+#define LOOP_SEQUENCE ((sequence *(*)())0xDEADBEEF)
+
 extern theme colors;
 extern sequence sequences[NUM_SEQUENCES];
 extern char game_strings[NUM_GAME_STRINGS][128];

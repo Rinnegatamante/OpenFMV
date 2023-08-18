@@ -202,7 +202,7 @@ void start_sequence(sequence *s) {
 	
 	// Loading video file
 	sprintf(generic_buf, "/Converted/%s.mp4", s->hash);
-	video_open(generic_buf, 0);
+	video_open(generic_buf, s->d == LOOP_SEQUENCE ? 1 : 0);
 	cur_seq = s;
 	cur_event = 0;
 	chosen_path = 0;
