@@ -296,7 +296,8 @@ void purge_from_ep3() {
 void purge_from_ep4() {
 	if (!fake_pass) {
 		for (int i = ATMO_FORD_TRANSIT; i <= ATMO_FIRE; i++) {
-			audio_sample_stop_and_free(mus[i]);
+			if (i != AFTER_CRASH)
+				audio_sample_stop_and_free(mus[i]);
 		}
 	}
 }
@@ -820,6 +821,33 @@ sequence *stop_siren() { audio_sample_stop_and_free(mus[ATMO_SIREN]); return NUL
 sequence *stop_siren_p3() { audio_sample_stop_and_free(mus[ATMO_SIREN_3]); return NULL; }
 sequence *stop_atmo_london() { audio_sample_stop_and_free(mus[ATMO_LONDON]); return NULL; }
 sequence *stop_fire() { audio_sample_stop_and_free(mus[ATMO_FIRE]); return NULL; }
+sequence *fade_police_everywhere() { audio_sample_fade(mus[POLICE_EVERYWHERE], 0.158687f, 0.1111572f, 0, 6000); return NULL; }
+sequence *fade_police_everywhere2() { audio_sample_fade(mus[POLICE_EVERYWHERE], 0.1111572f, 0.1594517f, 46750, 52750); return NULL; }
+sequence *fade_police_everywhere3() { audio_sample_fade(mus[POLICE_EVERYWHERE], 0.1594517f, 0.0f, 708, 4542); return NULL; }
+sequence *fade_police_everywhere4() { audio_sample_fade(mus[POLICE_EVERYWHERE], 0.1594517f, 0.0f, 0, 5167); return NULL; }
+sequence *fade_woe_dark_end() { audio_sample_fade(mus[WOE_DARK_END], 0.0796349f, 0.1242747f, 20000, 23000); return NULL; }
+sequence *fade_woe_dark() { audio_sample_fade(mus[WOE_DARK], 0.07858334f, 0.0f, 0, 4000); return NULL; }
+sequence *fade_woe_bowl_music2() { audio_sample_fade(mus[AFTER_CRASH], 0.07961292f, 0.0f, 0, 4000); return NULL; }
+sequence *fade_after_crash2() { audio_sample_fade(mus[AFTER_CRASH], 0.09751472f, 0.0f, 2167, 8833); return NULL; }
+sequence *fade_woe_bowl_music() { audio_sample_fade(mus[WOE_BOWL_MUSIC], 0.07952181f, 0.07961292f, 28208, 33208); return NULL; }
+sequence *start_police_everywhere() { mus[POLICE_EVERYWHERE] = audio_sample_start("Ep05A PoliceEverywhere 3x", 0, 0.158687f); game_vars.police_everywhere_playing = 1; return NULL; }
+sequence *start_hong_kong_backdoor() { mus[ATMO_HONG_KONG_BACK_DOOR] = audio_sample_start("EP05A Atmo Ext Hong Kong City Back Door", 1, 1.0f); return NULL; }
+sequence *start_woe_dark() { mus[WOE_DARK] = audio_sample_start("EP05A MrWoe Woe Dark", 0, 0.07858334f); return NULL; }
+sequence *start_push_your_chances() { mus[PUSHING_YOUR_CHANCES] = audio_sample_start("EP05A Pushing your chances", 0, 0.1241259f); return NULL; }
+sequence *start_woe_office() { mus[ATMO_WOE_OFFICE] = audio_sample_start("EP05A Atmo Int Woe Office", 1, 1.0f); return NULL; }
+sequence *start_woe_dark_end() { mus[WOE_DARK_END] = audio_sample_start("EP05A MrWoe Woe Dark End", 0, 0.0796349f); return NULL; }
+sequence *start_woes_resto() { mus[WOES_RESTO] = audio_sample_start("EP05A WoesResto", 0, 0.0f); return NULL; }
+sequence *start_woe_bowl_music() { mus[WOE_BOWL_MUSIC] = audio_sample_start("EP05A MrWoe Bowlmusic", 0, 0.07952181f); return NULL; }
+sequence *start_atmo_hong_kong() { mus[ATMO_HONG_KONG_CITY] = audio_sample_start("EP05A Atmo Int Hong Kong City", 1, 1.0f); return NULL; }
+sequence *stop_after_crash() { audio_sample_stop_and_free(mus[AFTER_CRASH]); return NULL; }
+sequence *stop_atmo_hong_kong() { audio_sample_stop_and_free(mus[ATMO_HONG_KONG_CITY]); return NULL; }
+sequence *stop_woes_resto() { audio_sample_stop_and_free(mus[WOES_RESTO]); return NULL; }
+sequence *stop_woe_bowl_music() { audio_sample_stop_and_free(mus[WOE_BOWL_MUSIC]); return NULL; }
+sequence *stop_woe_dark() { audio_sample_stop_and_free(mus[WOE_DARK]); return NULL; }
+sequence *stop_woe_office() { audio_sample_stop_and_free(mus[ATMO_WOE_OFFICE]); return NULL; }
+sequence *stop_police_everywhere() { audio_sample_stop_and_free(mus[POLICE_EVERYWHERE]); return NULL; }
+sequence *stop_hong_kong_backdoor() { audio_sample_stop_and_free(mus[ATMO_HONG_KONG_BACK_DOOR]); return NULL; }
+sequence *change_woes_resto() { audio_sample_set_volume(mus[WOES_RESTO], 0.09954205f); return NULL; }
 
 void fill_events() {
 	// OPENING
@@ -1446,26 +1474,72 @@ void fill_events() {
 	// seg442_1 (empty)
 	// EPISODE 5A
 	// seg501_507
-	// seg508_1
+	install_timed_event(&sequences[172], 2167, 0, EVENT_ONESHOT, start_woes_resto);
+	install_timed_event(&sequences[172], 2167, 8833, EVENT_DURATION, fade_after_crash2);
+	install_timed_event(&sequences[172], 8833, 0, EVENT_ONESHOT, change_woes_resto);
+	install_timed_event(&sequences[172], 8875, 0, EVENT_ONESHOT, start_atmo_hong_kong);
+	install_timed_event(&sequences[172], 13000, 0, EVENT_ONESHOT, stop_after_crash);
+	// seg508_1 (empty)
 	// seg508_2
+	install_timed_event(&sequences[174], 17000, 0, EVENT_ONESHOT, stop_atmo_hong_kong);
 	// seg508_3
+	install_timed_event(&sequences[175], 22300, 0, EVENT_ONESHOT, stop_atmo_hong_kong);
 	// seg509_511
+	install_timed_event(&sequences[176], 7708, 0, EVENT_ONESHOT, stop_woes_resto);
+	install_timed_event(&sequences[176], 8792, 0, EVENT_ONESHOT, stop_atmo_hong_kong);
 	// seg516
+	install_timed_event(&sequences[177], 0, 0, EVENT_ONESHOT, start_woe_office);
+	install_timed_event(&sequences[177], 13208, 0, EVENT_ONESHOT, start_woe_bowl_music);
+	install_timed_event(&sequences[177], 28208, 33208, EVENT_DURATION, fade_woe_bowl_music);
 	// seg517
+	install_timed_event(&sequences[178], 0, 0, EVENT_ONESHOT, stop_woes_resto);
 	// seg519
+	install_timed_event(&sequences[179], 0, 0, EVENT_ONESHOT, start_woe_dark);
+	install_timed_event(&sequences[179], 0, 4000, EVENT_DURATION, fade_woe_bowl_music2);
+	install_timed_event(&sequences[179], 4000, 0, EVENT_ONESHOT, stop_woe_bowl_music);
 	// seg520
+	install_timed_event(&sequences[180], 0, 0, EVENT_ONESHOT, start_woe_dark_end);
+	install_timed_event(&sequences[180], 0, 4000, EVENT_DURATION, fade_woe_dark);
+	install_timed_event(&sequences[180], 4000, 0, EVENT_ONESHOT, stop_woe_dark);
+	install_timed_event(&sequences[180], 20000, 23000, EVENT_DURATION, fade_woe_dark_end);
+	install_timed_event(&sequences[180], 27583, 0, EVENT_ONESHOT, start_police_everywhere);
+	install_timed_event(&sequences[180], 28292, 0, EVENT_ONESHOT, stop_woe_office);
 	// seg522
+	install_timed_event(&sequences[181], 0, 0, EVENT_ONESHOT, start_woe_dark_end);
+	install_timed_event(&sequences[181], 0, 4000, EVENT_DURATION, fade_woe_bowl_music2);
+	install_timed_event(&sequences[181], 4000, 0, EVENT_ONESHOT, stop_woe_bowl_music);
+	install_timed_event(&sequences[181], 4000, 0, EVENT_ONESHOT, stop_woe_dark);
+	install_timed_event(&sequences[181], 20000, 23000, EVENT_DURATION, fade_woe_dark_end);
+	install_timed_event(&sequences[181], 45875, 0, EVENT_ONESHOT, start_police_everywhere);
+	install_timed_event(&sequences[181], 48400, 0, EVENT_ONESHOT, stop_woe_office);
 	// seg524_a
+	install_timed_event(&sequences[182], 0, 0, EVENT_ONESHOT, start_hong_kong_backdoor);
 	// seg524_b
+	install_timed_event(&sequences[183], 42, 0, EVENT_ONESHOT, start_hong_kong_backdoor);
 	// seg524_c
-	// seg525
+	install_timed_event(&sequences[184], 42, 0, EVENT_ONESHOT, start_hong_kong_backdoor);
+	// seg525 (empty)
 	// seg526
-	// seg527
+	install_timed_event(&sequences[186], 0, 6000, EVENT_DURATION, fade_police_everywhere);
+	install_timed_event(&sequences[186], 46750, 52750, EVENT_DURATION, fade_police_everywhere2);
+	// seg527 (empty)
 	// seg528_a
+	install_timed_event(&sequences[188], 2042, 0, EVENT_ONESHOT, start_push_your_chances);
+	install_timed_event(&sequences[188], 2958, 0, EVENT_ONESHOT, stop_police_everywhere);
+	install_timed_event(&sequences[188], 8625, 0, EVENT_ONESHOT, stop_hong_kong_backdoor);
 	// seg528_b
+	install_timed_event(&sequences[189], 19600, 0, EVENT_ONESHOT, stop_hong_kong_backdoor);
 	// seg529_a
+	install_timed_event(&sequences[190], 708, 4542, EVENT_DURATION, fade_police_everywhere3);
+	install_timed_event(&sequences[190], 4542, 0, EVENT_ONESHOT, start_push_your_chances);
+	install_timed_event(&sequences[190], 5042, 0, EVENT_ONESHOT, stop_police_everywhere);
+	install_timed_event(&sequences[190], 14333, 0, EVENT_ONESHOT, stop_hong_kong_backdoor);
 	// seg529_b
-	// seg530
+	install_timed_event(&sequences[191], 0, 5166, EVENT_DURATION, fade_police_everywhere4);
+	install_timed_event(&sequences[191], 5167, 0, EVENT_ONESHOT, start_push_your_chances);
+	install_timed_event(&sequences[191], 5292, 0, EVENT_ONESHOT, stop_police_everywhere);
+	install_timed_event(&sequences[191], 15583, 0, EVENT_ONESHOT, stop_hong_kong_backdoor);
+	// seg530 (empty)
 	// EPISODE 5B
 	// seg551
 	// seg554

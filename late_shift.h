@@ -49,6 +49,7 @@ typedef struct {
 	uint8_t may_stabbed;
 	uint8_t get_away_long_playing;
 	uint8_t passed_by_seg326;
+	uint8_t police_everywhere_playing;
 } gamestate;
 
 extern gamestate game_vars;
