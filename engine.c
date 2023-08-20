@@ -140,7 +140,8 @@ void reload_subtitles(sequence *s) {
 	int i = 0;
 	fake_pass = 1;
 	sequence *link;
-	enqueue_link(s->d);
+	if (s->d != LOOP_SEQUENCE)
+		enqueue_link(s->d);
 	enqueue_link(s->l);
 	enqueue_link(s->r);
 	enqueue_link(s->e);
