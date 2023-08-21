@@ -50,6 +50,13 @@ typedef struct {
 	uint8_t get_away_long_playing;
 	uint8_t passed_by_seg326;
 	uint8_t police_everywhere_playing;
+	uint8_t cross_exam;
+	uint8_t turned_away;
+	uint8_t left_may_crying;
+	uint8_t from_ep7_to_ep11;
+	uint8_t from_ep9_to_ep11;
+	uint8_t finish_ep7_target;
+	uint8_t passed_by_seg765;
 } gamestate;
 
 extern gamestate game_vars;
