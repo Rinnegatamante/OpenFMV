@@ -269,6 +269,7 @@ enum {
 	// EPISODE 6A
 	ATMO_HOTEL_ROOM,
 	TSCHOI_STAB,
+	TSCHOI_ACTION,
 	ATMO_TV_BG_PART1,
 	ATMO_TV_BG_PART2,
 	ATMO_TV_BG_PART3,
@@ -326,7 +327,7 @@ void purge_from_ep4() {
 void purge_from_ep5a() {
 	if (!fake_pass) {
 		for (int i = ATMO_WOE_OFFICE; i <= WOE_DARK_END; i++) {
-			if (i != POLICE_EVERYWHERE) {
+			if (i != POLICE_EVERYWHERE && i != PUSHING_YOUR_CHANCES) {
 				audio_sample_stop_and_free(mus[i]);
 			}
 		}
@@ -551,7 +552,7 @@ sequence *seg565() { return &sequences[208]; }
 sequence *eval_gone_to_woe2() { return game_vars.gone_to_woe ? &sequences[209] : &sequences[210]; }
 sequence *seg570_571() { return &sequences[211]; }
 // EPISODE 6A
-sequence *seg601_602_603() { /*purge_from_ep*/ trigger_save = 1; return &sequences[214]; }
+sequence *seg601_602_603() { purge_from_ep5a(); trigger_save = 1; return &sequences[214]; }
 sequence *eval_blank_book() { return game_vars.blank_book ? &sequences[215] : &sequences[216]; }
 sequence *eval_may_likes_matt() { if (game_vars.may_likes_matt >= 4) { game_vars.may_kiss = 1; return &sequences[233]; } return &sequences[234]; }
 sequence *eval_may_kiss() { return game_vars.may_kiss ? &sequences[236] : &sequences[235]; }
@@ -942,6 +943,33 @@ sequence *stop_tenseness() { audio_sample_stop_and_free(mus[TENSENESS]); return 
 sequence *fade_after_crash3() { audio_sample_fade(mus[AFTER_CRASH], 0.09751472f, 0.0f, 0, 6000); return NULL; }
 sequence *start_radioplay() { mus[RADIO_PLAY] = audio_sample_start("EP06B Radioplay", 1, 1.0f); return NULL; }
 sequence *stop_showdown_and_violence() { audio_sample_stop_and_free(mus[SHOWDOWN_AND_VIOLENCE]); return NULL; }
+sequence *fade_hotel_romance2() { audio_sample_fade(mus[HOTEL_ROMANCE], 0.08464747f, 0.0f, 28333, 35958); return NULL; }
+sequence *fade_hotel_romance() { audio_sample_fade(mus[HOTEL_ROMANCE], 0.09851323f, 0.08464747f, 6083, 14083); return NULL; }
+sequence *fade_on_the_news() { audio_sample_fade(mus[ON_THE_NEWS], 0.09919386f, 0.0f, 0, 6750); return NULL; }
+sequence *fade_pushing_your_chances() { audio_sample_fade(mus[PUSHING_YOUR_CHANCES], 0.1241259f, 0.06466196f, 0, 11000); return NULL; }
+sequence *start_atmo_hotel_room() { mus[ATMO_HOTEL_ROOM] = audio_sample_start("EP06A Atmo Int Hotel Room", 1, 1.0f); return NULL; }
+sequence *start_atmo_tv_bg_p1() { mus[ATMO_TV_BG_PART1] = audio_sample_start("EP06A Atmo Int TV Background Part 1", 0, 1.0f); return NULL; }
+sequence *start_atmo_tv_bg_p2() { mus[ATMO_TV_BG_PART2] = audio_sample_start("EP06A Atmo Int TV Background Part 2", 0, 1.0f); return NULL; }
+sequence *start_atmo_tv_bg_trans() { mus[ATMO_TV_BG_TRANS] = audio_sample_start("EP06A Atmo Int TV Background Transition", 0, 1.0f); return NULL; }
+sequence *start_hotel_romance() { mus[HOTEL_ROMANCE] = audio_sample_start("EP06A Hotel Romance", 0, 0.09851323f); return NULL; }
+sequence *start_on_the_news() { mus[ON_THE_NEWS] = audio_sample_start("EP06A On the News", 0, 0.09919386f); return NULL; }
+sequence *start_on_the_news2() { mus[ON_THE_NEWS] = audio_sample_start("EP06A On the News", 0, 0.0973212f); return NULL; }
+sequence *start_atmo_tv_bg_p3() { mus[ATMO_TV_BG_PART3] = audio_sample_start("EP06A Atmo Int TV Background Part 3", 0, 1.0f); return NULL; }
+sequence *stop_showdown_and_violence() { audio_sample_stop_and_free(mus[SHOWDOWN_AND_VIOLENCE]); return NULL; }
+sequence *stop_hotel_romance() { audio_sample_stop_and_free(mus[HOTEL_ROMANCE]); return NULL; }
+sequence *stop_atmo_tv_bg_trans() { audio_sample_stop_and_free(mus[ATMO_TV_BG_TRANS]); return NULL; }
+sequence *stop_on_the_news() { audio_sample_stop_and_free(mus[ON_THE_NEWS]); return NULL; }
+sequence *stop_atmo_hotel_room() { audio_sample_stop_and_free(mus[ATMO_HOTEL_ROOM]); return NULL; }
+sequence *stop_atmo_stairway() { audio_sample_stop_and_free(mus[ATMO_STAIRWAY]); return NULL; }
+sequence *start_tschoi_action() { mus[TSCHOI_ACTION] = audio_sample_start("EP06A Tschoi Action", 0, 0.1002888f); return NULL; }
+sequence *fade_tschoi_action() { audio_sample_fade(mus[TSCHOI_ACTION], 0.1002888f, 0.126724f, 13833, 16167); return NULL; }
+sequence *start_atmo_stairway() { mus[ATMO_STAIRWAY] = audio_sample_start("EP06A Atmo Int Stairway", 1, 1.0f); return NULL; }
+sequence *start_atmo_backyard() { mus[ATMO_BACKYARD] = audio_sample_start("EP06A Atmo Ext Back yard", 1, 1.0f); return NULL; }
+sequence *start_tschoi_stab() { mus[TSCHOI_STAB] = audio_sample_start("EP06A Tschoi Action STAB", 0, 0.2509432f); return NULL; }
+sequence *stop_tschoi_action() { audio_sample_stop_and_free(mus[TSCHOI_ACTION]); return NULL; }
+sequence *stop_atmo_backyard() { audio_sample_stop_and_free(mus[ATMO_BACKYARD]); return NULL; }
+sequence *start_radioplay2() { mus[RADIO_PLAY] = audio_sample_start("EP06B Radioplay", 0, 0.0f); return NULL; }
+sequence *fade_radioplay() { audio_sample_fade(mus[RADIO_PLAY], 0.0f, 1.0f, 3958, 5958); return NULL; }
 
 void fill_events() {
 	// OPENING
@@ -1672,28 +1700,70 @@ void fill_events() {
 	install_timed_event(&sequences[211], 69792, 0, EVENT_ONESHOT, stop_showdown_and_violence);
 	// EPISODE 6A
 	// seg601_602_603
+	install_timed_event(&sequences[214], 0, 11000, EVENT_DURATION, fade_pushing_your_chances);
+	install_timed_event(&sequences[214], 28167, 0, EVENT_ONESHOT, start_atmo_hotel_room);
+	install_timed_event(&sequences[214], 39958, 0, EVENT_ONESHOT, start_atmo_tv_bg_p1);
+	install_timed_event(&sequences[214], 72083, 0, EVENT_ONESHOT, start_hotel_romance);
+	install_timed_event(&sequences[214], 94083, 0, EVENT_ONESHOT, start_atmo_tv_bg_trans);
 	// seg604_c
+	install_timed_event(&sequences[215], 1917, 0, EVENT_ONESHOT, stop_atmo_tv_bg_trans);
+	install_timed_event(&sequences[215], 2917, 0, EVENT_ONESHOT, start_atmo_tv_bg_p3);
+	install_timed_event(&sequences[215], 8200, 0, EVENT_ONESHOT, stop_hotel_romance);
 	// seg604_d
+	install_timed_event(&sequences[216], 1833, 0, EVENT_ONESHOT, stop_atmo_tv_bg_trans);
+	install_timed_event(&sequences[216], 2833, 0, EVENT_ONESHOT, start_atmo_tv_bg_p3);
+	install_timed_event(&sequences[216], 8167, 0, EVENT_ONESHOT, stop_hotel_romance);
 	// seg605_b
-	// seg606
-	// seg607
-	// seg608
+	install_timed_event(&sequences[217], 2833, 0, EVENT_ONESHOT, start_on_the_news);
+	// seg606 (empty)
+	// seg607 (empty)
+	// seg608 (empty)
 	// seg610
-	// seg614_a
-	// seg614_b
-	// seg618
-	// seg615
-	// seg619
+	install_timed_event(&sequences[221], 0, 6750, EVENT_DURATION, fade_on_the_news);
+	install_timed_event(&sequences[221], 6750, 0, EVENT_ONESHOT, stop_on_the_news);
+	install_timed_event(&sequences[221], 6750, 0, EVENT_ONESHOT, start_tschoi_action);
+	install_timed_event(&sequences[221], 13417, 0, EVENT_ONESHOT, stop_atmo_hotel_room);
+	install_timed_event(&sequences[221], 13833, 0, EVENT_ONESHOT, start_atmo_stairway);
+	install_timed_event(&sequences[221], 13833, 16167, EVENT_DURATION, fade_tschoi_action);
+	// seg614_a (empty)
+	// seg614_b (empty)
+	// seg618 (empty)
+	// seg615 (empty)
+	// seg619 (empty)
 	// seg620_621_622
+	install_timed_event(&sequences[227], 15792, 0, EVENT_ONESHOT, stop_atmo_stairway);
+	install_timed_event(&sequences[227], 15792, 0, EVENT_ONESHOT, start_atmo_backyard);
 	// seg616_622
-	// seg617
+	install_timed_event(&sequences[228], 15042, 0, EVENT_ONESHOT, stop_atmo_stairway);
+	install_timed_event(&sequences[228], 15042, 0, EVENT_ONESHOT, start_atmo_backyard);
+	// seg617 (empty)
 	// seg623_a
+	install_timed_event(&sequences[230], 4167, 0, EVENT_ONESHOT, start_tschoi_stab);
+	install_timed_event(&sequences[230], 4167, 0, EVENT_ONESHOT, stop_tschoi_action);
+	install_timed_event(&sequences[230], 11800, 0, EVENT_ONESHOT, stop_atmo_backyard);
 	// seg623_b
+	install_timed_event(&sequences[231], 3625, 0, EVENT_ONESHOT, start_tschoi_stab);
+	install_timed_event(&sequences[231], 3792, 0, EVENT_ONESHOT, stop_tschoi_action);
+	install_timed_event(&sequences[231], 13800, 0, EVENT_ONESHOT, stop_atmo_backyard);
 	// seg624
+	install_timed_event(&sequences[232], 95, 0, EVENT_ONESHOT, start_tschoi_stab);
+	install_timed_event(&sequences[232], 95, 0, EVENT_ONESHOT, stop_tschoi_action);
+	install_timed_event(&sequences[232], 3958, 0, EVENT_ONESHOT, start_radioplay2);
+	install_timed_event(&sequences[232], 3958, 5958, EVENT_DURATION, fade_radioplay);
+	install_timed_event(&sequences[232], 7166, 0, EVENT_ONESHOT, stop_atmo_stairway);
 	// seg604_a
+	install_timed_event(&sequences[233], 4000, 0, EVENT_ONESHOT, stop_atmo_tv_bg_trans);
+	install_timed_event(&sequences[233], 5000, 0, EVENT_ONESHOT, start_atmo_tv_bg_p2);
+	install_timed_event(&sequences[233], 6083, 14083, EVENT_DURATION, fade_hotel_romance);
+	install_timed_event(&sequences[233], 28333, 0, EVENT_ONESHOT, start_on_the_news2);
+	install_timed_event(&sequences[233], 28333, 35958, EVENT_DURATION, fade_hotel_romance2);
+	install_timed_event(&sequences[233], 35958, 0, EVENT_ONESHOT, stop_hotel_romance);
 	// seg604_b
-	// seg609_a
-	// seg609_b
+	install_timed_event(&sequences[234], 1500, 0, EVENT_ONESHOT, stop_atmo_tv_bg_trans);
+	install_timed_event(&sequences[234], 2500, 0, EVENT_ONESHOT, start_atmo_tv_bg_p3);
+	install_timed_event(&sequences[234], 7500, 0, EVENT_ONESHOT, stop_hotel_romance);
+	// seg609_a (empty)
+	// seg609_b (empty)
 	// EPISODE 6B
 	// seg651_1
 	// seg651_2b
