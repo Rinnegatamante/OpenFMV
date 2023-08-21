@@ -290,34 +290,52 @@ audio_sample *mus[NUM_AUDIO_SOURCES];
 void purge_from_ep1() {
 	if (!fake_pass) {
 		for (int i = CAR_PARK; i <= GUTTED_STINGER; i++) {
-			if (i != MATT_ESCAPE)
+			if (i != MATT_ESCAPE) {
 				audio_sample_stop_and_free(mus[i]);
+			}
 		}
 	}
 }
 void purge_from_ep2() {
 	if (!fake_pass) {
 		for (int i = ATMO_TRAIN; i <= JEFF_LINE; i++) {
-			if (i != LETS_GO)
+			if (i != LETS_GO) {
 				audio_sample_stop_and_free(mus[i]);
+			}
 		}
 	}
 }
 void purge_from_ep3() {
 	if (!fake_pass) {
 		for (int i = ATMO_BASEMENT_SEBASTIEN; i <= TAKING_SEATS; i++) {
-			if (i != GET_AWAY_LONG)
+			if (i != GET_AWAY_LONG) {
 				audio_sample_stop_and_free(mus[i]);
+			}
 		}
 	}
 }
 void purge_from_ep4() {
 	if (!fake_pass) {
 		for (int i = ATMO_FORD_TRANSIT; i <= ATMO_FIRE; i++) {
-			if (i != AFTER_CRASH)
+			if (i != AFTER_CRASH) {
 				audio_sample_stop_and_free(mus[i]);
+			}
 		}
 	}
+}
+void purge_from_ep5a() {
+	if (!fake_pass) {
+		for (int i = ATMO_WOE_OFFICE; i <= WOE_DARK_END; i++) {
+			if (i != POLICE_EVERYWHERE) {
+				audio_sample_stop_and_free(mus[i]);
+			}
+		}
+	}
+}
+void purge_from_ep5b() {
+	audio_sample_stop_and_free(mus[SHOWDOWN_AND_VIOLENCE]);
+	audio_sample_stop_and_free(mus[TENSENESS]);
+	audio_sample_stop_and_free(mus[ATMO_POLICE_STATION]);
 }
 
 // Game jump funcs
@@ -516,7 +534,7 @@ sequence *seg529_a() { return &sequences[190]; }
 sequence *seg529_b() { return &sequences[191]; }
 sequence *seg530() { return &sequences[192]; }
 // EPISODE 5B
-sequence *seg551() { trigger_save = 1; purge_from_ep4(); return &sequences[193]; }
+sequence *seg551() { trigger_save = 1; purge_from_ep4(); purge_from_ep5a(); return &sequences[193]; }
 sequence *seg554() { if (!game_vars.gone_to_woe) trigger_save = 1; game_vars.report_to_police = 1; return &sequences[194]; }
 sequence *eval_gone_to_woe() { return game_vars.gone_to_woe ? &sequences[195] : &sequences[196]; }
 sequence *eval_sabotage2() { return game_vars.sabotage >= 4 ? &sequences[197] : &sequences[198]; }
@@ -554,7 +572,7 @@ sequence *seg623_a() { return &sequences[230]; }
 sequence *seg623_b() { return &sequences[231]; }
 sequence *seg624() { game_vars.radioplay_started = 1; return &sequences[232]; }
 // EPISODE 6B
-sequence *seg651_1() { /*purge_from_ep*/ trigger_save = 1; game_vars.cross_exam = 1; return &sequences[237]; }
+sequence *seg651_1() { purge_from_ep5b(); trigger_save = 1; game_vars.cross_exam = 1; return &sequences[237]; }
 sequence *eval_report_police() { return game_vars.report_to_police ? &sequences[238] : &sequences[239]; }
 sequence *seg651_3() { return &sequences[240]; }
 sequence *seg652_a() { return &sequences[241]; }
@@ -912,6 +930,18 @@ sequence *stop_woe_office() { audio_sample_stop_and_free(mus[ATMO_WOE_OFFICE]); 
 sequence *stop_police_everywhere() { audio_sample_stop_and_free(mus[POLICE_EVERYWHERE]); return NULL; }
 sequence *stop_hong_kong_backdoor() { audio_sample_stop_and_free(mus[ATMO_HONG_KONG_BACK_DOOR]); return NULL; }
 sequence *change_woes_resto() { audio_sample_set_volume(mus[WOES_RESTO], 0.09954205f); return NULL; }
+sequence *maybe_start_police_everywhere() { if (!game_vars.police_everywhere_playing) { mus[POLICE_EVERYWHERE] = audio_sample_start("Ep05A PoliceEverywhere 3x", 0, 0.249946f); } game_vars.police_everywhere_playing = 0; return NULL; }
+sequence *start_atmo_police_station() { mus[ATMO_POLICE_STATION] = audio_sample_start("EP05B Atmo Int Police Station", 1, 1.0f); return NULL; }
+sequence *start_showdown_and_violence() { mus[SHOWDOWN_AND_VIOLENCE] = audio_sample_start("EP05B ShowdownAndViolence", 0, 0.3166535f); return NULL; }
+sequence *start_tenseness() { mus[TENSENESS] = audio_sample_start("EP05B Tenseness", 0, 0.2510983f); return NULL; }
+sequence *fade_police_everywhere5() { audio_sample_fade(mus[POLICE_EVERYWHERE], 0.249946f, 0.1590833f, 0, 3500); return NULL; }
+sequence *fade_police_everywhere6() { audio_sample_fade(mus[POLICE_EVERYWHERE], 0.1590833f, 0.0f, 12333, 21333); return NULL; }
+sequence *fade_tenseness() { audio_sample_fade(mus[TENSENESS], 0.2510983f, 0.0f, 49208, 50708); return NULL; }
+sequence *stop_atmo_police_station() { audio_sample_stop_and_free(mus[ATMO_POLICE_STATION]); return NULL; }
+sequence *stop_tenseness() { audio_sample_stop_and_free(mus[TENSENESS]); return NULL; }
+sequence *fade_after_crash3() { audio_sample_fade(mus[AFTER_CRASH], 0.09751472f, 0.0f, 0, 6000); return NULL; }
+sequence *start_radioplay() { mus[RADIO_PLAY] = audio_sample_start("EP06B Radioplay", 1, 1.0f); return NULL; }
+sequence *stop_showdown_and_violence() { audio_sample_stop_and_free(mus[SHOWDOWN_AND_VIOLENCE]); return NULL; }
 
 void fill_events() {
 	// OPENING
@@ -1606,24 +1636,40 @@ void fill_events() {
 	// seg530 (empty)
 	// EPISODE 5B
 	// seg551
+	install_timed_event(&sequences[193], 0, 0, EVENT_ONESHOT, maybe_start_police_everywhere);
+	install_timed_event(&sequences[193], 0, 3500, EVENT_DURATION, fade_police_everywhere5);
+	install_timed_event(&sequences[193], 12333, 21333, EVENT_DURATION, fade_police_everywhere6);
+	install_timed_event(&sequences[193], 21333, 0, EVENT_ONESHOT, stop_police_everywhere);
 	// seg554
-	// seg561
-	// seg555
-	// seg556_a
-	// seg556_b
-	// seg557
-	// seg558_a
-	// seg558_b
-	// seg560
-	// seg562_a
-	// seg562_b
-	// seg563
-	// seg564_a
-	// seg564_b
-	// seg565
+	install_timed_event(&sequences[194], 0, 0, EVENT_ONESHOT, start_atmo_police_station);
+	install_timed_event(&sequences[194], 0, 6000, EVENT_DURATION, fade_after_crash3);
+	install_timed_event(&sequences[194], 6000, 0, EVENT_ONESHOT, stop_after_crash);
+	// seg561 (empty)
+	// seg555 (empty)
+	// seg556_a (empty)
+	// seg556_b (empty)
+	// seg557 (empty)
+	// seg558_a (empty)
+	// seg558_b (empty)
+	// seg560 (empty)
+	// seg562_a (empty)
+	// seg562_b (empty)
+	// seg563 (empty)
+	// seg564_a (empty)
+	// seg564_b (empty)
+	// seg565 (empty)
 	// seg568_b
+	install_timed_event(&sequences[209], 5750, 0, EVENT_ONESHOT, start_tenseness);
+	install_timed_event(&sequences[209], 31200, 0, EVENT_ONESHOT, stop_atmo_police_station);
 	// seg568_a
+	install_timed_event(&sequences[210], 6708, 0, EVENT_ONESHOT, start_tenseness);
+	install_timed_event(&sequences[210], 26500, 0, EVENT_ONESHOT, stop_atmo_police_station);
 	// seg570_571
+	install_timed_event(&sequences[211], 45125, 0, EVENT_ONESHOT, start_showdown_and_violence);
+	install_timed_event(&sequences[211], 49208, 50708, EVENT_DURATION, fade_tenseness);
+	install_timed_event(&sequences[211], 50708, 0, EVENT_ONESHOT, stop_tenseness);
+	install_timed_event(&sequences[211], 69792, 0, EVENT_ONESHOT, start_radioplay);
+	install_timed_event(&sequences[211], 69792, 0, EVENT_ONESHOT, stop_showdown_and_violence);
 	// EPISODE 6A
 	// seg601_602_603
 	// seg604_c
@@ -1682,6 +1728,54 @@ void fill_events() {
 	// seg668_669_670_a
 	// seg668_669_670_b
 	// EPISODE 7
+	// seg732
+	// seg701
+	// seg702
+	// seg707
+	// seg703
+	// seg704
+	// seg708
+	// seg709
+	// seg710
+	// seg711
+	// seg712
+	// seg713_a
+	// seg713_b
+	// seg713_c
+	// seg714_723
+	// seg724
+	// seg760
+	// seg761
+	// seg762
+	// seg763
+	// seg764
+	// seg725_k
+	// seg727
+	// seg734
+	// seg738
+	// seg739_2
+	// seg739_1
+	// seg739_a
+	// seg739_b
+	// seg733
+	// seg715
+	// seg717_720
+	// seg717_718
+	// seg719_720
+	// seg716_723
+	// seg721_723
+	// seg737
+	// seg738
+	// seg740
+	// seg741
+	// seg742
+	// seg743_k
+	// seg743_1
+	// seg745
+	// seg747_2_749_750
+	// seg765_756_757
+	// seg770
+	// seg770_2
 	// EPISODE 9A
 	// EPISODE 9B
 	// EPISODE 10
