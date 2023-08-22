@@ -279,6 +279,21 @@ enum {
 	ON_THE_NEWS,
 	HOTEL_ROMANCE,
 	// EPISODE 6B
+	TORTURE_TOM,
+	TCHOI_HOTEL_ROOM,
+	THUMBSCREW_P1,
+	KNIFE_ACCENT_P1,
+	KNIFE_ACCENT_P2,
+	THUMBSCREW_TALK,
+	HOELZLI_ACCENT,
+	THUMBSCREW_P2,
+	SHORT_KNIFE,
+	LONG_KNIFE,
+	ATMO_RADIO_PLAY,
+	MATT_ALONE,
+	TORTURE_MAIN,
+	THUMBSCREW_ANGRY,
+	TORTURE_END,
 	// EPISODE 7
 	// EPISODE 9A
 	// EPISODE 9B
@@ -334,9 +349,18 @@ void purge_from_ep5a() {
 	}
 }
 void purge_from_ep5b() {
-	audio_sample_stop_and_free(mus[SHOWDOWN_AND_VIOLENCE]);
-	audio_sample_stop_and_free(mus[TENSENESS]);
-	audio_sample_stop_and_free(mus[ATMO_POLICE_STATION]);
+	if (!fake_pass) {
+		audio_sample_stop_and_free(mus[SHOWDOWN_AND_VIOLENCE]);
+		audio_sample_stop_and_free(mus[TENSENESS]);
+		audio_sample_stop_and_free(mus[ATMO_POLICE_STATION]);
+	}
+}
+void purge_from_ep6a() {
+	if (!fake_pass) {
+		for (int i = ATMO_HOTEL_ROOM; i <= HOTEL_ROMANCE; i++) {
+			audio_sample_stop_and_free(mus[i]);
+		}
+	}
 }
 
 // Game jump funcs
@@ -573,7 +597,7 @@ sequence *seg623_a() { return &sequences[230]; }
 sequence *seg623_b() { return &sequences[231]; }
 sequence *seg624() { game_vars.radioplay_started = 1; return &sequences[232]; }
 // EPISODE 6B
-sequence *seg651_1() { purge_from_ep5b(); trigger_save = 1; game_vars.cross_exam = 1; return &sequences[237]; }
+sequence *seg651_1() { purge_from_ep5b(); purge_from_ep6a(); trigger_save = 1; game_vars.cross_exam = 1; return &sequences[237]; }
 sequence *eval_report_police() { return game_vars.report_to_police ? &sequences[238] : &sequences[239]; }
 sequence *seg651_3() { return &sequences[240]; }
 sequence *seg652_a() { return &sequences[241]; }
@@ -955,7 +979,6 @@ sequence *start_hotel_romance() { mus[HOTEL_ROMANCE] = audio_sample_start("EP06A
 sequence *start_on_the_news() { mus[ON_THE_NEWS] = audio_sample_start("EP06A On the News", 0, 0.09919386f); return NULL; }
 sequence *start_on_the_news2() { mus[ON_THE_NEWS] = audio_sample_start("EP06A On the News", 0, 0.0973212f); return NULL; }
 sequence *start_atmo_tv_bg_p3() { mus[ATMO_TV_BG_PART3] = audio_sample_start("EP06A Atmo Int TV Background Part 3", 0, 1.0f); return NULL; }
-sequence *stop_showdown_and_violence() { audio_sample_stop_and_free(mus[SHOWDOWN_AND_VIOLENCE]); return NULL; }
 sequence *stop_hotel_romance() { audio_sample_stop_and_free(mus[HOTEL_ROMANCE]); return NULL; }
 sequence *stop_atmo_tv_bg_trans() { audio_sample_stop_and_free(mus[ATMO_TV_BG_TRANS]); return NULL; }
 sequence *stop_on_the_news() { audio_sample_stop_and_free(mus[ON_THE_NEWS]); return NULL; }
@@ -970,6 +993,42 @@ sequence *stop_tschoi_action() { audio_sample_stop_and_free(mus[TSCHOI_ACTION]);
 sequence *stop_atmo_backyard() { audio_sample_stop_and_free(mus[ATMO_BACKYARD]); return NULL; }
 sequence *start_radioplay2() { mus[RADIO_PLAY] = audio_sample_start("EP06B Radioplay", 0, 0.0f); return NULL; }
 sequence *fade_radioplay() { audio_sample_fade(mus[RADIO_PLAY], 0.0f, 1.0f, 3958, 5958); return NULL; }
+sequence *stop_torture_end() { audio_sample_stop_and_free(mus[TORTURE_END]); return NULL; }
+sequence *stop_tchoi_hotel() { audio_sample_stop_and_free(mus[TCHOI_HOTEL_ROOM]); return NULL; }
+sequence *stop_thumbscrew_p2() { audio_sample_stop_and_free(mus[THUMBSCREW_P2]); return NULL; }
+sequence *stop_short_knife() { audio_sample_stop_and_free(mus[SHORT_KNIFE]); return NULL; }
+sequence *stop_long_knife() { audio_sample_stop_and_free(mus[LONG_KNIFE]); return NULL; }
+sequence *stop_torture_main() { audio_sample_stop_and_free(mus[TORTURE_MAIN]); return NULL; }
+sequence *stop_radioplay() { audio_sample_stop_and_free(mus[RADIO_PLAY]); return NULL; }
+sequence *stop_thumbscrew_p1() { audio_sample_stop_and_free(mus[THUMBSCREW_P1]); return NULL; }
+sequence *start_knife_accent_p1() { mus[KNIFE_ACCENT_P1] = audio_sample_start("EP06B Knife Accent I", 0, 0.1772321f); return NULL; }
+sequence *start_knife_accent_p2() { mus[KNIFE_ACCENT_P2] = audio_sample_start("EP06B Knife Accent II", 0, 0.176941f); return NULL; }
+sequence *start_atmo_radioplay() { mus[ATMO_RADIO_PLAY] = audio_sample_start("EP06B Atmo Int Radioplay", 0, 1.0f); return NULL; }
+sequence *start_thumbscrew_p1() { mus[THUMBSCREW_P1] = audio_sample_start("EP06B Thumbscrew I", 0, 0.139111f); return NULL; }
+sequence *start_tchoi_hotel() { mus[TCHOI_HOTEL_ROOM] = audio_sample_start("EP06B Atmo Int Tchoi Hotel Room", 0, 1.0f); return NULL; }
+sequence *fade_radioplay2() { audio_sample_fade(mus[RADIO_PLAY], 0.2523407f, 0.0f, 15208, 18208); return NULL; }
+sequence *maybe_start_radioplay() { if (!game_vars.radioplay_started) { mus[RADIO_PLAY] = audio_sample_start("EP06B Radioplay", 0, 0.2523407f); } return NULL; }
+sequence *start_torture_main() { mus[TORTURE_MAIN] = audio_sample_start("EP06B Torture Main", 0, 0.141086f); return NULL; }
+sequence *fade_thumbscrew_p1() { audio_sample_fade(mus[THUMBSCREW_P1], 0.139111f, 0.0f, 7125, 13500); return NULL; }
+sequence *start_short_knife() { mus[SHORT_KNIFE] = audio_sample_start("EP06B Short Knife", 0, 0.177368f); return NULL; }
+sequence *start_long_knife() { mus[LONG_KNIFE] = audio_sample_start("EP06B Long Knife", 0, 0.1412607f); return NULL; }
+sequence *fade_torture_main() { audio_sample_fade(mus[TORTURE_MAIN], 0.141086f, 0.0f, 3583, 13583); return NULL; }
+sequence *fade_torture_main2() { audio_sample_fade(mus[TORTURE_MAIN], 0.141086f, 0.0f, 1375, 11375); return NULL; }
+sequence *fade_torture_main3() { audio_sample_fade(mus[TORTURE_MAIN], 0.141086f, 0.0f, 4917, 14917); return NULL; }
+sequence *start_thumbscrew_talk() { mus[THUMBSCREW_TALK] = audio_sample_start("EP06B Thumbscrew Talk", 0, 0.1396351f); return NULL; }
+sequence *fade_thumbscrew_p2() { audio_sample_fade(mus[THUMBSCREW_P2], 0.142008f, 0.0f, 0, 6000); return NULL; }
+sequence *fade_thumbscrew_p2_2() { audio_sample_fade(mus[THUMBSCREW_P2], 0.142008f, 0.0f, 0, 5000); return NULL; }
+sequence *start_torture_tom() { mus[TORTURE_TOM] = audio_sample_start("EP06B Torture Tom Hit", 0, 0.07788388f); return NULL; }
+sequence *start_thumbscrew_p2() { mus[THUMBSCREW_P2] = audio_sample_start("EP06B Thumbscrew II", 0, 0.142008f); return NULL; }
+sequence *start_thumbscrew_angry() { mus[THUMBSCREW_ANGRY] = audio_sample_start("EP06B Thumbscrew Angry", 0, 0.1417508f); return NULL; }
+sequence *start_thumbscrew_angry2() { mus[THUMBSCREW_ANGRY] = audio_sample_start("EP06B Thumbscrew Angry", 0, 0.139737f); return NULL; }
+sequence *start_torture_end() { mus[TORTURE_END] = audio_sample_start("EP06B Torture End", 0, 0.139868f); return NULL; }
+sequence *start_matt_alone() { mus[MATT_ALONE] = audio_sample_start("EP07 Matt Alone", 0, 0.07865617f); return NULL; }
+sequence *fade_matt_alone() { audio_sample_fade(mus[MATT_ALONE], 0.07865617f, 0.1126601f, 37542, 41000); return NULL; }
+sequence *start_matt_alone2() { mus[MATT_ALONE] = audio_sample_start("EP07 Matt Alone", 0, 0.1120794f); return NULL; }
+sequence *fade_torture_end() { audio_sample_fade(mus[TORTURE_END], 0.139868f, 0.0f, 33583, 39208); return NULL; }
+sequence *fade_torture_end2() { audio_sample_fade(mus[TORTURE_END], 0.139868f, 0.1120614f, 333, 1333); return NULL; }
+sequence *start_hoelzli_accent() { mus[HOELZLI_ACCENT] = audio_sample_start("EP06B Hoelzli Accent", 0, 0.177203f); return NULL; }
 
 void fill_events() {
 	// OPENING
@@ -1766,37 +1825,96 @@ void fill_events() {
 	// seg609_b (empty)
 	// EPISODE 6B
 	// seg651_1
+	install_timed_event(&sequences[237], 0, 0, EVENT_ONESHOT, maybe_start_radioplay);
+	install_timed_event(&sequences[237], 0, 0, EVENT_ONESHOT, start_atmo_radioplay);
+	install_timed_event(&sequences[237], 12875, 0, EVENT_ONESHOT, start_thumbscrew_p1);
+	install_timed_event(&sequences[237], 14000, 0, EVENT_ONESHOT, start_tchoi_hotel);
+	install_timed_event(&sequences[237], 15208, 18208, EVENT_DURATION, fade_radioplay2);
+	install_timed_event(&sequences[237], 18208, 0, EVENT_ONESHOT, stop_radioplay);
 	// seg651_2b
+	install_timed_event(&sequences[238], 27542, 0, EVENT_ONESHOT, start_knife_accent_p1);
 	// seg651_2a
-	// seg651_3
+	install_timed_event(&sequences[239], 26375, 0, EVENT_ONESHOT, start_knife_accent_p1);
+	// seg651_3 (empty)
 	// seg652_a
+	install_timed_event(&sequences[241], 7125, 0, EVENT_ONESHOT, start_torture_main);
+	install_timed_event(&sequences[241], 7125, 13500, EVENT_DURATION, fade_thumbscrew_p1);
+	install_timed_event(&sequences[241], 13500, 0, EVENT_ONESHOT, stop_thumbscrew_p1);
 	// seg652_b
-	// seg653
+	install_timed_event(&sequences[242], 22708, 0, EVENT_ONESHOT, start_torture_main);
+	install_timed_event(&sequences[242], 35333, 0, EVENT_ONESHOT, stop_thumbscrew_p1);
+	// seg653 (empty)
 	// seg654
+	install_timed_event(&sequences[244], 16, 0, EVENT_ONESHOT, start_knife_accent_p2);
 	// seg655_a
+	install_timed_event(&sequences[245], 3583, 0, EVENT_ONESHOT, start_short_knife);
+	install_timed_event(&sequences[245], 3583, 13583, EVENT_DURATION, fade_torture_main);
+	install_timed_event(&sequences[245], 13583, 0, EVENT_ONESHOT, stop_torture_main);
 	// seg655_b
+	install_timed_event(&sequences[246], 1375, 0, EVENT_ONESHOT, start_long_knife);
+	install_timed_event(&sequences[246], 1375, 11375, EVENT_DURATION, fade_torture_main2);
+	install_timed_event(&sequences[246], 11375, 0, EVENT_ONESHOT, stop_torture_main);
 	// seg655_c
-	// seg656
+	install_timed_event(&sequences[247], 4917, 0, EVENT_ONESHOT, start_long_knife);
+	install_timed_event(&sequences[247], 4917, 14917, EVENT_DURATION, fade_torture_main3);
+	install_timed_event(&sequences[247], 14917, 0, EVENT_ONESHOT, stop_torture_main);
+	// seg656 (empty)
 	// seg666_a
+	install_timed_event(&sequences[249], 0, 0, EVENT_ONESHOT, stop_short_knife);
+	install_timed_event(&sequences[249], 0, 0, EVENT_ONESHOT, stop_long_knife);
+	install_timed_event(&sequences[249], 0, 0, EVENT_ONESHOT, start_thumbscrew_talk);
+	install_timed_event(&sequences[249], 0, 6000, EVENT_DURATION, fade_thumbscrew_p2);
+	install_timed_event(&sequences[249], 6000, 0, EVENT_ONESHOT, stop_thumbscrew_p2);
 	// seg657
-	// seg660
+	install_timed_event(&sequences[250], 23042, 0, EVENT_ONESHOT, start_torture_tom);
+	install_timed_event(&sequences[250], 23500, 0, EVENT_ONESHOT, stop_short_knife);
+	install_timed_event(&sequences[250], 23500, 0, EVENT_ONESHOT, stop_long_knife);
+	install_timed_event(&sequences[250], 25917, 0, EVENT_ONESHOT, start_thumbscrew_p2);
+	// seg660 (empty)
 	// seg667_669_670_a
+	install_timed_event(&sequences[252], 0, 0, EVENT_ONESHOT, start_thumbscrew_angry);
+	install_timed_event(&sequences[252], 0, 5000, EVENT_DURATION, fade_thumbscrew_p2_2);
+	install_timed_event(&sequences[252], 5000, 0, EVENT_ONESHOT, stop_thumbscrew_p2);
 	// seg667_669_670_b
+	install_timed_event(&sequences[253], 0, 0, EVENT_ONESHOT, start_thumbscrew_angry2);
+	install_timed_event(&sequences[253], 0, 5000, EVENT_DURATION, fade_thumbscrew_p2_2);
+	install_timed_event(&sequences[253], 5000, 0, EVENT_ONESHOT, stop_thumbscrew_p2);
 	// seg673
+	install_timed_event(&sequences[254], 15875, 0, EVENT_ONESHOT, start_torture_end);
 	// seg671_a
+	install_timed_event(&sequences[255], 14208, 0, EVENT_ONESHOT, start_torture_end);
 	// seg671_b
+	install_timed_event(&sequences[256], 14208, 0, EVENT_ONESHOT, start_torture_end);
 	// seg672
-	// seg661
+	install_timed_event(&sequences[257], 13792, 0, EVENT_ONESHOT, start_matt_alone);
+	install_timed_event(&sequences[257], 37542, 41000, EVENT_DURATION, fade_matt_alone);
+	install_timed_event(&sequences[257], 41000, 0, EVENT_ONESHOT, stop_tchoi_hotel);
+	// seg661 (empty)
 	// seg674
+	install_timed_event(&sequences[259], 33583, 0, EVENT_ONESHOT, start_matt_alone2);
+	install_timed_event(&sequences[259], 33583, 39208, EVENT_DURATION, fade_torture_end);
+	install_timed_event(&sequences[259], 39208, 0, EVENT_ONESHOT, stop_torture_end);
+	install_timed_event(&sequences[259], 63000, 0, EVENT_ONESHOT, stop_tchoi_hotel);
 	// seg675
+	install_timed_event(&sequences[260], 333, 1333, EVENT_DURATION, fade_torture_end2);
 	// seg662
+	install_timed_event(&sequences[261], 458, 0, EVENT_ONESHOT, start_hoelzli_accent);
 	// seg666_b
-	// seg663
-	// seg664
+	install_timed_event(&sequences[262], 0, 0, EVENT_ONESHOT, start_thumbscrew_talk);
+	install_timed_event(&sequences[262], 0, 6000, EVENT_DURATION, fade_thumbscrew_p2);
+	install_timed_event(&sequences[262], 6000, 0, EVENT_ONESHOT, stop_thumbscrew_p2);
+	// seg663 (empty)
+	// seg664 (empty)
 	// seg665
+	install_timed_event(&sequences[265], 0, 0, EVENT_ONESHOT, start_thumbscrew_angry2);
+	install_timed_event(&sequences[265], 0, 5000, EVENT_DURATION, fade_thumbscrew_p2_2);
+	install_timed_event(&sequences[265], 5000, 0, EVENT_ONESHOT, stop_thumbscrew_p2);
 	// seg666_c
-	// seg668_669_670_a
-	// seg668_669_670_b
+	install_timed_event(&sequences[266], 0, 0, EVENT_ONESHOT, start_thumbscrew_talk);
+	install_timed_event(&sequences[266], 0, 6000, EVENT_DURATION, fade_thumbscrew_p2);
+	install_timed_event(&sequences[266], 6000, 0, EVENT_ONESHOT, stop_thumbscrew_p2);
+	// seg668_669_670_a (empty)
+	// seg668_669_670_b (empty)
 	// EPISODE 7
 	// seg732
 	// seg701
