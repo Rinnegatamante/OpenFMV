@@ -216,21 +216,29 @@ subtitle_draw:
 			
 			// Draw choices
 			if (cur_seq->l) {
+				char *ltext = cur_seq->ltext();
+				if (!ltext) {
+					goto skip_choices;
+				}
+				
 				// Precalculate once buttons sizes for properly centering them
 				if (btns_state == BTNS_CALC_SIZE && colors.choices_type == CHOICES_CENTER_POS) {
 					ImGui::Begin("##fake", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBringToFrontOnFocus);
 					ImGui::SetCursorPosX(-10000.0f);
-					ImGui::Button(cur_seq->ltext(), ImVec2(ImGui::CalcTextSize(cur_seq->ltext()).x + 20.0f, 1.0f));
+					ImGui::Button(ltext, ImVec2(ImGui::CalcTextSize(ltext).x + 20.0f, 1.0f));
 					btn1_size = ImGui::GetItemRectSize();
 					ImGui::SetCursorPosX(-10000.0f);
 					ImGui::Button(cur_seq->rtext(), ImVec2(ImGui::CalcTextSize(cur_seq->rtext()).x + 20.0f, 1.0f));
 					btn2_size = ImGui::GetItemRectSize();
 					btn3_size = ImVec2(0, 0);
 					if (cur_seq->e) {
-						ImGui::SetCursorPosX(-10000.0f);
-						ImGui::Button(cur_seq->etext(), ImVec2(ImGui::CalcTextSize(cur_seq->etext()).x + 20.0f, 1.0f));
-						btn3_size = ImGui::GetItemRectSize();
-						btn3_size.x += + style.ItemSpacing.x;
+						char *etext = cur_seq->etext();
+						if (etext) {
+							ImGui::SetCursorPosX(-10000.0f);
+							ImGui::Button(etext, ImVec2(ImGui::CalcTextSize(etext).x + 20.0f, 1.0f));
+							btn3_size = ImGui::GetItemRectSize();
+							btn3_size.x += + style.ItemSpacing.x;
+						}
 					}
 					ImGui::End();
 					btns_state = BTNS_DONE;
@@ -253,7 +261,7 @@ subtitle_draw:
 					}
 					ImGui::PushStyleColor(ImGuiCol_Text, btn1_hovered ? Color4(colors.btn_hover_text) : Color4(colors.btn_text));
 					ImGui::PushStyleColor(ImGuiCol_Button, btn1_hovered ? Color4(colors.btn_hover_bg) : Color4(colors.btn_bg));
-					if (ImGui::Button(cur_seq->ltext(), ImVec2(ImGui::CalcTextSize(cur_seq->ltext()).x + 20.0f, 40.0f))) {
+					if (ImGui::Button(ltext, ImVec2(ImGui::CalcTextSize(ltext).x + 20.0f, 40.0f))) {
 						chosen_path = 1;
 					}
 					if (ImGui::IsItemFocused()) {
@@ -283,21 +291,24 @@ subtitle_draw:
 					}
 					ImGui::PopStyleColor();
 					if (cur_seq->e) {
-						if (colors.choices_type == CHOICES_CENTER_POS) {
-							ImGui::SameLine();
-						} else {
-							ImGui::SetCursorPos(ImVec2(colors.choice3[0], colors.choice3[1]));
+						char *etext = cur_seq->etext();
+						if (etext) {
+							if (colors.choices_type == CHOICES_CENTER_POS) {
+								ImGui::SameLine();
+							} else {
+								ImGui::SetCursorPos(ImVec2(colors.choice3[0], colors.choice3[1]));
+							}
+							ImGui::PushStyleColor(ImGuiCol_Text, btn3_hovered ? Color4(colors.btn_hover_text) : Color4(colors.btn_text));
+							if (ImGui::Button(etext, ImVec2(ImGui::CalcTextSize(etext).x + 20.0f, 40.0f))) {
+								chosen_path = 3;
+							}
+							if (ImGui::IsItemFocused()) {
+								btn3_hovered = true;
+							} else {
+								btn3_hovered = false;
+							}
+							ImGui::PopStyleColor();
 						}
-						ImGui::PushStyleColor(ImGuiCol_Text, btn3_hovered ? Color4(colors.btn_hover_text) : Color4(colors.btn_text));
-						if (ImGui::Button(cur_seq->etext(), ImVec2(ImGui::CalcTextSize(cur_seq->etext()).x + 20.0f, 40.0f))) {
-							chosen_path = 3;
-						}
-						if (ImGui::IsItemFocused()) {
-							btn3_hovered = true;
-						} else {
-							btn3_hovered = false;
-						}
-						ImGui::PopStyleColor();
 					}
 					ImGui::PopFont();
 					ImGui::GetCurrentContext()->NavDisableHighlight = false;
@@ -336,7 +347,7 @@ subtitle_draw:
 					ImGui::End();
 				}
 			}
-			
+skip_choices:			
 			// Draw pause menu
 			if (player_state == PLAYER_PAUSED) {
 				menu_setup();

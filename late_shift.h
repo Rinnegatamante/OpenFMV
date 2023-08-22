@@ -12,7 +12,7 @@
 
 #define SUBTITLE_NEWLINE "\n\n"
 
-#define GAME_VER "0.8.0"
+#define GAME_VER "0.8.5"
 
 #ifdef __cplusplus
 extern "C" {
@@ -57,6 +57,13 @@ typedef struct {
 	uint8_t from_ep9_to_ep11;
 	uint8_t finish_ep7_target;
 	uint8_t passed_by_seg765;
+	uint8_t know_trojan;
+	uint8_t mentioned_trojan;
+	uint8_t got_keycard;
+	uint8_t aware_of_chest;
+	uint8_t payback_time;
+	uint8_t called_parr;
+	uint8_t torture_seb;
 } gamestate;
 
 extern gamestate game_vars;
