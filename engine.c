@@ -101,7 +101,7 @@ int subs_loader(SceSize args, void *argp) {
 	}
 }
 
-void fill_sequence(sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump) {
+void fill_sequence(char *name, sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump) {
 	s->d = d;
 	s->l = l;
 	s->r = r;
@@ -113,6 +113,8 @@ void fill_sequence(sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtex
 	s->end = end;
 	s->jump_time = jump;
 	s->sub_lang = -1;
+
+	spooky_hash128(name, strlen(name), s->hash);
 }
 
 #define enqueue_link(x) \
@@ -250,10 +252,6 @@ uint32_t load_image(const char *fname) {
 
 void free_image(uint32_t image) {
 	glDeleteTextures(1, &image);
-}
-
-void resolve_hash(const char *src, char *dst) {
-	spooky_hash128(src, strlen(src), dst);
 }
 
 audio_sample *audio_sample_start(const char *fname, int looping, float vol) {

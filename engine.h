@@ -8,7 +8,7 @@ extern "C" {
 #include "games.h"
 #include "unzip.h"
 
-#define ENGINE_VER "0.9.7"
+#define ENGINE_VER "0.9.8"
 
 #define NUM_AUDIO_SAMPLES 32
 
@@ -172,7 +172,7 @@ extern void *snd_unpause;
 void load_animated_bg(const char *fname, int needs_hash);
 uint32_t load_image(const char *fname);
 void free_image(uint32_t image);
-void fill_sequence(sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump);
+void fill_sequence(char *name, sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump);
 void start_sequence(sequence *s);
 void start_first_sequence(sequence *s);
 void install_timed_event(sequence *t, uint32_t start, uint32_t end, uint8_t type, sequence *(*s)());
@@ -182,7 +182,6 @@ void start_subs_loader();
 void set_subs_window(float x, float y, float w, float h);
 
 void spooky_hash128(const void *buf, int len, char *out);
-void resolve_hash(const char *src, char *dst);
 
 void menu_setup();
 void game_main_menu();
