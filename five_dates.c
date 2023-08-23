@@ -15,12 +15,9 @@ void fill_events() {
 }
 
 void fill_sequences() {
-	// PROLOGUE
-	resolve_hash("scene_goto_App", sequences[0].hash);
-	
 	// Creating sequences links
 	// PROLOGUE
-	fill_sequence(&sequences[0], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // ad2c6a4b-85f4-4ba3-bb06-65be14e974e0
+	fill_sequence("scene_goto_App", &sequences[0], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // ad2c6a4b-85f4-4ba3-bb06-65be14e974e0
 	
 	fill_events();
 }
