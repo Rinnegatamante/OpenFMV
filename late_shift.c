@@ -186,6 +186,7 @@ enum {
 	COOKIE_OPENED,
 };
 enum {
+	HOSPITAL_EP09B,
 	PAYBACK_EP11,
 };
 
@@ -325,11 +326,14 @@ enum {
 	ATMO_TRAIN_5,
 	MAYLING_TRUTH,
 	ATMO_REVELLERS_4,
+	POLICE_EVERYWHERE_1,
 	POLICE_EVERYWHERE_2,
 	ATMO_POLICE_SINGLE_SIREN,
+	ATMO_POLICE_SINGLE_SIREN_2,
 	ATMO_POLICE_SEVERAL_SIRENS,
 	ATMO_TRAIN_5_BASS,
 	ATMO_REVELLERS_3,
+	ATMO_TRAIN_4_REAR,
 	ATMO_TRAIN_1_LONGER,
 	ATMO_TRAIN_5_LONGER,
 	ATMO_REVELLERS_2,
@@ -415,6 +419,15 @@ void purge_from_ep6b() {
 	if (!fake_pass) {
 		for (int i = TORTURE_TOM; i <= TORTURE_END; i++) {
 			if (i != MATT_ALONE) {
+				audio_sample_stop_and_free(mus[i]);
+			}
+		}
+	}
+}
+void purge_from_ep7() {
+	if (!fake_pass) {
+		for (int i = FORGED; i <= INTENTNESS_MOOD; i++) {
+			if (i != INTENTNESS_MOOD && i != AFTER_FIGHT_TRANS) {
 				audio_sample_stop_and_free(mus[i]);
 			}
 		}
@@ -707,7 +720,7 @@ sequence *seg727() { return &sequences[291]; }
 sequence *seg734() { return &sequences[292]; }
 sequence *eval_left_may_crying() { return game_vars.left_may_crying ? &sequences[293] : &sequences[294]; }
 sequence *seg739_1() { return &sequences[295]; }
-sequence *seg739_a() { return &sequences[296]; }
+sequence *seg739_a() { game_vars.passed_by_seg739 = 1; return &sequences[296]; }
 sequence *seg739_b() { game_vars.from_ep7_to_ep11 = 1; game_vars.from_ep9_to_ep11 = 1; return &sequences[297]; }
 sequence *eval_cross_exam() { return game_vars.cross_exam ? seg739_b() : seg739_a(); }
 sequence *seg733() { return &sequences[298]; }
@@ -723,7 +736,7 @@ sequence *seg741() { return &sequences[308]; }
 sequence *seg742() { return &sequences[309]; }
 sequence *seg743_k() { return &sequences[310]; }
 sequence *seg743_1() { return &sequences[311]; }
-sequence *seg745() { return &sequences[312]; }
+sequence *seg745() { game_vars.finish_ep7_target = HOSPITAL_EP09B; return &sequences[312]; }
 sequence *seg747_2_749_750() { game_vars.finish_ep7_target = PAYBACK_EP11; game_vars.from_ep7_to_ep11 = 1; game_vars.from_ep9_to_ep11 = 1; return &sequences[313]; }
 sequence *seg765_756_757() { game_vars.finish_ep7_target = PAYBACK_EP11; game_vars.from_ep7_to_ep11 = 1; game_vars.from_ep9_to_ep11 = 1; game_vars.passed_by_seg765 = 1; return &sequences[314]; }
 sequence *seg770() { return &sequences[315]; }
@@ -771,7 +784,7 @@ sequence *seg939() { game_vars.payback_time = 0; game_vars.called_parr = 1; retu
 sequence *seg945() { return &sequences[363]; }
 sequence *eval_payback_time() { return game_vars.payback_time ? /* ep11 */ NULL : /* ep10 */ NULL; }
 // EPISODE 9B
-sequence *seg951_1_951_2() { return &sequences[364]; }
+sequence *seg951_1_951_2() { trigger_save = 1; purge_from_ep7(); return &sequences[364]; }
 sequence *eval_knows_about_party2() { return game_vars.know_about_party ? &sequences[365] : &sequences[366]; }
 sequence *eval_freak2() { return game_vars.elo_thinks == FREAK_THINKS ? &sequences[367] : &sequences[368]; }
 sequence *eval_loser2() { return game_vars.elo_thinks == LOSER_THINKS ? &sequences[369] : &sequences[370]; }
@@ -1168,6 +1181,78 @@ sequence *fade_torture_end() { audio_sample_fade(mus[TORTURE_END], 0.139868f, 0.
 sequence *fade_torture_end2() { audio_sample_fade(mus[TORTURE_END], 0.139868f, 0.1120614f, 333, 1333); return NULL; }
 sequence *start_hoelzli_accent() { mus[HOELZLI_ACCENT] = audio_sample_start("EP06B Hoelzli Accent", 0, 0.177203f); return NULL; }
 sequence *dont_know_trojan_jump() { if (!game_vars.know_trojan) return seg976(); return NULL; }
+sequence *fade_matt_alone() { audio_sample_fade(mus[MATT_ALONE], 0.1114461f, 0.0f, 9167, 10750); return NULL; }
+sequence *fade_auction_guy() { audio_sample_fade(mus[AUCTION_GUY], 0.1598199f, 0.0f, 4167, 8333); return NULL; }
+sequence *fade_auction_guy2() { audio_sample_fade(mus[AUCTION_GUY], 0.1598199f, 0.0f, 0, 4000); return NULL; }
+sequence *fade_auction_guy3() { audio_sample_fade(mus[AUCTION_GUY], 0.1598199f, 0.0f, 12042, 16042); return NULL; }	
+sequence *fade_atmo_train_p5() { audio_sample_fade(mus[ATMO_TRAIN_5], 1.0f, 0.3167162f, 15250, 18250); return NULL; }	
+sequence *fade_mayling_truth() { audio_sample_fade(mus[MAYLING_TRUTH], 0.1126381f, 0.0f, 18625, 24625); return NULL; }	
+sequence *fade_drum_and_bass() { audio_sample_fade(mus[DRUM_AND_BASS], 0.0f, 0.2648638f, 60458, 69458); return NULL; }
+sequence *fade_drum_and_bass2() { audio_sample_fade(mus[DRUM_AND_BASS], 0.0f, 0.2519945f, 53250, 60833); return NULL; }
+sequence *fade_drum_and_bass3() { audio_sample_fade(mus[DRUM_AND_BASS], 0.2519945f, 0.0f, 0, 10958); return NULL; }
+sequence *fade_drum_and_bass4() { audio_sample_fade(mus[DRUM_AND_BASS], 0.2519945f, 0.0f, 8250, 12292); return NULL; }
+sequence *fade_drum_and_bass5() { audio_sample_fade(mus[DRUM_AND_BASS], 0.2519945f, 0.0f, 8167, 12167); return NULL; }
+sequence *fade_drum_and_bass6() { audio_sample_fade(mus[DRUM_AND_BASS], 0.0f, 0.2513545f, 11667, 20667); return NULL; }
+sequence *fade_drum_and_bass7() { audio_sample_fade(mus[DRUM_AND_BASS], 0.2519945f, 0.0f, 0, 12875); return NULL; }
+sequence *fade_drum_and_bass8() { audio_sample_fade(mus[DRUM_AND_BASS], 0.2519945f, 0.0f, 26708, 31292); return NULL; }
+sequence *fade_forged() { audio_sample_fade(mus[FORGED], 0.111812f, 0.0f, 14958, 21958); return NULL; }
+sequence *fade_revellers_p5_2() { audio_sample_fade(mus[ATMO_REVELLERS_5], 0.5608469f, 0.0f, 14083, 21000); return NULL; }
+sequence *fade_revellers_p5() { audio_sample_fade(mus[ATMO_REVELLERS_5], 0.5608469f, 0.0f, 16708, 23000); return NULL; }
+sequence *stop_drum_and_bass() { audio_sample_stop_and_free(mus[DRUM_AND_BASS]); return NULL; }
+sequence *stop_atmo_tunnel() { audio_sample_stop_and_free(mus[ATMO_TUNNEL]); return NULL; }
+sequence *stop_matt_alone() { audio_sample_stop_and_free(mus[MATT_ALONE]); return NULL; }
+sequence *stop_police_everywhere_p1() { audio_sample_stop_and_free(mus[POLICE_EVERYWHERE_1]); return NULL; }
+sequence *stop_mayling_truth() { audio_sample_stop_and_free(mus[MAYLING_TRUTH]); return NULL; }
+sequence *start_atmo_train_p1_longer() { mus[ATMO_TRAIN_1_LONGER] = audio_sample_start("EP07 Atmo Ext Train 1 longer", 0, 0.3551822f); return NULL; }
+sequence *start_atmo_train_p4_rear() { mus[ATMO_TRAIN_4_REAR] = audio_sample_start("EP07 Atmo Ext Train 4 REAR", 0, 0.3160785f); return NULL; }
+sequence *start_atmo_train_p4() { mus[ATMO_TRAIN_4] = audio_sample_start("EP07 Atmo Ext Train 4", 0, 0.2346464f); return NULL; }
+sequence *start_atmo_train_p4_2() { mus[ATMO_TRAIN_4] = audio_sample_start("EP07 Atmo Ext Train 4", 0, 0.3478609f); return NULL; }
+sequence *start_atmo_train_p4_3() { mus[ATMO_TRAIN_4] = audio_sample_start("EP07 Atmo Ext Train 4", 0, 0.4065775f); return NULL; }
+sequence *start_atmo_train_p4_4() { mus[ATMO_TRAIN_4] = audio_sample_start("EP07 Atmo Ext Train 4", 0, 0.427056f); return NULL; }
+sequence *start_atmo_train_p4_short() { mus[ATMO_TRAIN_4_SHORT] = audio_sample_start("EP07 Atmo Ext Train 4 short", 0, 0.7106568f); return NULL; }
+sequence *start_atmo_train_p5_bass() { mus[ATMO_TRAIN_5_BASS] = audio_sample_start("EP07 Atmo Ext Train 5 bass", 0, 0.3516853f); return NULL; }
+sequence *start_forged() { mus[FORGED] = audio_sample_start("EP07 Forged", 0, 0.111812f); return NULL; }
+sequence *start_atmo_tunnel() { mus[ATMO_TUNNEL] = audio_sample_start("EP07 Atmo Int Tunnel", 1, 1.0f); return NULL; }
+sequence *start_drum_and_bass() { mus[DRUM_AND_BASS] = audio_sample_start("EP07 Drum & Bass", 0, 0.0f); return NULL; }
+sequence *start_atmo_police_several_sirens() { mus[ATMO_POLICE_SEVERAL_SIRENS] = audio_sample_start("EP07 Atmo Ext Police Several Sirens 1", 0, 1.0f); return NULL; }
+sequence *maybe_start_matt_alone() { if (!game_vars.matt_alone_playing) { mus[MATT_ALONE] = audio_sample_start("EP07 Matt Alone", 0, 0.1114461f); } game_vars.matt_alone_playing = 0; return NULL; }
+sequence *change_atmo_train_p5_bass() { audio_sample_set_volume(mus[ATMO_TRAIN_5_BASS], 0.2303271f); return NULL; }
+sequence *change_atmo_train_p4() { audio_sample_set_volume(mus[ATMO_TRAIN_4], 0.3040856f); return NULL; }
+sequence *change_atmo_train_p4_2() { audio_sample_set_volume(mus[ATMO_TRAIN_4], 0.2822826f); return NULL; }
+sequence *change_revellers_p5() { audio_sample_set_volume(mus[ATMO_REVELLERS_5], 1.0f); return NULL; }
+sequence *start_mayling_truth() { mus[MAYLING_TRUTH] = audio_sample_start("EP07 MayLing's Truth", 0, 0.1126381f); return NULL; }
+sequence *stop_forged() { audio_sample_stop_and_free(mus[FORGED]); return NULL; }
+sequence *stop_atmo_train_p1() { audio_sample_stop_and_free(mus[ATMO_TRAIN_1]); return NULL; }
+sequence *stop_revellers_p5() { audio_sample_stop_and_free(mus[ATMO_REVELLERS_5]); return NULL; }
+sequence *start_atmo_train_p1() { mus[ATMO_TRAIN_1] = audio_sample_start("EP07 Atmo Ext Train 1", 0, 0.3853095f); return NULL; }
+sequence *start_atmo_train_p1_2() { mus[ATMO_TRAIN_1] = audio_sample_start("EP07 Atmo Ext Train 1", 0, 0.4462832f); return NULL; }
+sequence *start_atmo_train_p1_3() { mus[ATMO_TRAIN_1] = audio_sample_start("EP07 Atmo Ext Train 1", 0, 0.5014004f); return NULL; }
+sequence *start_atmo_train_p2() { mus[ATMO_TRAIN_2] = audio_sample_start("EP07 Atmo Ext Train 2", 0, 0.5861539f); return NULL; }
+sequence *start_atmo_train_p5() { mus[ATMO_TRAIN_5] = audio_sample_start("EP07 Atmo Ext Train 5", 0, 1.0f); return NULL; }
+sequence *start_atmo_train_p5_2() { mus[ATMO_TRAIN_5] = audio_sample_start("EP07 Atmo Ext Train 5", 0, 0.2810671f); return NULL; }
+sequence *start_atmo_train_p5_longer() { mus[ATMO_TRAIN_5_LONGER] = audio_sample_start("EP07 Atmo Ext Train 5 longer", 0, 0.3145116f); return NULL; }
+sequence *start_atmo_train_p6() { mus[ATMO_TRAIN_6] = audio_sample_start("EP07 Atmo Ext Train 6", 0, 0.3800933f); return NULL; }
+sequence *start_atmo_train_p6_2() { mus[ATMO_TRAIN_6] = audio_sample_start("EP07 Atmo Ext Train 6", 0, 0.2803708f); return NULL; }
+sequence *start_atmo_train_p4_longer() { mus[ATMO_TRAIN_4_LONGER] = audio_sample_start("EP07 Atmo Ext Train 4 longer", 0, 0.4762116f); return NULL; }
+sequence *start_atmo_police_single_siren_2_short() { mus[ATMO_POLICE_SINGLE_SIREN_2] = audio_sample_start("EP07 Atmo Ext Police Single Siren 2 short", 0, 0.2651353f); return NULL; }
+sequence *start_atmo_police_single_siren_short() { mus[ATMO_POLICE_SINGLE_SIREN] = audio_sample_start("EP07 Atmo Ext Police Single Siren 1 short", 0, 0.6961312f); return NULL; }
+sequence *start_atmo_police_single_siren_short3() { mus[ATMO_POLICE_SINGLE_SIREN] = audio_sample_start("EP07 Atmo Ext Police Single Siren 1 short", 0, 0.7106217f); return NULL; }
+sequence *start_atmo_police_single_siren_short2() { mus[ATMO_POLICE_SINGLE_SIREN] = audio_sample_start("EP07 Atmo Ext Police Single Siren 1 short", 0, 0.791577f); return NULL; }
+sequence *start_police_everywhere_p1() { mus[POLICE_EVERYWHERE_1] = audio_sample_start("EP07 Police Everywhere I", 0, 0.1112219f); return NULL; }
+sequence *start_revellers_p1() { mus[ATMO_REVELLERS_1] = audio_sample_start("EP07 Atmo Ext Revellers 1", 0, 1.0f); return NULL; }
+sequence *start_revellers_p2() { mus[ATMO_REVELLERS_2] = audio_sample_start("EP07 Atmo Ext Revellers 2", 0, 1.0f); return NULL; }
+sequence *start_revellers_p3() { mus[ATMO_REVELLERS_3] = audio_sample_start("EP07 Atmo Ext Revellers 3", 0, 1.0f); return NULL; }
+sequence *start_revellers_p4() { mus[ATMO_REVELLERS_4] = audio_sample_start("EP07 Atmo Ext Revellers 4", 0, 1.0f); return NULL; }
+sequence *start_revellers_p5() { mus[ATMO_REVELLERS_5] = audio_sample_start("EP07 Atmo Ext Revellers 5", 0, 0.5608469f); return NULL; }
+sequence *start_auction_guy2() { mus[AUCTION_GUY] = audio_sample_start("EP07 Auction Guy", 0, 0.1598199f); return NULL; }
+sequence *start_police_everywhere_p2() { mus[POLICE_EVERYWHERE_2] = audio_sample_start("EP07 Police Everywhere II", 0, 0.05980561f); return NULL; }
+sequence *start_police_everywhere_p2_2() { mus[POLICE_EVERYWHERE_2] = audio_sample_start("EP07 Police Everywhere II", 0, 0.0706706f); return NULL; }
+sequence *start_police_everywhere_p2_3() { mus[POLICE_EVERYWHERE_2] = audio_sample_start("EP07 Police Everywhere II", 0, 0.1583093f); return NULL; }
+sequence *start_after_fight() { mus[AFTER_FIGHT] = audio_sample_start("EP07 After Fight", 0, 0.1590764f); return NULL; }
+sequence *start_after_fight_trans() { mus[AFTER_FIGHT_TRANS] = audio_sample_start("EP07 After Fight Transition", 0, 0.1593597f); return NULL; }
+sequence *maybe_start_intentness_mood() { if (game_vars.passed_by_seg765 || game_vars.passed_by_seg739) { mus[INTENTNESS_MOOD] = audio_sample_start("EP10 Intentness", 0, 0.1121213f); } return NULL; }
+sequence *fade_intentness_mood() { audio_sample_fade(mus[INTENTNESS_MOOD], 0.1121213f, 0.2506319f, 3458, 10458); return NULL; }
+
 void fill_events() {
 	// OPENING
 	// seg101
@@ -2055,57 +2140,249 @@ void fill_events() {
 	// seg668_669_670_b (empty)
 	// EPISODE 7
 	// seg732
+	install_timed_event(&sequences[269], 0, 0, EVENT_ONESHOT, maybe_start_matt_alone);
+	install_timed_event(&sequences[269], 41625, 0, EVENT_ONESHOT, start_atmo_tunnel);
+	install_timed_event(&sequences[269], 60417, 0, EVENT_ONESHOT, stop_atmo_tunnel);
+	install_timed_event(&sequences[269], 60458, 0, EVENT_ONESHOT, start_drum_and_bass);
+	install_timed_event(&sequences[269], 60458, 69458, EVENT_DURATION, fade_drum_and_bass);
 	// seg701
-	// seg702
+	install_timed_event(&sequences[270], 0, 0, EVENT_ONESHOT, start_atmo_police_several_sirens);
+	install_timed_event(&sequences[270], 42, 0, EVENT_ONESHOT, start_atmo_train_p4_rear);
+	install_timed_event(&sequences[270], 21417, 0, EVENT_ONESHOT, start_atmo_train_p5_bass);
+	install_timed_event(&sequences[270], 21417, 0, EVENT_ONESHOT, start_forged);
+	install_timed_event(&sequences[270], 26375, 0, EVENT_ONESHOT, start_atmo_tunnel);
+	install_timed_event(&sequences[270], 26500, 0, EVENT_ONESHOT, change_atmo_train_p5_bass);
+	install_timed_event(&sequences[270], 38750, 0, EVENT_ONESHOT, start_atmo_train_p1_longer);
+	install_timed_event(&sequences[270], 63625, 0, EVENT_ONESHOT, start_atmo_train_p4_short);
+	// seg702 (empty)
 	// seg707
+	install_timed_event(&sequences[272], 12583, 0, EVENT_ONESHOT, start_mayling_truth);
+	install_timed_event(&sequences[272], 14958, 21958, EVENT_DURATION, fade_forged);
+	install_timed_event(&sequences[272], 21958, 0, EVENT_ONESHOT, stop_forged);
+	install_timed_event(&sequences[272], 38958, 0, EVENT_ONESHOT, start_atmo_train_p4);
+	install_timed_event(&sequences[272], 52792, 0, EVENT_ONESHOT, start_atmo_train_p1);
 	// seg703
+	install_timed_event(&sequences[273], 14375, 0, EVENT_ONESHOT, start_atmo_train_p2);
 	// seg704
-	// seg708
-	// seg709
-	// seg710
-	// seg711
+	install_timed_event(&sequences[274], 8375, 0, EVENT_ONESHOT, start_atmo_train_p6);
+	// seg708 (empty)
+	// seg709 (empty)
+	// seg710 (empty)
+	// seg711 (empty)
 	// seg712
+	install_timed_event(&sequences[279], 10333, 0, EVENT_ONESHOT, start_atmo_train_p4_longer);
+	install_timed_event(&sequences[279], 18625, 24625, EVENT_DURATION, fade_mayling_truth);
+	install_timed_event(&sequences[279], 24625, 0, EVENT_ONESHOT, stop_mayling_truth);
 	// seg713_a
+	install_timed_event(&sequences[280], 3083, 0, EVENT_ONESHOT, start_atmo_police_single_siren_short);
 	// seg713_b
+	install_timed_event(&sequences[281], 4958, 0, EVENT_ONESHOT, start_atmo_police_single_siren_short2);
 	// seg713_c
+	install_timed_event(&sequences[282], 4167, 0, EVENT_ONESHOT, start_atmo_police_single_siren_short2);
 	// seg714_723
+	install_timed_event(&sequences[283], 18625, 0, EVENT_ONESHOT, start_atmo_train_p4_2);
+	install_timed_event(&sequences[283], 22875, 0, EVENT_ONESHOT, change_atmo_train_p4);
 	// seg724
+	install_timed_event(&sequences[284], 18625, 0, EVENT_ONESHOT, start_police_everywhere_p1);
+	install_timed_event(&sequences[284], 19583, 0, EVENT_ONESHOT, start_atmo_train_p6_2);
+	install_timed_event(&sequences[284], 26208, 0, EVENT_ONESHOT, start_atmo_police_single_siren_2_short);
+	install_timed_event(&sequences[284], 30375, 0, EVENT_ONESHOT, stop_atmo_tunnel);
+	install_timed_event(&sequences[284], 51833, 0, EVENT_ONESHOT, start_drum_and_bass);
+	install_timed_event(&sequences[284], 53250, 0, EVENT_ONESHOT, start_revellers_p1);
+	install_timed_event(&sequences[284], 53250, 60833, EVENT_DURATION, fade_drum_and_bass2);
+	install_timed_event(&sequences[284], 61833, 0, EVENT_ONESHOT, stop_police_everywhere_p1);
 	// seg760
+	install_timed_event(&sequences[285], 0, 0, EVENT_ONESHOT, start_revellers_p2);
 	// seg761
-	// seg762
-	// seg763
+	install_timed_event(&sequences[286], 0, 0, EVENT_ONESHOT, start_revellers_p3);
+	// seg762 (empty)
+	// seg763 (empty)
 	// seg764
-	// seg725_k
+	install_timed_event(&sequences[289], 0, 0, EVENT_ONESHOT, start_auction_guy2);
+	install_timed_event(&sequences[289], 0, 0, EVENT_ONESHOT, start_atmo_tunnel);
+	install_timed_event(&sequences[289], 0, 10958, EVENT_DURATION, fade_drum_and_bass3);
+	install_timed_event(&sequences[289], 10958, 0, EVENT_ONESHOT, start_atmo_train_p5);
+	install_timed_event(&sequences[289], 13000, 0, EVENT_ONESHOT, stop_drum_and_bass);
+	install_timed_event(&sequences[289], 15250, 18250, EVENT_DURATION, fade_atmo_train_p5);
+	install_timed_event(&sequences[289], 18542, 0, EVENT_ONESHOT, start_atmo_train_p1_2);
+	// seg725_k (empty)
 	// seg727
+	install_timed_event(&sequences[291], 4167, 0, EVENT_ONESHOT, start_police_everywhere_p2);
+	install_timed_event(&sequences[291], 4167, 8333, EVENT_DURATION, fade_auction_guy);
+	install_timed_event(&sequences[291], 8333, 0, EVENT_ONESHOT, stop_auction_guy);
+	install_timed_event(&sequences[291], 53708, 0, EVENT_ONESHOT, stop_atmo_tunnel);
 	// seg734
-	// seg738
+	install_timed_event(&sequences[292], 0, 0, EVENT_ONESHOT, start_revellers_p5);
+	install_timed_event(&sequences[292], 2500, 0, EVENT_ONESHOT, stop_mayling_truth);
+	install_timed_event(&sequences[292], 2500, 0, EVENT_ONESHOT, stop_forged);
+	install_timed_event(&sequences[292], 3750, 0, EVENT_ONESHOT, change_revellers_p5);
+	install_timed_event(&sequences[292], 10750, 0, EVENT_ONESHOT, stop_matt_alone);
+	// seg738 (empty)
 	// seg739_2
+	install_timed_event(&sequences[294], 12000, 0, EVENT_ONESHOT, stop_revellers_p5);
 	// seg739_1
+	install_timed_event(&sequences[295], 15458, 0, EVENT_ONESHOT, stop_revellers_p5);
 	// seg739_a
+	install_timed_event(&sequences[296], 8250, 0, EVENT_ONESHOT, start_after_fight);
+	install_timed_event(&sequences[296], 8250, 12292, EVENT_DURATION, fade_drum_and_bass4);
+	install_timed_event(&sequences[296], 12292, 0, EVENT_ONESHOT, stop_drum_and_bass);
 	// seg739_b
+	install_timed_event(&sequences[297], 8167, 0, EVENT_ONESHOT, start_after_fight_trans);
+	install_timed_event(&sequences[297], 8167, 12167, EVENT_DURATION, fade_drum_and_bass5);
+	install_timed_event(&sequences[297], 12167, 0, EVENT_ONESHOT, stop_drum_and_bass);
 	// seg733
+	install_timed_event(&sequences[298], 0, 0, EVENT_ONESHOT, stop_atmo_tunnel);
+	install_timed_event(&sequences[298], 11667, 0, EVENT_ONESHOT, start_drum_and_bass);
+	install_timed_event(&sequences[298], 11667, 20667, EVENT_DURATION, fade_drum_and_bass6);
 	// seg715
+	install_timed_event(&sequences[299], 5583, 0, EVENT_ONESHOT, start_atmo_train_p5_longer);
 	// seg717_720
+	install_timed_event(&sequences[300], 13292, 0, EVENT_ONESHOT, start_atmo_police_single_siren_short3);
+	install_timed_event(&sequences[300], 15875, 0, EVENT_ONESHOT, start_atmo_train_p6_2);
 	// seg717_718
+	install_timed_event(&sequences[301], 13250, 0, EVENT_ONESHOT, start_atmo_police_single_siren_short);
 	// seg719_720
+	install_timed_event(&sequences[302], 2000, 0, EVENT_ONESHOT, start_atmo_train_p6_2);
 	// seg716_723
+	install_timed_event(&sequences[303], 2000, 0, EVENT_ONESHOT, start_atmo_train_p4_3);
+	install_timed_event(&sequences[303], 12958, 0, EVENT_ONESHOT, change_atmo_train_p4_2);
+	install_timed_event(&sequences[303], 27500, 0, EVENT_ONESHOT, stop_mayling_truth);
 	// seg721_723
-	// seg737
-	// seg738
+	install_timed_event(&sequences[304], 21375, 0, EVENT_ONESHOT, start_atmo_train_p4_4);
+	install_timed_event(&sequences[304], 25625, 0, EVENT_ONESHOT, change_atmo_train_p4_2);
+	install_timed_event(&sequences[304], 40208, 0, EVENT_ONESHOT, stop_mayling_truth);
+	// seg737 (empty)
+	// seg738 (empty)
 	// seg740
+	install_timed_event(&sequences[307], 14671, 23000, EVENT_DURATION, fade_revellers_p5);
+	install_timed_event(&sequences[307], 23000, 0, EVENT_ONESHOT, stop_revellers_p5);
 	// seg741
+	install_timed_event(&sequences[308], 14083, 21000, EVENT_DURATION, fade_revellers_p5_2);
+	install_timed_event(&sequences[308], 21000, 0, EVENT_ONESHOT, stop_revellers_p5);
 	// seg742
-	// seg743_k
-	// seg743_1
+	install_timed_event(&sequences[309], 0, 0, EVENT_ONESHOT, start_auction_guy2);
+	install_timed_event(&sequences[309], 0, 12875, EVENT_DURATION, fade_drum_and_bass7);
+	install_timed_event(&sequences[309], 12875, 0, EVENT_ONESHOT, start_atmo_train_p5_2);
+	install_timed_event(&sequences[309], 13000, 0, EVENT_ONESHOT, stop_drum_and_bass);
+	install_timed_event(&sequences[309], 16125, 0, EVENT_ONESHOT, start_atmo_train_p1_3);
+	// seg743_k (empty)
+	// seg743_1 (empty)
 	// seg745
+	install_timed_event(&sequences[312], 0, 0, EVENT_ONESHOT, start_police_everywhere_p2_2);
+	install_timed_event(&sequences[312], 0, 4000, EVENT_DURATION, fade_auction_guy2);
+	install_timed_event(&sequences[312], 4000, 0, EVENT_ONESHOT, stop_auction_guy);
 	// seg747_2_749_750
+	install_timed_event(&sequences[313], 12042, 0, EVENT_ONESHOT, start_police_everywhere_p2_3);
+	install_timed_event(&sequences[313], 12042, 16042, EVENT_DURATION, fade_auction_guy3);
+	install_timed_event(&sequences[313], 16042, 0, EVENT_ONESHOT, stop_auction_guy);
 	// seg765_756_757
+	install_timed_event(&sequences[314], 0, 0, EVENT_ONESHOT, start_revellers_p4);
+	install_timed_event(&sequences[314], 26708, 31292, EVENT_DURATION, fade_drum_and_bass8);
+	install_timed_event(&sequences[314], 31292, 0, EVENT_ONESHOT, stop_drum_and_bass);
+	install_timed_event(&sequences[314], 31292, 0, EVENT_ONESHOT, start_after_fight);
 	// seg770
-	// seg770_2
+	install_timed_event(&sequences[315], 0, 0, EVENT_ONESHOT, stop_atmo_train_p1);
+	install_timed_event(&sequences[315], 3458, 0, EVENT_ONESHOT, maybe_start_intentness_mood);
+	install_timed_event(&sequences[315], 3458, 10458, EVENT_DURATION, fade_intentness_mood);
+	// seg770_2 (empty)
 	// EPISODE 9A
+	// seg901_1_901_2
+	// seg902_b
+	// seg902_a
+	// seg903_a
+	// seg903_b
+	// seg904_a
+	// seg904_b_905_1
+	// seg906_a
+	// seg906_b
+	// seg907_1
+	// seg946_1
+	// seg905_2
+	// seg907_2
+	// seg908_a_909_913
+	// seg908_c
+	// seg908_b
+	// seg910
+	// seg912_913
+	// seg915
+	// seg916
+	// seg917_b
+	// seg917_a
+	// seg918
+	// seg919
+	// seg920
+	// seg914
+	// seg911_913
+	// seg947_1_913
+	// seg948_1
+	// seg921
+	// seg922
+	// seg923
+	// seg924
+	// seg927
+	// seg928
+	// seg928_939
+	// seg929
+	// seg930
+	// seg930_939
+	// seg931_933_934_a_935
+	// seg929_939
+	// seg933_2_937_a_938
+	// seg936
+	// seg937_a_938
+	// seg937_b_938
+	// seg939
+	// seg945
 	// EPISODE 9B
+	// seg951_1_951_2
+	// seg952_b
+	// seg952_a
+	// seg953_a
+	// seg953_b
+	// seg954_a
+	// seg954_b
+	// seg955
+	// seg956_a_947_2
+	// seg956_b
+	// seg957_1
+	// seg946_2_947_2
+	// seg948_2
+	// seg958_a_959
+	// seg958_c
+	// seg958_b
+	// seg957_2
+	// seg960
+	// seg961
+	// seg962
+	// seg963
+	// seg964
+	// seg965
+	// seg966_b
+	// seg966_a
+	// seg967
+	// seg968
+	// seg969_a
+	// seg969_b
+	// seg970
+	// seg970_2
+	// seg970_1
+	// seg971_b
+	// seg971_a
+	// seg974_1
+	// seg974
 	// seg975
 	install_timed_event(&sequences[400], 18375, 0, EVENT_ONESHOT, dont_know_trojan_jump);
+	// seg976
+	// seg973_b
+	// seg973_a
+	// seg972
+	// seg977_978
+	// seg990_991_992
+	// seg990_992
+	// seg994
+	// seg988_984_2
+	// seg974_2
+	// seg977_979
 	// EPISODE 10
 	// EPISODE 11
 }

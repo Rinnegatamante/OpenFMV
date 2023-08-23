@@ -12,7 +12,7 @@
 
 #define SUBTITLE_NEWLINE "\n\n"
 
-#define GAME_VER "0.8.8"
+#define GAME_VER "0.9.0"
 
 #ifdef __cplusplus
 extern "C" {
@@ -65,6 +65,7 @@ typedef struct {
 	uint8_t called_parr;
 	uint8_t torture_seb;
 	uint8_t passed_by_seg975;
+	uint8_t passed_by_seg739;
 } gamestate;
 
 extern gamestate game_vars;
