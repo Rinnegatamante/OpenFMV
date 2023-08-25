@@ -14,6 +14,14 @@
 #include "unzip.h"
 #include "trophies.h"
 
+enum {
+	NO_CHOICE,
+	LEFT_CHOICE,
+	RIGHT_CHOICE,
+	EXTRA_CHOICE,
+	DONE_CHOICE
+};
+
 static uint32_t shadow_u32 = 0;
 
 void ImGui_CircleBar(float radius, float thickness, float progress, ImVec4 color) {
@@ -243,8 +251,8 @@ subtitle_draw:
 			ImGui::PopFontShadow();
 			
 			// Draw choices
-			if (cur_seq->l) {
-				char *ltext = cur_seq->ltext();
+			if (cur_choice->l) {
+				char *ltext = cur_choice->ltext();
 				if (!ltext) {
 					goto skip_choices;
 				}
@@ -256,11 +264,11 @@ subtitle_draw:
 					ImGui::Button(ltext, ImVec2(ImGui::CalcTextSize(ltext).x + 20.0f, 1.0f));
 					btn1_size = ImGui::GetItemRectSize();
 					ImGui::SetCursorPosX(-10000.0f);
-					ImGui::Button(cur_seq->rtext(), ImVec2(ImGui::CalcTextSize(cur_seq->rtext()).x + 20.0f, 1.0f));
+					ImGui::Button(cur_choice->rtext(), ImVec2(ImGui::CalcTextSize(cur_choice->rtext()).x + 20.0f, 1.0f));
 					btn2_size = ImGui::GetItemRectSize();
 					btn3_size = ImVec2(0, 0);
-					if (cur_seq->e) {
-						char *etext = cur_seq->etext();
+					if (cur_choice->e) {
+						char *etext = cur_choice->etext();
 						if (etext) {
 							ImGui::SetCursorPosX(-10000.0f);
 							ImGui::Button(etext, ImVec2(ImGui::CalcTextSize(etext).x + 20.0f, 1.0f));
@@ -273,7 +281,7 @@ subtitle_draw:
 					ImGui::GetCurrentContext()->NavId = 0;
 				}
 			
-				if (cur_delta > cur_seq->start && cur_delta < cur_seq->end && !chosen_path) {		
+				if (cur_delta > cur_choice->start && cur_delta < cur_choice->end && !chosen_path) {		
 					ImGui::SetNextWindowFocus();				
 					ImGui::SetNextWindowBgAlpha(0.0f);
 					ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_Always);
@@ -309,7 +317,7 @@ subtitle_draw:
 						ImGui::SetCursorPos(ImVec2(colors.choice2[0], colors.choice2[1]));
 					}
 					ImGui::PushStyleColor(ImGuiCol_Text, btn2_hovered ? Color4(colors.btn_hover_text) : Color4(colors.btn_text));
-					if (ImGui::Button(cur_seq->rtext(), ImVec2(ImGui::CalcTextSize(cur_seq->rtext()).x + 20.0f, 40.0f))) {
+					if (ImGui::Button(cur_choice->rtext(), ImVec2(ImGui::CalcTextSize(cur_choice->rtext()).x + 20.0f, 40.0f))) {
 						chosen_path = 2;
 					}
 					if (ImGui::IsItemFocused()) {
@@ -318,8 +326,8 @@ subtitle_draw:
 						btn2_hovered = false;
 					}
 					ImGui::PopStyleColor();
-					if (cur_seq->e) {
-						char *etext = cur_seq->etext();
+					if (cur_choice->e) {
+						char *etext = cur_choice->etext();
 						if (etext) {
 							if (colors.choices_type == CHOICES_CENTER_POS) {
 								ImGui::SameLine();
@@ -343,7 +351,7 @@ subtitle_draw:
 					
 					// Draw remaining time bar
 					if (cur_seq->d != LOOP_SEQUENCE) {
-						float progress = (float)(cur_delta - cur_seq->start) / (float)(cur_seq->end - cur_seq->start);
+						float progress = (float)(cur_delta - cur_choice->start) / (float)(cur_choice->end - cur_choice->start);
 						float half_width;
 						switch (colors.bar_type) {
 						case BAR_DEFAULT:
@@ -432,21 +440,35 @@ handle_event:
 			}
 			
 			// Starting chosen sequence
-			if (chosen_path && (cur_delta > cur_seq->jump_time)) {
+			if (chosen_path && (cur_delta > cur_choice->jump_time)) {
+				sequence *next_seq = NULL;
 				switch (chosen_path) {
-				case 1:
-					start_sequence(cur_seq->l());
+				case LEFT_CHOICE:
+					next_seq = cur_choice->l();
 					break;
-				case 2:
-					start_sequence(cur_seq->r());
+				case RIGHT_CHOICE:
+					next_seq = cur_choice->r();
 					break;
-				case 3:
-					start_sequence(cur_seq->e());
+				case EXTRA_CHOICE:
+					next_seq = cur_choice->e();
+					break;
+				case DONE_CHOICE:
 					break;
 				default:
 					debug_log("Fatal Error: Invalid chosen path.\n");
 					break;
 				}
+				
+				if (next_seq) {
+					start_sequence(next_seq);
+				} else {
+					chosen_path = DONE_CHOICE;
+				}
+			}
+			if (cur_delta > cur_choice->end) {
+				cur_choice = &cur_seq->aux_choice;
+				chosen_path = NO_CHOICE;
+				btns_state = BTNS_CALC_SIZE;
 			}
 		}
 		

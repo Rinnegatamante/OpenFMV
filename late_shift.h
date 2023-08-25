@@ -66,6 +66,8 @@ typedef struct {
 	uint8_t torture_seb;
 	uint8_t passed_by_seg975;
 	uint8_t passed_by_seg739;
+	uint8_t go_home;
+	uint8_t cut_end_seg1078;
 } gamestate;
 
 extern gamestate game_vars;

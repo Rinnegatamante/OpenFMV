@@ -33,6 +33,7 @@ audio_sample bgm[NUM_AUDIO_SAMPLES];
 subs_window subs_win;
 
 sequence *cur_seq;
+choice *cur_choice;
 subtitle *cur_sub;
 theme colors;
 void *snd_click, *snd_hover, *snd_pause, *snd_unpause;
@@ -87,7 +88,7 @@ void load_subtitles(sequence *s) {
 	s->sub_lang = config.language;
 }
 
-#define SUBS_LOADER_QUEUE_SIZE 5
+#define SUBS_LOADER_QUEUE_SIZE 8
 volatile sequence *to_load[SUBS_LOADER_QUEUE_SIZE] = {NULL};
 SceUID subs_request_mutex, subs_delivered_mutex;
 int subs_loader(SceSize args, void *argp) {
@@ -105,20 +106,34 @@ int subs_loader(SceSize args, void *argp) {
 
 void fill_sequence(char *name, sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump) {
 	s->d = d;
-	s->l = l;
-	s->r = r;
-	s->e = e;
-	s->ltext = ltext;
-	s->rtext = rtext;
-	s->etext = etext;
-	s->start = start;
-	s->end = end;
-	s->jump_time = jump;
+	s->main_choice.l = l;
+	s->main_choice.r = r;
+	s->main_choice.e = e;
+	s->main_choice.ltext = ltext;
+	s->main_choice.rtext = rtext;
+	s->main_choice.etext = etext;
+	s->main_choice.start = start;
+	s->main_choice.end = end;
+	s->main_choice.jump_time = jump;
 	s->sub_lang = -1;
 #ifdef DEBUG
 	strcpy(s->name, name);
 #endif
 	spooky_hash128(name, strlen(name), s->hash);
+	
+	sceClibMemset(&s->aux_choice, 0, sizeof(choice));
+}
+
+void add_extra_choice(sequence *s, char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump) {
+	s->aux_choice.l = l;
+	s->aux_choice.r = r;
+	s->aux_choice.e = e;
+	s->aux_choice.ltext = ltext;
+	s->aux_choice.rtext = rtext;
+	s->aux_choice.etext = etext;
+	s->aux_choice.start = start;
+	s->aux_choice.end = end;
+	s->aux_choice.jump_time = jump;
 }
 
 #define enqueue_link(x) \
@@ -148,9 +163,12 @@ void reload_subtitles(sequence *s) {
 	sequence *link;
 	if (s->d != LOOP_SEQUENCE)
 		enqueue_link(s->d);
-	enqueue_link(s->l);
-	enqueue_link(s->r);
-	enqueue_link(s->e);
+	enqueue_link(s->main_choice.l);
+	enqueue_link(s->main_choice.r);
+	enqueue_link(s->main_choice.e);
+	enqueue_link(s->aux_choice.l);
+	enqueue_link(s->aux_choice.r);
+	enqueue_link(s->aux_choice.e);
 	to_load[i] = NULL;
 	fake_pass = 0;
 	
@@ -179,10 +197,14 @@ void start_sequence(sequence *s) {
 	int i = 0;
 	fake_pass = 1;
 	sequence *link;
-	enqueue_link(s->d);
-	enqueue_link(s->l);
-	enqueue_link(s->r);
-	enqueue_link(s->e);
+	if (s->d != LOOP_SEQUENCE)
+		enqueue_link(s->d);
+	enqueue_link(s->main_choice.l);
+	enqueue_link(s->main_choice.r);
+	enqueue_link(s->main_choice.e);
+	enqueue_link(s->aux_choice.l);
+	enqueue_link(s->aux_choice.r);
+	enqueue_link(s->aux_choice.e);
 	to_load[i] = NULL;
 	fake_pass = 0;
 	
@@ -211,7 +233,9 @@ void start_sequence(sequence *s) {
 	sprintf(generic_buf, "/Converted/%s.mp4", s->hash);
 	video_open(generic_buf, s->d == LOOP_SEQUENCE ? 1 : 0);
 	cur_seq = s;
+	cur_choice = &s->main_choice;
 	cur_event = 0;
+	cur_delta = 0;
 	chosen_path = 0;
 	btns_state = BTNS_CALC_SIZE;
 }

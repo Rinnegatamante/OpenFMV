@@ -96,18 +96,26 @@ typedef struct {
 	struct sequence *(*s)();
 } timed_event;
 
-typedef struct sequence {
-#ifdef DEBUG
-	char name[32];
-#endif
-	char hash[64];
-	struct sequence *(*d)();
+typedef struct {
 	struct sequence *(*l)();
 	struct sequence *(*r)();
 	struct sequence *(*e)();
 	char *(*ltext)();
 	char *(*rtext)();
 	char *(*etext)();
+	uint32_t jump_time;
+	uint32_t start;
+	uint32_t end;
+} choice;
+
+typedef struct sequence {
+#ifdef DEBUG
+	char name[32];
+#endif
+	char hash[64];
+	struct sequence *(*d)();
+	choice main_choice;
+	choice aux_choice;
 	uint32_t jump_time;
 	uint32_t start;
 	uint32_t end;
@@ -154,6 +162,7 @@ extern sequence sequences[NUM_SEQUENCES];
 extern char game_strings[NUM_GAME_STRINGS][128];
 extern audio_sample bgm[NUM_AUDIO_SAMPLES];
 extern sequence *cur_seq;
+extern choice *cur_choice;
 extern subtitle *cur_sub;
 extern int fake_pass;
 extern int chosen_path;
@@ -175,6 +184,7 @@ void load_animated_bg(const char *fname, int needs_hash);
 uint32_t load_image(const char *fname);
 void free_image(uint32_t image);
 void fill_sequence(char *name, sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump);
+void add_extra_choice(sequence *s, char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump);
 void start_sequence(sequence *s);
 void start_first_sequence(sequence *s);
 void install_timed_event(sequence *t, uint32_t start, uint32_t end, uint8_t type, sequence *(*s)());
