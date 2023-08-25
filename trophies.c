@@ -8,11 +8,11 @@ static int trp_ctx;
 static int plat_id = -1;
 
 typedef struct {
-    int sdkVersion;
-    SceCommonDialogParam commonParam;
-    int context;
-    int options;
-    uint8_t reserved[128];
+	int sdkVersion;
+	SceCommonDialogParam commonParam;
+	int context;
+	int options;
+	uint8_t reserved[128];
 } SceNpTrophySetupDialogParam;
 
 int sceNpTrophyInit(void *unk);
@@ -23,6 +23,19 @@ int sceNpTrophySetupDialogTerm();
 int sceNpTrophyCreateHandle(int *handle);
 int sceNpTrophyDestroyHandle(int handle);
 int sceNpTrophyUnlockTrophy(int ctx, int handle, int id, int *plat_id);
+int trophies_available = 0;
+
+volatile int trp_id;
+SceUID trp_request_mutex;
+int trophies_unlocker(SceSize args, void *argp) {
+	for (;;) {
+		sceKernelWaitSema(trp_request_mutex, 1, NULL);
+		int trp_handle;
+		sceNpTrophyCreateHandle(&trp_handle);
+		sceNpTrophyUnlockTrophy(trp_ctx, trp_handle, trp_id, &plat_id);
+		sceNpTrophyDestroyHandle(trp_handle);
+	}
+}
 
 int trophies_init() {
 	sceAppMgrAppParamGetString(0, 12, comm_id, 256);
@@ -46,12 +59,17 @@ int trophies_init() {
 	}
 	sceNpTrophySetupDialogTerm();
 	
+	trp_request_mutex = sceKernelCreateSema("trps request", 0, 0, 1, NULL);
+	SceUID tropies_unlocker_thd = sceKernelCreateThread("trophies unlocker", &trophies_unlocker, 0x10000100, 0x10000, 0, 0, NULL);
+	sceKernelStartThread(tropies_unlocker_thd, 0, NULL);
+	
+	trophies_available = 1;
 	return res;
 }
 
 void trophies_unlock(int id) {
-	int trp_handle;
-	sceNpTrophyCreateHandle(&trp_handle);
-	sceNpTrophyUnlockTrophy(trp_ctx, trp_handle, id, &plat_id);
-	sceNpTrophyDestroyHandle(trp_handle);
+	if (trophies_available) {
+		trp_id = id;
+		sceKernelSignalSema(trp_request_mutex, 1);
+	}
 }
