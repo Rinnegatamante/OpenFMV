@@ -101,7 +101,6 @@ typedef struct sequence {
 	char name[32];
 #endif
 	char hash[64];
-	struct sequence *links[8];
 	struct sequence *(*d)();
 	struct sequence *(*l)();
 	struct sequence *(*r)();

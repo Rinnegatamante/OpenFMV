@@ -2,7 +2,7 @@
 #include <vitaGL.h>
 
 static char comm_id[12] = {0};
-static const char signature[160] = {0xb9,0xdd,0xe1,0x3b,0x01,0x00};
+static char signature[160] = {0xb9,0xdd,0xe1,0x3b,0x01,0x00};
 
 static int trp_ctx;
 static int plat_id = -1;
