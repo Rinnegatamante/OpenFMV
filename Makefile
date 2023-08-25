@@ -4,7 +4,7 @@ LIBS = -lsoloud -lz -lm -limgui -lvitaGL -lvitashark -lSceShaccCgExt -lmathneon 
   -lSceAppMgr_stub -lSceAppUtil_stub -lSceAudio_stub -lSceCtrl_stub -lSceCommonDialog_stub \
   -lSceDisplay_stub -lSceFios2_stub -lSceGxm_stub -lSceShaccCg_stub -lSceSysmodule_stub \
   -lScePower_stub -lSceKernelDmacmgr_stub -lSceAvPlayer_stub -lSceTouch_stub \
-  -Wl,--whole-archive -lpthread -Wl,--no-whole-archive
+  -Wl,--whole-archive -lpthread -Wl,--no-whole-archive -lSceNpTrophy_stub
 
 CFILES   := $(foreach dir,$(SOURCES), $(wildcard $(dir)/*.c))
 CPPFILES   := $(foreach dir,$(SOURCES), $(wildcard $(dir)/*.cpp))
@@ -17,11 +17,11 @@ CXX      = $(PREFIX)-g++
 CFLAGS  = -fno-lto -g -Wl,-q
 
 ifeq ($(LATE_SHIFT),1)
-CFLAGS += -DLATE_SHIFT
+CFLAGS += -DLATE_SHIFT -DHAVE_TROPHIES
 TARGET := lateshift
 APP_NAME := "Late Shift"
 DATA_FILES := "data/Late Shift"
-TITLEID := LATESHIFT
+TITLEID := LATE00001
 endif
 
 ifeq ($(FIVE_DATES),1)
@@ -29,7 +29,7 @@ CFLAGS += -DFIVE_DATES
 TARGET := fivedates
 APP_NAME := "Five Dates"
 DATA_FILES := "data/Five Dates"
-TITLEID := FIVEDATES
+TITLEID := FIVE00001
 endif
 
 ifeq ($(DEBUG),1)

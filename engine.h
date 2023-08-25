@@ -8,7 +8,7 @@ extern "C" {
 #include "games.h"
 #include "unzip.h"
 
-#define ENGINE_VER "0.9.8"
+#define ENGINE_VER "1.0.0"
 
 #define NUM_AUDIO_SAMPLES 32
 

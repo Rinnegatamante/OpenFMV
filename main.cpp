@@ -12,6 +12,7 @@
 #include "fios.h"
 #include "player.h"
 #include "unzip.h"
+#include "trophies.h"
 
 static uint32_t shadow_u32 = 0;
 
@@ -63,6 +64,22 @@ void reload_theme() {
 	shadow_u32 = (uint32_t)(colors.shadow_text[0] * 255.0f) | (uint32_t)(colors.shadow_text[1] * 255.0f) << 8 | (uint32_t)(colors.shadow_text[2] * 255.0f) << 16 | (uint32_t)(colors.shadow_text[3] * 255.0f) << 24;
 }
 
+void warning(const char *msg) {
+	SceMsgDialogUserMessageParam msg_param;
+	sceClibMemset(&msg_param, 0, sizeof(SceMsgDialogUserMessageParam));
+	msg_param.buttonType = SCE_MSG_DIALOG_BUTTON_TYPE_OK;
+	msg_param.msg = (const SceChar8*)msg;
+	SceMsgDialogParam param;
+	sceMsgDialogParamInit(&param);
+	param.mode = SCE_MSG_DIALOG_MODE_USER_MSG;
+	param.userMsgParam = &msg_param;
+	sceMsgDialogInit(&param);
+	while (sceMsgDialogGetStatus() != SCE_COMMON_DIALOG_STATUS_FINISHED) {
+		vglSwapBuffers(GL_TRUE);
+	}
+	sceMsgDialogTerm();
+}
+
 int main(int argc, char *argv[]) {
 	// Mounting PSARC archive for videos
 	fios_init();
@@ -89,9 +106,20 @@ int main(int argc, char *argv[]) {
 	// Initing vitaGL and video player
 	scePowerSetArmClockFrequency(444);
 	scePowerSetBusClockFrequency(222);
-	vglInitWithCustomThreshold(0, 960, 544, 16 * 1024 * 1024, 32 * 1024 * 1024, 0, 0, SCE_GXM_MULTISAMPLE_NONE);
+	vglInitWithCustomThreshold(0, 960, 544, 16 * 1024 * 1024, 32 * 1024 * 1024, 0, 26 * 1024 * 1024, SCE_GXM_MULTISAMPLE_NONE);
 	sceSysmoduleLoadModule(SCE_SYSMODULE_AVPLAYER);
-	
+
+#ifdef HAVE_TROPHIES
+	// Initing trophy system
+	int r = trophies_init();
+	if (r < 0) {
+#ifdef DEBUG
+		printf("sceNpTrophyCreateContext returned 0x%08X\n", r);
+#endif
+		warning("This game features unlockable trophies but NoTrpDrm is not installed. If you want to be able to unlock trophies, please install it.");
+	}
+#endif
+
 	// Initing audio player and menu audio sounds
 	audio_init();
 	snd_hover = audio_sound_load("app0:data/menu_move.ogg");
