@@ -390,6 +390,7 @@ skip_choices:
 			ImGui::Render();
 			ImGui_ImplVitaGL_RenderDrawData(ImGui::GetDrawData());
 			vglSwapBuffers(GL_FALSE);
+			sceKernelPowerTick((SceKernelPowerTickType)0);
 			
 			// Handle game state changes
 			switch (game_state) {
