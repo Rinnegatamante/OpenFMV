@@ -1345,17 +1345,17 @@ sequence *fade_torment_seb3() { audio_sample_fade(mus[TORMENT_SEBASTIAN], 0.1576
 sequence *fade_atmo_phone_vibra() { audio_sample_fade(mus[ATMO_PHONE_VIBRA], 0.0f, 0.1959517f, 16167, 24167); return NULL; }
 sequence *change_hb_seb_slow() { audio_sample_set_volume(mus[ATMO_HEARTBEAT_SEB_SLOW], 0.4981439f); return NULL; }
 sequence *start_after_fight_trans2() { mus[AFTER_FIGHT_TRANS] = audio_sample_start("EP07 After Fight Transition", 0, 0.2499574f); return NULL; }
-sequence *unlock_cause_and_effect() { trophies_unlock(CAUSE_AND_EFFECT); return NULL;}
-sequence *unlock_fair_share() { trophies_unlock(FAIR_SHARE); return NULL;}
-sequence *unlock_shill_bidder() { trophies_unlock(SHILL_BIDDER); return NULL;}
-sequence *unlock_office_clerk() { trophies_unlock(OFFICE_CLERK); return NULL;}
-sequence *unlock_sabotage() { trophies_unlock(SABOTAGE); return NULL;}
-sequence *unlock_star_crossed_lovers() { trophies_unlock(STAR_CROSSED_LOVERS); return NULL;}
-sequence *unlock_protector() { trophies_unlock(PROTECTOR); return NULL;}
-sequence *unlock_choices_matter() { trophies_unlock(CHOICES_MATTER); return NULL;}
-sequence *unlock_even_tempered() { trophies_unlock(EVEN_TEMPERED); return NULL;}
-sequence *unlock_interrogation() { trophies_unlock(INTERROGATION); return NULL;}
-sequence *unlock_good_karma() { trophies_unlock(GOOD_KARMA); return NULL;}
+sequence *unlock_cause_and_effect() { trophies_unlock(CAUSE_AND_EFFECT); return NULL; }
+sequence *unlock_fair_share() { trophies_unlock(FAIR_SHARE); return NULL; }
+sequence *unlock_shill_bidder() { trophies_unlock(SHILL_BIDDER); return NULL; }
+sequence *unlock_office_clerk() { trophies_unlock(OFFICE_CLERK); return NULL; }
+sequence *unlock_sabotage() { trophies_unlock(SABOTAGE); return NULL; }
+sequence *unlock_star_crossed_lovers() { trophies_unlock(STAR_CROSSED_LOVERS); return NULL; }
+sequence *unlock_protector() { trophies_unlock(PROTECTOR); return NULL; }
+sequence *unlock_choices_matter() { trophies_unlock(CHOICES_MATTER); return NULL; }
+sequence *unlock_even_tempered() { trophies_unlock(EVEN_TEMPERED); return NULL; }
+sequence *unlock_interrogation() { trophies_unlock(INTERROGATION); return NULL; }
+sequence *unlock_good_karma() { trophies_unlock(GOOD_KARMA); return NULL; }
 
 void fill_events() {
 	// OPENING

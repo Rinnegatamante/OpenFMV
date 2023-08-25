@@ -97,6 +97,9 @@ typedef struct {
 } timed_event;
 
 typedef struct sequence {
+#ifdef DEBUG
+	char name[32];
+#endif
 	char hash[64];
 	struct sequence *links[8];
 	struct sequence *(*d)();

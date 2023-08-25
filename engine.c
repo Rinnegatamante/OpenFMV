@@ -38,7 +38,9 @@ theme colors;
 void *snd_click, *snd_hover, *snd_pause, *snd_unpause;
 
 void load_subtitles(sequence *s) {
-	debug_log("Loading subtitles for %s\n", s->hash);
+#ifdef DEBUG
+	debug_log("Loading subtitles for %s sequence\n", s->name);
+#endif
 	unz_file_info file_info;
 	sprintf(subtitle_buf, "%s.srt", s->hash);
 	s->num_subs = 0;
@@ -113,7 +115,9 @@ void fill_sequence(char *name, sequence *s, sequence *(*d)(), char *(*ltext)(), 
 	s->end = end;
 	s->jump_time = jump;
 	s->sub_lang = -1;
-
+#ifdef DEBUG
+	strcpy(s->name, name);
+#endif
 	spooky_hash128(name, strlen(name), s->hash);
 }
 
@@ -163,9 +167,9 @@ void start_sequence(sequence *s) {
 #ifdef DBG_SAVE
 	trigger_save = 1;
 #endif
-
-	debug_log("Launching %s\n", s->hash);
-	
+#ifdef DEBUG
+	debug_log("Launching %s sequence\n", s->name);
+#endif
 	// Dumping current gamestate
 	gamestate dump;
 	memcpy(&dump, &game_vars, sizeof(game_state));
@@ -259,6 +263,9 @@ audio_sample *audio_sample_start(const char *fname, int looping, float vol) {
 	for (int i = 0; i < NUM_AUDIO_SAMPLES; i++) {
 		if (!bgm[i].active) {
 			r = &bgm[i];
+#ifdef DEBUG
+			printf("Playing %s on slot %d\n", fname, i);
+#endif
 			break;
 		}
 	}
@@ -272,6 +279,9 @@ audio_sample *audio_voice_sample_start(const char *fname, int looping, float vol
 	for (int i = 0; i < NUM_AUDIO_SAMPLES; i++) {
 		if (!bgm[i].active) {
 			r = &bgm[i];
+#ifdef DEBUG
+			printf("Playing %s on slot %d\n", fname, i);
+#endif
 			break;
 		}
 	}
