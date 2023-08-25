@@ -8,12 +8,38 @@
 #include "engine.h"
 #include "player.h"
 #include "late_shift.h"
+#include "trophies.h"
 
 #ifdef LATE_SHIFT
 char game_strings[NUM_GAME_STRINGS][128];
 
 // Prototypes
 sequence *seg951_1_951_2();
+
+// Trophies IDs
+enum {
+	PLATINUM_TROPHY, // Implemented
+	THE_COWARD,
+	THE_LIONS_DEN,
+	THE_PLOY,
+	THE_FOOL,
+	THE_DELIVERY,
+	THE_BRIBE,
+	THE_FRENZY,
+	CAUSE_AND_EFFECT, // Implemented
+	FAIR_SHARE, // Implemented
+	PROFICIENT_STORYTELLER,
+	SHILL_BIDDER, // Implemented
+	OFFICE_CLERK, // Implemented
+	STAR_CROSSED_LOVERS, // Implemented
+	EVEN_TEMPERED, // Implemented
+	CHOICES_MATTER, // Implemented
+	EXPERT_STORYTELLER,
+	GOOD_KARMA, // Implemented
+	SABOTAGE, // Implemented
+	INTERROGATION, // Implemented
+	PROTECTOR // Implemented
+};
 
 // Game get text funcs
 char *selfless() { return game_strings[31]; }
@@ -1144,7 +1170,7 @@ sequence *fade_after_crash3() { audio_sample_fade(mus[AFTER_CRASH], 0.09751472f,
 sequence *start_radioplay() { mus[RADIO_PLAY] = audio_sample_start("EP06B Radioplay", 1, 1.0f); return NULL; }
 sequence *stop_showdown_and_violence() { audio_sample_stop_and_free(mus[SHOWDOWN_AND_VIOLENCE]); return NULL; }
 sequence *fade_hotel_romance2() { audio_sample_fade(mus[HOTEL_ROMANCE], 0.08464747f, 0.0f, 28333, 35958); return NULL; }
-sequence *fade_hotel_romance() { audio_sample_fade(mus[HOTEL_ROMANCE], 0.09851323f, 0.08464747f, 6083, 14083); return NULL; }
+sequence *fade_hotel_romance() { audio_sample_fade(mus[HOTEL_ROMANCE], 0.09851323f, 0.08464747f, 7000, 14083); return NULL; }
 sequence *fade_on_the_news() { audio_sample_fade(mus[ON_THE_NEWS], 0.09919386f, 0.0f, 0, 6750); return NULL; }
 sequence *fade_pushing_your_chances() { audio_sample_fade(mus[PUSHING_YOUR_CHANCES], 0.1241259f, 0.06466196f, 0, 11000); return NULL; }
 sequence *start_atmo_hotel_room() { mus[ATMO_HOTEL_ROOM] = audio_sample_start("EP06A Atmo Int Hotel Room", 1, 1.0f); return NULL; }
@@ -1221,7 +1247,7 @@ sequence *fade_drum_and_bass6() { audio_sample_fade(mus[DRUM_AND_BASS], 0.0f, 0.
 sequence *fade_drum_and_bass7() { audio_sample_fade(mus[DRUM_AND_BASS], 0.2519945f, 0.0f, 0, 12875); return NULL; }
 sequence *fade_drum_and_bass8() { audio_sample_fade(mus[DRUM_AND_BASS], 0.2519945f, 0.0f, 26708, 31292); return NULL; }
 sequence *fade_forged() { audio_sample_fade(mus[FORGED], 0.111812f, 0.0f, 14958, 21958); return NULL; }
-sequence *fade_revellers_p5_2() { audio_sample_fade(mus[ATMO_REVELLERS_5], 0.5608469f, 0.0f, 14083, 21000); return NULL; }
+sequence *fade_revellers_p5_2() { audio_sample_fade(mus[ATMO_REVELLERS_5], 0.5608469f, 0.0f, 15000, 21000); return NULL; }
 sequence *fade_revellers_p5() { audio_sample_fade(mus[ATMO_REVELLERS_5], 0.5608469f, 0.0f, 16708, 23000); return NULL; }
 sequence *stop_drum_and_bass() { audio_sample_stop_and_free(mus[DRUM_AND_BASS]); return NULL; }
 sequence *stop_atmo_tunnel() { audio_sample_stop_and_free(mus[ATMO_TUNNEL]); return NULL; }
@@ -1315,9 +1341,21 @@ sequence *fade_hospital_reception5() { audio_sample_fade(mus[HOSPITAL_RECEPTION]
 sequence *fade_hospital_reception6() { audio_sample_fade(mus[HOSPITAL_RECEPTION], 0.2525519f, 0.0f, 19083, 29083); return NULL; }
 sequence *fade_torment_seb() { audio_sample_fade(mus[TORMENT_SEBASTIAN], 0.1576302f, 0.0f, 36167, 40000); return NULL; }
 sequence *fade_torment_seb2() { audio_sample_fade(mus[TORMENT_SEBASTIAN], 0.1576302f, 0.0f, 0, 5000); return NULL; }
+sequence *fade_torment_seb3() { audio_sample_fade(mus[TORMENT_SEBASTIAN], 0.1576302f, 0.0f, 0, 3000); return NULL; }
 sequence *fade_atmo_phone_vibra() { audio_sample_fade(mus[ATMO_PHONE_VIBRA], 0.0f, 0.1959517f, 16167, 24167); return NULL; }
 sequence *change_hb_seb_slow() { audio_sample_set_volume(mus[ATMO_HEARTBEAT_SEB_SLOW], 0.4981439f); return NULL; }
 sequence *start_after_fight_trans2() { mus[AFTER_FIGHT_TRANS] = audio_sample_start("EP07 After Fight Transition", 0, 0.2499574f); return NULL; }
+sequence *unlock_cause_and_effect() { trophies_unlock(CAUSE_AND_EFFECT); return NULL;}
+sequence *unlock_fair_share() { trophies_unlock(FAIR_SHARE); return NULL;}
+sequence *unlock_shill_bidder() { trophies_unlock(SHILL_BIDDER); return NULL;}
+sequence *unlock_office_clerk() { trophies_unlock(OFFICE_CLERK); return NULL;}
+sequence *unlock_sabotage() { trophies_unlock(SABOTAGE); return NULL;}
+sequence *unlock_star_crossed_lovers() { trophies_unlock(STAR_CROSSED_LOVERS); return NULL;}
+sequence *unlock_protector() { trophies_unlock(PROTECTOR); return NULL;}
+sequence *unlock_choices_matter() { trophies_unlock(CHOICES_MATTER); return NULL;}
+sequence *unlock_even_tempered() { trophies_unlock(EVEN_TEMPERED); return NULL;}
+sequence *unlock_interrogation() { trophies_unlock(INTERROGATION); return NULL;}
+sequence *unlock_good_karma() { trophies_unlock(GOOD_KARMA); return NULL;}
 
 void fill_events() {
 	// OPENING
@@ -1337,12 +1375,14 @@ void fill_events() {
 	install_timed_event(&sequences[4], 0, 0, EVENT_ONESHOT, start_selfish_title);
 	install_timed_event(&sequences[4], 10750, 14750, EVENT_DURATION, fade_out_op);
 	install_timed_event(&sequences[4], 14750, 0, EVENT_ONESHOT, stop_opening);
+	install_timed_event(&sequences[4], 15000, 0, EVENT_ONESHOT, unlock_cause_and_effect);
 	install_timed_event(&sequences[4], 19417, 24500, EVENT_DURATION, fade_out_atmo_station);
 	install_timed_event(&sequences[4], 24500, 0, EVENT_ONESHOT, stop_atmo_station);
 	// seg107_b
 	install_timed_event(&sequences[5], 0, 0, EVENT_ONESHOT, start_selfless_title);
 	install_timed_event(&sequences[5], 0, 4000, EVENT_DURATION, fade_out_op2);
 	install_timed_event(&sequences[5], 4000, 0, EVENT_ONESHOT, stop_opening);
+	install_timed_event(&sequences[5], 10000, 0, EVENT_ONESHOT, unlock_cause_and_effect);
 	install_timed_event(&sequences[5], 17792, 23000, EVENT_DURATION, fade_out_atmo_station2);
 	install_timed_event(&sequences[5], 23000, 0, EVENT_ONESHOT, stop_atmo_station);
 	// EPISODE 1
@@ -1516,8 +1556,9 @@ void fill_events() {
 	// seg229 (empty)
 	// seg227 (empty)
 	// seg231
+	install_timed_event(&sequences[69], 10000, 0, EVENT_ONESHOT, unlock_fair_share);
 	install_timed_event(&sequences[69], 10292, 19292, EVENT_DURATION, fade_pushing);
-	install_timed_event(&sequences[63], 19292, 0, EVENT_ONESHOT, start_lets_go2);
+	install_timed_event(&sequences[69], 19292, 0, EVENT_ONESHOT, start_lets_go2);
 	install_timed_event(&sequences[69], 20292, 0, EVENT_ONESHOT, stop_pushing);
 	install_timed_event(&sequences[69], 20292, 21625, EVENT_DURATION, fade_lets_go2);
 	install_timed_event(&sequences[69], 21625, 0, EVENT_ONESHOT, stop_atmo_house);
@@ -1565,6 +1606,7 @@ void fill_events() {
 	install_timed_event(&sequences[77], 2000, 0, EVENT_ONESHOT, stop_bidding_flache);
 	// seg313
 	install_timed_event(&sequences[78], 0, 0, EVENT_ONESHOT, start_bidding_riser_let_her);
+	install_timed_event(&sequences[78], 46000, 0, EVENT_ONESHOT, unlock_shill_bidder);
 	install_timed_event(&sequences[78], 57500, 0, EVENT_ONESHOT, start_dance3);
 	install_timed_event(&sequences[78], 57583, 0, EVENT_ONESHOT, stop_atmo_auction);
 	install_timed_event(&sequences[78], 57912, 0, EVENT_ONESHOT, start_atmo_hall);
@@ -1605,6 +1647,7 @@ void fill_events() {
 	install_timed_event(&sequences[88], 19000, 0, EVENT_ONESHOT, stop_car_park_elevator);
 	// seg320_k (empty)
 	// seg322
+	install_timed_event(&sequences[90], 5000, 0, EVENT_ONESHOT, unlock_office_clerk);
 	install_timed_event(&sequences[90], 7625, 0, EVENT_ONESHOT, start_atmo_inside_office);
 	// seg322_tap (empty)
 	// seg326_324
@@ -1715,7 +1758,8 @@ void fill_events() {
 	install_timed_event(&sequences[123], 9375, 17833, EVENT_DURATION, fade_brutal_p2_9);
 	install_timed_event(&sequences[123], 17833, 0, EVENT_ONESHOT, stop_brutal_p2);
 	// seg369_1k (empty)
-	// seg369_2k (empty)
+	// seg369_2k
+	install_timed_event(&sequences[125], 0, 0, EVENT_ONESHOT, unlock_sabotage);
 	// seg370_375
 	install_timed_event(&sequences[126], 8250, 0, EVENT_ONESHOT, start_get_away_long2);
 	install_timed_event(&sequences[126], 9000, 0, EVENT_ONESHOT, stop_brutal_keypad);
@@ -2102,7 +2146,8 @@ void fill_events() {
 	// seg604_a
 	install_timed_event(&sequences[233], 4000, 0, EVENT_ONESHOT, stop_atmo_tv_bg_trans);
 	install_timed_event(&sequences[233], 5000, 0, EVENT_ONESHOT, start_atmo_tv_bg_p2);
-	install_timed_event(&sequences[233], 6083, 14083, EVENT_DURATION, fade_hotel_romance);
+	install_timed_event(&sequences[233], 7000, 0, EVENT_ONESHOT, unlock_star_crossed_lovers);
+	install_timed_event(&sequences[233], 7000, 14083, EVENT_DURATION, fade_hotel_romance);
 	install_timed_event(&sequences[233], 28333, 0, EVENT_ONESHOT, start_on_the_news2);
 	install_timed_event(&sequences[233], 28333, 35958, EVENT_DURATION, fade_hotel_romance2);
 	install_timed_event(&sequences[233], 35958, 0, EVENT_ONESHOT, stop_hotel_romance);
@@ -2198,6 +2243,7 @@ void fill_events() {
 	install_timed_event(&sequences[265], 0, 0, EVENT_ONESHOT, start_thumbscrew_angry2);
 	install_timed_event(&sequences[265], 0, 5000, EVENT_DURATION, fade_thumbscrew_p2_2);
 	install_timed_event(&sequences[265], 5000, 0, EVENT_ONESHOT, stop_thumbscrew_p2);
+	install_timed_event(&sequences[265], 5000, 0, EVENT_ONESHOT, unlock_protector);
 	// seg666_c
 	install_timed_event(&sequences[266], 0, 0, EVENT_ONESHOT, start_thumbscrew_talk);
 	install_timed_event(&sequences[266], 0, 6000, EVENT_DURATION, fade_thumbscrew_p2);
@@ -2240,6 +2286,7 @@ void fill_events() {
 	install_timed_event(&sequences[279], 18625, 24625, EVENT_DURATION, fade_mayling_truth);
 	install_timed_event(&sequences[279], 24625, 0, EVENT_ONESHOT, stop_mayling_truth);
 	// seg713_a
+	install_timed_event(&sequences[280], 0, 0, EVENT_ONESHOT, unlock_star_crossed_lovers);
 	install_timed_event(&sequences[280], 3083, 0, EVENT_ONESHOT, start_atmo_police_single_siren_short);
 	// seg713_b
 	install_timed_event(&sequences[281], 4958, 0, EVENT_ONESHOT, start_atmo_police_single_siren_short2);
@@ -2261,7 +2308,8 @@ void fill_events() {
 	install_timed_event(&sequences[285], 0, 0, EVENT_ONESHOT, start_revellers_p2);
 	// seg761
 	install_timed_event(&sequences[286], 0, 0, EVENT_ONESHOT, start_revellers_p3);
-	// seg762 (empty)
+	// seg762
+	install_timed_event(&sequences[287], 15000, 0, EVENT_ONESHOT, unlock_even_tempered);
 	// seg763 (empty)
 	// seg764
 	install_timed_event(&sequences[289], 0, 0, EVENT_ONESHOT, start_auction_guy2);
@@ -2324,7 +2372,8 @@ void fill_events() {
 	install_timed_event(&sequences[307], 14671, 23000, EVENT_DURATION, fade_revellers_p5);
 	install_timed_event(&sequences[307], 23000, 0, EVENT_ONESHOT, stop_revellers_p5);
 	// seg741
-	install_timed_event(&sequences[308], 14083, 21000, EVENT_DURATION, fade_revellers_p5_2);
+	install_timed_event(&sequences[308], 15000, 0, EVENT_ONESHOT, unlock_choices_matter);
+	install_timed_event(&sequences[308], 15000, 21000, EVENT_DURATION, fade_revellers_p5_2);
 	install_timed_event(&sequences[308], 21000, 0, EVENT_ONESHOT, stop_revellers_p5);
 	// seg742
 	install_timed_event(&sequences[309], 0, 0, EVENT_ONESHOT, start_auction_guy2);
@@ -2408,6 +2457,7 @@ void fill_events() {
 	install_timed_event(&sequences[343], 38542, 48542, EVENT_DURATION, fade_hospital_reception5);
 	install_timed_event(&sequences[343], 48542, 0, EVENT_ONESHOT, stop_hospital_reception);
 	// seg947_1_913
+	install_timed_event(&sequences[344], 17000, 0, EVENT_ONESHOT, unlock_good_karma);
 	install_timed_event(&sequences[344], 19083, 29083, EVENT_DURATION, fade_hospital_reception6);
 	install_timed_event(&sequences[344], 29083, 0, EVENT_ONESHOT, stop_hospital_reception);
 	// seg948_1 (empty)
@@ -2435,7 +2485,8 @@ void fill_events() {
 	install_timed_event(&sequences[354], 10042, 0, EVENT_ONESHOT, start_torment_stop_or_strangle);
 	// seg930_939
 	install_timed_event(&sequences[355], 0, 0, EVENT_ONESHOT, start_de_escalation_no_boom);
-	install_timed_event(&sequences[355], 0, 5000, EVENT_DURATION, fade_torment_seb2);
+	install_timed_event(&sequences[355], 0, 3000, EVENT_DURATION, fade_torment_seb3);
+	install_timed_event(&sequences[355], 3000, 0, EVENT_ONESHOT, unlock_interrogation);
 	install_timed_event(&sequences[355], 5000, 0, EVENT_ONESHOT, stop_torment_seb);
 	install_timed_event(&sequences[355], 6000, 0, EVENT_ONESHOT, change_hb_seb_slow);
 	// seg931_933_934_a_935
