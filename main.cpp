@@ -114,7 +114,7 @@ int main(int argc, char *argv[]) {
 	SceIoStat st;
 	int r = trophies_init();
 	if (r < 0 && sceIoGetstat(TROPHIES_FILE, &st) < 0) {
-		FILE *f = fopen(TROPHIES_FILE,"w");
+		FILE *f = fopen(TROPHIES_FILE, "w");
 		fclose(f);
 		warning("This game features unlockable trophies but NoTrpDrm is not installed. If you want to be able to unlock trophies, please install it.");
 	}

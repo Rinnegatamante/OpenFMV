@@ -374,7 +374,7 @@ enum {
 	ATMO_REVELLERS_5,
 	ATMO_TRAIN_4,
 	INTENTNESS_MOOD,
-	// EPISODE 9A
+	// EPISODE 9A/9B
 	TORMENT_SEBASTIAN,
 	ATMO_HEARTBEAT_SEB_FAST,
 	TORMENT_ESCALATION,
@@ -385,6 +385,10 @@ enum {
 	DE_ESCALATION_NO_BOOM,
 	ATMO_HEARTBEAT_MAY_ASCENDING,
 	TORMENT_ACCENT,
+	TORMENT_ACCENT_P2,
+	TORMENT_ESCALATION_SHORT,
+	DESPERATION,
+	DESPERATION_RISER,
 	LONLINESS,
 	AWARENESS_DOWNLIFTER_9,
 	WAKE_UP_CALL,
@@ -393,7 +397,6 @@ enum {
 	LONLINESS_RISER,
 	ATMO_RECEPTION,
 	ATMO_HEARTBEAT_SEB_SLOW,
-	// EPISODE 9B
 	// EPISODE 10
 	// EPISODE 11
 };
@@ -477,7 +480,7 @@ void purge_from_ep7() {
 		}
 	}
 }
-void purge_from_ep9a() {
+void purge_from_ep9() {
 	if (!fake_pass) {
 		for (int i = TORMENT_SEBASTIAN; i <= ATMO_HEARTBEAT_SEB_SLOW; i++) {
 			audio_sample_stop_and_free(mus[i]);
@@ -1304,6 +1307,7 @@ sequence *start_after_fight_trans() { mus[AFTER_FIGHT_TRANS] = audio_sample_star
 sequence *maybe_start_intentness_mood() { if (game_vars.passed_by_seg765 || game_vars.passed_by_seg739) { mus[INTENTNESS_MOOD] = audio_sample_start("EP10 Intentness", 0, 0.1121213f); } return NULL; }
 sequence *fade_intentness_mood() { audio_sample_fade(mus[INTENTNESS_MOOD], 0.1121213f, 0.2506319f, 3458, 10458); return NULL; }
 sequence *stop_torment_seb() { audio_sample_stop_and_free(mus[TORMENT_SEBASTIAN]); return NULL; }
+sequence *stop_desperation_riser() { audio_sample_stop_and_free(mus[DESPERATION_RISER]); return NULL; }
 sequence *stop_atmo_hb_may_ascending() { audio_sample_stop_and_free(mus[ATMO_HEARTBEAT_MAY_ASCENDING]); return NULL; }
 sequence *stop_atmo_hb_seb_slow() { audio_sample_stop_and_free(mus[ATMO_HEARTBEAT_SEB_SLOW]); return NULL; }
 sequence *stop_atmo_hb_seb_fast() { audio_sample_stop_and_free(mus[ATMO_HEARTBEAT_SEB_FAST]); return NULL; }
@@ -1345,6 +1349,23 @@ sequence *fade_torment_seb3() { audio_sample_fade(mus[TORMENT_SEBASTIAN], 0.1576
 sequence *fade_atmo_phone_vibra() { audio_sample_fade(mus[ATMO_PHONE_VIBRA], 0.0f, 0.1959517f, 16167, 24167); return NULL; }
 sequence *change_hb_seb_slow() { audio_sample_set_volume(mus[ATMO_HEARTBEAT_SEB_SLOW], 0.4981439f); return NULL; }
 sequence *start_after_fight_trans2() { mus[AFTER_FIGHT_TRANS] = audio_sample_start("EP07 After Fight Transition", 0, 0.2499574f); return NULL; }
+sequence *fade_police_everywhere_p2_2() { audio_sample_fade(mus[POLICE_EVERYWHERE_2], 0.05980561f, 0.0f, 4208, 15083); return NULL; }
+sequence *start_hospital_reception_2() { mus[HOSPITAL_RECEPTION] = audio_sample_start("EP09 Hospital Reception", 0, 0.2501003f); return NULL; }
+sequence *start_atmo_hb_seb_slow2() { mus[ATMO_HEARTBEAT_SEB_SLOW] = audio_sample_start("EP09 Atmo Heartbeat Seb Slow", 1, 1.0f); return NULL; }
+sequence *fade_hospital_reception7() { audio_sample_fade(mus[HOSPITAL_RECEPTION], 0.2525519f, 0.0f, 0, 6000); return NULL; }
+sequence *start_torment_accent_p2() { mus[TORMENT_ACCENT_P2] = audio_sample_start("EP09 Torment Accent II", 0, 0.1584375f); return NULL; }
+sequence *start_torment_escalation_short() { mus[TORMENT_ESCALATION_SHORT] = audio_sample_start("EP09 Torment Escalation short", 0, 0.1577474f); return NULL; }
+sequence *fade_torment_seb4() { audio_sample_fade(mus[TORMENT_SEBASTIAN], 0.1576302f, 0.0f, 0, 6000); return NULL; }
+sequence *start_desperation() { mus[DESPERATION] = audio_sample_start("EP09 Desperation", 0, 0.1260066f); return NULL; }
+sequence *start_desperation_riser() { mus[DESPERATION_RISER] = audio_sample_start("EP09 Desperation Riser", 0, 0.0f); return NULL; }
+sequence *fade_desperation() { audio_sample_fade(mus[DESPERATION], 0.1260066f, 0.2486506f, 28458, 33583); return NULL; }
+sequence *maybe_fade_desperation() { if (game_vars.cross_exam) { audio_sample_fade(mus[DESPERATION], 0.2486506f, 0.0f, 33583, 41667); } return NULL; }
+sequence *maybe_stop_desperation() { if (game_vars.cross_exam) { audio_sample_stop_and_free(mus[DESPERATION]); } return NULL; }
+sequence *fade_desperation2() { audio_sample_fade(mus[DESPERATION], 0.1260066f, 0.2486506f, 25792, 30917); return NULL; }
+sequence *fade_desperation_riser() { audio_sample_fade(mus[DESPERATION_RISER], 0.0f, 0.07745742f, 3083, 6083); return NULL; }
+sequence *fade_desperation_riser2() { audio_sample_fade(mus[DESPERATION_RISER], 0.07745742f, 0.0f, 10625, 27625); return NULL; }
+sequence *maybe_fade_desperation2() { if (game_vars.cross_exam) { audio_sample_fade(mus[DESPERATION], 0.2486506f, 0.0f, 30917, 39000); } return NULL; }
+sequence *maybe_start_intentness_mood2() { if (game_vars.cross_exam) {  mus[INTENTNESS_MOOD] = audio_sample_start("EP07 Intentness Mood", 0, 0.1987343f); } return NULL; }
 sequence *unlock_cause_and_effect() { trophies_unlock(CAUSE_AND_EFFECT); return NULL; }
 sequence *unlock_fair_share() { trophies_unlock(FAIR_SHARE); return NULL; }
 sequence *unlock_shill_bidder() { trophies_unlock(SHILL_BIDDER); return NULL; }
@@ -2530,54 +2551,123 @@ void fill_events() {
 	install_timed_event(&sequences[363], 70167, 0, EVENT_ONESHOT, start_after_fight_trans2);
 	// EPISODE 9B
 	// seg951_1_951_2
-	// seg952_b
-	// seg952_a
-	// seg953_a
-	// seg953_b
-	// seg954_a
-	// seg954_b
+	install_timed_event(&sequences[364], 4208, 0, EVENT_ONESHOT, start_atmo_reception);
+	install_timed_event(&sequences[364], 4208, 15083, EVENT_DURATION, fade_police_everywhere_p2_2);
+	install_timed_event(&sequences[364], 15083, 0, EVENT_ONESHOT, stop_police_everywhere_p2);
+	// seg952_b (empty)
+	// seg952_a (empty)
+	// seg953_a (empty)
+	// seg953_b (empty)
+	// seg954_a (empty)
+	// seg954_b (empty)
 	// seg955
+	install_timed_event(&sequences[371], 8625, 0, EVENT_ONESHOT, start_hospital_reception_2);
 	// seg956_a_947_2
-	// seg956_b
-	// seg957_1
+	install_timed_event(&sequences[372], 39000, 0, EVENT_ONESHOT, unlock_good_karma);
+	// seg956_b (empty)
+	// seg957_1 (empty)
 	// seg946_2_947_2
-	// seg948_2
-	// seg958_a_959
-	// seg958_c
-	// seg958_b
-	// seg957_2
-	// seg960
-	// seg961
-	// seg962
+	install_timed_event(&sequences[375], 22000, 0, EVENT_ONESHOT, unlock_good_karma);
+	// seg948_2 (empty)
+	// seg958_a_959 (empty)
+	// seg958_c (empty)
+	// seg958_b (empty)
+	// seg957_2 (empty)
+	// seg960 (empty)
+	// seg961 (empty)
+	// seg962 (empty)
 	// seg963
+	install_timed_event(&sequences[384], 0, 0, EVENT_ONESHOT, stop_atmo_reception);
 	// seg964
+	install_timed_event(&sequences[385], 42, 0, EVENT_ONESHOT, stop_atmo_reception);
 	// seg965
+	install_timed_event(&sequences[386], 0, 0, EVENT_ONESHOT, start_torment_seb);
+	install_timed_event(&sequences[386], 0, 0, EVENT_ONESHOT, start_atmo_hb_seb_slow2);
+	install_timed_event(&sequences[386], 0, 0, EVENT_ONESHOT, start_atmo_hospital);
+	install_timed_event(&sequences[386], 0, 6000, EVENT_DURATION, fade_hospital_reception7);
+	install_timed_event(&sequences[386], 6000, 0, EVENT_ONESHOT, stop_hospital_reception);
 	// seg966_b
+	install_timed_event(&sequences[387], 3042, 0, EVENT_ONESHOT, stop_atmo_hb_seb_slow);
+	install_timed_event(&sequences[387], 3250, 0, EVENT_ONESHOT, start_atmo_hb_seb_fast);
 	// seg966_a
+	install_timed_event(&sequences[388], 3000, 0, EVENT_ONESHOT, stop_atmo_hb_seb_slow);
+	install_timed_event(&sequences[388], 3208, 0, EVENT_ONESHOT, start_atmo_hb_seb_fast);
 	// seg967
+	install_timed_event(&sequences[389], 29958, 0, EVENT_ONESHOT, start_torment_accent);
 	// seg968
-	// seg969_a
-	// seg969_b
-	// seg970
+	install_timed_event(&sequences[390], 11917, 0, EVENT_ONESHOT, start_torment_accent_p2);
+	// seg969_a (empty)
+	// seg969_b (empty)
+	// seg970 (empty)
 	// seg970_2
+	install_timed_event(&sequences[394], 0, 0, EVENT_ONESHOT, start_torment_de_escalation);
+	install_timed_event(&sequences[394], 0, 6000, EVENT_DURATION, fade_torment_seb4);
+	install_timed_event(&sequences[394], 6000, 0, EVENT_ONESHOT, stop_torment_seb);
 	// seg970_1
-	// seg971_b
-	// seg971_a
-	// seg974_1
-	// seg974
+	install_timed_event(&sequences[395], 0, 0, EVENT_ONESHOT, start_torment_de_escalation);
+	install_timed_event(&sequences[395], 0, 6000, EVENT_DURATION, fade_torment_seb4);
+	install_timed_event(&sequences[395], 6000, 0, EVENT_ONESHOT, stop_torment_seb);
+	install_timed_event(&sequences[395], 6458, 0, EVENT_ONESHOT, stop_atmo_hb_seb_fast);
+	install_timed_event(&sequences[395], 7958, 0, EVENT_ONESHOT, start_atmo_hb_seb_fast);
+	// seg971_b (empty)
+	// seg971_a (empty)
+	// seg974_1 (empty)
+	// seg974 (empty)
 	// seg975
+	install_timed_event(&sequences[400], 1208, 0, EVENT_ONESHOT, stop_atmo_hb_seb_fast);
+	install_timed_event(&sequences[400], 2708, 0, EVENT_ONESHOT, start_atmo_hb_seb_fast);
 	install_timed_event(&sequences[400], 18375, 0, EVENT_ONESHOT, dont_know_trojan_jump);
 	// seg976
+	install_timed_event(&sequences[401], 11167, 0, EVENT_ONESHOT, start_torment_stop_or_strangle);
 	// seg973_b
+	install_timed_event(&sequences[402], 0, 0, EVENT_ONESHOT, start_torment_escalation);
+	install_timed_event(&sequences[402], 0, 5000, EVENT_DURATION, fade_torment_seb2);
+	install_timed_event(&sequences[402], 5000, 0, EVENT_ONESHOT, stop_torment_seb);
 	// seg973_a
+	install_timed_event(&sequences[403], 0, 0, EVENT_ONESHOT, start_torment_escalation_short);
+	install_timed_event(&sequences[403], 0, 5000, EVENT_DURATION, fade_torment_seb2);
+	install_timed_event(&sequences[403], 5000, 0, EVENT_ONESHOT, stop_torment_seb);
 	// seg972
+	install_timed_event(&sequences[404], 0, 0, EVENT_ONESHOT, start_de_escalation_no_boom);
+	install_timed_event(&sequences[404], 0, 0, EVENT_ONESHOT, unlock_interrogation);
+	install_timed_event(&sequences[404], 0, 6000, EVENT_DURATION, fade_torment_seb4);
+	install_timed_event(&sequences[404], 6000, 0, EVENT_ONESHOT, stop_torment_seb);
 	// seg977_978
+	install_timed_event(&sequences[405], 9917, 0, EVENT_ONESHOT, stop_atmo_hb_seb_fast);
+	install_timed_event(&sequences[405], 12292, 0, EVENT_ONESHOT, start_atmo_hb_seb_fast);
 	// seg990_991_992
+	install_timed_event(&sequences[406], 17042, 0, EVENT_ONESHOT, start_desperation);
+	install_timed_event(&sequences[406], 28458, 33583, EVENT_DURATION, fade_desperation);
+	install_timed_event(&sequences[406], 33583, 41667, EVENT_DURATION, maybe_fade_desperation);
+	install_timed_event(&sequences[406], 41667, 0, EVENT_ONESHOT, maybe_stop_desperation);
+	install_timed_event(&sequences[406], 44875, 0, EVENT_ONESHOT, stop_atmo_hospital);
+	install_timed_event(&sequences[406], 44875, 0, EVENT_ONESHOT, stop_atmo_hb_seb_fast);
 	// seg990_992
+	install_timed_event(&sequences[407], 14375, 0, EVENT_ONESHOT, start_desperation);
+	install_timed_event(&sequences[407], 25792, 30917, EVENT_DURATION, fade_desperation2);
+	install_timed_event(&sequences[407], 30917, 39000, EVENT_DURATION, maybe_fade_desperation2);
+	install_timed_event(&sequences[407], 39000, 0, EVENT_ONESHOT, maybe_stop_desperation);
+	install_timed_event(&sequences[407], 39000, 0, EVENT_ONESHOT, maybe_start_intentness_mood2);
+	install_timed_event(&sequences[407], 42332, 0, EVENT_ONESHOT, stop_atmo_hospital);
+	install_timed_event(&sequences[407], 42332, 0, EVENT_ONESHOT, stop_atmo_hb_seb_fast);
 	// seg994
+	install_timed_event(&sequences[408], 1500, 0, EVENT_ONESHOT, start_desperation_riser);
+	install_timed_event(&sequences[408], 3083, 6083, EVENT_DURATION, fade_desperation_riser);
+	install_timed_event(&sequences[408], 10625, 27625, EVENT_DURATION, fade_desperation_riser2);
+	install_timed_event(&sequences[408], 27625, 0, EVENT_ONESHOT, stop_desperation_riser);
+	install_timed_event(&sequences[408], 27625, 0, EVENT_ONESHOT, start_after_fight_trans2);
 	// seg988_984_2
-	// seg974_2
+	install_timed_event(&sequences[409], 14208, 0, EVENT_ONESHOT, start_desperation);
+	install_timed_event(&sequences[409], 25792, 30917, EVENT_DURATION, fade_desperation2);
+	install_timed_event(&sequences[409], 30917, 39000, EVENT_DURATION, maybe_fade_desperation2);
+	install_timed_event(&sequences[409], 39000, 0, EVENT_ONESHOT, maybe_stop_desperation);
+	install_timed_event(&sequences[409], 39000, 0, EVENT_ONESHOT, maybe_start_intentness_mood2);
+	install_timed_event(&sequences[409], 41250, 0, EVENT_ONESHOT, stop_atmo_hospital);
+	install_timed_event(&sequences[409], 41250, 0, EVENT_ONESHOT, stop_atmo_hb_seb_fast);
+	// seg974_2 (empty)
 	// seg977_979
+	install_timed_event(&sequences[411], 9542, 0, EVENT_ONESHOT, stop_atmo_hb_seb_fast);
+	install_timed_event(&sequences[411], 12125, 0, EVENT_ONESHOT, start_atmo_hb_seb_fast);
 	// EPISODE 10
 	// EPISODE 11
 }
