@@ -1,5 +1,6 @@
 #include <vitasdk.h>
 #include <vitaGL.h>
+#include <stdio.h>
 
 static char comm_id[12] = {0};
 static char signature[160] = {0xb9,0xdd,0xe1,0x3b,0x01,0x00};
@@ -42,8 +43,12 @@ int trophies_init() {
 	sceSysmoduleLoadModule(SCE_SYSMODULE_NP_TROPHY);
 	sceNpTrophyInit(NULL);
 	int res = sceNpTrophyCreateContext(&trp_ctx, comm_id, signature, 0);
-	if (res < 0)
+	if (res < 0) {
+#ifdef DEBUG
+		printf("sceNpTrophyCreateContext returned 0x%08X\n", res);
+#endif	
 		return res;
+	}
 	SceNpTrophySetupDialogParam setupParam;
 	sceClibMemset(&setupParam, 0, sizeof(SceNpTrophySetupDialogParam));
 	_sceCommonDialogSetMagicNumber(&setupParam.commonParam);

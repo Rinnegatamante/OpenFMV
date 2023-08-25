@@ -9,7 +9,7 @@
 #define CONFIG_FILE "ux0:data/Late Shift/config.sav"
 #define VIDEOS_FILE "ux0:data/Late Shift/Videos.psarc"
 #define AUDIO_FOLDER "ux0:data/Late Shift/oggs"
-
+#define TROPHIES_FILE "ux0:data/Late Shift/trophies.chk"
 #define SUBTITLE_NEWLINE "\n\n"
 
 #define GAME_VER "0.9.0"

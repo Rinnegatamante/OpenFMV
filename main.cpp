@@ -111,11 +111,11 @@ int main(int argc, char *argv[]) {
 
 #ifdef HAVE_TROPHIES
 	// Initing trophy system
+	SceIoStat st;
 	int r = trophies_init();
-	if (r < 0) {
-#ifdef DEBUG
-		printf("sceNpTrophyCreateContext returned 0x%08X\n", r);
-#endif
+	if (r < 0 && sceIoGetstat(TROPHIES_FILE, &st) < 0) {
+		FILE *f = fopen(TROPHIES_FILE,"w");
+		fclose(f);
 		warning("This game features unlockable trophies but NoTrpDrm is not installed. If you want to be able to unlock trophies, please install it.");
 	}
 #endif
