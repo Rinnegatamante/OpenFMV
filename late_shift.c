@@ -22,8 +22,8 @@ enum {
 	PLATINUM_TROPHY, // Implemented
 	THE_COWARD, // Implemented
 	THE_LIONS_DEN, // Implemented
-	THE_PLOY,
-	THE_FOOL,
+	THE_PLOY, // Implemented
+	THE_FOOL, // Implemented
 	THE_DELIVERY,
 	THE_BRIBE,
 	THE_FRENZY,
@@ -425,7 +425,54 @@ enum {
 	ATMO_RECEPTION,
 	ATMO_HEARTBEAT_SEB_SLOW,
 	// EPISODE 10
+	REQUIEM_BROKEN,
+	ATMO_PARR_HOUSE,
+	ATMO_PARR_END,
+	BOWLTEST_FAIL,
+	REQUIEM_MAY,
+	INTENTNESS_END_SHORT,
+	PASSWORD,
+	GETOUT,
+	ATMO_HAINSWORTH_OFFICES,
+	BOWLTEST,
+	ATMO_VAN_STOP,
+	LIFT_BOSSA_DEL_BREEZY_ENDLESS,
+	REQUIEM_WIN,
+	PAYBACK_STAIRWELL,
+	BOWLTEST_RISER_SHORT,
+	VO_BETHNAL_GREEN,
+	ATMO_HAINSWORTH_PARKING_LOT,
+	VO_WESTMINSTER_PLEASE,
+	AWARENESS_MOOD,
+	ATMO_VAN,
+	HAINSWORTH_RETURN_LONG,
+	DONE_STINGER,
+	PASSWORD_ACCENT,
+	HAINSWORTH_RETURN,
+	REQUIEM_ARRIVAL,
+	EXIT,
+	INTENTNESS,
+	PAYBACK_FRONT,
+	ESCAPE,
+	ATMO_HAINSWORTH_CORRIDOR,
+	VAN,
+	TENSENESS_10,
+	ATMO_STREET,
 	// EPISODE 11
+	SHOWDOWN_RISER_MORE,
+	INTENTNESS_11,
+	REQUIEM_WHERE,
+	SHOWDOWN,
+	SHOWDOWN_VIOLENCE,
+	REQUIEM_SORRY,
+	INTENTESS_ALTERNATE,
+	REQUIEM_PARR,
+	REQUIREM_ARRIVAL,
+	WANTED,
+	SHOWDOWN_SAFE_ACCENT,
+	REQUIREM_AFTER,
+	ATMO_PARR,
+	REQUIREM_MATT
 };
 audio_sample *mus[NUM_AUDIO_SOURCES];
 
@@ -510,7 +557,18 @@ void purge_from_ep7() {
 void purge_from_ep9() {
 	if (!fake_pass) {
 		for (int i = TORMENT_SEBASTIAN; i <= ATMO_HEARTBEAT_SEB_SLOW; i++) {
-			audio_sample_stop_and_free(mus[i]);
+			if (i != AWARENESS_DOWNLIFTER_9 && i != DESPERATION && i != WAKE_UP_CALL && i != DESPERATION_RISER) {
+				audio_sample_stop_and_free(mus[i]);
+			}
+		}
+	}
+}
+void purge_from_ep10() {
+	if (!fake_pass) {
+		for (int i = REQUIEM_BROKEN; i <= ATMO_STREET; i++) {
+			if (i != REQUIEM_MAY) {
+				audio_sample_stop_and_free(mus[i]);
+			}
 		}
 	}
 }
@@ -908,7 +966,7 @@ sequence *seg988_984_2() { game_vars.payback_time = 1; return &sequences[409]; }
 sequence *seg974_2() { return &sequences[410]; }
 sequence *seg977_979() { game_vars.aware_of_chest = 1; return &sequences[411]; }
 // EPISODE 10
-sequence *seg1000() { trigger_save = 1; return &sequences[412]; }
+sequence *seg1000() { trigger_save = 1; purge_from_ep9(); return &sequences[412]; }
 sequence *seg1001_1003() { return &sequences[413]; }
 sequence *seg1004_k() { return &sequences[414]; }
 sequence *seg1006() { return &sequences[415]; }
@@ -1451,6 +1509,72 @@ sequence *fade_desperation_riser() { audio_sample_fade(mus[DESPERATION_RISER], 0
 sequence *fade_desperation_riser2() { audio_sample_fade(mus[DESPERATION_RISER], 0.07745742f, 0.0f, 10625, 27625); return NULL; }
 sequence *maybe_fade_desperation2() { if (game_vars.cross_exam) { audio_sample_fade(mus[DESPERATION], 0.2486506f, 0.0f, 30917, 39000); } return NULL; }
 sequence *maybe_start_intentness_mood2() { if (game_vars.cross_exam) {  mus[INTENTNESS_MOOD] = audio_sample_start("EP07 Intentness Mood", 0, 0.1987343f); } return NULL; }
+sequence *start_lift_bossa_del_breezy() { mus[LIFT_BOSSA_DEL_BREEZY_ENDLESS] = audio_sample_start("EP10 Lift BossaDelBreezy Endless", 1, 0.0f); return NULL; }
+sequence *start_intentness() { mus[INTENTNESS] = audio_sample_start("EP10 Intentness", 0, 0.2124908f); return NULL; }
+sequence *start_password() { mus[PASSWORD] = audio_sample_start("EP10 Password", 0, 0.1585867f); return NULL; }
+sequence *start_escape() { mus[ESCAPE] = audio_sample_start("EP10 Escape", 0, 0.2510501f); return NULL; }
+sequence *start_exit() { mus[EXIT] = audio_sample_start("EP10 Exit", 0, 0.2511656f); return NULL; }
+sequence *start_requiem_arrival() { mus[REQUIEM_ARRIVAL] = audio_sample_start("EP10 Requiem Arrival", 0, 0.09947789f); return NULL; }
+sequence *start_tenseness10() { mus[TENSENESS_10] = audio_sample_start("EP10 Tenseness", 0, 0.3078487f); return NULL; }
+sequence *start_tenseness10_2() { mus[TENSENESS_10] = audio_sample_start("EP10 Tenseness", 0, 0.2509031f); return NULL; }
+sequence *start_atmo_street() { mus[ATMO_STREET] = audio_sample_start("EP10 Atmo Ext Street", 0, 1.0f); return NULL; }
+sequence *start_atmo_hainsworth_parking() { mus[ATMO_HAINSWORTH_PARKING_LOT] = audio_sample_start("EP10 Atmo Ext Hainsworth Parking Lot", 1, 1.0f); return NULL; }
+sequence *start_hainsworth_return() { mus[HAINSWORTH_RETURN] = audio_sample_start("EP10 Hainsworth Return", 0, 0.09993204f); return NULL; }
+sequence *start_hainsworth_return_long() { mus[HAINSWORTH_RETURN_LONG] = audio_sample_start("EP10 Hainsworth Return Long", 0, 0.1399311f); return NULL; }
+sequence *start_password_accent() { mus[PASSWORD_ACCENT] = audio_sample_start("EP10 Password Accent", 0, 0.1588699f); return NULL; }
+sequence *start_payback_front() { mus[PAYBACK_FRONT] = audio_sample_start("EP10 Payback Front", 0, 0.2873729f); return NULL; }
+sequence *start_atmo_van() { mus[ATMO_VAN] = audio_sample_start("EP10 Atmo Int Van", 1, 1.0f); return NULL; }
+sequence *start_atmo_van_stop() { mus[ATMO_VAN_STOP] = audio_sample_start("EP10 Atmo Int Van Stop", 0, 1.0f); return NULL; }
+sequence *start_payback_stairwell() { mus[PAYBACK_STAIRWELL] = audio_sample_start("EP10 Payback Stairwell", 0, 0.2504725f); return NULL; }
+sequence *start_atmo_hainsworth_corridor() { mus[ATMO_HAINSWORTH_CORRIDOR] = audio_sample_start("EP10 Atmo Int Hainsworth Corridor", 0, 1.0f); return NULL; }
+sequence *fade_desperation_riser3() { audio_sample_fade(mus[DESPERATION_RISER], 0.07745742f, 0.0f, 1958, 4000); return NULL; }
+sequence *fade_intentness_mood2() { audio_sample_fade(mus[INTENTNESS_MOOD], 0.1987343f, 0.0f, 4000, 7958); return NULL; }
+sequence *fade_intentness() { audio_sample_fade(mus[INTENTNESS], 0.2124908f, 0.0f, 0, 10000); return NULL; }
+sequence *fade_hainsworth_return() { audio_sample_fade(mus[HAINSWORTH_RETURN], 0.09993204f, 0.05201785f, 0, 4625); return NULL; }
+sequence *fade_password_accent() { audio_sample_fade(mus[PASSWORD_ACCENT], 0.1588699f, 0.0f, 1125, 3125); return NULL; }
+sequence *stop_desperation() { audio_sample_stop_and_free(mus[DESPERATION]); return NULL; }
+sequence *stop_password() { audio_sample_stop_and_free(mus[PASSWORD]); return NULL; }
+sequence *stop_hainsworth_return() { audio_sample_stop_and_free(mus[HAINSWORTH_RETURN]); return NULL; }
+sequence *stop_password_accent() { audio_sample_stop_and_free(mus[PASSWORD_ACCENT]); return NULL; }
+sequence *stop_atmo_hainsworth_offices() { audio_sample_stop_and_free(mus[ATMO_HAINSWORTH_OFFICES]); return NULL; }
+sequence *stop_atmo_hainsworth_corridor() { audio_sample_stop_and_free(mus[ATMO_HAINSWORTH_CORRIDOR]); return NULL; }
+sequence *stop_atmo_hainsworth_parking() { audio_sample_stop_and_free(mus[ATMO_HAINSWORTH_PARKING_LOT]); return NULL; }
+sequence *stop_wake_up_call() { audio_sample_stop_and_free(mus[WAKE_UP_CALL]); return NULL; }
+sequence *stop_lift_bossa_del_breezy() { audio_sample_stop_and_free(mus[LIFT_BOSSA_DEL_BREEZY_ENDLESS]); return NULL; }
+sequence *stop_intentness_mood() { audio_sample_stop_and_free(mus[INTENTNESS_MOOD]); return NULL; }
+sequence *stop_intentness() { audio_sample_stop_and_free(mus[INTENTNESS]); return NULL; }
+sequence *stop_atmo_van() { audio_sample_stop_and_free(mus[ATMO_VAN]); return NULL; }
+sequence *stop_requiem_arrival() { audio_sample_stop_and_free(mus[REQUIEM_ARRIVAL]); return NULL; }
+sequence *change_lift_bossa_del_breezy() { audio_sample_set_volume(mus[LIFT_BOSSA_DEL_BREEZY_ENDLESS], 0.0297619f); return NULL; }
+sequence *change_lift_bossa_del_breezy2() { audio_sample_set_volume(mus[LIFT_BOSSA_DEL_BREEZY_ENDLESS], 0.07271375f); return NULL; }
+sequence *change_lift_bossa_del_breezy3() { audio_sample_set_volume(mus[LIFT_BOSSA_DEL_BREEZY_ENDLESS], 0.03944742f); return NULL; }
+sequence *change_lift_bossa_del_breezy4() { audio_sample_set_volume(mus[LIFT_BOSSA_DEL_BREEZY_ENDLESS], 0.04029473f); return NULL; }
+sequence *change_lift_bossa_del_breezy5() { audio_sample_set_volume(mus[LIFT_BOSSA_DEL_BREEZY_ENDLESS], 0.07976449f); return NULL; }
+sequence *change_lift_bossa_del_breezy6() { audio_sample_set_volume(mus[LIFT_BOSSA_DEL_BREEZY_ENDLESS], 0.00295858f); return NULL; }
+sequence *change_lift_bossa_del_breezy7() { audio_sample_set_volume(mus[LIFT_BOSSA_DEL_BREEZY_ENDLESS], 0.0f); return NULL; }
+sequence *change_requiem_win() { audio_sample_set_volume(mus[REQUIEM_WIN], 0.1353797f); return NULL; }
+sequence *change_atmo_van() { audio_sample_set_volume(mus[ATMO_VAN], 0.2813083f); return NULL; }
+sequence *change_atmo_van_stop() { audio_sample_set_volume(mus[ATMO_VAN_STOP], 0.4930437f); return NULL; }
+sequence *fade_requiem_arrival() { audio_sample_fade(mus[REQUIEM_ARRIVAL], 0.09947789f, 0.0f, 97250, 107250); return NULL; }
+sequence *start_requiem_may() { mus[REQUIEM_MAY] = audio_sample_start("EP11 Requiem May", 0, 0.09962032f); return NULL; }
+sequence *start_atmo_parr_house() { mus[ATMO_PARR_HOUSE] = audio_sample_start("EP10 Atmo Ext + Int Parr House", 1, 1.0f); return NULL; }
+sequence *fade_tenseness10() { audio_sample_fade(mus[TENSENESS_10], 0.3078487f, 0.0f, 31667, 41667); return NULL; }
+sequence *fade_bowltest() { audio_sample_fade(mus[BOWLTEST], 0.08948381f, 0.0f, 45125, 54125); return NULL; }
+sequence *stop_tenseness10() { audio_sample_stop_and_free(mus[TENSENESS_10]); return NULL; }
+sequence *stop_atmo_parr_house() { audio_sample_stop_and_free(mus[ATMO_PARR_HOUSE]); return NULL; }
+sequence *stop_bowltest() { audio_sample_stop_and_free(mus[BOWLTEST]); return NULL; }
+sequence *stop_atmo_parr_end() { audio_sample_stop_and_free(mus[ATMO_PARR_END]); return NULL; }
+sequence *stop_atmo_street() { audio_sample_stop_and_free(mus[ATMO_STREET]); return NULL; }
+sequence *start_requiem_win() { mus[REQUIEM_WIN] = audio_sample_start("EP10 Requiem Win", 0, 0.09886219f); return NULL; }
+sequence *start_atmo_parr_end() { mus[ATMO_PARR_END] = audio_sample_start("EP10 Atmo Ext Parr End", 0, 1.0f); return NULL; }
+sequence *start_done_stinger() { mus[DONE_STINGER] = audio_sample_start("EP10 Done Stinger", 0, 0.1416847f); return NULL; }
+sequence *start_requiem_broken() { mus[REQUIEM_BROKEN] = audio_sample_start("EP10 Requiem Broken", 0, 0.1273758f); return NULL; }
+sequence *start_bowltest() { mus[BOWLTEST] = audio_sample_start("EP10 Bowltest", 0, 0.08948381f); return NULL; }
+sequence *start_bowltest_fail() { mus[BOWLTEST_FAIL] = audio_sample_start("EP10 Bowltest Fail", 0, 0.08883473f); return NULL; }
+sequence *start_bowltest_riser_short() { mus[BOWLTEST_RISER_SHORT] = audio_sample_start("EP10 Bowltest Riser Short", 0, 0.1173763f); return NULL; }
+sequence *start_awareness_downlifter_9_2() { mus[AWARENESS_DOWNLIFTER_9] = audio_sample_start("EP09 Awareness Downlifter", 0, 0.09940945f); return NULL; }
+sequence *start_vo_westminster_or_bethnal() { if (game_vars.go_home) { mus[VO_WESTMINSTER_PLEASE] = audio_voice_sample_start("EP10 VO Westminster Please", 0, 0.4052885f); } else { mus[VO_BETHNAL_GREEN] = audio_voice_sample_start("EP10 VO Bethnal Green", 0, 0.3967226f); } return NULL; }
+sequence *maybe_start_intentess_end() { if (game_vars.go_home) { mus[INTENTNESS_END_SHORT] = audio_sample_start("EP10 Intentness Ende Ep10 short", 0, 0.124175f); } return NULL; }
 sequence *unlock_cause_and_effect() { trophies_unlock(CAUSE_AND_EFFECT); return NULL; }
 sequence *unlock_fair_share() { trophies_unlock(FAIR_SHARE); return NULL; }
 sequence *unlock_shill_bidder() { trophies_unlock(SHILL_BIDDER); return NULL; }
@@ -1462,6 +1586,8 @@ sequence *unlock_choices_matter() { trophies_unlock(CHOICES_MATTER); return NULL
 sequence *unlock_even_tempered() { trophies_unlock(EVEN_TEMPERED); return NULL; }
 sequence *unlock_interrogation() { trophies_unlock(INTERROGATION); return NULL; }
 sequence *unlock_good_karma() { trophies_unlock(GOOD_KARMA); return NULL; }
+sequence *unlock_the_fool() { trophies_unlock(THE_FOOL); return NULL; }
+sequence *unlock_the_ploy() { trophies_unlock(THE_PLOY); return NULL; }
 
 void fill_events() {
 	// OPENING
@@ -2754,6 +2880,164 @@ void fill_events() {
 	install_timed_event(&sequences[411], 9542, 0, EVENT_ONESHOT, stop_atmo_hb_seb_fast);
 	install_timed_event(&sequences[411], 12125, 0, EVENT_ONESHOT, start_atmo_hb_seb_fast);
 	// EPISODE 10
+	// seg1000
+	install_timed_event(&sequences[412], 0, 0, EVENT_ONESHOT, stop_desperation);
+	install_timed_event(&sequences[412], 0, 0, EVENT_ONESHOT, start_lift_bossa_del_breezy);
+	install_timed_event(&sequences[412], 1000, 0, EVENT_ONESHOT, stop_wake_up_call);
+	install_timed_event(&sequences[412], 1958, 0, EVENT_ONESHOT, start_intentness);
+	install_timed_event(&sequences[412], 1958, 4000, EVENT_DURATION, fade_desperation_riser3);
+	install_timed_event(&sequences[412], 4000, 0, EVENT_ONESHOT, stop_desperation_riser);
+	install_timed_event(&sequences[412], 4000, 7958, EVENT_ONESHOT, fade_intentness_mood2);
+	install_timed_event(&sequences[412], 7958, 0, EVENT_ONESHOT, stop_intentness_mood);
+	// seg1001_1003
+	install_timed_event(&sequences[413], 6375, 0, EVENT_ONESHOT, stop_desperation);
+	// seg1004_k (empty)
+	// seg1006
+	install_timed_event(&sequences[415], 0, 10000, EVENT_ONESHOT, fade_intentness);
+	install_timed_event(&sequences[415], 10000, 0, EVENT_ONESHOT, stop_intentness);
+	install_timed_event(&sequences[415], 27625, 0, EVENT_ONESHOT, change_lift_bossa_del_breezy);
+	// seg1007
+	install_timed_event(&sequences[416], 0, 10000, EVENT_ONESHOT, fade_intentness);
+	install_timed_event(&sequences[416], 10000, 0, EVENT_ONESHOT, stop_intentness);
+	// seg1020_1
+	install_timed_event(&sequences[417], 0, 10000, EVENT_ONESHOT, fade_intentness);
+	install_timed_event(&sequences[417], 10000, 0, EVENT_ONESHOT, stop_intentness);
+	// seg1021_1
+	install_timed_event(&sequences[418], 0, 0, EVENT_ONESHOT, change_lift_bossa_del_breezy2);
+	// seg1021_2
+	install_timed_event(&sequences[419], 0, 0, EVENT_ONESHOT, change_lift_bossa_del_breezy2);
+	// seg1021_3 (empty)
+	// seg1022_1023_b (empty)
+	// seg1026_b_1025_1027_tap
+	install_timed_event(&sequences[422], 4250, 0, EVENT_ONESHOT, change_lift_bossa_del_breezy3);
+	// seg1028_1033_1036_k
+	install_timed_event(&sequences[423], 6500, 0, EVENT_ONESHOT, change_lift_bossa_del_breezy4);
+	// seg1024_1027_tap
+	install_timed_event(&sequences[424], 6500, 0, EVENT_ONESHOT, change_lift_bossa_del_breezy4);
+	// seg1008_a (empty)
+	// seg1008_b
+	install_timed_event(&sequences[426], 10125, 0, EVENT_ONESHOT, change_lift_bossa_del_breezy);
+	// seg1013_b (empty)
+	// seg1014_a
+	install_timed_event(&sequences[428], 16667, 0, EVENT_ONESHOT, change_lift_bossa_del_breezy);
+	// seg1014_b_1015
+	install_timed_event(&sequences[429], 4542, 0, EVENT_ONESHOT, start_payback_front);
+	// seg1013_a_1016_b
+	install_timed_event(&sequences[430], 40292, 0, EVENT_ONESHOT, change_lift_bossa_del_breezy);
+	// seg1037
+	install_timed_event(&sequences[431], 1125, 0, EVENT_ONESHOT, start_password_accent);
+	install_timed_event(&sequences[431], 1125, 3125, EVENT_ONESHOT, fade_password_accent);
+	install_timed_event(&sequences[431], 3125, 0, EVENT_ONESHOT, stop_password_accent);
+	// seg1041
+	install_timed_event(&sequences[432], 4958, 0, EVENT_ONESHOT, stop_atmo_hainsworth_offices);
+	install_timed_event(&sequences[432], 4958, 0, EVENT_ONESHOT, start_atmo_hainsworth_corridor);
+	// seg1046_k
+	install_timed_event(&sequences[433], 0, 0, EVENT_ONESHOT, start_password);
+	// seg1042
+	install_timed_event(&sequences[434], 6583, 0, EVENT_ONESHOT, start_escape);
+	install_timed_event(&sequences[434], 7667, 0, EVENT_ONESHOT, stop_atmo_hainsworth_corridor);
+	// seg1043_1044 (empty)
+	// seg1045_1044
+	install_timed_event(&sequences[436], 2167, 0, EVENT_ONESHOT, stop_atmo_hainsworth_corridor);
+	install_timed_event(&sequences[436], 3667, 0, EVENT_ONESHOT, start_payback_stairwell);
+	// seg1046
+	install_timed_event(&sequences[437], 0, 0, EVENT_ONESHOT, start_lift_bossa_del_breezy);
+	install_timed_event(&sequences[437], 10417, 0, EVENT_ONESHOT, stop_password);
+	install_timed_event(&sequences[437], 10417, 0, EVENT_ONESHOT, start_password_accent);
+	install_timed_event(&sequences[437], 13625, 0, EVENT_ONESHOT, change_lift_bossa_del_breezy4);
+	install_timed_event(&sequences[437], 14333, 0, EVENT_ONESHOT, stop_atmo_hainsworth_offices);
+	// seg1047_a_1045
+	install_timed_event(&sequences[438], 4125, 0, EVENT_ONESHOT, stop_lift_bossa_del_breezy);
+	// seg1048
+	install_timed_event(&sequences[439], 0, 0, EVENT_ONESHOT, stop_lift_bossa_del_breezy);
+	install_timed_event(&sequences[439], 6000, 0, EVENT_ONESHOT, start_hainsworth_return);
+	// seg1047_b
+	install_timed_event(&sequences[440], 2583, 0, EVENT_ONESHOT, change_lift_bossa_del_breezy5);
+	// seg1049_a (empty)
+	// seg1049_b (empty)
+	// seg1050_b
+	install_timed_event(&sequences[443], 958, 0, EVENT_ONESHOT, change_lift_bossa_del_breezy3);
+	install_timed_event(&sequences[443], 9375, 0, EVENT_ONESHOT, change_lift_bossa_del_breezy6);
+	// seg1050_a_1051_1052_b_1054_b
+	install_timed_event(&sequences[444], 0, 0, EVENT_ONESHOT, change_lift_bossa_del_breezy7);
+	install_timed_event(&sequences[444], 0, 0, EVENT_ONESHOT, start_atmo_hall);
+	install_timed_event(&sequences[444], 1042, 0, EVENT_ONESHOT, change_lift_bossa_del_breezy4);
+	install_timed_event(&sequences[444], 7333, 0, EVENT_ONESHOT, start_atmo_hainsworth_parking);
+	install_timed_event(&sequences[444], 7333, 0, EVENT_ONESHOT, stop_atmo_hall);
+	install_timed_event(&sequences[444], 7458, 0, EVENT_ONESHOT, stop_lift_bossa_del_breezy);
+	install_timed_event(&sequences[444], 20708, 0, EVENT_ONESHOT, start_hainsworth_return_long);
+	// seg1049_a (empty)
+	// seg1057
+	install_timed_event(&sequences[446], 0, 4625, EVENT_DURATION, fade_hainsworth_return);
+	install_timed_event(&sequences[446], 4625, 0, EVENT_ONESHOT, stop_atmo_hainsworth_parking);
+	install_timed_event(&sequences[446], 5458, 0, EVENT_ONESHOT, stop_hainsworth_return);
+	install_timed_event(&sequences[446], 15875, 0, EVENT_ONESHOT, start_exit);
+	// seg1058 (empty)
+	// seg1059_1_1060
+	install_timed_event(&sequences[448], 0, 0, EVENT_ONESHOT, start_atmo_van);
+	install_timed_event(&sequences[448], 0, 0, EVENT_ONESHOT, stop_atmo_hainsworth_parking);
+	// seg1061_a_1069_1069_1
+	install_timed_event(&sequences[449], 25625, 0, EVENT_ONESHOT, start_atmo_van_stop);
+	install_timed_event(&sequences[449], 25625, 0, EVENT_ONESHOT, change_atmo_van);
+	install_timed_event(&sequences[449], 45583, 0, EVENT_ONESHOT, start_tenseness10);
+	install_timed_event(&sequences[449], 72125, 0, EVENT_ONESHOT, stop_atmo_van);
+	install_timed_event(&sequences[449], 72125, 0, EVENT_ONESHOT, change_atmo_van_stop);
+	// seg1063_1078
+	install_timed_event(&sequences[450], 0, 0, EVENT_ONESHOT, stop_atmo_van);
+	install_timed_event(&sequences[450], 0, 0, EVENT_ONESHOT, start_atmo_van_stop);
+	install_timed_event(&sequences[450], 13750, 0, EVENT_ONESHOT, start_atmo_street);
+	// seg1067_3
+	install_timed_event(&sequences[451], 42, 0, EVENT_ONESHOT, stop_atmo_van);
+	// seg1068_1_1068_3
+	install_timed_event(&sequences[452], 0, 0, EVENT_ONESHOT, start_requiem_arrival);
+	install_timed_event(&sequences[452], 97250, 107250, EVENT_DURATION, fade_requiem_arrival);
+	install_timed_event(&sequences[452], 107250, 0, EVENT_ONESHOT, stop_requiem_arrival);
+	install_timed_event(&sequences[452], 110750, 0, EVENT_ONESHOT, start_requiem_may);
+	// seg1069_3
+	install_timed_event(&sequences[453], 31583, 0, EVENT_ONESHOT, start_atmo_parr_house);
+	install_timed_event(&sequences[453], 31667, 41667, EVENT_DURATION, fade_tenseness10);
+	install_timed_event(&sequences[453], 41667, 0, EVENT_ONESHOT, stop_tenseness10);
+	// seg1070_a
+	install_timed_event(&sequences[454], 7708, 0, EVENT_ONESHOT, start_bowltest);
+	// seg1070_b
+	install_timed_event(&sequences[455], 20042, 0, EVENT_ONESHOT, start_bowltest);
+	// seg1072_a (empty)
+	// seg1072_b_1073_1_1073_2
+	install_timed_event(&sequences[457], 41375, 0, EVENT_ONESHOT, start_awareness_downlifter_9_2);
+	install_timed_event(&sequences[457], 45083, 0, EVENT_ONESHOT, start_bowltest_riser_short);
+	install_timed_event(&sequences[457], 45125, 0, EVENT_ONESHOT, start_bowltest_fail);
+	install_timed_event(&sequences[457], 45125, 54125, EVENT_DURATION, fade_bowltest);
+	install_timed_event(&sequences[457], 54125, 0, EVENT_ONESHOT, stop_bowltest);
+	install_timed_event(&sequences[457], 87833, 0, EVENT_ONESHOT, stop_atmo_parr_house);
+	install_timed_event(&sequences[457], 88125, 0, EVENT_ONESHOT, start_requiem_broken);
+	install_timed_event(&sequences[457], 100000, 0, EVENT_ONESHOT, unlock_the_fool);
+	// seg1075_1
+	install_timed_event(&sequences[458], 3000, 0, EVENT_ONESHOT, unlock_the_ploy);
+	// seg1079
+	install_timed_event(&sequences[459], 12417, 0, EVENT_ONESHOT, start_vo_westminster_or_bethnal);
+	install_timed_event(&sequences[459], 12708, 0, EVENT_ONESHOT, maybe_start_intentess_end);
+	install_timed_event(&sequences[459], 16583, 0, EVENT_ONESHOT, stop_atmo_street);
+	// seg1075_4 (empty)
+	// seg1075_5 (empty)
+	// seg1075_3 (empty)
+	// seg1083_1084
+	install_timed_event(&sequences[463], 76917, 0, EVENT_ONESHOT, stop_intentness);
+	// seg1075_6_1075_2
+	install_timed_event(&sequences[464], 20875, 0, EVENT_ONESHOT, start_done_stinger);
+	install_timed_event(&sequences[464], 22625, 0, EVENT_ONESHOT, stop_bowltest);
+	install_timed_event(&sequences[464], 40583, 0, EVENT_ONESHOT, stop_atmo_parr_house);
+	install_timed_event(&sequences[464], 40667, 0, EVENT_ONESHOT, start_atmo_parr_end);
+	install_timed_event(&sequences[464], 41417, 0, EVENT_ONESHOT, start_requiem_win);
+	install_timed_event(&sequences[464], 71500, 0, EVENT_ONESHOT, change_requiem_win);
+	// seg1076_a
+	install_timed_event(&sequences[465], 20667, 0, EVENT_ONESHOT, stop_atmo_parr_end);
+	// seg1076_b
+	install_timed_event(&sequences[466], 18583, 0, EVENT_ONESHOT, stop_atmo_parr_end);
+	// seg1081_a_1069_2
+	install_timed_event(&sequences[467], 0, 0, EVENT_ONESHOT, start_tenseness10_2);
+	install_timed_event(&sequences[467], 9625, 0, EVENT_ONESHOT, stop_atmo_street);
+	// seg1081_b
+	install_timed_event(&sequences[468], 0, 0, EVENT_ONESHOT, stop_atmo_street);
 	// EPISODE 11
 }
 
