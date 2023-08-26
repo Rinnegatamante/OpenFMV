@@ -12,6 +12,9 @@
 
 #define MENU_INPUT_DELAY (300000) // Input delay in microseconds between two key presses
 
+extern ImFont *fnt_italic;
+extern ImFont *fnt_normal;
+
 float *draw_attributes = NULL;
 void draw_image(uint32_t image, float x, float y, float w, float h) {
 	float x2 = x + w;
@@ -134,18 +137,48 @@ int draw_video_frame() {
 	return 1;
 }
 
-void draw_text(float x, float y, const char *label, float *clr) {
+void draw_text(float x, float y, const char *label, float *clr, float scale) {
+	fnt_normal->Scale = scale;
+	ImGui::PushFont(fnt_normal);
 	ImGui::SetCursorPos(ImVec2(x, y));
 	ImGui::TextColored(Color4(clr), label);
+	fnt_normal->Scale = 1.0f;
+	ImGui::PopFont();
 }
 
-void draw_centered_text(float y, const char *label) {
+void draw_italic_text(float x, float y, const char *label, float *clr, float scale) {
+	fnt_italic->Scale = scale;
+	ImGui::PushFont(fnt_italic);
+	ImGui::SetCursorPos(ImVec2(x, y));
+	ImGui::TextColored(Color4(clr), label);
+	fnt_italic->Scale = 1.0f;
+	ImGui::PopFont();
+}
+
+void draw_centered_text(float y, const char *label, float scale) {
+	fnt_normal->Scale = scale;
+	ImGui::PushFont(fnt_normal);
 	ImGui::SetCursorPosY(y);
 	auto windowWidth = ImGui::GetWindowSize().x;
 	auto textWidth   = ImGui::CalcTextSize(label).x;
 
 	ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
 	ImGui::Text(label);
+	fnt_normal->Scale = 1.0f;
+	ImGui::PopFont();
+}
+
+void draw_centered_italic_text(float y, const char *label, float scale) {
+	fnt_italic->Scale = scale;
+	ImGui::PushFont(fnt_italic);
+	ImGui::SetCursorPosY(y);
+	auto windowWidth = ImGui::GetWindowSize().x;
+	auto textWidth   = ImGui::CalcTextSize(label).x;
+
+	ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
+	ImGui::Text(label);
+	fnt_italic->Scale = 1.0f;
+	ImGui::PopFont();
 }
 
 int draw_button(float x, float y, const char *label, int *state) {

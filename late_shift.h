@@ -5,14 +5,15 @@
 #define NUM_SEQUENCES 508
 #define NUM_GAME_STRINGS 443
 #define NUM_AUDIO_SOURCES 215
-#define SAVE_FILE "ux0:data/Late Shift/progress.sav"
+#define PLAYTHROUGH_SAVE_FILE "ux0:data/Late Shift/progress.sav"
+#define GLOBAL_SAVE_FILE "ux0:data/Late Shift/unlocks.sav"
 #define CONFIG_FILE "ux0:data/Late Shift/config.sav"
 #define VIDEOS_FILE "ux0:data/Late Shift/Videos.psarc"
 #define AUDIO_FOLDER "ux0:data/Late Shift/oggs"
 #define TROPHIES_FILE "ux0:data/Late Shift/trophies.chk"
 #define SUBTITLE_NEWLINE "\n\n"
 
-#define GAME_VER "0.9.5"
+#define GAME_VER "0.9.6"
 
 #ifdef __cplusplus
 extern "C" {
@@ -68,9 +69,13 @@ typedef struct {
 	uint8_t passed_by_seg739;
 	uint8_t go_home;
 	uint8_t cut_end_seg1078;
-} gamestate;
+} playstate;
 
-extern gamestate game_vars;
+typedef struct {
+	uint8_t run_finished;
+	uint16_t seen_episodes;
+	uint32_t taken_decisions;
+} gamestate;
 
 void fill_sequences();
 void load_localization_files(int lang);

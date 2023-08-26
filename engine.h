@@ -171,6 +171,7 @@ extern int btns_state;
 extern int cur_event;
 extern int game_state;
 extern uint32_t cur_delta;
+extern uint32_t choices_num;
 extern unzFile sub_handle;
 extern engine config;
 extern subs_window subs_win;
@@ -179,6 +180,9 @@ extern void *snd_click;
 extern void *snd_hover;
 extern void *snd_pause;
 extern void *snd_unpause;
+
+extern playstate game_vars;
+extern gamestate global_vars;
 
 void load_animated_bg(const char *fname, int needs_hash);
 uint32_t load_image(const char *fname);

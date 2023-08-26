@@ -27,7 +27,8 @@ int chosen_path = 0;
 int cur_event = 0;
 int fake_pass = 0;
 int game_state;
-gamestate game_vars;
+playstate game_vars = {0};
+gamestate global_vars = {0};
 sequence sequences[NUM_SEQUENCES];
 audio_sample bgm[NUM_AUDIO_SAMPLES];
 subs_window subs_win;
@@ -153,7 +154,7 @@ void reload_subtitles(sequence *s) {
 	}
 	
 	// Dumping current gamestate
-	gamestate dump;
+	playstate dump;
 	memcpy(&dump, &game_vars, sizeof(game_state));
 	int real_trigger_save = trigger_save;
 	
@@ -214,9 +215,12 @@ void start_sequence(sequence *s) {
 	
 	// Updating progress save
 	if (trigger_save) {
-		FILE *f = fopen(SAVE_FILE, "w");
+		FILE *f = fopen(PLAYTHROUGH_SAVE_FILE, "w");
 		fwrite(s->hash, 1, 32, f);
-		fwrite(&game_vars, 1, sizeof(gamestate), f);
+		fwrite(&game_vars, 1, sizeof(playstate), f);
+		fclose(f);
+		f = fopen(GLOBAL_SAVE_FILE, "w");
+		fwrite(&global_vars, 1, sizeof(gamestate), f);
 		fclose(f);
 		trigger_save = 0;
 	}

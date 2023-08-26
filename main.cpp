@@ -22,7 +22,10 @@ enum {
 	DONE_CHOICE
 };
 
+ImFont *fnt_normal;
+ImFont *fnt_italic;
 static uint32_t shadow_u32 = 0;
+uint32_t choices_num = 0;
 
 void ImGui_CircleBar(float radius, float thickness, float progress, ImVec4 color) {
 	int num_segments = 20;
@@ -149,8 +152,8 @@ int main(int argc, char *argv[]) {
 		0,
 	};
 	ImGui::CreateContext();
-	ImFont *fnt_normal = ImGui::GetIO().Fonts->AddFontFromFileTTF("app0:data/normal.ttf", 24.0f, NULL, compact_ranges);
-	ImFont *fnt_italic = ImGui::GetIO().Fonts->AddFontFromFileTTF("app0:data/italic.ttf", 24.0f, NULL, compact_ranges);
+	fnt_normal = ImGui::GetIO().Fonts->AddFontFromFileTTF("app0:data/normal.ttf", 24.0f, NULL, compact_ranges);
+	fnt_italic = ImGui::GetIO().Fonts->AddFontFromFileTTF("app0:data/italic.ttf", 24.0f, NULL, compact_ranges);
 	ImGui_ImplVitaGL_Init_Extended();
 	ImGuiStyle& style = ImGui::GetStyle();
 	style.WindowBorderSize = 0.0f;
@@ -176,8 +179,15 @@ int main(int argc, char *argv[]) {
 	// Populating sequences tree
 	fill_sequences();
 	
-	// Loading menu engine theme
 main_menu:
+	// Loading global save
+	f = fopen(GLOBAL_SAVE_FILE, "rb");
+	if (f) {
+		fread(&global_vars, 1, sizeof(gamestate), f);
+		fclose(f);
+	}
+
+	// Loading menu engine theme
 	menu_setup();
 	reload_theme();
 	
@@ -258,25 +268,28 @@ subtitle_draw:
 				}
 				
 				// Precalculate once buttons sizes for properly centering them
-				if (btns_state == BTNS_CALC_SIZE && colors.choices_type == CHOICES_CENTER_POS) {
-					ImGui::Begin("##fake", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBringToFrontOnFocus);
-					ImGui::SetCursorPosX(-10000.0f);
-					ImGui::Button(ltext, ImVec2(ImGui::CalcTextSize(ltext).x + 20.0f, 1.0f));
-					btn1_size = ImGui::GetItemRectSize();
-					ImGui::SetCursorPosX(-10000.0f);
-					ImGui::Button(cur_choice->rtext(), ImVec2(ImGui::CalcTextSize(cur_choice->rtext()).x + 20.0f, 1.0f));
-					btn2_size = ImGui::GetItemRectSize();
-					btn3_size = ImVec2(0, 0);
-					if (cur_choice->e) {
-						char *etext = cur_choice->etext();
-						if (etext) {
-							ImGui::SetCursorPosX(-10000.0f);
-							ImGui::Button(etext, ImVec2(ImGui::CalcTextSize(etext).x + 20.0f, 1.0f));
-							btn3_size = ImGui::GetItemRectSize();
-							btn3_size.x += + style.ItemSpacing.x;
+				if (btns_state == BTNS_CALC_SIZE) {
+					choices_num++;
+					if (colors.choices_type == CHOICES_CENTER_POS) {
+						ImGui::Begin("##fake", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBringToFrontOnFocus);
+						ImGui::SetCursorPosX(-10000.0f);
+						ImGui::Button(ltext, ImVec2(ImGui::CalcTextSize(ltext).x + 20.0f, 1.0f));
+						btn1_size = ImGui::GetItemRectSize();
+						ImGui::SetCursorPosX(-10000.0f);
+						ImGui::Button(cur_choice->rtext(), ImVec2(ImGui::CalcTextSize(cur_choice->rtext()).x + 20.0f, 1.0f));
+						btn2_size = ImGui::GetItemRectSize();
+						btn3_size = ImVec2(0, 0);
+						if (cur_choice->e) {
+							char *etext = cur_choice->etext();
+							if (etext) {
+								ImGui::SetCursorPosX(-10000.0f);
+								ImGui::Button(etext, ImVec2(ImGui::CalcTextSize(etext).x + 20.0f, 1.0f));
+								btn3_size = ImGui::GetItemRectSize();
+								btn3_size.x += + style.ItemSpacing.x;
+							}
 						}
+						ImGui::End();
 					}
-					ImGui::End();
 					btns_state = BTNS_DONE;
 					ImGui::GetCurrentContext()->NavId = 0;
 				}

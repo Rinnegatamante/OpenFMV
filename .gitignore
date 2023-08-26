@@ -8,3 +8,4 @@ sce_sys/*
 data/*.ttf
 data/lang
 data/*.ogg
+data/*.png

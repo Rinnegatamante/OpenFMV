@@ -59,7 +59,42 @@ enum {
 	PROTECTOR // Implemented
 };
 
+#define NUM_EPISODES 14
+enum {
+	EPISODE_OP,
+	EPISODE_01,
+	EPISODE_02,
+	EPISODE_03,
+	EPISODE_04,
+	EPISODE_05A,
+	EPISODE_05B,
+	EPISODE_06A,
+	EPISODE_06B,
+	EPISODE_07,
+	EPISODE_09A,
+	EPISODE_09B,
+	EPISODE_10,
+	EPISODE_11
+};
 
+#define exec_save(ep) \
+	global_vars.seen_episodes |= (1 << ep); \
+	if (global_vars.seen_episodes == (1 << NUM_EPISODES) - 1) { \
+		trophies_unlock(CHOICES_MATTER); \
+	} \
+	trigger_save = 1; \
+	global_vars.taken_decisions += choices_num; \
+	choices_num = 0;
+	
+uint32_t get_num_episodes_seen() {
+	uint32_t res = 0;
+	for (int i = 0; i < NUM_EPISODES; i++) {
+		if (global_vars.seen_episodes & (1 << i)) {
+			res++;
+		}
+	}
+	return res;
+}
 
 // Game get text funcs
 char *selfless() { return game_strings[31]; }
@@ -602,7 +637,7 @@ sequence *seg106() { return &sequences[3]; }
 sequence *seg107_a() { return &sequences[4]; }
 sequence *seg107_b() { return &sequences[5]; }
 // EPISODE 1
-sequence *seg109_110_b_111() { trigger_save = 1; return &sequences[6]; }
+sequence *seg109_110_b_111() { exec_save(EPISODE_01); return &sequences[6]; }
 sequence *seg113_116() { return &sequences[7]; }
 sequence *seg114() { return &sequences[8]; }
 sequence *seg115() { game_vars.know_about_party = 1; return &sequences[9]; }
@@ -642,8 +677,8 @@ sequence *seg125() { game_vars.elo_thinks = FREAK_THINKS; return &sequences[40];
 sequence *seg112_2_122_b() { game_vars.elo_thinks = FREAK_THINKS; return &sequences[213]; }
 sequence *seg112_1() { return &sequences[212]; }
 // EPISODE 2
-sequence *seg201() { trigger_save = 1; purge_from_ep1(); return &sequences[41]; }
-sequence *seg202() { trigger_save = 1; purge_from_ep1(); return &sequences[42]; }
+sequence *seg201() { exec_save(EPISODE_02); purge_from_ep1(); return &sequences[41]; }
+sequence *seg202() { exec_save(EPISODE_02); purge_from_ep1(); return &sequences[42]; }
 sequence *seg203() { return &sequences[43]; }
 sequence *seg204() { return &sequences[44]; }
 sequence *seg205() { return &sequences[45]; }
@@ -672,7 +707,7 @@ sequence *eval_coming_from_seg223() { return game_vars.coming_from_seg223 ? seg2
 sequence *seg227() { return &sequences[68]; }
 sequence *seg228() { return &sequences[66]; }
 // EPISODE 3
-sequence *seg301_1_301_2() { trigger_save = 1; purge_from_ep2(); return &sequences[70]; }
+sequence *seg301_1_301_2() { exec_save(EPISODE_03); purge_from_ep2(); return &sequences[70]; }
 sequence *seg302_a() { game_vars.may_likes_matt++; return &sequences[71]; }
 sequence *seg302_b() { game_vars.sabotage++; return &sequences[72]; }
 sequence *seg303_310() { return &sequences[73]; }
@@ -729,7 +764,7 @@ sequence *seg369_2k() { return &sequences[125]; }
 sequence *seg370_375() { game_vars.lockdown = 0; game_vars.get_away_long_playing = 1; return &sequences[126]; }
 sequence *seg373_374_366() { return &sequences[127]; }
 // EPISODE4
-sequence *eval_ep4_start() { trigger_save = 1; purge_from_ep3(); if (game_vars.lockdown) { return (game_vars.gone_upstairs || game_vars.sabotage >= 4) ? &sequences[128] : &sequences[129]; } else return game_vars.gone_upstairs ? &sequences[130] : &sequences[131]; }
+sequence *eval_ep4_start() { exec_save(EPISODE_04); purge_from_ep3(); if (game_vars.lockdown) { return (game_vars.gone_upstairs || game_vars.sabotage >= 4) ? &sequences[128] : &sequences[129]; } else return game_vars.gone_upstairs ? &sequences[130] : &sequences[131]; }
 sequence *eval_low_sabotage() { return game_vars.sabotage < 3 ? &sequences[132] : &sequences[133]; }
 sequence *seg408() { game_vars.may_likes_matt++; return &sequences[134]; }
 sequence *seg403_a() { return &sequences[135]; }
@@ -770,7 +805,7 @@ sequence *seg446() { return &sequences[169]; }
 sequence *seg447() { game_vars.gone_to_woe = 1; return &sequences[170]; }
 sequence *seg442_1() { return &sequences[171]; }
 // EPISODE 5A
-sequence *seg501_507() { trigger_save = 1; purge_from_ep4(); return &sequences[172]; }
+sequence *seg501_507() { exec_save(EPISODE_05A); purge_from_ep4(); return &sequences[172]; }
 sequence *seg508_1() { return &sequences[173]; }
 sequence *seg508_2() { game_vars.has_cookie = COOKIE_REFUSED; return &sequences[174]; }
 sequence *seg508_3() { game_vars.has_cookie = COOKIE_OPENED; return &sequences[175]; }
@@ -790,8 +825,8 @@ sequence *seg529_a() { return &sequences[190]; }
 sequence *seg529_b() { return &sequences[191]; }
 sequence *seg530() { return &sequences[192]; }
 // EPISODE 5B
-sequence *seg551() { trigger_save = 1; purge_from_ep4(); purge_from_ep5a(); return &sequences[193]; }
-sequence *seg554() { if (!game_vars.gone_to_woe) trigger_save = 1; game_vars.report_to_police = 1; return &sequences[194]; }
+sequence *seg551() { exec_save(EPISODE_05B); purge_from_ep4(); purge_from_ep5a(); return &sequences[193]; }
+sequence *seg554() { if (!game_vars.gone_to_woe) { exec_save(EPISODE_05B); } game_vars.report_to_police = 1; return &sequences[194]; }
 sequence *eval_gone_to_woe() { return game_vars.gone_to_woe ? &sequences[195] : &sequences[196]; }
 sequence *eval_sabotage2() { return game_vars.sabotage >= 4 ? &sequences[197] : &sequences[198]; }
 sequence *seg557() { return &sequences[199]; }
@@ -807,7 +842,7 @@ sequence *seg565() { return &sequences[208]; }
 sequence *eval_gone_to_woe2() { return game_vars.gone_to_woe ? &sequences[209] : &sequences[210]; }
 sequence *seg570_571() { return &sequences[211]; }
 // EPISODE 6A
-sequence *seg601_602_603() { purge_from_ep5a(); trigger_save = 1; return &sequences[214]; }
+sequence *seg601_602_603() { purge_from_ep5a(); exec_save(EPISODE_06A); return &sequences[214]; }
 sequence *eval_blank_book() { return game_vars.blank_book ? &sequences[215] : &sequences[216]; }
 sequence *eval_may_likes_matt() { if (game_vars.may_likes_matt >= 4) { game_vars.may_kiss = 1; return &sequences[233]; } return &sequences[234]; }
 sequence *eval_may_kiss() { return game_vars.may_kiss ? &sequences[236] : &sequences[235]; }
@@ -828,7 +863,7 @@ sequence *seg623_a() { return &sequences[230]; }
 sequence *seg623_b() { return &sequences[231]; }
 sequence *seg624() { game_vars.radioplay_started = 1; return &sequences[232]; }
 // EPISODE 6B
-sequence *seg651_1() { purge_from_ep5b(); purge_from_ep6a(); trigger_save = 1; game_vars.cross_exam = 1; return &sequences[237]; }
+sequence *seg651_1() { purge_from_ep5b(); purge_from_ep6a(); exec_save(EPISODE_06B); game_vars.cross_exam = 1; return &sequences[237]; }
 sequence *eval_report_police() { return game_vars.report_to_police ? &sequences[238] : &sequences[239]; }
 sequence *seg651_3() { return &sequences[240]; }
 sequence *seg652_a() { return &sequences[241]; }
@@ -856,7 +891,7 @@ sequence *seg665() { game_vars.spit_in_the_face = 1; return &sequences[265]; }
 sequence *seg666_c() { return &sequences[266]; }
 sequence *eval_knife_long() { return game_vars.knife_long ? &sequences[267] : &sequences[268]; }
 // EPISODE 7
-sequence *eval_ep7_start() { purge_from_ep6a(); purge_from_ep6b();  trigger_save = 1; return game_vars.cross_exam ? &sequences[269] : &sequences[270]; }
+sequence *eval_ep7_start() { purge_from_ep6a(); purge_from_ep6b();  exec_save(EPISODE_07); return game_vars.cross_exam ? &sequences[269] : &sequences[270]; }
 sequence *seg702() { return &sequences[271]; }
 sequence *seg707() { return &sequences[272]; }
 sequence *seg703() { game_vars.turned_away = 1; return &sequences[273]; }
@@ -903,7 +938,7 @@ sequence *seg770() { return &sequences[315]; }
 sequence *eval_ep7_target() { return game_vars.finish_ep7_target == PAYBACK_EP11 ? NULL : seg951_1_951_2(); }
 sequence *seg770_2() { return &sequences[316]; }
 // EPISODE 9A
-sequence *seg901_1_901_2() { trigger_save = 1; purge_from_ep7(); return &sequences[317]; }
+sequence *seg901_1_901_2() { exec_save(EPISODE_09A); purge_from_ep7(); return &sequences[317]; }
 sequence *eval_gone_upstairs() { return game_vars.gone_upstairs ? &sequences[337] : &sequences[338]; }
 sequence *seg905_2() { return &sequences[328]; }
 sequence *seg908_b() { return &sequences[332]; }
@@ -944,7 +979,7 @@ sequence *seg939() { game_vars.payback_time = 0; game_vars.called_parr = 1; retu
 sequence *seg945() { return &sequences[363]; }
 sequence *eval_payback_time() { return game_vars.payback_time ? /* ep11 */ NULL : seg1000(); }
 // EPISODE 9B
-sequence *seg951_1_951_2() { trigger_save = 1; purge_from_ep7(); return &sequences[364]; }
+sequence *seg951_1_951_2() { exec_save(EPISODE_09B); purge_from_ep7(); return &sequences[364]; }
 sequence *eval_knows_about_party2() { return game_vars.know_about_party ? &sequences[365] : &sequences[366]; }
 sequence *eval_freak2() { return game_vars.elo_thinks == FREAK_THINKS ? &sequences[367] : &sequences[368]; }
 sequence *eval_loser2() { return game_vars.elo_thinks == LOSER_THINKS ? &sequences[369] : &sequences[370]; }
@@ -985,7 +1020,7 @@ sequence *seg988_984_2() { game_vars.payback_time = 1; return &sequences[409]; }
 sequence *seg974_2() { return &sequences[410]; }
 sequence *seg977_979() { game_vars.aware_of_chest = 1; return &sequences[411]; }
 // EPISODE 10
-sequence *seg1000() { trigger_save = 1; purge_from_ep9(); return &sequences[412]; }
+sequence *seg1000() { exec_save(EPISODE_10); purge_from_ep9(); return &sequences[412]; }
 sequence *seg1001_1003() { return &sequences[413]; }
 sequence *seg1004_k() { return &sequences[414]; }
 sequence *seg1006() { return &sequences[415]; }
@@ -1601,7 +1636,6 @@ sequence *unlock_office_clerk() { trophies_unlock(OFFICE_CLERK); return NULL; }
 sequence *unlock_sabotage() { trophies_unlock(SABOTAGE); return NULL; }
 sequence *unlock_star_crossed_lovers() { trophies_unlock(STAR_CROSSED_LOVERS); return NULL; }
 sequence *unlock_protector() { trophies_unlock(PROTECTOR); return NULL; }
-sequence *unlock_choices_matter() { trophies_unlock(CHOICES_MATTER); return NULL; }
 sequence *unlock_even_tempered() { trophies_unlock(EVEN_TEMPERED); return NULL; }
 sequence *unlock_interrogation() { trophies_unlock(INTERROGATION); return NULL; }
 sequence *unlock_good_karma() { trophies_unlock(GOOD_KARMA); return NULL; }
@@ -2623,7 +2657,7 @@ void fill_events() {
 	install_timed_event(&sequences[307], 14671, 23000, EVENT_DURATION, fade_revellers_p5);
 	install_timed_event(&sequences[307], 23000, 0, EVENT_ONESHOT, stop_revellers_p5);
 	// seg741
-	install_timed_event(&sequences[308], 15000, 0, EVENT_ONESHOT, unlock_choices_matter);
+	install_timed_event(&sequences[308], 15000, 0, EVENT_ONESHOT, unlock_even_tempered);
 	install_timed_event(&sequences[308], 15000, 21000, EVENT_DURATION, fade_revellers_p5_2);
 	install_timed_event(&sequences[308], 21000, 0, EVENT_ONESHOT, stop_revellers_p5);
 	// seg742
@@ -3794,27 +3828,37 @@ void game_pause_menu(int *first_call) {
 }
 
 void game_main_menu() {
-	// Loading animated background and audio background
+	// Loading animated background, image backgrounds and audio background
 	load_animated_bg("000_MenuBackground", 1);
+	static uint32_t decisions_bg = 0;
+	if (!decisions_bg) {
+		decisions_bg = load_image("app0:data/choices.png");
+	}
 	int bg_audio_handle;
 	void *bg_audio = audio_track_play("EP01 Car Park Melody", 1, 1.0f, &bg_audio_handle);
 	
 	SceIoStat st;
-	int has_save = sceIoGetstat(SAVE_FILE, &st) ? 0 : 1;
-	int btns_state[10];
+	int has_save = sceIoGetstat(PLAYTHROUGH_SAVE_FILE, &st) ? 0 : 1;
+	int btns_state[16];
 	int in_options = 0;
+	int in_decisions = 0;
 	int request_new_game = 0;
+	uint32_t num_episodes_seen = get_num_episodes_seen();
 	
 	char version_text[256];
 	sprintf(version_text, "OpenFMV v.%s (LS v.%s)", ENGINE_VER, GAME_VER);
 	sequence *out = NULL;
 	while (!out) {
 		if (draw_video_frame()) {
+			if (in_decisions) {
+				draw_image(decisions_bg, 0.0f, 0.0f, 960.0f, 544.0f);
+			}
 			init_ui_frame();
 			
 			// Calculating button centering positions
 			float x_resume = calc_centered_button_pos(game_strings[6]);
 			float x_newgame = calc_centered_button_pos(game_strings[4]);
+			float x_decisions = calc_centered_button_pos(game_strings[8]);
 			float x_options = calc_centered_button_pos(game_strings[9]);
 			float x_exitgame = calc_centered_button_pos(game_strings[10]);
 			float x_back = calc_centered_button_pos(game_strings[3]);
@@ -3828,15 +3872,20 @@ void game_main_menu() {
 			float x_newgame_warn = calc_centered_button_pos(game_strings[5]);
 			
 			init_menu(0.0f, 0.0f, 0.0f, 960.0f, 600.0f, "##main_menu");
-			if (!in_options) {
+			if (!in_options && !in_decisions) {
+				float y = 250.0f;
 				if (has_save) {
-					if (draw_main_button(x_resume, 200, game_strings[6], &btns_state[0])) {
+					y -= 50.0f;
+					if (global_vars.run_finished) {
+						y -= 25.0f;
+					}
+					if (draw_main_button(x_resume, y, game_strings[6], &btns_state[0])) {
 						// Loading progress save
 						char hash[64] = {0};
-						FILE *f = fopen(SAVE_FILE, "r");
+						FILE *f = fopen(PLAYTHROUGH_SAVE_FILE, "r");
 						if (f) {
 							fread(hash, 1, 32, f);
-							fread(&game_vars, 1, sizeof(gamestate), f);
+							fread(&game_vars, 1, sizeof(playstate), f);
 							fclose(f);
 						}
 					
@@ -3849,22 +3898,35 @@ void game_main_menu() {
 							}	
 						}
 					}
-					if (draw_button(x_newgame, 250, game_strings[4], &btns_state[1])) {
+					y += 50.0f;
+					if (draw_button(x_newgame, y, game_strings[4], &btns_state[1])) {
 						request_new_game = 1;
 					}
+					y += 50.0f;
 				} else {
-					if (draw_main_button(x_newgame, 250, game_strings[4], &btns_state[1])) {
+					if (global_vars.run_finished) {
+						y -= 50.0f;
+					}
+					if (draw_main_button(x_newgame, y, game_strings[4], &btns_state[1])) {
 						request_new_game = 1;
 					}
+					y += 50.0f;
 				}
-				if (draw_button(x_options, 300, game_strings[9], &btns_state[2])) {
+				if (global_vars.run_finished) {
+					if (draw_button(x_decisions, y, game_strings[8], &btns_state[11])) {
+						in_decisions = 1;
+					}
+					y += 50.0f;
+				}
+				if (draw_button(x_options, y, game_strings[9], &btns_state[2])) {
 					in_options = 1;
 				}
-				if (draw_button(x_exitgame, 350, game_strings[10], &btns_state[3])) {
+				y += 50.0f;
+				if (draw_button(x_exitgame, y, game_strings[10], &btns_state[3])) {
 					sceKernelExitProcess(0);
 				}
 			}
-			draw_text(5, 515, version_text, colors.text);
+			draw_text(5, 515, version_text, colors.text, 0.8f);
 			end_menu();
 			
 			if (in_options) {
@@ -3894,13 +3956,16 @@ void game_main_menu() {
 				if (has_save) {
 					float w = 960.0f - x_newgame_warn * 2;
 					init_menu(1.0f, x_newgame_warn, 200.0f, w, 100.0f, "##warning");
-					draw_centered_text(5.0f, game_strings[5]);
+					draw_centered_text(5.0f, game_strings[5], 1.0f);
 					if (draw_main_button(w / 4, 60.0f, game_strings[2], &btns_state[7])) {
 						// Starting new game
 						debug_log("Booting first sequence\n");
 						trigger_save = 1;
 						out = &sequences[0];
-						memset(&game_vars, 0, sizeof(gamestate));
+						memset(&game_vars, 0, sizeof(playstate));
+						choices_num = 0;
+						global_vars.seen_episodes |= 1;
+						global_vars.taken_decisions = 0;
 					}
 					if (draw_button(w - w / 4 - (960.0f - 2 * x_back), 60.0f, game_strings[3], &btns_state[8])) {
 						request_new_game = 0;
@@ -3910,9 +3975,29 @@ void game_main_menu() {
 					// Starting new game
 					debug_log("Booting first sequence\n");
 					trigger_save = 1;
+					choices_num = 0;
 					out = &sequences[0];
 					memset(&game_vars, 0, sizeof(gamestate));
 				}
+			} else if (in_decisions) {
+				char str[32];
+				init_menu(0.0f, 0.0f, 0.0f, 960.0f, 544.0f, "##decisions");
+				draw_centered_text(80, game_strings[8], 1.0f);
+				draw_centered_italic_text(130, game_strings[19], 0.8f);
+				sprintf(str, "%hhu / 7", num_unlocked_endings);
+				draw_centered_text(150, str, 0.7f);
+				draw_progressbar(352, 170, 256, 6, (float)num_unlocked_endings / 7.0f, "##barendings");	
+				draw_centered_italic_text(230, game_strings[20], 0.8f);
+				sprintf(str, "%hhu / 14", num_episodes_seen);
+				draw_centered_text(250, str, 0.7f);
+				draw_progressbar(352, 270, 256, 6, (float)num_unlocked_endings / 14.0f, "##barchapters");
+				draw_centered_italic_text(330, game_strings[21], 0.8f);
+				sprintf(str, "%u", global_vars.taken_decisions);
+				draw_centered_text(350, str, 0.7f);
+				if (draw_main_button(x_back, 450, game_strings[3], &btns_state[6])) {
+					in_decisions = 0;
+				}
+				end_menu();
 			}
 			
 			end_ui_frame();
