@@ -36,14 +36,16 @@ uint8_t get_num_seen_endings() {
 }
 
 #define unlock_ending(x) \
-	trophies_unlock(x); \
-	if (!is_ending_seen(x)) { \
-		global_vars.seen_endings |= (1 << (x - 1)); \
-		num_unlocked_endings++; \
-		if (num_unlocked_endings == 4) { \
-			trophies_unlock(PROFICIENT_STORYTELLER); \
-		} else if (num_unlocked_endings == 7) { \
-			trophies_unlock(EXPERT_STORYTELLER); \
+	if (!fake_pass) { \
+		trophies_unlock(x); \
+		if (!is_ending_seen(x)) { \
+			global_vars.seen_endings |= (1 << (x - 1)); \
+			num_unlocked_endings++; \
+			if (num_unlocked_endings == 4) { \
+				trophies_unlock(PROFICIENT_STORYTELLER); \
+			} else if (num_unlocked_endings == 7) { \
+				trophies_unlock(EXPERT_STORYTELLER); \
+			} \
 		} \
 	}
 
@@ -91,13 +93,15 @@ enum {
 };
 
 #define exec_save(ep) \
-	global_vars.seen_episodes |= (1 << ep); \
-	if (global_vars.seen_episodes == (1 << NUM_EPISODES) - 1) { \
-		trophies_unlock(CHOICES_MATTER); \
-	} \
-	trigger_save = 1; \
-	global_vars.taken_decisions += choices_num; \
-	choices_num = 0;
+	if (!fake_pass) { \
+		global_vars.seen_episodes |= (1 << ep); \
+		if (global_vars.seen_episodes == (1 << NUM_EPISODES) - 1) { \
+			trophies_unlock(CHOICES_MATTER); \
+		} \
+		trigger_save = 1; \
+		global_vars.taken_decisions += choices_num; \
+		choices_num = 0; \
+	}
 	
 uint32_t get_num_episodes_seen() {
 	uint32_t res = 0;
@@ -3971,9 +3975,11 @@ void game_main_menu() {
 					// Starting new game
 					debug_log("Booting first sequence\n");
 					trigger_save = 1;
-					choices_num = 0;
 					out = &sequences[0];
 					memset(&game_vars, 0, sizeof(gamestate));
+					choices_num = 0;
+					global_vars.seen_episodes |= 1;
+					global_vars.taken_decisions = 0;
 				}
 			} else if (in_decisions) {
 				char str[32];

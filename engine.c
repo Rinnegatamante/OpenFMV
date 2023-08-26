@@ -192,7 +192,6 @@ void start_sequence(sequence *s) {
 	// Dumping current gamestate
 	gamestate dump;
 	memcpy(&dump, &game_vars, sizeof(game_state));
-	int real_trigger_save = trigger_save;
 	
 	// Faking possible choices to get a list of reachable sequences
 	int i = 0;
@@ -210,11 +209,11 @@ void start_sequence(sequence *s) {
 	fake_pass = 0;
 	
 	// Restoring original gamestate
-	trigger_save = real_trigger_save;
 	memcpy(&game_vars, &dump, sizeof(game_state));
 	
 	// Updating progress save
 	if (trigger_save) {
+		debug_log("Saving...\n");
 		FILE *f = fopen(PLAYTHROUGH_SAVE_FILE, "w");
 		fwrite(s->hash, 1, 32, f);
 		fwrite(&game_vars, 1, sizeof(playstate), f);
