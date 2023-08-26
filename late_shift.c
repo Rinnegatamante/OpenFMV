@@ -18,14 +18,27 @@ sequence *seg951_1_951_2();
 sequence *seg1000();
 
 #define NUM_TROPHIES 21
-uint8_t trophies_state[NUM_TROPHIES] = {0};
 uint8_t num_unlocked_endings = 0;
 uint8_t trophies_state_detected = 0;
 
+uint8_t is_ending_seen(uint8_t e) {
+	return (global_vars.seen_endings & (1 << (e - 1))) > 0;
+}
+
+uint8_t get_num_seen_endings() {
+	uint8_t res = 0;
+	for (int i = 0; i < 7; i++) {
+		if (global_vars.seen_endings & (1 << i)) {
+			res++;
+		}
+	}
+	return res;
+}
+
 #define unlock_ending(x) \
-	if (!trophies_state[x]) { \
-		trophies_unlock(x); \
-		trophies_state[x] = 1; \
+	trophies_unlock(x); \
+	if (!is_ending_seen(x)) { \
+		global_vars.seen_endings |= (1 << (x - 1)); \
 		num_unlocked_endings++; \
 		if (num_unlocked_endings == 4) { \
 			trophies_unlock(PROFICIENT_STORYTELLER); \
@@ -3726,24 +3739,6 @@ void load_localization_files(int lang) {
 }
 
 void menu_setup() {
-	if (!trophies_state_detected) {
-		// Loading trophies state
-		num_unlocked_endings = 0;
-		for (uint8_t i = 0; i < NUM_TROPHIES; i++) {
-			trophies_state[i] = trophies_is_unlocked(i);
-			if (trophies_state[i] && i > PLATINUM_TROPHY && i < CAUSE_AND_EFFECT) { // Ending related trophies
-				num_unlocked_endings++;
-			}
-#ifdef DEBUG
-			printf("Trophy #%u %s unlocked.\n", i, trophies_state[i] ? "is" : "is not");
-#endif
-		}
-#ifdef DEBUG
-		printf("%u endings seen.\n", num_unlocked_endings);
-#endif
-		trophies_state_detected = 1;
-	}
-
 	// Setting up engine theme for menu
 	set_theme_color(colors.btn_hover_bg, 0.0f, 0.0f, 0.0f, 0.0f);
 	set_theme_color(colors.btn_bg, 0.0f, 0.0f, 0.0f, 0.0f);
@@ -3844,6 +3839,7 @@ void game_main_menu() {
 	int in_decisions = 0;
 	int request_new_game = 0;
 	uint32_t num_episodes_seen = get_num_episodes_seen();
+	num_unlocked_endings = get_num_seen_endings();
 	
 	char version_text[256];
 	sprintf(version_text, "OpenFMV v.%s (LS v.%s)", ENGINE_VER, GAME_VER);
@@ -3983,17 +3979,17 @@ void game_main_menu() {
 				char str[32];
 				init_menu(0.0f, 0.0f, 0.0f, 960.0f, 544.0f, "##decisions");
 				draw_centered_text(80, game_strings[8], 1.0f);
-				draw_centered_italic_text(130, game_strings[19], 0.8f);
+				draw_centered_italic_text(150, game_strings[19], 0.8f);
 				sprintf(str, "%hhu / 7", num_unlocked_endings);
-				draw_centered_text(150, str, 0.7f);
-				draw_progressbar(352, 170, 256, 6, (float)num_unlocked_endings / 7.0f, "##barendings");	
-				draw_centered_italic_text(230, game_strings[20], 0.8f);
+				draw_centered_text(170, str, 0.7f);
+				draw_progressbar(352, 190, 256, 6, (float)num_unlocked_endings / 7.0f, "##barendings");	
+				draw_centered_italic_text(250, game_strings[20], 0.8f);
 				sprintf(str, "%hhu / 14", num_episodes_seen);
-				draw_centered_text(250, str, 0.7f);
-				draw_progressbar(352, 270, 256, 6, (float)num_unlocked_endings / 14.0f, "##barchapters");
-				draw_centered_italic_text(330, game_strings[21], 0.8f);
+				draw_centered_text(270, str, 0.7f);
+				draw_progressbar(352, 290, 256, 6, (float)num_unlocked_endings / 14.0f, "##barchapters");
+				draw_centered_italic_text(350, game_strings[21], 0.8f);
 				sprintf(str, "%u", global_vars.taken_decisions);
-				draw_centered_text(350, str, 0.7f);
+				draw_centered_text(370, str, 0.7f);
 				if (draw_main_button(x_back, 450, game_strings[3], &btns_state[6])) {
 					in_decisions = 0;
 				}

@@ -89,7 +89,10 @@ int trophies_init() {
 }
 
 uint8_t trophies_is_unlocked(uint32_t id) {
-	return (trophies_unlocks.unk[id >> 5] & (1 << (id & 31))) > 0;
+	if (trophies_available) {
+		return (trophies_unlocks.unk[id >> 5] & (1 << (id & 31))) > 0;
+	}
+	return 0;
 }
 
 void trophies_unlock(uint32_t id) {

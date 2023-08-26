@@ -74,6 +74,7 @@ typedef struct {
 typedef struct {
 	uint8_t run_finished;
 	uint16_t seen_episodes;
+	uint8_t seen_endings;
 	uint32_t taken_decisions;
 } gamestate;
 
