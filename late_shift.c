@@ -17,6 +17,22 @@ char game_strings[NUM_GAME_STRINGS][128];
 sequence *seg951_1_951_2();
 sequence *seg1000();
 
+#define NUM_TROPHIES 21
+uint8_t trophies_state[NUM_TROPHIES] = {0};
+uint8_t num_unlocked_endings = 0;
+
+#define unlock_ending(x) \
+	if (!trophies_state[x]) { \
+		trophies_unlock(x); \
+		trophies_state[x] = 1; \
+		num_unlocked_endings++; \
+		if (num_unlocked_endings == 4) { \
+			trophies_unlock(PROFICIENT_STORYTELLER); \
+		} else if (num_unlocked_endings == 7) { \
+			trophies_unlock(EXPERT_STORYTELLER); \
+		} \
+	}
+
 // Trophies IDs
 enum {
 	PLATINUM_TROPHY, // Implemented
@@ -29,18 +45,20 @@ enum {
 	THE_FRENZY,
 	CAUSE_AND_EFFECT, // Implemented
 	FAIR_SHARE, // Implemented
-	PROFICIENT_STORYTELLER,
+	PROFICIENT_STORYTELLER, // Implemented
 	SHILL_BIDDER, // Implemented
 	OFFICE_CLERK, // Implemented
 	STAR_CROSSED_LOVERS, // Implemented
 	EVEN_TEMPERED, // Implemented
 	CHOICES_MATTER, // Implemented
-	EXPERT_STORYTELLER,
+	EXPERT_STORYTELLER, // Implemented
 	GOOD_KARMA, // Implemented
 	SABOTAGE, // Implemented
 	INTERROGATION, // Implemented
 	PROTECTOR // Implemented
 };
+
+
 
 // Game get text funcs
 char *selfless() { return game_strings[31]; }
@@ -3673,6 +3691,20 @@ void load_localization_files(int lang) {
 }
 
 void menu_setup() {
+	// Loading trophies state
+	for (uint8_t i = 0; i < NUM_TROPHIES; i++) {
+		trophies_state[i] = trophies_is_unlocked(i);
+		if (trophies_state[i] && i > PLATINUM_TROPHY && i < CAUSE_AND_EFFECT) { // Ending related trophies
+			num_unlocked_endings++;
+		}
+#ifdef DEBUG
+		printf("Trophy #%u %s unlocked.\n", i, trophies_state[i] ? "is" : "is not");
+#endif
+	}
+#ifdef DEBUG
+	printf("%u endings seen.\n", num_unlocked_endings);
+#endif
+
 	// Setting up engine theme for menu
 	set_theme_color(colors.btn_hover_bg, 0.0f, 0.0f, 0.0f, 0.0f);
 	set_theme_color(colors.btn_bg, 0.0f, 0.0f, 0.0f, 0.0f);

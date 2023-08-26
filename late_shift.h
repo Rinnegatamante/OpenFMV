@@ -12,7 +12,7 @@
 #define TROPHIES_FILE "ux0:data/Late Shift/trophies.chk"
 #define SUBTITLE_NEWLINE "\n\n"
 
-#define GAME_VER "0.9.0"
+#define GAME_VER "0.9.5"
 
 #ifdef __cplusplus
 extern "C" {
