@@ -20,6 +20,7 @@ sequence *seg1000();
 #define NUM_TROPHIES 21
 uint8_t trophies_state[NUM_TROPHIES] = {0};
 uint8_t num_unlocked_endings = 0;
+uint8_t trophies_state_detected = 0;
 
 #define unlock_ending(x) \
 	if (!trophies_state[x]) { \
@@ -1023,14 +1024,14 @@ sequence *seg1059_1_1060() { return &sequences[448]; }
 sequence *seg1061_a_1069_1069_1() { return &sequences[449]; }
 sequence *seg1063_1078() { return &sequences[450]; }
 sequence *seg1067_3() { return &sequences[451]; }
-sequence *seg1068_1_1068_3() { trophies_unlock(THE_LIONS_DEN); return &sequences[452]; }
+sequence *seg1068_1_1068_3() { unlock_ending(THE_LIONS_DEN); return &sequences[452]; }
 sequence *seg1069_3() { return &sequences[453]; }
 sequence *seg1072_a() { return &sequences[456]; }
 sequence *seg1072_b_1073_1_1073_2() { return &sequences[457]; }
 sequence *seg1075_1() { return &sequences[458]; }
 sequence *seg1075_6_1075_2() { return &sequences[464]; }
-sequence *seg1079() { trophies_unlock(THE_COWARD); game_vars.go_home = 1; return &sequences[459]; }
-sequence *seg1079_special() { trophies_unlock(THE_COWARD); game_vars.go_home = 1; game_vars.cut_end_seg1078 = 1; return &sequences[459]; }
+sequence *seg1079() { unlock_ending(THE_COWARD); game_vars.go_home = 1; return &sequences[459]; }
+sequence *seg1079_special() { unlock_ending(THE_COWARD); game_vars.go_home = 1; game_vars.cut_end_seg1078 = 1; return &sequences[459]; }
 sequence *eval_may_stabbed() { return game_vars.may_stabbed ? &sequences[465] : &sequences[466]; }
 sequence *eval_go_home() { return game_vars.go_home ? &sequences[463] : seg1068_1_1068_3(); }
 sequence *eval_called_parr() { return game_vars.called_parr ? &sequences[454] : &sequences[455]; }
@@ -1604,8 +1605,8 @@ sequence *unlock_choices_matter() { trophies_unlock(CHOICES_MATTER); return NULL
 sequence *unlock_even_tempered() { trophies_unlock(EVEN_TEMPERED); return NULL; }
 sequence *unlock_interrogation() { trophies_unlock(INTERROGATION); return NULL; }
 sequence *unlock_good_karma() { trophies_unlock(GOOD_KARMA); return NULL; }
-sequence *unlock_the_fool() { trophies_unlock(THE_FOOL); return NULL; }
-sequence *unlock_the_ploy() { trophies_unlock(THE_PLOY); return NULL; }
+sequence *unlock_the_fool() { unlock_ending(THE_FOOL); return NULL; }
+sequence *unlock_the_ploy() { unlock_ending(THE_PLOY); return NULL; }
 
 void fill_events() {
 	// OPENING
@@ -3691,19 +3692,23 @@ void load_localization_files(int lang) {
 }
 
 void menu_setup() {
-	// Loading trophies state
-	for (uint8_t i = 0; i < NUM_TROPHIES; i++) {
-		trophies_state[i] = trophies_is_unlocked(i);
-		if (trophies_state[i] && i > PLATINUM_TROPHY && i < CAUSE_AND_EFFECT) { // Ending related trophies
-			num_unlocked_endings++;
+	if (!trophies_state_detected) {
+		// Loading trophies state
+		num_unlocked_endings = 0;
+		for (uint8_t i = 0; i < NUM_TROPHIES; i++) {
+			trophies_state[i] = trophies_is_unlocked(i);
+			if (trophies_state[i] && i > PLATINUM_TROPHY && i < CAUSE_AND_EFFECT) { // Ending related trophies
+				num_unlocked_endings++;
+			}
+#ifdef DEBUG
+			printf("Trophy #%u %s unlocked.\n", i, trophies_state[i] ? "is" : "is not");
+#endif
 		}
 #ifdef DEBUG
-		printf("Trophy #%u %s unlocked.\n", i, trophies_state[i] ? "is" : "is not");
+		printf("%u endings seen.\n", num_unlocked_endings);
 #endif
+		trophies_state_detected = 1;
 	}
-#ifdef DEBUG
-	printf("%u endings seen.\n", num_unlocked_endings);
-#endif
 
 	// Setting up engine theme for menu
 	set_theme_color(colors.btn_hover_bg, 0.0f, 0.0f, 0.0f, 0.0f);
