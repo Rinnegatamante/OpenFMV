@@ -1,11 +1,5 @@
 SOURCES	:= .
 
-LIBS = -lsoloud -lz -lm -limgui -lvitaGL -lvitashark -lSceShaccCgExt -lmathneon -ltaihen_stub \
-  -lSceAppMgr_stub -lSceAppUtil_stub -lSceAudio_stub -lSceCtrl_stub -lSceCommonDialog_stub \
-  -lSceDisplay_stub -lSceFios2_stub -lSceGxm_stub -lSceShaccCg_stub -lSceSysmodule_stub \
-  -lScePower_stub -lSceKernelDmacmgr_stub -lSceAvPlayer_stub -lSceTouch_stub \
-  -Wl,--whole-archive -lpthread -Wl,--no-whole-archive -lSceNpTrophy_stub
-
 CFILES   := $(foreach dir,$(SOURCES), $(wildcard $(dir)/*.c))
 CPPFILES   := $(foreach dir,$(SOURCES), $(wildcard $(dir)/*.cpp))
 BINFILES := $(foreach dir,$(DATA), $(wildcard $(dir)/*.bin))
@@ -15,6 +9,22 @@ PREFIX  = arm-vita-eabi
 CC      = $(PREFIX)-gcc
 CXX      = $(PREFIX)-g++
 CFLAGS  = -fno-lto -g -Wl,-q
+LIBS := -limgui
+
+# Available audio backends
+# SoLoud
+CFLAGS += -DHAVE_SOLOUD
+LIBS += -lsoloud
+# SDL2 Mixer X
+CFLAGS += -DHAVE_SDL2_MIXER_EXT
+LIBS += -lSDL2_Mixer_ext -lSDL2 -lSceMotion_stub -lSceIme_stub -lSceHid_stub -lmpg123 -lvorbisfile -lvorbis \
+	-lmikmod -lflac -lSceAudioIn_stub -lopusfile -lopus -logg -lxmp -lModplug
+
+LIBS += -lz -lm -lvitaGL -lvitashark -lSceShaccCgExt -lmathneon -ltaihen_stub \
+  -lSceAppMgr_stub -lSceAppUtil_stub -lSceAudio_stub -lSceCtrl_stub -lSceCommonDialog_stub \
+  -lSceDisplay_stub -lSceFios2_stub -lSceGxm_stub -lSceShaccCg_stub -lSceSysmodule_stub \
+  -lScePower_stub -lSceKernelDmacmgr_stub -lSceAvPlayer_stub -lSceTouch_stub \
+  -Wl,--whole-archive -lpthread -Wl,--no-whole-archive -lSceNpTrophy_stub
 
 ifeq ($(LATE_SHIFT),1)
 CFLAGS += -DLATE_SHIFT -DHAVE_TROPHIES

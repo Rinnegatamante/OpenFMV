@@ -111,7 +111,6 @@ int main(int argc, char *argv[]) {
 		config.music_volume = 1.0f;
 		sceAppUtilSystemParamGetInt(SCE_SYSTEM_PARAM_ID_LANG, &config.language);
 	}
-	audio_set_global_volume(config.master_volume);
 	load_localization_files(config.language);
 	
 	// Initing vitaGL and video player
@@ -131,17 +130,19 @@ int main(int argc, char *argv[]) {
 	}
 #endif
 
-	// Show game splashscreen
-	while (game_splashscreen()) {
-		vglSwapBuffers(GL_FALSE);
-	}
-
 	// Initing audio player and menu audio sounds
+	audio_system_init();
 	audio_init();
+	audio_set_global_volume(config.master_volume);
 	snd_hover = audio_sound_load("app0:data/menu_move.ogg");
 	snd_click = audio_sound_load("app0:data/menu_click.ogg");
 	snd_pause = audio_sound_load("app0:data/menu_pause.ogg");
 	snd_unpause = audio_sound_load("app0:data/menu_unpause.ogg");
+	
+	// Show game splashscreen
+	while (game_splashscreen()) {
+		vglSwapBuffers(GL_FALSE);
+	}
 	
 	// Initializing dear ImGui
 	static const ImWchar compact_ranges[] = { // All languages except chinese
@@ -205,6 +206,8 @@ main_menu:
 	game_prepare();
 	
 	// Main Loop
+	uint32_t last_delta = 0;
+	uint32_t last_tick = sceKernelGetProcessTimeLow();
 	game_state = GAME_ACTIVE;
 	ImVec2 btn1_size = ImVec2(0, 0);
 	ImVec2 btn2_size = ImVec2(0, 0);
@@ -409,6 +412,7 @@ skip_choices:
 				game_pause_menu(&pause_menu_triggered);
 				game_setup();
 				reload_theme();
+				last_tick = sceKernelGetProcessTimeLow();
 			}
 
 			// Update display
@@ -490,8 +494,22 @@ handle_event:
 			}
 		}
 		
+		// sceAvPlayer sometimes locks on last video frame without issueing a STOP event, so we need to manually deal with this bug
+		if (player_state != PLAYER_PAUSED) {
+			if (cur_delta != last_delta) {
+				last_delta = cur_delta;
+				last_tick = sceKernelGetProcessTimeLow();
+			} else {
+				if (sceKernelGetProcessTimeLow() - last_tick > 500000 and cur_delta > 5000) {
+					debug_log("sceAvPlayer lock bug. Skipping to next sequence.\n");
+					goto next_sequence;
+				}
+			}
+		}
+		
 		// Auto-select default choice if player gives no input
 		if (player_state == PLAYER_INACTIVE) {
+next_sequence:
 			if (cur_seq->d) {
 				start_sequence(cur_seq->d());
 			} else { // If no default choice is set, we return to main menu

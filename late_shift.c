@@ -970,7 +970,7 @@ sequence *seg745() { game_vars.finish_ep7_target = HOSPITAL_EP09B; return &seque
 sequence *seg747_2_749_750() { game_vars.finish_ep7_target = PAYBACK_EP11; game_vars.from_ep7_to_ep11 = 1; game_vars.from_ep9_to_ep11 = 1; return &sequences[313]; }
 sequence *seg765_756_757() { game_vars.finish_ep7_target = PAYBACK_EP11; game_vars.from_ep7_to_ep11 = 1; game_vars.from_ep9_to_ep11 = 1; game_vars.passed_by_seg765 = 1; return &sequences[314]; }
 sequence *seg770() { return &sequences[315]; }
-sequence *eval_ep7_target() { return game_vars.finish_ep7_target == PAYBACK_EP11 ? NULL : seg951_1_951_2(); }
+sequence *eval_ep7_target() { return game_vars.finish_ep7_target == PAYBACK_EP11 ? eval_from_ep9_to_ep11() : seg951_1_951_2(); }
 sequence *seg770_2() { return &sequences[316]; }
 // EPISODE 9A
 sequence *seg901_1_901_2() { exec_save(EPISODE_09A); purge_from_ep7(); return &sequences[317]; }
@@ -4087,6 +4087,7 @@ void game_main_menu() {
 	SceIoStat st;
 	int has_save = sceIoGetstat(PLAYTHROUGH_SAVE_FILE, &st) ? 0 : 1;
 	int btns_state[16];
+	int audio_backend_warning = 0;
 	int in_options = 0;
 	int in_decisions = force_decisions;
 	force_decisions = 0;
@@ -4094,6 +4095,7 @@ void game_main_menu() {
 	uint32_t num_episodes_seen = get_num_episodes_seen();
 	num_unlocked_endings = get_num_seen_endings();
 	
+	int current_audio_backend = config.audio_backend;
 	char version_text[256];
 	sprintf(version_text, "OpenFMV v.%s (LS v.%s)", ENGINE_VER, GAME_VER);
 	sequence *out = NULL;
@@ -4110,15 +4112,19 @@ void game_main_menu() {
 			float x_decisions = calc_centered_button_pos(game_strings[8]);
 			float x_options = calc_centered_button_pos(game_strings[9]);
 			float x_exitgame = calc_centered_button_pos(game_strings[10]);
+			float x_ok = calc_centered_button_pos(game_strings[2]);
 			float x_back = calc_centered_button_pos(game_strings[3]);
 			float x_volume = calc_centered_button_pos(game_strings[14]);
 			float x_music_volume = calc_centered_button_pos(game_strings[15]);
-			char subtitles_text[256], lang_text[256];
+			char subtitles_text[256], lang_text[256], backend_text[256];
 			sprintf(subtitles_text, "%s: %s###sub", game_strings[16], config.subtitles ? game_strings[0] : game_strings[1]);
 			float x_subtitles = calc_centered_button_pos(subtitles_text);
 			sprintf(lang_text, "%s: %s###lang", game_strings[17], game_strings[18]);
 			float x_lang = calc_centered_button_pos(lang_text);
 			float x_newgame_warn = calc_centered_button_pos(game_strings[5]);
+			float x_audio_backend_warn = calc_centered_button_pos("An application restart is required for the new audio backend to be used.");
+			sprintf(backend_text, "Audio Driver: %s###backend", audio_backends[config.audio_backend]);
+			float x_backend = calc_centered_button_pos(backend_text);
 			
 			init_menu(0.0f, 0.0f, 0.0f, 960.0f, 600.0f, "##main_menu");
 			if (!in_options && !in_decisions) {
@@ -4184,23 +4190,36 @@ void game_main_menu() {
 						load_localization_files(available_lang[current_lang]);
 					}
 					draw_selector(x_subtitles, 210, subtitles_text, &btns_state[5], &config.subtitles, 2);
+					draw_selector(x_backend, 250, backend_text, &btns_state[12], &config.audio_backend, AUDIO_BACKENDS_NUM);
 					int vol = (int)(config.master_volume * 255.0f);
-					draw_fast_selector(x_volume, 245, game_strings[14], &btns_state[9], &vol, 255);
+					draw_fast_selector(x_volume, 285, game_strings[14], &btns_state[9], &vol, 255);
 					config.master_volume = (float)vol / 255.0f;
-					draw_progressbar(352, 275, 256, 6, config.master_volume, "##barvol");
+					draw_progressbar(352, 315, 256, 6, config.master_volume, "##barvol");
 					int mus_vol = (int)(config.music_volume * 255.0f);
-					draw_fast_selector(x_music_volume, 285, game_strings[15], &btns_state[10], &mus_vol, 255);
+					draw_fast_selector(x_music_volume, 325, game_strings[15], &btns_state[10], &mus_vol, 255);
 					config.music_volume = (float)mus_vol / 255.0f;
-					draw_progressbar(352, 315, 256, 6, config.music_volume, "##barmusvol");
+					draw_progressbar(352, 355, 256, 6, config.music_volume, "##barmusvol");
 					audio_set_global_volume(config.master_volume);
 					audio_track_set_volume(bg_audio_handle, 1.0f);
-					if (draw_button(x_back, 325, game_strings[3], &btns_state[6])) {
+					if (draw_button(x_back, 370, game_strings[3], &btns_state[6])) {
+						if (config.audio_backend != current_audio_backend) {
+							current_audio_backend = config.audio_backend;
+							audio_backend_warning = 1;
+						}
 						in_options = 0;
 						FILE *f = fopen(CONFIG_FILE, "wb");
 						fwrite(&config, 1, sizeof(engine), f);
 						fclose(f);
 					}
 					end_menu();
+			} else if (audio_backend_warning) {
+				float w = 960.0f - x_audio_backend_warn * 2;
+				init_menu(1.0f, x_audio_backend_warn, 200.0f, w, 100.0f, "##audio_warning");
+				draw_centered_text(5.0f, "An application restart is required for the new audio backend to be used.", 1.0f);
+				if (draw_main_button((w - (960.0f - 2 * x_ok)) / 2, 60.0f, game_strings[2], &btns_state[14])) {
+					audio_backend_warning = 0;
+				}
+				end_menu();
 			} else if (request_new_game) {
 				if (has_save) {
 					float w = 960.0f - x_newgame_warn * 2;
@@ -4245,7 +4264,7 @@ void game_main_menu() {
 				draw_centered_italic_text(350, game_strings[21], 0.8f);
 				sprintf(str, "%u", global_vars.taken_decisions);
 				draw_centered_text(370, str, 0.7f);
-				if (draw_main_button(x_back, 450, game_strings[3], &btns_state[6])) {
+				if (draw_main_button(x_back, 450, game_strings[3], &btns_state[13])) {
 					in_decisions = 0;
 				}
 				end_menu();

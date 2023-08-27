@@ -55,6 +55,7 @@ typedef struct {
 	float master_volume;
 	float music_volume;
 	int language;
+	int audio_backend;
 } engine;
 
 typedef struct subtitle {
