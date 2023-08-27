@@ -31,9 +31,8 @@ Five Dates: `make FIVE_DATES=1`
 ## Setting up the game
 ### Late Shift
 - Install `lateshift.vpk`.
-- Place the content of `data/Late Shift` (provided in the Release inside a .zip file) in `ux0:data/Late Shift`.
 - Grab the `Subtitles` folder from your purchased copy of the game and place it in `ux0:data/Late Shift`.
-- Place `scripts/video_process.bat` inside the folder of your purchased copy of the game and run it (you'll need to install ffmpeg if you don't have it already).
+- Place `video_process.bat` inside the folder of your purchased copy of the game and run it (you'll need to install [ffmpeg](https://ffmpeg.org/) if you don't have it already).
 - Install [Total Commander](https://www.ghisler.com/download.htm) and its [PSARC plugin](http://totalcmd.net/plugring/PSARC.html).
 - Launch Total Commander and navigate up to your purchased copy of the game main folder.
 - Right click on `Converted` folder; it will turn red.
@@ -46,8 +45,9 @@ Five Dates: `make FIVE_DATES=1`
 - Launch AssetStudioGUI and click on `File -> Load File`.
 - Open the file `LateShift_Data/StreamingAssets/AssetBundles/audio` with it.
 - Click on `Export -> All assets` and select an empty folder where to extract the assets.
-- Place `scripts/audio_process.bat` in the same folder where you extracted the assets and run it.
+- Place `audio_process.exe` and `msys-2.0.dll` in the same folder where you extracted the assets and run it.
 - Copy the resulting `oggs` folder in `ux0:data/Late Shift`.
 
 ## Credits
 - hatoving: Helping with setting up tools and giving an hand with initial Late Shift rewrite.
+- CatoTheYounfer: Testing Late Shift rewrite.

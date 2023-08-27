@@ -1150,72 +1150,72 @@ sequence *endcredits() { return &sequences[504]; }
 	
 // Game event funcs
 sequence *seg435_a_event() { if (game_vars.may_likes_matt >= 4) { return seg435_a(); } return NULL; }
-sequence *start_op_bgm() { mus[OPENING] = audio_sample_start("EP01 Opening", 0, 0.20033f); return NULL; }
+sequence *start_op_bgm() { mus[OPENING] = audio_sample_start("EP01/EP01 Opening", 0, 0.20033f); return NULL; }
 sequence *fade_op_vol_1() { audio_sample_set_volume(mus[OPENING], 0.125887f); return NULL; }
 sequence *fade_op_vol_2() { audio_sample_set_volume(mus[OPENING], 0.198939f); return NULL; }
 sequence *fade_op_vol_3() { audio_sample_set_volume(mus[OPENING], 0.126269f); return NULL; }
 sequence *fade_op_vol_4() { audio_sample_set_volume(mus[OPENING], 0.199322f); return NULL; }
 sequence *fade_op_vol_5() { audio_sample_set_volume(mus[OPENING], 0.124558f); return NULL; }
 sequence *fade_op_vol_6() { audio_sample_set_volume(mus[OPENING], 0.198644f); return NULL; }
-sequence *start_atmo_station() { mus[ATMO_STATION] = audio_sample_start("EP01 Atmo Int Tube Station", 0, 1.0f); return NULL; }
-sequence *start_selfish_title() { mus[OPENING2] = audio_sample_start("EP01 Titles SelfFish", 0, 0.3178015f); return NULL; }
-sequence *start_selfless_title() { mus[OPENING2] = audio_sample_start("EP01 Titles SelfLess", 0, 0.3161767f); return NULL; }
+sequence *start_atmo_station() { mus[ATMO_STATION] = audio_sample_start("EP01/EP01 Atmo Int Tube Station", 0, 1.0f); return NULL; }
+sequence *start_selfish_title() { mus[OPENING2] = audio_sample_start("EP01/EP01 Titles SelfFish", 0, 0.3178015f); return NULL; }
+sequence *start_selfless_title() { mus[OPENING2] = audio_sample_start("EP01/EP01 Titles SelfLess", 0, 0.3161767f); return NULL; }
 sequence *fade_out_op() { audio_sample_fade(mus[OPENING], 0.198644f, 0.0f, 10750, 14750); return NULL; }
 sequence *fade_out_op2() { audio_sample_fade(mus[OPENING], 0.198644f, 0.0f, 0, 4000); return NULL; }
 sequence *fade_out_atmo_station() { audio_sample_fade(mus[ATMO_STATION], 1.0f, 0.0f, 19417, 24500); return NULL; }
 sequence *fade_out_atmo_station2() { audio_sample_fade(mus[ATMO_STATION], 1.0f, 0.0f, 17792, 23000); return NULL; }
 sequence *stop_opening() { audio_sample_stop_and_free(mus[OPENING]); return NULL; }
 sequence *stop_atmo_station() { audio_sample_stop_and_free(mus[ATMO_STATION]); return NULL; }
-sequence *start_loneliness_carpark() { mus[CAR_PARK] = audio_sample_start("EP01 Loneliness Carpark Neu", 0, 0.1110497f); return NULL; }
-sequence *start_garage_atmo() { mus[ATMO_GARAGE] = audio_sample_start("EP01 Atmo Int Garage Hut", 1, 1.0f); return NULL; }
+sequence *start_loneliness_carpark() { mus[CAR_PARK] = audio_sample_start("EP01/EP01 Loneliness Carpark Neu", 0, 0.1110497f); return NULL; }
+sequence *start_garage_atmo() { mus[ATMO_GARAGE] = audio_sample_start("EP01/EP01 Atmo Int Garage Hut", 1, 1.0f); return NULL; }
 sequence *stop_atmo_garage() { audio_sample_stop_and_free(mus[ATMO_GARAGE]); return NULL; }
-sequence *start_car_park_melody() { mus[CAR_PARK_MELODY] = audio_sample_start("EP01 Car Park Melody", 0, 0.1767543f); return NULL; }
+sequence *start_car_park_melody() { mus[CAR_PARK_MELODY] = audio_sample_start("EP01/EP01 Car Park Melody", 0, 0.1767543f); return NULL; }
 sequence *stop_opening2() { audio_sample_stop_and_free(mus[OPENING2]); return NULL; }
 sequence *fade_car_park_melody() { audio_sample_fade(mus[CAR_PARK_MELODY], 0.1767543f, 0.0f, 2333, 7750); return NULL; }
 sequence *fade_car_park_melody2() { audio_sample_fade(mus[CAR_PARK_MELODY], 0.1767543f, 0.0f, 10875, 18875); return NULL; }
 sequence *fade_car_park_melody3() { audio_sample_fade(mus[CAR_PARK_MELODY], 0.1767543f, 0.0f, 4667, 12667); return NULL; }
 sequence *fade_car_park_melody4() { audio_sample_fade(mus[CAR_PARK_MELODY], 0.1767543f, 0.0f, 41, 3625); return NULL; }
 sequence *fade_car_park_melody5() { audio_sample_fade(mus[CAR_PARK_MELODY], 0.1767543f, 0.0f, 42, 7042); return NULL; }
-sequence *start_lee_noise() { mus[LEE_NOISE] = audio_sample_start("EP01 Lee's Noise", 0, 0.2506548f); return NULL; }
-sequence *start_lee_noise2() { mus[LEE_NOISE] = audio_sample_start("EP01 Lee's Noise", 0, 0.2514759f); return NULL; }
-sequence *start_lee_noise3() { mus[LEE_NOISE] = audio_sample_start("EP01 Lee's Noise", 0, 0.2517725f); return NULL; }
+sequence *start_lee_noise() { mus[LEE_NOISE] = audio_sample_start("EP01/EP01 Lee's Noise", 0, 0.2506548f); return NULL; }
+sequence *start_lee_noise2() { mus[LEE_NOISE] = audio_sample_start("EP01/EP01 Lee's Noise", 0, 0.2514759f); return NULL; }
+sequence *start_lee_noise3() { mus[LEE_NOISE] = audio_sample_start("EP01/EP01 Lee's Noise", 0, 0.2517725f); return NULL; }
 sequence *stop_carpark_melody() { audio_sample_stop_and_free(mus[CAR_PARK_MELODY]); return NULL; }
-sequence *start_carpark_deal() { mus[CAR_PARK_DEAL] = audio_sample_start("EP01 Carpark Deal", 0, 0.1579017f); return NULL; }
-sequence *start_scream_close() { mus[SCREAM_CLOSE] = audio_sample_start("EP01 Atmo Scream Close", 0, 0.1635859f); return NULL; }
+sequence *start_carpark_deal() { mus[CAR_PARK_DEAL] = audio_sample_start("EP01/EP01 Carpark Deal", 0, 0.1579017f); return NULL; }
+sequence *start_scream_close() { mus[SCREAM_CLOSE] = audio_sample_start("EP01/EP01 Atmo Scream Close", 0, 0.1635859f); return NULL; }
 sequence *stop_carpark_deal() { audio_sample_stop_and_free(mus[CAR_PARK_DEAL]); return NULL; }
-sequence *start_elodie_escape() { mus[ELODIE_ESCAPE] = audio_sample_start("EP01 Elodie Escape", 0, 0.1770804f); return NULL; }
-sequence *start_elodie_escape2() { mus[ELODIE_ESCAPE] = audio_sample_start("EP01 Elodie Escape", 0, 0.1769967f); return NULL; }
+sequence *start_elodie_escape() { mus[ELODIE_ESCAPE] = audio_sample_start("EP01/EP01 Elodie Escape", 0, 0.1770804f); return NULL; }
+sequence *start_elodie_escape2() { mus[ELODIE_ESCAPE] = audio_sample_start("EP01/EP01 Elodie Escape", 0, 0.1769967f); return NULL; }
 sequence *fade_car_park_deal() { audio_sample_fade(mus[CAR_PARK_DEAL], 0.1579017f, 0.0f, 6917, 7917); return NULL; }
 sequence *fade_car_park_deal2() { audio_sample_fade(mus[CAR_PARK_DEAL], 0.1579017f, 0.0f, 11500, 12500); return NULL; }
-sequence *start_lee_stinger() { mus[LEE_STINGER] = audio_sample_start("EP01 Lee Stinger", 0, 0.1989933f); return NULL; }
-sequence *start_garage_parkfield() { mus[GARAGE_PARKFIELD] = audio_sample_start("EP01 Atmo Int Garage Parkfield", 1, 1.0f); return NULL; }
-sequence *start_cable_tie() { mus[CABLE_TIE] = audio_sample_start("EP01 Cable Tie Stinger", 0, 0.1998071f); return NULL; }
-sequence *start_scream_far() { mus[SCREAM_FAR] = audio_sample_start("EP01 Atmo Scream Far", 0, 1.0f); return NULL; }
-sequence *start_cctv() { mus[CCTV] = audio_sample_start("EP01 CCTV", 0, 0.2512645f); return NULL; }
-sequence *start_rope_lee_stinger() { mus[ROPE_LEE_STINGER] = audio_sample_start("EP01 Rope Lee Stinger", 0, 0.1274621f); return NULL; }
-sequence *start_weapon_stinger() { mus[WEAPON_STINGER] = audio_sample_start("EP01 Weapon Stinger", 0, 0.1760814f); return NULL; }
-sequence *start_weapon_stinger2() { mus[WEAPON_STINGER] = audio_sample_start("EP01 Weapon Stinger", 0, 0.1752229f); return NULL; }
-sequence *start_carpark_nodeal() { mus[CAR_PARK_NO_DEAL] = audio_sample_start("EP01 Carpark NoDeal", 0, 0.1246213f); return NULL; }
-sequence *start_carpark_nodeal2() { mus[CAR_PARK_NO_DEAL] = audio_sample_start("EP01 Carpark NoDeal", 0, 0.1274091f); return NULL; }
-sequence *start_carpark_nodeal3() { mus[CAR_PARK_NO_DEAL] = audio_sample_start("EP01 Carpark NoDeal", 0, 0.1262329f); return NULL; }
+sequence *start_lee_stinger() { mus[LEE_STINGER] = audio_sample_start("EP01/EP01 Lee Stinger", 0, 0.1989933f); return NULL; }
+sequence *start_garage_parkfield() { mus[GARAGE_PARKFIELD] = audio_sample_start("EP01/EP01 Atmo Int Garage Parkfield", 1, 1.0f); return NULL; }
+sequence *start_cable_tie() { mus[CABLE_TIE] = audio_sample_start("EP01/EP01 Cable Tie Stinger", 0, 0.1998071f); return NULL; }
+sequence *start_scream_far() { mus[SCREAM_FAR] = audio_sample_start("EP01/EP01 Atmo Scream Far", 0, 1.0f); return NULL; }
+sequence *start_cctv() { mus[CCTV] = audio_sample_start("EP01/EP01 CCTV", 0, 0.2512645f); return NULL; }
+sequence *start_rope_lee_stinger() { mus[ROPE_LEE_STINGER] = audio_sample_start("EP01/EP01 Rope Lee Stinger", 0, 0.1274621f); return NULL; }
+sequence *start_weapon_stinger() { mus[WEAPON_STINGER] = audio_sample_start("EP01/EP01 Weapon Stinger", 0, 0.1760814f); return NULL; }
+sequence *start_weapon_stinger2() { mus[WEAPON_STINGER] = audio_sample_start("EP01/EP01 Weapon Stinger", 0, 0.1752229f); return NULL; }
+sequence *start_carpark_nodeal() { mus[CAR_PARK_NO_DEAL] = audio_sample_start("EP01/EP01 Carpark NoDeal", 0, 0.1246213f); return NULL; }
+sequence *start_carpark_nodeal2() { mus[CAR_PARK_NO_DEAL] = audio_sample_start("EP01/EP01 Carpark NoDeal", 0, 0.1274091f); return NULL; }
+sequence *start_carpark_nodeal3() { mus[CAR_PARK_NO_DEAL] = audio_sample_start("EP01/EP01 Carpark NoDeal", 0, 0.1262329f); return NULL; }
 sequence *fade_garage_parkfield() { audio_sample_fade(mus[GARAGE_PARKFIELD], 1.0f, 0.0f, 19958, 22250); return NULL; }
 sequence *stop_garage_parkfield() { audio_sample_stop_and_free(mus[GARAGE_PARKFIELD]); return NULL; }
 sequence *stop_carpark_nodeal() { audio_sample_stop_and_free(mus[CAR_PARK_NO_DEAL]); return NULL; }
 sequence *stop_elodie_escape() { audio_sample_stop_and_free(mus[ELODIE_ESCAPE]); return NULL; }
-sequence *start_inside_car() { mus[INSIDE_CAR] = audio_sample_start("EP01 Inside Car", 0, 0.2504064f); return NULL; }
-sequence *start_matt_escape() { mus[MATT_ESCAPE] = audio_sample_start("EP01 Matt Escape", 0, 0.1586634f); return NULL; }
+sequence *start_inside_car() { mus[INSIDE_CAR] = audio_sample_start("EP01/EP01 Inside Car", 0, 0.2504064f); return NULL; }
+sequence *start_matt_escape() { mus[MATT_ESCAPE] = audio_sample_start("EP01/EP01 Matt Escape", 0, 0.1586634f); return NULL; }
 sequence *stop_inside_car() { audio_sample_stop_and_free(mus[INSIDE_CAR]); return NULL; }
 sequence *fade_inside_car() { audio_sample_fade(mus[INSIDE_CAR], 0.2504064f, 0.0f, 41, 3042); return NULL; }
 sequence *fade_inside_car2() { audio_sample_fade(mus[INSIDE_CAR], 0.2504064f, 0.0f, 0, 3000); return NULL; }
-sequence *start_gutted_stinger() { mus[GUTTED_STINGER] = audio_sample_start("EP01 Gutted Stinger", 0, 0.177706f); return NULL; }
-sequence *start_lee_line() { mus[LEE_LINE] = audio_sample_start("EP02 Leeline", 0, 0.07848254f); return NULL; }
-sequence *start_atmo_ext_house() { mus[ATMO_EXT_HOUSE] = audio_sample_start("EP02 Atmo Ext House", 0, 1.0f); return NULL; }
+sequence *start_gutted_stinger() { mus[GUTTED_STINGER] = audio_sample_start("EP01/EP01 Gutted Stinger", 0, 0.177706f); return NULL; }
+sequence *start_lee_line() { mus[LEE_LINE] = audio_sample_start("EP02/EP02 Leeline", 0, 0.07848254f); return NULL; }
+sequence *start_atmo_ext_house() { mus[ATMO_EXT_HOUSE] = audio_sample_start("EP02/EP02 Atmo Ext House", 0, 1.0f); return NULL; }
 sequence *fade_matt_escape() { audio_sample_fade(mus[MATT_ESCAPE], 0.1586634f, 0.0f, 500, 7000); return NULL; }
 sequence *fade_lee_line() { audio_sample_fade(mus[LEE_LINE], 0.07848254f, 0.06439577f, 16833, 18875); return NULL; }
 sequence *stop_matt_escape() { audio_sample_stop_and_free(mus[MATT_ESCAPE]); return NULL; }
-sequence *maybe_start_matt_escape() { if (!game_vars.matt_escape) { mus[MATT_ESCAPE] = audio_sample_start("EP01 Matt Escape", 0, 0.1586634f); } game_vars.matt_escape = 0; return NULL; }
-sequence *start_atmo_train_station() { mus[ATMO_TRAIN_STATION] = audio_sample_start("EP02 Atmo Ext Train Station", 1, 1.0f); return NULL; }
-sequence *start_atmo_train() { mus[ATMO_TRAIN] = audio_sample_start("EP02 Atmo Ext Train", 0, 1.0f); return NULL; }
+sequence *maybe_start_matt_escape() { if (!game_vars.matt_escape) { mus[MATT_ESCAPE] = audio_sample_start("EP01/EP01 Matt Escape", 0, 0.1586634f); } game_vars.matt_escape = 0; return NULL; }
+sequence *start_atmo_train_station() { mus[ATMO_TRAIN_STATION] = audio_sample_start("EP02/EP02 Atmo Ext Train Station", 1, 1.0f); return NULL; }
+sequence *start_atmo_train() { mus[ATMO_TRAIN] = audio_sample_start("EP02/EP02 Atmo Ext Train", 0, 1.0f); return NULL; }
 sequence *fade_matt_escape2() { audio_sample_set_volume(mus[MATT_ESCAPE], 0.1098583f); return NULL; }
 sequence *fade_matt_escape3() { audio_sample_set_volume(mus[MATT_ESCAPE], 0.2363281f); return NULL; }
 sequence *fade_matt_escape4() { audio_sample_fade(mus[MATT_ESCAPE], 0.1098583f, 0.0f, 7667, 11667); return NULL; }
@@ -1223,103 +1223,103 @@ sequence *fade_matt_escape5() { audio_sample_fade(mus[MATT_ESCAPE], 0.1098583f, 
 sequence *fade_lee_line2() { audio_sample_fade(mus[LEE_LINE], 0.06439577f, 0.09268466f, 500, 2000); return NULL; }
 sequence *fade_lee_line3() { audio_sample_fade(mus[LEE_LINE], 0.06439577f, 0.0f, 0, 20000); return NULL; }
 sequence *stop_atmo_ext_house() { audio_sample_stop_and_free(mus[ATMO_EXT_HOUSE]); return NULL; }
-sequence *start_showdown_riser() { mus[SHOWDOWN_RISER] = audio_sample_start("EP11 Showdown Riser", 0, 0.1749866f); return NULL; }
+sequence *start_showdown_riser() { mus[SHOWDOWN_RISER] = audio_sample_start("EP11/EP11 Showdown Riser", 0, 0.1749866f); return NULL; }
 sequence *stop_atmo_train_station() { audio_sample_stop_and_free(mus[ATMO_TRAIN_STATION]); return NULL; }
-sequence *start_jeff_line() { mus[JEFF_LINE] = audio_sample_start("EP02 Jeffline", 0, 0.04032431f); return NULL; }
+sequence *start_jeff_line() { mus[JEFF_LINE] = audio_sample_start("EP02/EP02 Jeffline", 0, 0.04032431f); return NULL; }
 sequence *fade_jeff_line() { audio_sample_fade(mus[JEFF_LINE], 0.04032431f, 0.0750012f, 36375, 48375); return NULL; }
 sequence *fade_jeff_line2() { audio_sample_fade(mus[JEFF_LINE], 0.04032431f, 0.09360203f, 20875, 24375); return NULL; }
-sequence *start_jeff_gun() { mus[JEFF_GUN] = audio_sample_start("EP02 Jeffgun", 0, 0.2502597f); return NULL; }
-sequence *start_leg_it() { mus[LEG_IT] = audio_sample_start("EP02 Leg it", 0, 0.2508919f); return NULL; }
-sequence *start_atmo_house() { mus[ATMO_HOUSE] = audio_sample_start("EP02 Atmo Int House", 1, 1.0f); return NULL; }
-sequence *start_any_suggestions() { mus[ANY_SUGGESTIONS] = audio_sample_start("EP02 Any Suggestions", 0, 0.2505929f); return NULL; }
-sequence *start_one_less_problem() { mus[ONE_LESS_PROBLEM] = audio_sample_start("EP02 One Less Problem", 0, 0.2497907f); return NULL; }
+sequence *start_jeff_gun() { mus[JEFF_GUN] = audio_sample_start("EP02/EP02 Jeffgun", 0, 0.2502597f); return NULL; }
+sequence *start_leg_it() { mus[LEG_IT] = audio_sample_start("EP02/EP02 Leg it", 0, 0.2508919f); return NULL; }
+sequence *start_atmo_house() { mus[ATMO_HOUSE] = audio_sample_start("EP02/EP02 Atmo Int House", 1, 1.0f); return NULL; }
+sequence *start_any_suggestions() { mus[ANY_SUGGESTIONS] = audio_sample_start("EP02/EP02 Any Suggestions", 0, 0.2505929f); return NULL; }
+sequence *start_one_less_problem() { mus[ONE_LESS_PROBLEM] = audio_sample_start("EP02/EP02 One Less Problem", 0, 0.2497907f); return NULL; }
 sequence *fade_any_suggestions() { audio_sample_fade(mus[ANY_SUGGESTIONS], 0.2505929f, 0.0f, 7167, 8167); return NULL; }
 sequence *stop_any_suggestions() { audio_sample_stop_and_free(mus[ANY_SUGGESTIONS]); return NULL; }
 sequence *fade_any_suggestions2() { audio_sample_fade(mus[ANY_SUGGESTIONS], 0.2505929f, 0.0f, 3417, 12400); return NULL; }
-sequence *start_pushing() { mus[PUSHING_YOUR_CHANCE] = audio_sample_start("EP02 Pushing your chance", 0, 0.2500465f); return NULL; }
+sequence *start_pushing() { mus[PUSHING_YOUR_CHANCE] = audio_sample_start("EP02/EP02 Pushing your chance", 0, 0.2500465f); return NULL; }
 sequence *fade_one_less_problem() { audio_sample_fade(mus[ONE_LESS_PROBLEM], 0.2497907f, 0.0f, 16000, 20000); return NULL; }
 sequence *stop_one_less_problem() { audio_sample_stop_and_free(mus[ONE_LESS_PROBLEM]); return NULL; }
 sequence *fade_one_less_problem2() { audio_sample_fade(mus[ONE_LESS_PROBLEM], 0.2497907f, 0.0f, 16292, 20292); return NULL; }
-sequence *start_lets_go() { mus[LETS_GO] = audio_sample_start("EP02 Let's go", 0, 0.0234771f); return NULL; }
+sequence *start_lets_go() { mus[LETS_GO] = audio_sample_start("EP02/EP02 Let's go", 0, 0.0234771f); return NULL; }
 sequence *stop_pushing() { audio_sample_stop_and_free(mus[PUSHING_YOUR_CHANCE]); return NULL; }
 sequence *fade_lets_go() { audio_sample_set_volume(mus[LETS_GO], 0.09779948f); return NULL; }
 sequence *stop_atmo_house() { audio_sample_stop_and_free(mus[ATMO_HOUSE]); return NULL; }
 sequence *stop_lee_line() { audio_sample_stop_and_free(mus[LEE_LINE]); return NULL; }
 sequence *fade_pushing() { audio_sample_fade(mus[PUSHING_YOUR_CHANCE], 0.2500465f, 0.0f, 10292, 19292); return NULL; }
-sequence *start_lets_go2() { mus[LETS_GO] = audio_sample_start("EP02 Let's go", 0, 0.02562345f); return NULL; }
+sequence *start_lets_go2() { mus[LETS_GO] = audio_sample_start("EP02/EP02 Let's go", 0, 0.02562345f); return NULL; }
 sequence *fade_lets_go2() { audio_sample_fade(mus[LETS_GO], 0.02562345f, 0.09779948f, 10292, 19292); return NULL; }
-sequence *start_dance() { mus[DANCE_CHERRY_BLOSSOMS] = audio_sample_start("EP03 Dance of the Cherry Blossoms", 1, 0.0f); return NULL; }
-sequence *start_atmo_entrance() { mus[ATMO_ENTRANCE] = audio_sample_start("EP03 Atmo Ext Entrance", 1, 1.0f); return NULL; }
-sequence *start_auction_guy() { mus[AUCTION_GUY] = audio_sample_start("EP07 Auction Guy", 0, 0.09981957f); return NULL; }
+sequence *start_dance() { mus[DANCE_CHERRY_BLOSSOMS] = audio_sample_start("EP03/EP03 Dance of the Cherry Blossoms", 1, 0.0f); return NULL; }
+sequence *start_atmo_entrance() { mus[ATMO_ENTRANCE] = audio_sample_start("EP03/EP03 Atmo Ext Entrance", 1, 1.0f); return NULL; }
+sequence *start_auction_guy() { mus[AUCTION_GUY] = audio_sample_start("EP07/EP07 Auction Guy", 0, 0.09981957f); return NULL; }
 sequence *fade_lets_go3() { audio_sample_set_volume(mus[LETS_GO], 0.07045589f); return NULL; }
 sequence *fade_lets_go4() { audio_sample_fade(mus[LETS_GO], 0.07045589f, 0.1091634f, 17000, 18000); return NULL; }
 sequence *fade_dance() { audio_sample_fade(mus[DANCE_CHERRY_BLOSSOMS], 0.0f, 0.1775957f, 73958, 79958); return NULL; }
-sequence *start_matt_vo() { if (game_vars.respect_earned) { mus[VO_MATT_NO_MONEY] = audio_voice_sample_start("EP03 VO Matt No Money Taken", 0, 1.0f); } else { mus[VO_MATT_MONEY] = audio_voice_sample_start("EP03 VO Matt Money Taken", 0, 1.0f); } return NULL; }
+sequence *start_matt_vo() { if (game_vars.respect_earned) { mus[VO_MATT_NO_MONEY] = audio_voice_sample_start("EP03/EP03 VO Matt No Money Taken", 0, 1.0f); } else { mus[VO_MATT_MONEY] = audio_voice_sample_start("EP03/EP03 VO Matt Money Taken", 0, 1.0f); } return NULL; }
 sequence *stop_auction_guy() { audio_sample_stop_and_free(mus[AUCTION_GUY]); return NULL; }
 sequence *stop_atmo_entrance() { audio_sample_stop_and_free(mus[ATMO_ENTRANCE]); return NULL; }
 sequence *change_dance() { audio_sample_set_volume(mus[DANCE_CHERRY_BLOSSOMS], 0.1420184f); return NULL; }
-sequence *start_atmo_auction() { mus[ATMO_AUCTION] = audio_sample_start("EP03 Atmo Int Auction", 1, 1.0f); return NULL; }
+sequence *start_atmo_auction() { mus[ATMO_AUCTION] = audio_sample_start("EP03/EP03 Atmo Int Auction", 1, 1.0f); return NULL; }
 sequence *change_dance2() { audio_sample_set_volume(mus[DANCE_CHERRY_BLOSSOMS], 0.07851835f); return NULL; }
-sequence *start_taking_seats() { mus[TAKING_SEATS] = audio_sample_start("EP03 Taking Seats", 0, 0.1574344f); return NULL; }
+sequence *start_taking_seats() { mus[TAKING_SEATS] = audio_sample_start("EP03/EP03 Taking Seats", 0, 0.1574344f); return NULL; }
 sequence *stop_taking_seats() { audio_sample_stop_and_free(mus[TAKING_SEATS]); return NULL; }
 sequence *stop_dance() { audio_sample_stop_and_free(mus[DANCE_CHERRY_BLOSSOMS]); return NULL; }
 sequence *fade_taking_seats() { audio_sample_fade(mus[TAKING_SEATS], 0.1574344f, 0.0f, 69083, 79083); return NULL; }
-sequence *start_bowl_auction() { mus[BOWL_AUCTION] = audio_sample_start("EP03 Bowl Auction", 0, 0.1023089f); return NULL; }
+sequence *start_bowl_auction() { mus[BOWL_AUCTION] = audio_sample_start("EP03/EP03 Bowl Auction", 0, 0.1023089f); return NULL; }
 sequence *fade_bowl_auction() { audio_sample_fade(mus[BOWL_AUCTION], 0.1023089f, 0.1303438f, 90917, 92917); return NULL; }
 sequence *fade_bidding_flache() { audio_sample_fade(mus[BIDDING_FLACHE], 0.422129f, 0.2513284f, 158625, 160625); return NULL; }
-sequence *start_bidding_flache() { mus[BIDDING_FLACHE] = audio_sample_start("EP03 Bidding Flache Nu", 0, 0.422129f); return NULL; }
-sequence *start_bidding_riser_1() { mus[BIDDING_RISER_INTERVENE_1] = audio_sample_start("EP03 Bidding Riser Intervene I", 0, 0.1186769f); return NULL; }
+sequence *start_bidding_flache() { mus[BIDDING_FLACHE] = audio_sample_start("EP03/EP03 Bidding Flache Nu", 0, 0.422129f); return NULL; }
+sequence *start_bidding_riser_1() { mus[BIDDING_RISER_INTERVENE_1] = audio_sample_start("EP03/EP03 Bidding Riser Intervene I", 0, 0.1186769f); return NULL; }
 sequence *stop_atmo_auction() { audio_sample_stop_and_free(mus[ATMO_AUCTION]); return NULL; }
-sequence *start_atmo_hall() { mus[ATMO_HALL] = audio_sample_start("EP03 Atmo Int Hall", 1, 1.0f); return NULL; }
+sequence *start_atmo_hall() { mus[ATMO_HALL] = audio_sample_start("EP03/EP03 Atmo Int Hall", 1, 1.0f); return NULL; }
 sequence *stop_bidding_flache() { audio_sample_stop_and_free(mus[BIDDING_FLACHE]); return NULL; }
-sequence *start_dance2() { mus[DANCE_CHERRY_BLOSSOMS] = audio_sample_start("EP03 Dance of the Cherry Blossoms", 0, 0.2655425f); return NULL; }
+sequence *start_dance2() { mus[DANCE_CHERRY_BLOSSOMS] = audio_sample_start("EP03/EP03 Dance of the Cherry Blossoms", 0, 0.2655425f); return NULL; }
 sequence *fade_bidding_riser_1() { audio_sample_fade(mus[BIDDING_RISER_INTERVENE_1], 0.1186769f, 0.0f, 39750, 45250); return NULL; }
 sequence *stop_bidding_riser_1() { audio_sample_stop_and_free(mus[BIDDING_RISER_INTERVENE_1]); return NULL; }
-sequence *start_bidding_riser_2() { mus[BIDDING_RISER_INTERVENE_2] = audio_sample_start("EP03 Bidding Riser Intervene II", 0, 0.09432838f); return NULL; }
-sequence *start_bidding_riser_let_her() { mus[BIDDING_RISER_LET_HER] = audio_sample_start("EP03 Bidding Riser Let Her", 0, 0.1192486f); return NULL; }
+sequence *start_bidding_riser_2() { mus[BIDDING_RISER_INTERVENE_2] = audio_sample_start("EP03/EP03 Bidding Riser Intervene II", 0, 0.09432838f); return NULL; }
+sequence *start_bidding_riser_let_her() { mus[BIDDING_RISER_LET_HER] = audio_sample_start("EP03/EP03 Bidding Riser Let Her", 0, 0.1192486f); return NULL; }
 sequence *stop_bidding_riser_let_her() { audio_sample_stop_and_free(mus[BIDDING_RISER_LET_HER]); return NULL; }
 sequence *fade_bidding_riser_let_her() { audio_sample_fade(mus[BIDDING_RISER_LET_HER], 0.1192486f, 0.0f, 57912, 62250); return NULL; }
-sequence *start_dance3() { mus[DANCE_CHERRY_BLOSSOMS] = audio_sample_start("EP03 Dance of the Cherry Blossoms", 0, 0.26361f); return NULL; }
+sequence *start_dance3() { mus[DANCE_CHERRY_BLOSSOMS] = audio_sample_start("EP03/EP03 Dance of the Cherry Blossoms", 0, 0.26361f); return NULL; }
 sequence *fade_bidding_flache2() { audio_sample_fade(mus[BIDDING_FLACHE], 0.2513284f, 0.0f, 0, 5250); return NULL; }
 sequence *fade_dance2() { audio_sample_fade(mus[DANCE_CHERRY_BLOSSOMS], 0.26361f, 0.0f, 6750, 10250); return NULL; }
-sequence *start_car_park_elevator() { mus[CAR_PARK_ELEVATOR] = audio_sample_start("EP03 Carpark Elevator Edit", 0, 0.2932352f); return NULL; }
+sequence *start_car_park_elevator() { mus[CAR_PARK_ELEVATOR] = audio_sample_start("EP03/EP03 Carpark Elevator Edit", 0, 0.2932352f); return NULL; }
 sequence *stop_atmo_hall() { audio_sample_stop_and_free(mus[ATMO_HALL]); return NULL; }
-sequence *start_atmo_basement() { mus[ATMO_BASEMENT_GUARD] = audio_sample_start("EP03 Atmo Int Basement Guard", 1, 1.0f); return NULL; }
-sequence *start_brutal_p1() { mus[BRUTAL_CONSEQUENCE_1] = audio_sample_start("EP03 Brutal Consequence Part I", 0, 0.07070678f); return NULL; }
+sequence *start_atmo_basement() { mus[ATMO_BASEMENT_GUARD] = audio_sample_start("EP03/EP03 Atmo Int Basement Guard", 1, 1.0f); return NULL; }
+sequence *start_brutal_p1() { mus[BRUTAL_CONSEQUENCE_1] = audio_sample_start("EP03/EP03 Brutal Consequence Part I", 0, 0.07070678f); return NULL; }
 sequence *fade_car_park_elevator() { audio_sample_fade(mus[CAR_PARK_ELEVATOR], 0.2932352f, 0.0f, 7500, 10500); return NULL; }
 sequence *stop_car_park_elevator() { audio_sample_stop_and_free(mus[CAR_PARK_ELEVATOR]); return NULL; }
-sequence *start_brutal_p1_2() { mus[BRUTAL_CONSEQUENCE_1] = audio_sample_start("EP03 Brutal Consequence Part I", 0, 0.07147954f); return NULL; }
+sequence *start_brutal_p1_2() { mus[BRUTAL_CONSEQUENCE_1] = audio_sample_start("EP03/EP03 Brutal Consequence Part I", 0, 0.07147954f); return NULL; }
 sequence *fade_car_park_elevator2() { audio_sample_fade(mus[CAR_PARK_ELEVATOR], 0.2932352f, 0.0f, 6333, 9333); return NULL; }
-sequence *start_dance4() { mus[DANCE_CHERRY_BLOSSOMS] = audio_sample_start("EP03 Dance of the Cherry Blossoms", 0, 0.2647797f); return NULL; }
+sequence *start_dance4() { mus[DANCE_CHERRY_BLOSSOMS] = audio_sample_start("EP03/EP03 Dance of the Cherry Blossoms", 0, 0.2647797f); return NULL; }
 sequence *fade_bidding_riser_2() { audio_sample_fade(mus[BIDDING_RISER_INTERVENE_2], 0.09432838f, 0.0f, 18833, 24833); return NULL; }
 sequence *stop_bidding_riser_2() { audio_sample_stop_and_free(mus[BIDDING_RISER_INTERVENE_2]); return NULL; }
-sequence *start_awareness_downlifter() { mus[AWARENESS_DOWNLIFTER] = audio_sample_start("EP03 Awareness Downlifter", 0, 0.1007423f); return NULL; }
-sequence *start_awareness() { mus[AWARENESS] = audio_sample_start("EP03 Awareness", 0, 0.1590764f); return NULL; }
-sequence *start_atmo_inside_office() { mus[ATMO_INSIDE_OFFICE] = audio_sample_start("EP03 Atmo Int Inside Office", 1, 1.0f); return NULL; }
-sequence *start_atmo_outside_office() { mus[ATMO_OUTSIDE_OFFICE] = audio_sample_start("EP03 Atmo Int Outside Office", 1, 1.0f); return NULL; }
+sequence *start_awareness_downlifter() { mus[AWARENESS_DOWNLIFTER] = audio_sample_start("EP03/EP03 Awareness Downlifter", 0, 0.1007423f); return NULL; }
+sequence *start_awareness() { mus[AWARENESS] = audio_sample_start("EP03/EP03 Awareness", 0, 0.1590764f); return NULL; }
+sequence *start_atmo_inside_office() { mus[ATMO_INSIDE_OFFICE] = audio_sample_start("EP03/EP03 Atmo Int Inside Office", 1, 1.0f); return NULL; }
+sequence *start_atmo_outside_office() { mus[ATMO_OUTSIDE_OFFICE] = audio_sample_start("EP03/EP03 Atmo Int Outside Office", 1, 1.0f); return NULL; }
 sequence *fade_car_park_elevator3() { audio_sample_fade(mus[CAR_PARK_ELEVATOR], 0.2932352f, 0.0f, 16000, 19000); return NULL; }
 sequence *stop_atmo_inside_office() { audio_sample_stop_and_free(mus[ATMO_INSIDE_OFFICE]); return NULL; }
 sequence *stop_awareness() { audio_sample_stop_and_free(mus[AWARENESS]); return NULL; }
 sequence *fade_awareness() { audio_sample_fade(mus[AWARENESS], 0.1590764f, 0.0f, 5083, 6792); return NULL; }
-sequence *start_hainsworth_office() { mus[HAINSWORTH_OFFICE] = audio_sample_start("EP03 Hainsworth Office", 0, 0.03639143f); return NULL; }
+sequence *start_hainsworth_office() { mus[HAINSWORTH_OFFICE] = audio_sample_start("EP03/EP03 Hainsworth Office", 0, 0.03639143f); return NULL; }
 sequence *fade_hainsworth_office() { audio_sample_fade(mus[HAINSWORTH_OFFICE], 0.03639143f, 0.1003858f, 10333, 20333); return NULL; }
 sequence *fade_hainsworth_office2() { audio_sample_fade(mus[HAINSWORTH_OFFICE], 0.03639143f, 0.1005293f, 13125, 21000); return NULL; }
-sequence *start_hainsworth_elevator() { mus[HAIMSWORTH_ELEVATOR] = audio_sample_start("EP03 Haimsworth Elevator", 0, 0.1580438f); return NULL; }
+sequence *start_hainsworth_elevator() { mus[HAIMSWORTH_ELEVATOR] = audio_sample_start("EP03/EP03 Haimsworth Elevator", 0, 0.1580438f); return NULL; }
 sequence *stop_hainsworth_office() { audio_sample_stop_and_free(mus[HAINSWORTH_OFFICE]); return NULL; }
 sequence *fade_hainsworth_office3() { audio_sample_fade(mus[HAINSWORTH_OFFICE], 0.1005293f, 0.0f, 12583, 14500); return NULL; }
-sequence *start_get_away_long() { mus[GET_AWAY_LONG] = audio_sample_start("EP04 Get Away LONG", 0, 0.1569345f); return NULL; }	
-sequence *maybe_start_get_away_long() { if (game_vars.passed_by_seg341) { mus[GET_AWAY_LONG] = audio_sample_start("EP04 Get Away LONG", 0, 0.1587854f); } return NULL; }	
-sequence *start_brutal_riser() { mus[BRUTAL_RISER] = audio_sample_start("EP03 Brutal Riser", 0, 0.1490377f); return NULL; }
-sequence *start_brutal_p1_3() { mus[BRUTAL_CONSEQUENCE_1] = audio_sample_start("EP03 Haimsworth Elevator", 0, 0.1248198f); return NULL; }
-sequence *start_brutal_p2() { mus[BRUTAL_CONSEQUENCE_2] = audio_sample_start("EP03 Brutal Consequence Part II nu", 0, 0.2247357f); return NULL; }
-sequence *start_brutal_p3() { mus[BRUTAL_CONSEQUENCE_3] = audio_sample_start("EP03 Brutal Consequence Part III", 0, 0.1264629f); return NULL; }
-sequence *start_awareness_downlifter2() { mus[AWARENESS_DOWNLIFTER] = audio_sample_start("EP03 Awareness Downlifter", 0, 0.1807707f); return NULL; }
-sequence *start_freight() { mus[ATMO_FREIGHT_LIFT_PING] = audio_sample_start("EP03 Atmo Int Freight Lift Ping", 0, 0.5029765f); return NULL; }
-sequence *start_alarm() { mus[ATMO_ALARM] = audio_sample_start("EP03 Atmo Int Alarm", 0, 1.0f); return NULL; }
-sequence *start_alarm2() { mus[ATMO_ALARM] = audio_sample_start("EP03 Atmo Int Alarm", 1, 1.0f); return NULL; }
-sequence *start_hainsworth_lobby() { mus[HAINSWORTH_LOBBY] = audio_sample_start("EP03 Hainsworth Lobby", 0, 0.2504249f); return NULL; }
-sequence *start_hainsworth_lobby2() { mus[HAINSWORTH_LOBBY] = audio_sample_start("EP03 Hainsworth Lobby", 0, 0.2511927f); return NULL; }
-sequence *start_atmo_basement_sebastien() { mus[ATMO_BASEMENT_SEBASTIEN] = audio_sample_start("EP03 Atmo Int Basement Sebastien", 1, 1.0f); return NULL; }
+sequence *start_get_away_long() { mus[GET_AWAY_LONG] = audio_sample_start("EP04/EP04 Get Away LONG", 0, 0.1569345f); return NULL; }	
+sequence *maybe_start_get_away_long() { if (game_vars.passed_by_seg341) { mus[GET_AWAY_LONG] = audio_sample_start("EP04/EP04 Get Away LONG", 0, 0.1587854f); } return NULL; }	
+sequence *start_brutal_riser() { mus[BRUTAL_RISER] = audio_sample_start("EP03/EP03 Brutal Riser", 0, 0.1490377f); return NULL; }
+sequence *start_brutal_p1_3() { mus[BRUTAL_CONSEQUENCE_1] = audio_sample_start("EP03/EP03 Haimsworth Elevator", 0, 0.1248198f); return NULL; }
+sequence *start_brutal_p2() { mus[BRUTAL_CONSEQUENCE_2] = audio_sample_start("EP03/EP03 Brutal Consequence Part II nu", 0, 0.2247357f); return NULL; }
+sequence *start_brutal_p3() { mus[BRUTAL_CONSEQUENCE_3] = audio_sample_start("EP03/EP03 Brutal Consequence Part III", 0, 0.1264629f); return NULL; }
+sequence *start_awareness_downlifter2() { mus[AWARENESS_DOWNLIFTER] = audio_sample_start("EP03/EP03 Awareness Downlifter", 0, 0.1807707f); return NULL; }
+sequence *start_freight() { mus[ATMO_FREIGHT_LIFT_PING] = audio_sample_start("EP03/EP03 Atmo Int Freight Lift Ping", 0, 0.5029765f); return NULL; }
+sequence *start_alarm() { mus[ATMO_ALARM] = audio_sample_start("EP03/EP03 Atmo Int Alarm", 0, 1.0f); return NULL; }
+sequence *start_alarm2() { mus[ATMO_ALARM] = audio_sample_start("EP03/EP03 Atmo Int Alarm", 1, 1.0f); return NULL; }
+sequence *start_hainsworth_lobby() { mus[HAINSWORTH_LOBBY] = audio_sample_start("EP03/EP03 Hainsworth Lobby", 0, 0.2504249f); return NULL; }
+sequence *start_hainsworth_lobby2() { mus[HAINSWORTH_LOBBY] = audio_sample_start("EP03/EP03 Hainsworth Lobby", 0, 0.2511927f); return NULL; }
+sequence *start_atmo_basement_sebastien() { mus[ATMO_BASEMENT_SEBASTIEN] = audio_sample_start("EP03/EP03 Atmo Int Basement Sebastien", 1, 1.0f); return NULL; }
 sequence *fade_brutal_p1() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_1], 0.1248198f, 0.0f, 33875, 37000); return NULL; }
 sequence *fade_brutal_p2() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_2], 0.2247357f, 0.1576557f, 52792, 60792); return NULL; }
 sequence *fade_brutal_p2_2() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_2], 0.1576557f, 0.1587639f, 542, 2542); return NULL; }
@@ -1333,7 +1333,7 @@ sequence *stop_atmo_basement_guard() { audio_sample_stop_and_free(mus[ATMO_BASEM
 sequence *stop_alarm() { audio_sample_stop_and_free(mus[ATMO_ALARM]); return NULL; }
 sequence *stop_hainsworth_elevator() { audio_sample_stop_and_free(mus[HAIMSWORTH_ELEVATOR]); return NULL; }
 sequence *stop_atmo_basement_sebastien() { audio_sample_stop_and_free(mus[ATMO_BASEMENT_SEBASTIEN]); return NULL; }
-sequence *maybe_start_get_away_riser() { if (game_vars.passed_by_seg341) { mus[GET_AWAY_RISER] = audio_sample_start("EP03 Get Away Riser", 0, 0.3176751f); } return NULL;}
+sequence *maybe_start_get_away_riser() { if (game_vars.passed_by_seg341) { mus[GET_AWAY_RISER] = audio_sample_start("EP03/EP03 Get Away Riser", 0, 0.3176751f); } return NULL;}
 sequence *fade_multiple() { audio_sample_fade(mus[AWARENESS], 0.1590764f, 0.0f, 9625, 13167); audio_sample_fade(mus[HAIMSWORTH_ELEVATOR], 0.1580438f, 0.0f, 9625, 13167); return NULL; }
 sequence *stop_hainsworth_stairs() { audio_sample_stop_and_free(mus[HAIMSWORTH_STAIRS]); return NULL; }
 sequence *stop_atmo_outside_office() { audio_sample_stop_and_free(mus[ATMO_OUTSIDE_OFFICE]); return NULL; }
@@ -1344,26 +1344,26 @@ sequence *fade_hainsworth_office5() { audio_sample_fade(mus[HAINSWORTH_OFFICE], 
 sequence *fade_brutal_p1_2() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_1], 0.1248198f, 0.124516f, 21208, 25458); return NULL; }
 sequence *fade_brutal_p1_3() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_1], 0.124516f, 0.0f, 34875, 42583); return NULL; }
 sequence *fade_awareness2() { audio_sample_fade(mus[AWARENESS], 0.1590764f, 0.0f, 3000, 6000); return NULL; }
-sequence *start_hainsworth_lobby3() { mus[HAINSWORTH_LOBBY] = audio_sample_start("EP03 Hainsworth Lobby", 0, 0.2511107f); return NULL; }
-sequence *start_hainsworth_elevator2() { mus[HAIMSWORTH_ELEVATOR] = audio_sample_start("EP03 Haimsworth Elevator", 0, 0.1577016f); return NULL; }
-sequence *start_awareness_downlifter3() { mus[AWARENESS_DOWNLIFTER] = audio_sample_start("EP03 Awareness Downlifter", 0, 0.1806578f); return NULL; }
-sequence *start_freight2() { mus[ATMO_FREIGHT_LIFT_PING] = audio_sample_start("EP03 Atmo Int Freight Lift Ping", 0, 0.503014f); return NULL; }
-sequence *start_brutal_p2_2() { mus[BRUTAL_CONSEQUENCE_2] = audio_sample_start("EP03 Brutal Consequence Part II nu", 0, 0.222277f); return NULL; }
-sequence *start_brutal_keypad() { mus[BRUTAL_CONSEQUENCE_KEYPAD] = audio_sample_start("EP03 Brutal Consequence Keypad", 0, 0.2525122f); return NULL; }
-sequence *start_brutal_keypad2() { mus[BRUTAL_CONSEQUENCE_KEYPAD] = audio_sample_start("EP03 Brutal Consequence Keypad", 0, 0.09980504f); return NULL; }
-sequence *start_hainsworth_stairs() { mus[HAIMSWORTH_STAIRS] = audio_sample_start("EP03 Haimsworth Stairs", 0, 0.1253717f); return NULL; }
-sequence *start_get_away_long2() { mus[GET_AWAY_LONG] = audio_sample_start("EP04 Get Away LONG", 0, 0.1575244f); return NULL; }
+sequence *start_hainsworth_lobby3() { mus[HAINSWORTH_LOBBY] = audio_sample_start("EP03/EP03 Hainsworth Lobby", 0, 0.2511107f); return NULL; }
+sequence *start_hainsworth_elevator2() { mus[HAIMSWORTH_ELEVATOR] = audio_sample_start("EP03/EP03 Haimsworth Elevator", 0, 0.1577016f); return NULL; }
+sequence *start_awareness_downlifter3() { mus[AWARENESS_DOWNLIFTER] = audio_sample_start("EP03/EP03 Awareness Downlifter", 0, 0.1806578f); return NULL; }
+sequence *start_freight2() { mus[ATMO_FREIGHT_LIFT_PING] = audio_sample_start("EP03/EP03 Atmo Int Freight Lift Ping", 0, 0.503014f); return NULL; }
+sequence *start_brutal_p2_2() { mus[BRUTAL_CONSEQUENCE_2] = audio_sample_start("EP03/EP03 Brutal Consequence Part II nu", 0, 0.222277f); return NULL; }
+sequence *start_brutal_keypad() { mus[BRUTAL_CONSEQUENCE_KEYPAD] = audio_sample_start("EP03/EP03 Brutal Consequence Keypad", 0, 0.2525122f); return NULL; }
+sequence *start_brutal_keypad2() { mus[BRUTAL_CONSEQUENCE_KEYPAD] = audio_sample_start("EP03/EP03 Brutal Consequence Keypad", 0, 0.09980504f); return NULL; }
+sequence *start_hainsworth_stairs() { mus[HAIMSWORTH_STAIRS] = audio_sample_start("EP03/EP03 Haimsworth Stairs", 0, 0.1253717f); return NULL; }
+sequence *start_get_away_long2() { mus[GET_AWAY_LONG] = audio_sample_start("EP04/EP04 Get Away LONG", 0, 0.1575244f); return NULL; }
 sequence *fade_brutal_p2_5() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_2], 0.1576557f, 0.0f, 13500, 22500); return NULL; }
 sequence *fade_brutal_p2_6() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_2], 0.1576557f, 0.07212745f, 7000, 8000); return NULL; }
 sequence *fade_brutal_p2_7() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_2], 0.07212745f, 0.0f, 16667, 25667); return NULL; }
 sequence *fade_brutal_p2_8() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_2], 0.1576557f, 0.1229217f, 83, 3083); return NULL; }
 sequence *fade_brutal_p2_9() { audio_sample_fade(mus[BRUTAL_CONSEQUENCE_2], 0.1229217f, 0.0f, 9375, 17833); return NULL; }
-sequence *maybe_start_hainsworth_elevator() { if (game_vars.passed_by_seg326) { mus[HAIMSWORTH_ELEVATOR] = audio_sample_start("EP03 Haimsworth Elevator", 0, 0.1581205f); } return NULL; }
+sequence *maybe_start_hainsworth_elevator() { if (game_vars.passed_by_seg326) { mus[HAIMSWORTH_ELEVATOR] = audio_sample_start("EP03/EP03 Haimsworth Elevator", 0, 0.1581205f); } return NULL; }
 sequence *fade_bmw_m5() { audio_sample_fade(mus[ATMO_BMW_M5], 1.0f, 0.0f, 0, 2000); return NULL; }
-sequence *start_get_away_short() { mus[GET_AWAY_SHORT] = audio_sample_start("EP04 Get Away SHORT", 0, 0.1576156f); return NULL; }
-sequence *start_siren() { mus[ATMO_SIREN] = audio_sample_start("EP04 Atmo Ext Siren 1", 0, 0.503346f); return NULL; }
-sequence *start_bmw_i8() { mus[ATMO_BMW_I8] = audio_sample_start("EP04 Atmo Int BMW i8", 1, 1.0f); return NULL; }
-sequence *start_bmw_m5() { mus[ATMO_BMW_M5] = audio_sample_start("EP04 Atmo Int BMW M5", 1, 1.0f); return NULL; }
+sequence *start_get_away_short() { mus[GET_AWAY_SHORT] = audio_sample_start("EP04/EP04 Get Away SHORT", 0, 0.1576156f); return NULL; }
+sequence *start_siren() { mus[ATMO_SIREN] = audio_sample_start("EP04/EP04 Atmo Ext Siren 1", 0, 0.503346f); return NULL; }
+sequence *start_bmw_i8() { mus[ATMO_BMW_I8] = audio_sample_start("EP04/EP04 Atmo Int BMW i8", 1, 1.0f); return NULL; }
+sequence *start_bmw_m5() { mus[ATMO_BMW_M5] = audio_sample_start("EP04/EP04 Atmo Int BMW M5", 1, 1.0f); return NULL; }
 sequence *stop_bmw_m5() { audio_sample_stop_and_free(mus[ATMO_BMW_M5]); return NULL; }
 sequence *change_get_away_short() { audio_sample_set_volume(mus[GET_AWAY_SHORT], 0.1126353f); return NULL; }
 sequence *change_get_away_short2() { audio_sample_set_volume(mus[GET_AWAY_SHORT], 0.1543445f); return NULL; }
@@ -1371,7 +1371,7 @@ sequence *change_get_away_short3() { audio_sample_set_volume(mus[GET_AWAY_SHORT]
 sequence *change_get_away_short4() { audio_sample_set_volume(mus[GET_AWAY_SHORT], 0.1561145f); return NULL; }
 sequence *change_get_away_short5() { audio_sample_set_volume(mus[GET_AWAY_SHORT], 0.1112274f); return NULL; }
 sequence *change_get_away_short6() { audio_sample_set_volume(mus[GET_AWAY_SHORT], 0.1568132f); return NULL; }
-sequence *maybe_start_get_away_long2() { if (!game_vars.get_away_long_playing) { mus[GET_AWAY_LONG] = audio_sample_start("EP04 Get Away LONG", 0, 0.1588651f); } return NULL; }
+sequence *maybe_start_get_away_long2() { if (!game_vars.get_away_long_playing) { mus[GET_AWAY_LONG] = audio_sample_start("EP04/EP04 Get Away LONG", 0, 0.1588651f); } return NULL; }
 sequence *change_get_away_long() { audio_sample_set_volume(mus[GET_AWAY_LONG], 0.1109945f); return NULL; }
 sequence *change_get_away_long2() { audio_sample_set_volume(mus[GET_AWAY_LONG], 0.1564935f); return NULL; }
 sequence *change_get_away_long3() { audio_sample_set_volume(mus[GET_AWAY_LONG], 0.1120107f); return NULL; }
@@ -1381,11 +1381,11 @@ sequence *fade_siren() { audio_sample_fade(mus[ATMO_SIREN], 1.0f, 0.1783854f, 87
 sequence *fade_siren2() { audio_sample_fade(mus[ATMO_SIREN], 0.1783854f, 0.4423451f, 16167, 18667); return NULL; }
 sequence *fade_get_away_long() { audio_sample_fade(mus[GET_AWAY_LONG], 0.08918454f, 0.0f, 2375, 4375); return NULL; }
 sequence *fade_after_crash() { audio_sample_fade(mus[AFTER_CRASH], 0.06961862f, 0.09751472f, 105833, 115833); return NULL; }
-sequence *start_ford_transit() { mus[ATMO_FORD_TRANSIT] = audio_sample_start("EP04 Atmo Int Ford Transit", 1, 1.0f); return NULL; }
-sequence *start_fire() { mus[ATMO_FIRE] = audio_sample_start("EP04 Atmo Ext Fire", 0, 1.0f); return NULL; }
-sequence *start_atmo_london() { mus[ATMO_LONDON] = audio_sample_start("EP04 Atmo Ext London", 1, 1.0f); return NULL; }
-sequence *start_get_away_riser_new() { mus[GET_AWAY_RISER_NEW] = audio_sample_start("EP04 Get Away Riser NEU", 0, 0.2519232f); return NULL; }
-sequence *start_after_crash() { mus[AFTER_CRASH] = audio_sample_start("EP04 After Crash NEU", 0, 0.06961862f); return NULL; }
+sequence *start_ford_transit() { mus[ATMO_FORD_TRANSIT] = audio_sample_start("EP04/EP04 Atmo Int Ford Transit", 1, 1.0f); return NULL; }
+sequence *start_fire() { mus[ATMO_FIRE] = audio_sample_start("EP04/EP04 Atmo Ext Fire", 0, 1.0f); return NULL; }
+sequence *start_atmo_london() { mus[ATMO_LONDON] = audio_sample_start("EP04/EP04 Atmo Ext London", 1, 1.0f); return NULL; }
+sequence *start_get_away_riser_new() { mus[GET_AWAY_RISER_NEW] = audio_sample_start("EP04/EP04 Get Away Riser NEU", 0, 0.2519232f); return NULL; }
+sequence *start_after_crash() { mus[AFTER_CRASH] = audio_sample_start("EP04/EP04 After Crash NEU", 0, 0.06961862f); return NULL; }
 sequence *stop_bmw_i8() { audio_sample_stop_and_free(mus[ATMO_BMW_I8]); return NULL; }
 sequence *stop_get_away_short() { audio_sample_stop_and_free(mus[GET_AWAY_SHORT]); return NULL; }
 sequence *stop_get_away_long() { audio_sample_stop_and_free(mus[GET_AWAY_LONG]); return NULL; }
@@ -1393,9 +1393,9 @@ sequence *stop_get_away_riser_new() { audio_sample_stop_and_free(mus[GET_AWAY_RI
 sequence *stop_ford_transit() { audio_sample_stop_and_free(mus[ATMO_FORD_TRANSIT]); return NULL; }
 sequence *change_get_away_short7() { audio_sample_set_volume(mus[GET_AWAY_SHORT], 0.08882134f); return NULL; }
 sequence *change_get_away_long5() { audio_sample_set_volume(mus[GET_AWAY_LONG], 0.08918454f); return NULL; }
-sequence *start_siren2() { mus[ATMO_SIREN] = audio_sample_start("EP04 Atmo Ext Siren 1", 0, 1.0f); return NULL; }
-sequence *start_siren_p2() { mus[ATMO_SIREN_2] = audio_sample_start("EP04 Atmo Ext Siren 2", 0, 1.0f); return NULL; }
-sequence *start_siren_p3() { mus[ATMO_SIREN_3] = audio_sample_start("EP04 Atmo Ext Siren 3", 0, 1.0f); return NULL; }
+sequence *start_siren2() { mus[ATMO_SIREN] = audio_sample_start("EP04/EP04 Atmo Ext Siren 1", 0, 1.0f); return NULL; }
+sequence *start_siren_p2() { mus[ATMO_SIREN_2] = audio_sample_start("EP04/EP04 Atmo Ext Siren 2", 0, 1.0f); return NULL; }
+sequence *start_siren_p3() { mus[ATMO_SIREN_3] = audio_sample_start("EP04/EP04 Atmo Ext Siren 3", 0, 1.0f); return NULL; }
 sequence *stop_siren() { audio_sample_stop_and_free(mus[ATMO_SIREN]); return NULL; }
 sequence *stop_siren_p3() { audio_sample_stop_and_free(mus[ATMO_SIREN_3]); return NULL; }
 sequence *stop_atmo_london() { audio_sample_stop_and_free(mus[ATMO_LONDON]); return NULL; }
@@ -1409,15 +1409,15 @@ sequence *fade_woe_dark() { audio_sample_fade(mus[WOE_DARK], 0.07858334f, 0.0f, 
 sequence *fade_woe_bowl_music2() { audio_sample_fade(mus[AFTER_CRASH], 0.07961292f, 0.0f, 0, 4000); return NULL; }
 sequence *fade_after_crash2() { audio_sample_fade(mus[AFTER_CRASH], 0.09751472f, 0.0f, 2167, 8833); return NULL; }
 sequence *fade_woe_bowl_music() { audio_sample_fade(mus[WOE_BOWL_MUSIC], 0.07952181f, 0.07961292f, 28208, 33208); return NULL; }
-sequence *start_police_everywhere() { mus[POLICE_EVERYWHERE] = audio_sample_start("Ep05A PoliceEverywhere 3x", 0, 0.158687f); game_vars.police_everywhere_playing = 1; return NULL; }
-sequence *start_hong_kong_backdoor() { mus[ATMO_HONG_KONG_BACK_DOOR] = audio_sample_start("EP05A Atmo Ext Hong Kong City Back Door", 1, 1.0f); return NULL; }
-sequence *start_woe_dark() { mus[WOE_DARK] = audio_sample_start("EP05A MrWoe Woe Dark", 0, 0.07858334f); return NULL; }
-sequence *start_push_your_chances() { mus[PUSHING_YOUR_CHANCES] = audio_sample_start("EP05A Pushing your chances", 0, 0.1241259f); return NULL; }
-sequence *start_woe_office() { mus[ATMO_WOE_OFFICE] = audio_sample_start("EP05A Atmo Int Woe Office", 1, 1.0f); return NULL; }
-sequence *start_woe_dark_end() { mus[WOE_DARK_END] = audio_sample_start("EP05A MrWoe Woe Dark End", 0, 0.0796349f); return NULL; }
-sequence *start_woes_resto() { mus[WOES_RESTO] = audio_sample_start("EP05A WoesResto", 0, 0.0f); return NULL; }
-sequence *start_woe_bowl_music() { mus[WOE_BOWL_MUSIC] = audio_sample_start("EP05A MrWoe Bowlmusic", 0, 0.07952181f); return NULL; }
-sequence *start_atmo_hong_kong() { mus[ATMO_HONG_KONG_CITY] = audio_sample_start("EP05A Atmo Int Hong Kong City", 1, 1.0f); return NULL; }
+sequence *start_police_everywhere() { mus[POLICE_EVERYWHERE] = audio_sample_start("EP05/EP05A PoliceEverywhere 3x", 0, 0.158687f); game_vars.police_everywhere_playing = 1; return NULL; }
+sequence *start_hong_kong_backdoor() { mus[ATMO_HONG_KONG_BACK_DOOR] = audio_sample_start("EP05/EP05A Atmo Ext Hong Kong City Back Door", 1, 1.0f); return NULL; }
+sequence *start_woe_dark() { mus[WOE_DARK] = audio_sample_start("EP05/EP05A MrWoe Woe Dark", 0, 0.07858334f); return NULL; }
+sequence *start_push_your_chances() { mus[PUSHING_YOUR_CHANCES] = audio_sample_start("EP05/EP05A Pushing your chances", 0, 0.1241259f); return NULL; }
+sequence *start_woe_office() { mus[ATMO_WOE_OFFICE] = audio_sample_start("EP05/EP05A Atmo Int Woe Office", 1, 1.0f); return NULL; }
+sequence *start_woe_dark_end() { mus[WOE_DARK_END] = audio_sample_start("EP05/EP05A MrWoe Woe Dark End", 0, 0.0796349f); return NULL; }
+sequence *start_woes_resto() { mus[WOES_RESTO] = audio_sample_start("EP05/EP05A WoesResto", 0, 0.0f); return NULL; }
+sequence *start_woe_bowl_music() { mus[WOE_BOWL_MUSIC] = audio_sample_start("EP05/EP05A MrWoe Bowlmusic", 0, 0.07952181f); return NULL; }
+sequence *start_atmo_hong_kong() { mus[ATMO_HONG_KONG_CITY] = audio_sample_start("EP05/EP05A Atmo Int Hong Kong City", 1, 1.0f); return NULL; }
 sequence *stop_after_crash() { audio_sample_stop_and_free(mus[AFTER_CRASH]); return NULL; }
 sequence *stop_atmo_hong_kong() { audio_sample_stop_and_free(mus[ATMO_HONG_KONG_CITY]); return NULL; }
 sequence *stop_woes_resto() { audio_sample_stop_and_free(mus[WOES_RESTO]); return NULL; }
@@ -1427,43 +1427,43 @@ sequence *stop_woe_office() { audio_sample_stop_and_free(mus[ATMO_WOE_OFFICE]); 
 sequence *stop_police_everywhere() { audio_sample_stop_and_free(mus[POLICE_EVERYWHERE]); return NULL; }
 sequence *stop_hong_kong_backdoor() { audio_sample_stop_and_free(mus[ATMO_HONG_KONG_BACK_DOOR]); return NULL; }
 sequence *change_woes_resto() { audio_sample_set_volume(mus[WOES_RESTO], 0.09954205f); return NULL; }
-sequence *maybe_start_police_everywhere() { if (!game_vars.police_everywhere_playing) { mus[POLICE_EVERYWHERE] = audio_sample_start("Ep05A PoliceEverywhere 3x", 0, 0.249946f); } game_vars.police_everywhere_playing = 0; return NULL; }
-sequence *start_atmo_police_station() { mus[ATMO_POLICE_STATION] = audio_sample_start("EP05B Atmo Int Police Station", 1, 1.0f); return NULL; }
-sequence *start_showdown_and_violence() { mus[SHOWDOWN_AND_VIOLENCE] = audio_sample_start("EP05B ShowdownAndViolence", 0, 0.3166535f); return NULL; }
-sequence *start_tenseness() { mus[TENSENESS] = audio_sample_start("EP05B Tenseness", 0, 0.2510983f); return NULL; }
+sequence *maybe_start_police_everywhere() { if (!game_vars.police_everywhere_playing) { mus[POLICE_EVERYWHERE] = audio_sample_start("EP05/EP05A PoliceEverywhere 3x", 0, 0.249946f); } game_vars.police_everywhere_playing = 0; return NULL; }
+sequence *start_atmo_police_station() { mus[ATMO_POLICE_STATION] = audio_sample_start("EP05/EP05B Atmo Int Police Station", 1, 1.0f); return NULL; }
+sequence *start_showdown_and_violence() { mus[SHOWDOWN_AND_VIOLENCE] = audio_sample_start("EP05/EP05B ShowdownAndViolence", 0, 0.3166535f); return NULL; }
+sequence *start_tenseness() { mus[TENSENESS] = audio_sample_start("EP05/EP05B Tenseness", 0, 0.2510983f); return NULL; }
 sequence *fade_police_everywhere5() { audio_sample_fade(mus[POLICE_EVERYWHERE], 0.249946f, 0.1590833f, 0, 3500); return NULL; }
 sequence *fade_police_everywhere6() { audio_sample_fade(mus[POLICE_EVERYWHERE], 0.1590833f, 0.0f, 12333, 21333); return NULL; }
 sequence *fade_tenseness() { audio_sample_fade(mus[TENSENESS], 0.2510983f, 0.0f, 49208, 50708); return NULL; }
 sequence *stop_atmo_police_station() { audio_sample_stop_and_free(mus[ATMO_POLICE_STATION]); return NULL; }
 sequence *stop_tenseness() { audio_sample_stop_and_free(mus[TENSENESS]); return NULL; }
 sequence *fade_after_crash3() { audio_sample_fade(mus[AFTER_CRASH], 0.09751472f, 0.0f, 0, 6000); return NULL; }
-sequence *start_radioplay() { mus[RADIO_PLAY] = audio_sample_start("EP06B Radioplay", 1, 1.0f); return NULL; }
+sequence *start_radioplay() { mus[RADIO_PLAY] = audio_sample_start("EP06/EP06B Radioplay", 1, 1.0f); return NULL; }
 sequence *stop_showdown_and_violence() { audio_sample_stop_and_free(mus[SHOWDOWN_AND_VIOLENCE]); return NULL; }
 sequence *fade_hotel_romance2() { audio_sample_fade(mus[HOTEL_ROMANCE], 0.08464747f, 0.0f, 28333, 35958); return NULL; }
 sequence *fade_hotel_romance() { audio_sample_fade(mus[HOTEL_ROMANCE], 0.09851323f, 0.08464747f, 7000, 14083); return NULL; }
 sequence *fade_on_the_news() { audio_sample_fade(mus[ON_THE_NEWS], 0.09919386f, 0.0f, 0, 6750); return NULL; }
 sequence *fade_pushing_your_chances() { audio_sample_fade(mus[PUSHING_YOUR_CHANCES], 0.1241259f, 0.06466196f, 0, 11000); return NULL; }
-sequence *start_atmo_hotel_room() { mus[ATMO_HOTEL_ROOM] = audio_sample_start("EP06A Atmo Int Hotel Room", 1, 1.0f); return NULL; }
-sequence *start_atmo_tv_bg_p1() { mus[ATMO_TV_BG_PART1] = audio_sample_start("EP06A Atmo Int TV Background Part 1", 0, 1.0f); return NULL; }
-sequence *start_atmo_tv_bg_p2() { mus[ATMO_TV_BG_PART2] = audio_sample_start("EP06A Atmo Int TV Background Part 2", 0, 1.0f); return NULL; }
-sequence *start_atmo_tv_bg_trans() { mus[ATMO_TV_BG_TRANS] = audio_sample_start("EP06A Atmo Int TV Background Transition", 0, 1.0f); return NULL; }
-sequence *start_hotel_romance() { mus[HOTEL_ROMANCE] = audio_sample_start("EP06A Hotel Romance", 0, 0.09851323f); return NULL; }
-sequence *start_on_the_news() { mus[ON_THE_NEWS] = audio_sample_start("EP06A On the News", 0, 0.09919386f); return NULL; }
-sequence *start_on_the_news2() { mus[ON_THE_NEWS] = audio_sample_start("EP06A On the News", 0, 0.0973212f); return NULL; }
-sequence *start_atmo_tv_bg_p3() { mus[ATMO_TV_BG_PART3] = audio_sample_start("EP06A Atmo Int TV Background Part 3", 0, 1.0f); return NULL; }
+sequence *start_atmo_hotel_room() { mus[ATMO_HOTEL_ROOM] = audio_sample_start("EP06/EP06A Atmo Int Hotel Room", 1, 1.0f); return NULL; }
+sequence *start_atmo_tv_bg_p1() { mus[ATMO_TV_BG_PART1] = audio_sample_start("EP06/EP06A Atmo Int TV Background Part 1", 0, 1.0f); return NULL; }
+sequence *start_atmo_tv_bg_p2() { mus[ATMO_TV_BG_PART2] = audio_sample_start("EP06/EP06A Atmo Int TV Background Part 2", 0, 1.0f); return NULL; }
+sequence *start_atmo_tv_bg_trans() { mus[ATMO_TV_BG_TRANS] = audio_sample_start("EP06/EP06A Atmo Int TV Background Transition", 0, 1.0f); return NULL; }
+sequence *start_hotel_romance() { mus[HOTEL_ROMANCE] = audio_sample_start("EP06/EP06A Hotel Romance", 0, 0.09851323f); return NULL; }
+sequence *start_on_the_news() { mus[ON_THE_NEWS] = audio_sample_start("EP06/EP06A On the News", 0, 0.09919386f); return NULL; }
+sequence *start_on_the_news2() { mus[ON_THE_NEWS] = audio_sample_start("EP06/EP06A On the News", 0, 0.0973212f); return NULL; }
+sequence *start_atmo_tv_bg_p3() { mus[ATMO_TV_BG_PART3] = audio_sample_start("EP06/EP06A Atmo Int TV Background Part 3", 0, 1.0f); return NULL; }
 sequence *stop_hotel_romance() { audio_sample_stop_and_free(mus[HOTEL_ROMANCE]); return NULL; }
 sequence *stop_atmo_tv_bg_trans() { audio_sample_stop_and_free(mus[ATMO_TV_BG_TRANS]); return NULL; }
 sequence *stop_on_the_news() { audio_sample_stop_and_free(mus[ON_THE_NEWS]); return NULL; }
 sequence *stop_atmo_hotel_room() { audio_sample_stop_and_free(mus[ATMO_HOTEL_ROOM]); return NULL; }
 sequence *stop_atmo_stairway() { audio_sample_stop_and_free(mus[ATMO_STAIRWAY]); return NULL; }
-sequence *start_tschoi_action() { mus[TSCHOI_ACTION] = audio_sample_start("EP06A Tschoi Action", 0, 0.1002888f); return NULL; }
+sequence *start_tschoi_action() { mus[TSCHOI_ACTION] = audio_sample_start("EP06/EP06A Tschoi Action", 0, 0.1002888f); return NULL; }
 sequence *fade_tschoi_action() { audio_sample_fade(mus[TSCHOI_ACTION], 0.1002888f, 0.126724f, 13833, 16167); return NULL; }
-sequence *start_atmo_stairway() { mus[ATMO_STAIRWAY] = audio_sample_start("EP06A Atmo Int Stairway", 1, 1.0f); return NULL; }
-sequence *start_atmo_backyard() { mus[ATMO_BACKYARD] = audio_sample_start("EP06A Atmo Ext Back yard", 1, 1.0f); return NULL; }
-sequence *start_tschoi_stab() { mus[TSCHOI_STAB] = audio_sample_start("EP06A Tschoi Action STAB", 0, 0.2509432f); return NULL; }
+sequence *start_atmo_stairway() { mus[ATMO_STAIRWAY] = audio_sample_start("EP06/EP06A Atmo Int Stairway", 1, 1.0f); return NULL; }
+sequence *start_atmo_backyard() { mus[ATMO_BACKYARD] = audio_sample_start("EP06/EP06A Atmo Ext Back yard", 1, 1.0f); return NULL; }
+sequence *start_tschoi_stab() { mus[TSCHOI_STAB] = audio_sample_start("EP06/EP06A Tschoi Action STAB", 0, 0.2509432f); return NULL; }
 sequence *stop_tschoi_action() { audio_sample_stop_and_free(mus[TSCHOI_ACTION]); return NULL; }
 sequence *stop_atmo_backyard() { audio_sample_stop_and_free(mus[ATMO_BACKYARD]); return NULL; }
-sequence *start_radioplay2() { mus[RADIO_PLAY] = audio_sample_start("EP06B Radioplay", 0, 0.0f); return NULL; }
+sequence *start_radioplay2() { mus[RADIO_PLAY] = audio_sample_start("EP06/EP06B Radioplay", 0, 0.0f); return NULL; }
 sequence *fade_radioplay() { audio_sample_fade(mus[RADIO_PLAY], 0.0f, 1.0f, 3958, 5958); return NULL; }
 sequence *stop_torture_end() { audio_sample_stop_and_free(mus[TORTURE_END]); return NULL; }
 sequence *stop_tchoi_hotel() { audio_sample_stop_and_free(mus[TCHOI_HOTEL_ROOM]); return NULL; }
@@ -1473,34 +1473,34 @@ sequence *stop_long_knife() { audio_sample_stop_and_free(mus[LONG_KNIFE]); retur
 sequence *stop_torture_main() { audio_sample_stop_and_free(mus[TORTURE_MAIN]); return NULL; }
 sequence *stop_radioplay() { audio_sample_stop_and_free(mus[RADIO_PLAY]); return NULL; }
 sequence *stop_thumbscrew_p1() { audio_sample_stop_and_free(mus[THUMBSCREW_P1]); return NULL; }
-sequence *start_knife_accent_p1() { mus[KNIFE_ACCENT_P1] = audio_sample_start("EP06B Knife Accent I", 0, 0.1772321f); return NULL; }
-sequence *start_knife_accent_p2() { mus[KNIFE_ACCENT_P2] = audio_sample_start("EP06B Knife Accent II", 0, 0.176941f); return NULL; }
-sequence *start_atmo_radioplay() { mus[ATMO_RADIO_PLAY] = audio_sample_start("EP06B Atmo Int Radioplay", 0, 1.0f); return NULL; }
-sequence *start_thumbscrew_p1() { mus[THUMBSCREW_P1] = audio_sample_start("EP06B Thumbscrew I", 0, 0.139111f); return NULL; }
-sequence *start_tchoi_hotel() { mus[TCHOI_HOTEL_ROOM] = audio_sample_start("EP06B Atmo Int Tchoi Hotel Room", 0, 1.0f); return NULL; }
+sequence *start_knife_accent_p1() { mus[KNIFE_ACCENT_P1] = audio_sample_start("EP06/EP06B Knife Accent I", 0, 0.1772321f); return NULL; }
+sequence *start_knife_accent_p2() { mus[KNIFE_ACCENT_P2] = audio_sample_start("EP06/EP06B Knife Accent II", 0, 0.176941f); return NULL; }
+sequence *start_atmo_radioplay() { mus[ATMO_RADIO_PLAY] = audio_sample_start("EP06/EP06B Atmo Int Radioplay", 0, 1.0f); return NULL; }
+sequence *start_thumbscrew_p1() { mus[THUMBSCREW_P1] = audio_sample_start("EP06/EP06B Thumbscrew I", 0, 0.139111f); return NULL; }
+sequence *start_tchoi_hotel() { mus[TCHOI_HOTEL_ROOM] = audio_sample_start("EP06/EP06B Atmo Int Tchoi Hotel Room", 0, 1.0f); return NULL; }
 sequence *fade_radioplay2() { audio_sample_fade(mus[RADIO_PLAY], 0.2523407f, 0.0f, 15208, 18208); return NULL; }
-sequence *maybe_start_radioplay() { if (!game_vars.radioplay_started) { mus[RADIO_PLAY] = audio_sample_start("EP06B Radioplay", 0, 0.2523407f); } return NULL; }
-sequence *start_torture_main() { mus[TORTURE_MAIN] = audio_sample_start("EP06B Torture Main", 0, 0.141086f); return NULL; }
+sequence *maybe_start_radioplay() { if (!game_vars.radioplay_started) { mus[RADIO_PLAY] = audio_sample_start("EP06/EP06B Radioplay", 0, 0.2523407f); } return NULL; }
+sequence *start_torture_main() { mus[TORTURE_MAIN] = audio_sample_start("EP06/EP06B Torture Main", 0, 0.141086f); return NULL; }
 sequence *fade_thumbscrew_p1() { audio_sample_fade(mus[THUMBSCREW_P1], 0.139111f, 0.0f, 7125, 13500); return NULL; }
-sequence *start_short_knife() { mus[SHORT_KNIFE] = audio_sample_start("EP06B Short Knife", 0, 0.177368f); return NULL; }
-sequence *start_long_knife() { mus[LONG_KNIFE] = audio_sample_start("EP06B Long Knife", 0, 0.1412607f); return NULL; }
+sequence *start_short_knife() { mus[SHORT_KNIFE] = audio_sample_start("EP06/EP06B Short Knife", 0, 0.177368f); return NULL; }
+sequence *start_long_knife() { mus[LONG_KNIFE] = audio_sample_start("EP06/EP06B Long Knife", 0, 0.1412607f); return NULL; }
 sequence *fade_torture_main() { audio_sample_fade(mus[TORTURE_MAIN], 0.141086f, 0.0f, 3583, 13583); return NULL; }
 sequence *fade_torture_main2() { audio_sample_fade(mus[TORTURE_MAIN], 0.141086f, 0.0f, 1375, 11375); return NULL; }
 sequence *fade_torture_main3() { audio_sample_fade(mus[TORTURE_MAIN], 0.141086f, 0.0f, 4917, 14917); return NULL; }
-sequence *start_thumbscrew_talk() { mus[THUMBSCREW_TALK] = audio_sample_start("EP06B Thumbscrew Talk", 0, 0.1396351f); return NULL; }
+sequence *start_thumbscrew_talk() { mus[THUMBSCREW_TALK] = audio_sample_start("EP06/EP06B Thumbscrew Talk", 0, 0.1396351f); return NULL; }
 sequence *fade_thumbscrew_p2() { audio_sample_fade(mus[THUMBSCREW_P2], 0.142008f, 0.0f, 0, 6000); return NULL; }
 sequence *fade_thumbscrew_p2_2() { audio_sample_fade(mus[THUMBSCREW_P2], 0.142008f, 0.0f, 0, 5000); return NULL; }
-sequence *start_torture_tom() { mus[TORTURE_TOM] = audio_sample_start("EP06B Torture Tom Hit", 0, 0.07788388f); return NULL; }
-sequence *start_thumbscrew_p2() { mus[THUMBSCREW_P2] = audio_sample_start("EP06B Thumbscrew II", 0, 0.142008f); return NULL; }
-sequence *start_thumbscrew_angry() { mus[THUMBSCREW_ANGRY] = audio_sample_start("EP06B Thumbscrew Angry", 0, 0.1417508f); return NULL; }
-sequence *start_thumbscrew_angry2() { mus[THUMBSCREW_ANGRY] = audio_sample_start("EP06B Thumbscrew Angry", 0, 0.139737f); return NULL; }
-sequence *start_torture_end() { mus[TORTURE_END] = audio_sample_start("EP06B Torture End", 0, 0.139868f); return NULL; }
-sequence *start_matt_alone() { mus[MATT_ALONE] = audio_sample_start("EP07 Matt Alone", 0, 0.07865617f); return NULL; }
+sequence *start_torture_tom() { mus[TORTURE_TOM] = audio_sample_start("EP06/EP06B Torture Tom Hit", 0, 0.07788388f); return NULL; }
+sequence *start_thumbscrew_p2() { mus[THUMBSCREW_P2] = audio_sample_start("EP06/EP06B Thumbscrew II", 0, 0.142008f); return NULL; }
+sequence *start_thumbscrew_angry() { mus[THUMBSCREW_ANGRY] = audio_sample_start("EP06/EP06B Thumbscrew Angry", 0, 0.1417508f); return NULL; }
+sequence *start_thumbscrew_angry2() { mus[THUMBSCREW_ANGRY] = audio_sample_start("EP06/EP06B Thumbscrew Angry", 0, 0.139737f); return NULL; }
+sequence *start_torture_end() { mus[TORTURE_END] = audio_sample_start("EP06/EP06B Torture End", 0, 0.139868f); return NULL; }
+sequence *start_matt_alone() { mus[MATT_ALONE] = audio_sample_start("EP07/EP07 Matt Alone", 0, 0.07865617f); return NULL; }
 sequence *fade_matt_alone() { audio_sample_fade(mus[MATT_ALONE], 0.07865617f, 0.1126601f, 37542, 41000); return NULL; }
-sequence *start_matt_alone2() { mus[MATT_ALONE] = audio_sample_start("EP07 Matt Alone", 0, 0.1120794f); return NULL; }
+sequence *start_matt_alone2() { mus[MATT_ALONE] = audio_sample_start("EP07/EP07 Matt Alone", 0, 0.1120794f); return NULL; }
 sequence *fade_torture_end() { audio_sample_fade(mus[TORTURE_END], 0.139868f, 0.0f, 33583, 39208); return NULL; }
 sequence *fade_torture_end2() { audio_sample_fade(mus[TORTURE_END], 0.139868f, 0.1120614f, 333, 1333); return NULL; }
-sequence *start_hoelzli_accent() { mus[HOELZLI_ACCENT] = audio_sample_start("EP06B Hoelzli Accent", 0, 0.177203f); return NULL; }
+sequence *start_hoelzli_accent() { mus[HOELZLI_ACCENT] = audio_sample_start("EP06/EP06B Hoelzli Accent", 0, 0.177203f); return NULL; }
 sequence *dont_know_trojan_jump() { if (!game_vars.know_trojan) return seg976(); return NULL; }
 sequence *fade_matt_alone2() { audio_sample_fade(mus[MATT_ALONE], 0.1114461f, 0.0f, 9167, 10750); return NULL; }
 sequence *fade_auction_guy() { audio_sample_fade(mus[AUCTION_GUY], 0.1598199f, 0.0f, 4167, 8333); return NULL; }
@@ -1524,54 +1524,54 @@ sequence *stop_atmo_tunnel() { audio_sample_stop_and_free(mus[ATMO_TUNNEL]); ret
 sequence *stop_matt_alone() { audio_sample_stop_and_free(mus[MATT_ALONE]); return NULL; }
 sequence *stop_police_everywhere_p1() { audio_sample_stop_and_free(mus[POLICE_EVERYWHERE_1]); return NULL; }
 sequence *stop_mayling_truth() { audio_sample_stop_and_free(mus[MAYLING_TRUTH]); return NULL; }
-sequence *start_atmo_train_p1_longer() { mus[ATMO_TRAIN_1_LONGER] = audio_sample_start("EP07 Atmo Ext Train 1 longer", 0, 0.3551822f); return NULL; }
-sequence *start_atmo_train_p4_rear() { mus[ATMO_TRAIN_4_REAR] = audio_sample_start("EP07 Atmo Ext Train 4 REAR", 0, 0.3160785f); return NULL; }
-sequence *start_atmo_train_p4() { mus[ATMO_TRAIN_4] = audio_sample_start("EP07 Atmo Ext Train 4", 0, 0.2346464f); return NULL; }
-sequence *start_atmo_train_p4_2() { mus[ATMO_TRAIN_4] = audio_sample_start("EP07 Atmo Ext Train 4", 0, 0.3478609f); return NULL; }
-sequence *start_atmo_train_p4_3() { mus[ATMO_TRAIN_4] = audio_sample_start("EP07 Atmo Ext Train 4", 0, 0.4065775f); return NULL; }
-sequence *start_atmo_train_p4_4() { mus[ATMO_TRAIN_4] = audio_sample_start("EP07 Atmo Ext Train 4", 0, 0.427056f); return NULL; }
-sequence *start_atmo_train_p4_short() { mus[ATMO_TRAIN_4_SHORT] = audio_sample_start("EP07 Atmo Ext Train 4 short", 0, 0.7106568f); return NULL; }
-sequence *start_atmo_train_p5_bass() { mus[ATMO_TRAIN_5_BASS] = audio_sample_start("EP07 Atmo Ext Train 5 bass", 0, 0.3516853f); return NULL; }
-sequence *start_forged() { mus[FORGED] = audio_sample_start("EP07 Forged", 0, 0.111812f); return NULL; }
-sequence *start_atmo_tunnel() { mus[ATMO_TUNNEL] = audio_sample_start("EP07 Atmo Int Tunnel", 1, 1.0f); return NULL; }
-sequence *start_drum_and_bass() { mus[DRUM_AND_BASS] = audio_sample_start("EP07 Drum & Bass", 0, 0.0f); return NULL; }
-sequence *start_atmo_police_several_sirens() { mus[ATMO_POLICE_SEVERAL_SIRENS] = audio_sample_start("EP07 Atmo Ext Police Several Sirens 1", 0, 1.0f); return NULL; }
-sequence *maybe_start_matt_alone() { if (!game_vars.matt_alone_playing) { mus[MATT_ALONE] = audio_sample_start("EP07 Matt Alone", 0, 0.1114461f); } game_vars.matt_alone_playing = 0; return NULL; }
+sequence *start_atmo_train_p1_longer() { mus[ATMO_TRAIN_1_LONGER] = audio_sample_start("EP07/EP07 Atmo Ext Train 1 longer", 0, 0.3551822f); return NULL; }
+sequence *start_atmo_train_p4_rear() { mus[ATMO_TRAIN_4_REAR] = audio_sample_start("EP07/EP07 Atmo Ext Train 4 REAR", 0, 0.3160785f); return NULL; }
+sequence *start_atmo_train_p4() { mus[ATMO_TRAIN_4] = audio_sample_start("EP07/EP07 Atmo Ext Train 4", 0, 0.2346464f); return NULL; }
+sequence *start_atmo_train_p4_2() { mus[ATMO_TRAIN_4] = audio_sample_start("EP07/EP07 Atmo Ext Train 4", 0, 0.3478609f); return NULL; }
+sequence *start_atmo_train_p4_3() { mus[ATMO_TRAIN_4] = audio_sample_start("EP07/EP07 Atmo Ext Train 4", 0, 0.4065775f); return NULL; }
+sequence *start_atmo_train_p4_4() { mus[ATMO_TRAIN_4] = audio_sample_start("EP07/EP07 Atmo Ext Train 4", 0, 0.427056f); return NULL; }
+sequence *start_atmo_train_p4_short() { mus[ATMO_TRAIN_4_SHORT] = audio_sample_start("EP07/EP07 Atmo Ext Train 4 short", 0, 0.7106568f); return NULL; }
+sequence *start_atmo_train_p5_bass() { mus[ATMO_TRAIN_5_BASS] = audio_sample_start("EP07/EP07 Atmo Ext Train 5 bass", 0, 0.3516853f); return NULL; }
+sequence *start_forged() { mus[FORGED] = audio_sample_start("EP07/EP07 Forged", 0, 0.111812f); return NULL; }
+sequence *start_atmo_tunnel() { mus[ATMO_TUNNEL] = audio_sample_start("EP07/EP07 Atmo Int Tunnel", 1, 1.0f); return NULL; }
+sequence *start_drum_and_bass() { mus[DRUM_AND_BASS] = audio_sample_start("EP07/EP07 Drum & Bass", 0, 0.0f); return NULL; }
+sequence *start_atmo_police_several_sirens() { mus[ATMO_POLICE_SEVERAL_SIRENS] = audio_sample_start("EP07/EP07 Atmo Ext Police Several Sirens 1", 0, 1.0f); return NULL; }
+sequence *maybe_start_matt_alone() { if (!game_vars.matt_alone_playing) { mus[MATT_ALONE] = audio_sample_start("EP07/EP07 Matt Alone", 0, 0.1114461f); } game_vars.matt_alone_playing = 0; return NULL; }
 sequence *change_atmo_train_p5_bass() { audio_sample_set_volume(mus[ATMO_TRAIN_5_BASS], 0.2303271f); return NULL; }
 sequence *change_atmo_train_p4() { audio_sample_set_volume(mus[ATMO_TRAIN_4], 0.3040856f); return NULL; }
 sequence *change_atmo_train_p4_2() { audio_sample_set_volume(mus[ATMO_TRAIN_4], 0.2822826f); return NULL; }
 sequence *change_revellers_p5() { audio_sample_set_volume(mus[ATMO_REVELLERS_5], 1.0f); return NULL; }
-sequence *start_mayling_truth() { mus[MAYLING_TRUTH] = audio_sample_start("EP07 MayLing's Truth", 0, 0.1126381f); return NULL; }
+sequence *start_mayling_truth() { mus[MAYLING_TRUTH] = audio_sample_start("EP07/EP07 MayLing's Truth", 0, 0.1126381f); return NULL; }
 sequence *stop_forged() { audio_sample_stop_and_free(mus[FORGED]); return NULL; }
 sequence *stop_atmo_train_p1() { audio_sample_stop_and_free(mus[ATMO_TRAIN_1]); return NULL; }
 sequence *stop_revellers_p5() { audio_sample_stop_and_free(mus[ATMO_REVELLERS_5]); return NULL; }
-sequence *start_atmo_train_p1() { mus[ATMO_TRAIN_1] = audio_sample_start("EP07 Atmo Ext Train 1", 0, 0.3853095f); return NULL; }
-sequence *start_atmo_train_p1_2() { mus[ATMO_TRAIN_1] = audio_sample_start("EP07 Atmo Ext Train 1", 0, 0.4462832f); return NULL; }
-sequence *start_atmo_train_p1_3() { mus[ATMO_TRAIN_1] = audio_sample_start("EP07 Atmo Ext Train 1", 0, 0.5014004f); return NULL; }
-sequence *start_atmo_train_p2() { mus[ATMO_TRAIN_2] = audio_sample_start("EP07 Atmo Ext Train 2", 0, 0.5861539f); return NULL; }
-sequence *start_atmo_train_p5() { mus[ATMO_TRAIN_5] = audio_sample_start("EP07 Atmo Ext Train 5", 0, 1.0f); return NULL; }
-sequence *start_atmo_train_p5_2() { mus[ATMO_TRAIN_5] = audio_sample_start("EP07 Atmo Ext Train 5", 0, 0.2810671f); return NULL; }
-sequence *start_atmo_train_p5_longer() { mus[ATMO_TRAIN_5_LONGER] = audio_sample_start("EP07 Atmo Ext Train 5 longer", 0, 0.3145116f); return NULL; }
-sequence *start_atmo_train_p6() { mus[ATMO_TRAIN_6] = audio_sample_start("EP07 Atmo Ext Train 6", 0, 0.3800933f); return NULL; }
-sequence *start_atmo_train_p6_2() { mus[ATMO_TRAIN_6] = audio_sample_start("EP07 Atmo Ext Train 6", 0, 0.2803708f); return NULL; }
-sequence *start_atmo_train_p4_longer() { mus[ATMO_TRAIN_4_LONGER] = audio_sample_start("EP07 Atmo Ext Train 4 longer", 0, 0.4762116f); return NULL; }
-sequence *start_atmo_police_single_siren_2_short() { mus[ATMO_POLICE_SINGLE_SIREN_2] = audio_sample_start("EP07 Atmo Ext Police Single Siren 2 short", 0, 0.2651353f); return NULL; }
-sequence *start_atmo_police_single_siren_short() { mus[ATMO_POLICE_SINGLE_SIREN] = audio_sample_start("EP07 Atmo Ext Police Single Siren 1 short", 0, 0.6961312f); return NULL; }
-sequence *start_atmo_police_single_siren_short3() { mus[ATMO_POLICE_SINGLE_SIREN] = audio_sample_start("EP07 Atmo Ext Police Single Siren 1 short", 0, 0.7106217f); return NULL; }
-sequence *start_atmo_police_single_siren_short2() { mus[ATMO_POLICE_SINGLE_SIREN] = audio_sample_start("EP07 Atmo Ext Police Single Siren 1 short", 0, 0.791577f); return NULL; }
-sequence *start_police_everywhere_p1() { mus[POLICE_EVERYWHERE_1] = audio_sample_start("EP07 Police Everywhere I", 0, 0.1112219f); return NULL; }
-sequence *start_revellers_p1() { mus[ATMO_REVELLERS_1] = audio_sample_start("EP07 Atmo Ext Revellers 1", 0, 1.0f); return NULL; }
-sequence *start_revellers_p2() { mus[ATMO_REVELLERS_2] = audio_sample_start("EP07 Atmo Ext Revellers 2", 0, 1.0f); return NULL; }
-sequence *start_revellers_p3() { mus[ATMO_REVELLERS_3] = audio_sample_start("EP07 Atmo Ext Revellers 3", 0, 1.0f); return NULL; }
-sequence *start_revellers_p4() { mus[ATMO_REVELLERS_4] = audio_sample_start("EP07 Atmo Ext Revellers 4", 0, 1.0f); return NULL; }
-sequence *start_revellers_p5() { mus[ATMO_REVELLERS_5] = audio_sample_start("EP07 Atmo Ext Revellers 5", 0, 0.5608469f); return NULL; }
-sequence *start_auction_guy2() { mus[AUCTION_GUY] = audio_sample_start("EP07 Auction Guy", 0, 0.1598199f); return NULL; }
-sequence *start_police_everywhere_p2() { mus[POLICE_EVERYWHERE_2] = audio_sample_start("EP07 Police Everywhere II", 0, 0.05980561f); return NULL; }
-sequence *start_police_everywhere_p2_2() { mus[POLICE_EVERYWHERE_2] = audio_sample_start("EP07 Police Everywhere II", 0, 0.0706706f); return NULL; }
-sequence *start_police_everywhere_p2_3() { mus[POLICE_EVERYWHERE_2] = audio_sample_start("EP07 Police Everywhere II", 0, 0.1583093f); return NULL; }
-sequence *start_after_fight() { mus[AFTER_FIGHT] = audio_sample_start("EP07 After Fight", 0, 0.1590764f); return NULL; }
-sequence *start_after_fight_trans() { mus[AFTER_FIGHT_TRANS] = audio_sample_start("EP07 After Fight Transition", 0, 0.1593597f); return NULL; }
-sequence *maybe_start_intentness_mood() { if (game_vars.passed_by_seg765 || game_vars.passed_by_seg739) { mus[INTENTNESS_MOOD] = audio_sample_start("EP10 Intentness", 0, 0.1121213f); } return NULL; }
+sequence *start_atmo_train_p1() { mus[ATMO_TRAIN_1] = audio_sample_start("EP07/EP07 Atmo Ext Train 1", 0, 0.3853095f); return NULL; }
+sequence *start_atmo_train_p1_2() { mus[ATMO_TRAIN_1] = audio_sample_start("EP07/EP07 Atmo Ext Train 1", 0, 0.4462832f); return NULL; }
+sequence *start_atmo_train_p1_3() { mus[ATMO_TRAIN_1] = audio_sample_start("EP07/EP07 Atmo Ext Train 1", 0, 0.5014004f); return NULL; }
+sequence *start_atmo_train_p2() { mus[ATMO_TRAIN_2] = audio_sample_start("EP07/EP07 Atmo Ext Train 2", 0, 0.5861539f); return NULL; }
+sequence *start_atmo_train_p5() { mus[ATMO_TRAIN_5] = audio_sample_start("EP07/EP07 Atmo Ext Train 5", 0, 1.0f); return NULL; }
+sequence *start_atmo_train_p5_2() { mus[ATMO_TRAIN_5] = audio_sample_start("EP07/EP07 Atmo Ext Train 5", 0, 0.2810671f); return NULL; }
+sequence *start_atmo_train_p5_longer() { mus[ATMO_TRAIN_5_LONGER] = audio_sample_start("EP07/EP07 Atmo Ext Train 5 longer", 0, 0.3145116f); return NULL; }
+sequence *start_atmo_train_p6() { mus[ATMO_TRAIN_6] = audio_sample_start("EP07/EP07 Atmo Ext Train 6", 0, 0.3800933f); return NULL; }
+sequence *start_atmo_train_p6_2() { mus[ATMO_TRAIN_6] = audio_sample_start("EP07/EP07 Atmo Ext Train 6", 0, 0.2803708f); return NULL; }
+sequence *start_atmo_train_p4_longer() { mus[ATMO_TRAIN_4_LONGER] = audio_sample_start("EP07/EP07 Atmo Ext Train 4 longer", 0, 0.4762116f); return NULL; }
+sequence *start_atmo_police_single_siren_2_short() { mus[ATMO_POLICE_SINGLE_SIREN_2] = audio_sample_start("EP07/EP07 Atmo Ext Police Single Siren 2 short", 0, 0.2651353f); return NULL; }
+sequence *start_atmo_police_single_siren_short() { mus[ATMO_POLICE_SINGLE_SIREN] = audio_sample_start("EP07/EP07 Atmo Ext Police Single Siren 1 short", 0, 0.6961312f); return NULL; }
+sequence *start_atmo_police_single_siren_short3() { mus[ATMO_POLICE_SINGLE_SIREN] = audio_sample_start("EP07/EP07 Atmo Ext Police Single Siren 1 short", 0, 0.7106217f); return NULL; }
+sequence *start_atmo_police_single_siren_short2() { mus[ATMO_POLICE_SINGLE_SIREN] = audio_sample_start("EP07/EP07 Atmo Ext Police Single Siren 1 short", 0, 0.791577f); return NULL; }
+sequence *start_police_everywhere_p1() { mus[POLICE_EVERYWHERE_1] = audio_sample_start("EP07/EP07 Police Everywhere I", 0, 0.1112219f); return NULL; }
+sequence *start_revellers_p1() { mus[ATMO_REVELLERS_1] = audio_sample_start("EP07/EP07 Atmo Ext Revellers 1", 0, 1.0f); return NULL; }
+sequence *start_revellers_p2() { mus[ATMO_REVELLERS_2] = audio_sample_start("EP07/EP07 Atmo Ext Revellers 2", 0, 1.0f); return NULL; }
+sequence *start_revellers_p3() { mus[ATMO_REVELLERS_3] = audio_sample_start("EP07/EP07 Atmo Ext Revellers 3", 0, 1.0f); return NULL; }
+sequence *start_revellers_p4() { mus[ATMO_REVELLERS_4] = audio_sample_start("EP07/EP07 Atmo Ext Revellers 4", 0, 1.0f); return NULL; }
+sequence *start_revellers_p5() { mus[ATMO_REVELLERS_5] = audio_sample_start("EP07/EP07 Atmo Ext Revellers 5", 0, 0.5608469f); return NULL; }
+sequence *start_auction_guy2() { mus[AUCTION_GUY] = audio_sample_start("EP07/EP07 Auction Guy", 0, 0.1598199f); return NULL; }
+sequence *start_police_everywhere_p2() { mus[POLICE_EVERYWHERE_2] = audio_sample_start("EP07/EP07 Police Everywhere II", 0, 0.05980561f); return NULL; }
+sequence *start_police_everywhere_p2_2() { mus[POLICE_EVERYWHERE_2] = audio_sample_start("EP07/EP07 Police Everywhere II", 0, 0.0706706f); return NULL; }
+sequence *start_police_everywhere_p2_3() { mus[POLICE_EVERYWHERE_2] = audio_sample_start("EP07/EP07 Police Everywhere II", 0, 0.1583093f); return NULL; }
+sequence *start_after_fight() { mus[AFTER_FIGHT] = audio_sample_start("EP07/EP07 After Fight", 0, 0.1590764f); return NULL; }
+sequence *start_after_fight_trans() { mus[AFTER_FIGHT_TRANS] = audio_sample_start("EP07/EP07 After Fight Transition", 0, 0.1593597f); return NULL; }
+sequence *maybe_start_intentness_mood() { if (game_vars.passed_by_seg765 || game_vars.passed_by_seg739) { mus[INTENTNESS_MOOD] = audio_sample_start("EP10/EP10 Intentness", 0, 0.1121213f); } return NULL; }
 sequence *fade_intentness_mood() { audio_sample_fade(mus[INTENTNESS_MOOD], 0.1121213f, 0.2506319f, 3458, 10458); return NULL; }
 sequence *stop_torment_seb() { audio_sample_stop_and_free(mus[TORMENT_SEBASTIAN]); return NULL; }
 sequence *stop_desperation_riser() { audio_sample_stop_and_free(mus[DESPERATION_RISER]); return NULL; }
@@ -1584,25 +1584,25 @@ sequence *stop_atmo_phone_vibra() { audio_sample_stop_and_free(mus[ATMO_PHONE_VI
 sequence *stop_atmo_hospital() { audio_sample_stop_and_free(mus[ATMO_HOSPITAL]); return NULL; }
 sequence *stop_police_everywhere_p2() { audio_sample_stop_and_free(mus[POLICE_EVERYWHERE_2]); return NULL; }
 sequence *stop_hospital_reception() { audio_sample_stop_and_free(mus[HOSPITAL_RECEPTION]); return NULL; }
-sequence *start_atmo_phone_vibra() { mus[ATMO_PHONE_VIBRA] = audio_sample_start("EP09 Atmo Phone Vibra", 0, 0.0f); return NULL; }
-sequence *start_wake_up() { mus[WAKE_UP_CALL] = audio_sample_start("EP09 Wake Up Call", 0, 0.1586929f); return NULL; }
-sequence *start_lonliness_riser() { mus[LONLINESS_RISER] = audio_sample_start("EP09 Lonliness B Riser", 0, 0.1589053f); return NULL; }
-sequence *start_awareness_downlifter_9() { mus[AWARENESS_DOWNLIFTER_9] = audio_sample_start("EP09 Awareness Downlifter", 0, 0.06862868f); return NULL; }
-sequence *start_tenseness_long() { mus[TENSENESS_LONG] = audio_sample_start("EP09 Tenseness Long", 0, 0.13926f); return NULL; }
-sequence *start_lonliness() { mus[LONLINESS] = audio_sample_start("EP09 Lonliness B", 0, 0.1584156f); return NULL; }
-sequence *start_de_escalation_no_boom() { mus[DE_ESCALATION_NO_BOOM] = audio_sample_start("EP09 De-escalation no boom", 0, 0.1586328f); return NULL; }
-sequence *start_torment_de_escalation() { mus[TORMENT_DE_ESCALATION] = audio_sample_start("EP09 Torment De-escalation", 0, 0.1586328f); return NULL; }
-sequence *start_torment_accent() { mus[TORMENT_ACCENT] = audio_sample_start("EP09 Torment Accent I", 0, 0.1582878f); return NULL; }
-sequence *start_torment_escalation() { mus[TORMENT_ESCALATION] = audio_sample_start("EP09 Torment Escalation", 0, 0.1589453f); return NULL; }
-sequence *start_torment_stop_or_strangle() { mus[TORMENT_STOP_OR_STRANGLE] = audio_sample_start("EP09 Torment Stop or Strangle", 0, 0.1579557f); return NULL; }
-sequence *start_torment_seb() { mus[TORMENT_SEBASTIAN] = audio_sample_start("EP09 Torment Sebastian Main", 0, 0.1576302f); return NULL; }
-sequence *start_hospital_reception() { mus[HOSPITAL_RECEPTION] = audio_sample_start("EP09 Hospital Reception", 0, 0.2525519f); return NULL; }
-sequence *start_atmo_reception() { mus[ATMO_RECEPTION] = audio_sample_start("EP09 Atmo Int Reception", 1, 1.0f); return NULL; }
-sequence *start_atmo_hospital() { mus[ATMO_HOSPITAL] = audio_sample_start("EP09 Atmo Int Hospital", 1, 1.0f); return NULL; }
-sequence *start_atmo_hb_seb_slow() { mus[ATMO_HEARTBEAT_SEB_SLOW] = audio_sample_start("EP09 Atmo Heartbeat Seb Slow", 1, 0.7926897f); return NULL; }
-sequence *start_atmo_hb_seb_fast2() { mus[ATMO_HEARTBEAT_SEB_FAST] = audio_sample_start("EP09 Atmo Heartbeat Seb Fast", 1, 0.7900451f); return NULL; }
-sequence *start_atmo_hb_seb_fast() { mus[ATMO_HEARTBEAT_SEB_FAST] = audio_sample_start("EP09 Atmo Heartbeat Seb Fast", 1, 1.0f); return NULL; }
-sequence *start_atmo_hb_may_ascending() { mus[ATMO_HEARTBEAT_MAY_ASCENDING] = audio_sample_start("EP09 Atmo Heartbeat May ascending", 0, 0.789014f); return NULL; }
+sequence *start_atmo_phone_vibra() { mus[ATMO_PHONE_VIBRA] = audio_sample_start("EP09/EP09 Atmo Phone Vibra", 0, 0.0f); return NULL; }
+sequence *start_wake_up() { mus[WAKE_UP_CALL] = audio_sample_start("EP09/EP09 Wake Up Call", 0, 0.1586929f); return NULL; }
+sequence *start_lonliness_riser() { mus[LONLINESS_RISER] = audio_sample_start("EP09/EP09 Lonliness B Riser", 0, 0.1589053f); return NULL; }
+sequence *start_awareness_downlifter_9() { mus[AWARENESS_DOWNLIFTER_9] = audio_sample_start("EP09/EP09 Awareness Downlifter", 0, 0.06862868f); return NULL; }
+sequence *start_tenseness_long() { mus[TENSENESS_LONG] = audio_sample_start("EP09/EP09 Tenseness Long", 0, 0.13926f); return NULL; }
+sequence *start_lonliness() { mus[LONLINESS] = audio_sample_start("EP09/EP09 Lonliness B", 0, 0.1584156f); return NULL; }
+sequence *start_de_escalation_no_boom() { mus[DE_ESCALATION_NO_BOOM] = audio_sample_start("EP09/EP09 De-escalation no boom", 0, 0.1586328f); return NULL; }
+sequence *start_torment_de_escalation() { mus[TORMENT_DE_ESCALATION] = audio_sample_start("EP09/EP09 Torment De-escalation", 0, 0.1586328f); return NULL; }
+sequence *start_torment_accent() { mus[TORMENT_ACCENT] = audio_sample_start("EP09/EP09 Torment Accent I", 0, 0.1582878f); return NULL; }
+sequence *start_torment_escalation() { mus[TORMENT_ESCALATION] = audio_sample_start("EP09/EP09 Torment Escalation", 0, 0.1589453f); return NULL; }
+sequence *start_torment_stop_or_strangle() { mus[TORMENT_STOP_OR_STRANGLE] = audio_sample_start("EP09/EP09 Torment Stop or Strangle", 0, 0.1579557f); return NULL; }
+sequence *start_torment_seb() { mus[TORMENT_SEBASTIAN] = audio_sample_start("EP09/EP09 Torment Sebastian Main", 0, 0.1576302f); return NULL; }
+sequence *start_hospital_reception() { mus[HOSPITAL_RECEPTION] = audio_sample_start("EP09/EP09 Hospital Reception", 0, 0.2525519f); return NULL; }
+sequence *start_atmo_reception() { mus[ATMO_RECEPTION] = audio_sample_start("EP09/EP09 Atmo Int Reception", 1, 1.0f); return NULL; }
+sequence *start_atmo_hospital() { mus[ATMO_HOSPITAL] = audio_sample_start("EP09/EP09 Atmo Int Hospital", 1, 1.0f); return NULL; }
+sequence *start_atmo_hb_seb_slow() { mus[ATMO_HEARTBEAT_SEB_SLOW] = audio_sample_start("EP09/EP09 Atmo Heartbeat Seb Slow", 1, 0.7926897f); return NULL; }
+sequence *start_atmo_hb_seb_fast2() { mus[ATMO_HEARTBEAT_SEB_FAST] = audio_sample_start("EP09/EP09 Atmo Heartbeat Seb Fast", 1, 0.7900451f); return NULL; }
+sequence *start_atmo_hb_seb_fast() { mus[ATMO_HEARTBEAT_SEB_FAST] = audio_sample_start("EP09/EP09 Atmo Heartbeat Seb Fast", 1, 1.0f); return NULL; }
+sequence *start_atmo_hb_may_ascending() { mus[ATMO_HEARTBEAT_MAY_ASCENDING] = audio_sample_start("EP09/EP09 Atmo Heartbeat May ascending", 0, 0.789014f); return NULL; }
 sequence *fade_police_everywhere_p2() { audio_sample_fade(mus[POLICE_EVERYWHERE_2], 0.05980561f, 0.0f, 7750, 22000); return NULL; }
 sequence *fade_hospital_reception() { audio_sample_fade(mus[HOSPITAL_RECEPTION], 0.2525519f, 0.0f, 46542, 56542); return NULL; }
 sequence *fade_hospital_reception2() { audio_sample_fade(mus[HOSPITAL_RECEPTION], 0.2525519f, 0.0f, 27250, 37250); return NULL; }
@@ -1615,16 +1615,16 @@ sequence *fade_torment_seb2() { audio_sample_fade(mus[TORMENT_SEBASTIAN], 0.1576
 sequence *fade_torment_seb3() { audio_sample_fade(mus[TORMENT_SEBASTIAN], 0.1576302f, 0.0f, 0, 3000); return NULL; }
 sequence *fade_atmo_phone_vibra() { audio_sample_fade(mus[ATMO_PHONE_VIBRA], 0.0f, 0.1959517f, 16167, 24167); return NULL; }
 sequence *change_hb_seb_slow() { audio_sample_set_volume(mus[ATMO_HEARTBEAT_SEB_SLOW], 0.4981439f); return NULL; }
-sequence *start_after_fight_trans2() { mus[AFTER_FIGHT_TRANS] = audio_sample_start("EP07 After Fight Transition", 0, 0.2499574f); return NULL; }
+sequence *start_after_fight_trans2() { mus[AFTER_FIGHT_TRANS] = audio_sample_start("EP07/EP07 After Fight Transition", 0, 0.2499574f); return NULL; }
 sequence *fade_police_everywhere_p2_2() { audio_sample_fade(mus[POLICE_EVERYWHERE_2], 0.05980561f, 0.0f, 4208, 15083); return NULL; }
-sequence *start_hospital_reception_2() { mus[HOSPITAL_RECEPTION] = audio_sample_start("EP09 Hospital Reception", 0, 0.2501003f); return NULL; }
-sequence *start_atmo_hb_seb_slow2() { mus[ATMO_HEARTBEAT_SEB_SLOW] = audio_sample_start("EP09 Atmo Heartbeat Seb Slow", 1, 1.0f); return NULL; }
+sequence *start_hospital_reception_2() { mus[HOSPITAL_RECEPTION] = audio_sample_start("EP09/EP09 Hospital Reception", 0, 0.2501003f); return NULL; }
+sequence *start_atmo_hb_seb_slow2() { mus[ATMO_HEARTBEAT_SEB_SLOW] = audio_sample_start("EP09/EP09 Atmo Heartbeat Seb Slow", 1, 1.0f); return NULL; }
 sequence *fade_hospital_reception7() { audio_sample_fade(mus[HOSPITAL_RECEPTION], 0.2525519f, 0.0f, 0, 6000); return NULL; }
-sequence *start_torment_accent_p2() { mus[TORMENT_ACCENT_P2] = audio_sample_start("EP09 Torment Accent II", 0, 0.1584375f); return NULL; }
-sequence *start_torment_escalation_short() { mus[TORMENT_ESCALATION_SHORT] = audio_sample_start("EP09 Torment Escalation short", 0, 0.1577474f); return NULL; }
+sequence *start_torment_accent_p2() { mus[TORMENT_ACCENT_P2] = audio_sample_start("EP09/EP09 Torment Accent II", 0, 0.1584375f); return NULL; }
+sequence *start_torment_escalation_short() { mus[TORMENT_ESCALATION_SHORT] = audio_sample_start("EP09/EP09 Torment Escalation short", 0, 0.1577474f); return NULL; }
 sequence *fade_torment_seb4() { audio_sample_fade(mus[TORMENT_SEBASTIAN], 0.1576302f, 0.0f, 0, 6000); return NULL; }
-sequence *start_desperation() { mus[DESPERATION] = audio_sample_start("EP09 Desperation", 0, 0.1260066f); return NULL; }
-sequence *start_desperation_riser() { mus[DESPERATION_RISER] = audio_sample_start("EP09 Desperation Riser", 0, 0.0f); return NULL; }
+sequence *start_desperation() { mus[DESPERATION] = audio_sample_start("EP09/EP09 Desperation", 0, 0.1260066f); return NULL; }
+sequence *start_desperation_riser() { mus[DESPERATION_RISER] = audio_sample_start("EP09/EP09 Desperation Riser", 0, 0.0f); return NULL; }
 sequence *fade_desperation() { audio_sample_fade(mus[DESPERATION], 0.1260066f, 0.2486506f, 28458, 33583); return NULL; }
 sequence *maybe_fade_desperation() { if (game_vars.cross_exam) { audio_sample_fade(mus[DESPERATION], 0.2486506f, 0.0f, 33583, 41667); } return NULL; }
 sequence *maybe_stop_desperation() { if (game_vars.cross_exam) { audio_sample_stop_and_free(mus[DESPERATION]); } return NULL; }
@@ -1632,25 +1632,25 @@ sequence *fade_desperation2() { audio_sample_fade(mus[DESPERATION], 0.1260066f, 
 sequence *fade_desperation_riser() { audio_sample_fade(mus[DESPERATION_RISER], 0.0f, 0.07745742f, 3083, 6083); return NULL; }
 sequence *fade_desperation_riser2() { audio_sample_fade(mus[DESPERATION_RISER], 0.07745742f, 0.0f, 10625, 27625); return NULL; }
 sequence *maybe_fade_desperation2() { if (game_vars.cross_exam) { audio_sample_fade(mus[DESPERATION], 0.2486506f, 0.0f, 30917, 39000); } return NULL; }
-sequence *maybe_start_intentness_mood2() { if (game_vars.cross_exam) {  mus[INTENTNESS_MOOD] = audio_sample_start("EP07 Intentness Mood", 0, 0.1987343f); } return NULL; }
-sequence *start_lift_bossa_del_breezy() { mus[LIFT_BOSSA_DEL_BREEZY_ENDLESS] = audio_sample_start("EP10 Lift BossaDelBreezy Endless", 1, 0.0f); return NULL; }
-sequence *start_intentness() { mus[INTENTNESS] = audio_sample_start("EP10 Intentness", 0, 0.2124908f); return NULL; }
-sequence *start_password() { mus[PASSWORD] = audio_sample_start("EP10 Password", 0, 0.1585867f); return NULL; }
-sequence *start_escape() { mus[ESCAPE] = audio_sample_start("EP10 Escape", 0, 0.2510501f); return NULL; }
-sequence *start_exit() { mus[EXIT] = audio_sample_start("EP10 Exit", 0, 0.2511656f); return NULL; }
-sequence *start_requiem_arrival() { mus[REQUIEM_ARRIVAL] = audio_sample_start("EP10 Requiem Arrival", 0, 0.09947789f); return NULL; }
-sequence *start_tenseness10() { mus[TENSENESS_10] = audio_sample_start("EP10 Tenseness", 0, 0.3078487f); return NULL; }
-sequence *start_tenseness10_2() { mus[TENSENESS_10] = audio_sample_start("EP10 Tenseness", 0, 0.2509031f); return NULL; }
-sequence *start_atmo_street() { mus[ATMO_STREET] = audio_sample_start("EP10 Atmo Ext Street", 0, 1.0f); return NULL; }
-sequence *start_atmo_hainsworth_parking() { mus[ATMO_HAINSWORTH_PARKING_LOT] = audio_sample_start("EP10 Atmo Ext Hainsworth Parking Lot", 1, 1.0f); return NULL; }
-sequence *start_hainsworth_return() { mus[HAINSWORTH_RETURN] = audio_sample_start("EP10 Hainsworth Return", 0, 0.09993204f); return NULL; }
-sequence *start_hainsworth_return_long() { mus[HAINSWORTH_RETURN_LONG] = audio_sample_start("EP10 Hainsworth Return Long", 0, 0.1399311f); return NULL; }
-sequence *start_password_accent() { mus[PASSWORD_ACCENT] = audio_sample_start("EP10 Password Accent", 0, 0.1588699f); return NULL; }
-sequence *start_payback_front() { mus[PAYBACK_FRONT] = audio_sample_start("EP10 Payback Front", 0, 0.2873729f); return NULL; }
-sequence *start_atmo_van() { mus[ATMO_VAN] = audio_sample_start("EP10 Atmo Int Van", 1, 1.0f); return NULL; }
-sequence *start_atmo_van_stop() { mus[ATMO_VAN_STOP] = audio_sample_start("EP10 Atmo Int Van Stop", 0, 1.0f); return NULL; }
-sequence *start_payback_stairwell() { mus[PAYBACK_STAIRWELL] = audio_sample_start("EP10 Payback Stairwell", 0, 0.2504725f); return NULL; }
-sequence *start_atmo_hainsworth_corridor() { mus[ATMO_HAINSWORTH_CORRIDOR] = audio_sample_start("EP10 Atmo Int Hainsworth Corridor", 0, 1.0f); return NULL; }
+sequence *maybe_start_intentness_mood2() { if (game_vars.cross_exam) {  mus[INTENTNESS_MOOD] = audio_sample_start("EP07/EP07 Intentness Mood", 0, 0.1987343f); } return NULL; }
+sequence *start_lift_bossa_del_breezy() { mus[LIFT_BOSSA_DEL_BREEZY_ENDLESS] = audio_sample_start("EP10/EP10 Lift BossaDelBreezy Endless", 1, 0.0f); return NULL; }
+sequence *start_intentness() { mus[INTENTNESS] = audio_sample_start("EP10/EP10 Intentness", 0, 0.2124908f); return NULL; }
+sequence *start_password() { mus[PASSWORD] = audio_sample_start("EP10/EP10 Password", 0, 0.1585867f); return NULL; }
+sequence *start_escape() { mus[ESCAPE] = audio_sample_start("EP10/EP10 Escape", 0, 0.2510501f); return NULL; }
+sequence *start_exit() { mus[EXIT] = audio_sample_start("EP10/EP10 Exit", 0, 0.2511656f); return NULL; }
+sequence *start_requiem_arrival() { mus[REQUIEM_ARRIVAL] = audio_sample_start("EP10/EP10 Requiem Arrival", 0, 0.09947789f); return NULL; }
+sequence *start_tenseness10() { mus[TENSENESS_10] = audio_sample_start("EP10/EP10 Tenseness", 0, 0.3078487f); return NULL; }
+sequence *start_tenseness10_2() { mus[TENSENESS_10] = audio_sample_start("EP10/EP10 Tenseness", 0, 0.2509031f); return NULL; }
+sequence *start_atmo_street() { mus[ATMO_STREET] = audio_sample_start("EP10/EP10 Atmo Ext Street", 0, 1.0f); return NULL; }
+sequence *start_atmo_hainsworth_parking() { mus[ATMO_HAINSWORTH_PARKING_LOT] = audio_sample_start("EP10/EP10 Atmo Ext Hainsworth Parking Lot", 1, 1.0f); return NULL; }
+sequence *start_hainsworth_return() { mus[HAINSWORTH_RETURN] = audio_sample_start("EP10/EP10 Hainsworth Return", 0, 0.09993204f); return NULL; }
+sequence *start_hainsworth_return_long() { mus[HAINSWORTH_RETURN_LONG] = audio_sample_start("EP10/EP10 Hainsworth Return Long", 0, 0.1399311f); return NULL; }
+sequence *start_password_accent() { mus[PASSWORD_ACCENT] = audio_sample_start("EP10/EP10 Password Accent", 0, 0.1588699f); return NULL; }
+sequence *start_payback_front() { mus[PAYBACK_FRONT] = audio_sample_start("EP10/EP10 Payback Front", 0, 0.2873729f); return NULL; }
+sequence *start_atmo_van() { mus[ATMO_VAN] = audio_sample_start("EP10/EP10 Atmo Int Van", 1, 1.0f); return NULL; }
+sequence *start_atmo_van_stop() { mus[ATMO_VAN_STOP] = audio_sample_start("EP10/EP10 Atmo Int Van Stop", 0, 1.0f); return NULL; }
+sequence *start_payback_stairwell() { mus[PAYBACK_STAIRWELL] = audio_sample_start("EP10/EP10 Payback Stairwell", 0, 0.2504725f); return NULL; }
+sequence *start_atmo_hainsworth_corridor() { mus[ATMO_HAINSWORTH_CORRIDOR] = audio_sample_start("EP10/EP10 Atmo Int Hainsworth Corridor", 0, 1.0f); return NULL; }
 sequence *fade_desperation_riser3() { audio_sample_fade(mus[DESPERATION_RISER], 0.07745742f, 0.0f, 1958, 4000); return NULL; }
 sequence *fade_intentness_mood2() { audio_sample_fade(mus[INTENTNESS_MOOD], 0.1987343f, 0.0f, 4000, 7958); return NULL; }
 sequence *fade_intentness() { audio_sample_fade(mus[INTENTNESS], 0.2124908f, 0.0f, 0, 10000); return NULL; }
@@ -1680,8 +1680,8 @@ sequence *change_requiem_win() { audio_sample_set_volume(mus[REQUIEM_WIN], 0.135
 sequence *change_atmo_van() { audio_sample_set_volume(mus[ATMO_VAN], 0.2813083f); return NULL; }
 sequence *change_atmo_van_stop() { audio_sample_set_volume(mus[ATMO_VAN_STOP], 0.4930437f); return NULL; }
 sequence *fade_requiem_arrival() { audio_sample_fade(mus[REQUIEM_ARRIVAL], 0.09947789f, 0.0f, 97250, 107250); return NULL; }
-sequence *start_requiem_may() { mus[REQUIEM_MAY] = audio_sample_start("EP11 Requiem May", 0, 0.09962032f); return NULL; }
-sequence *start_atmo_parr_house() { mus[ATMO_PARR_HOUSE] = audio_sample_start("EP10 Atmo Ext + Int Parr House", 1, 1.0f); return NULL; }
+sequence *start_requiem_may() { mus[REQUIEM_MAY] = audio_sample_start("EP11/EP11 Requiem May", 0, 0.09962032f); return NULL; }
+sequence *start_atmo_parr_house() { mus[ATMO_PARR_HOUSE] = audio_sample_start("EP10/EP10 Atmo Ext + Int Parr House", 1, 1.0f); return NULL; }
 sequence *fade_tenseness10() { audio_sample_fade(mus[TENSENESS_10], 0.3078487f, 0.0f, 31667, 41667); return NULL; }
 sequence *fade_bowltest() { audio_sample_fade(mus[BOWLTEST], 0.08948381f, 0.0f, 45125, 54125); return NULL; }
 sequence *stop_tenseness10() { audio_sample_stop_and_free(mus[TENSENESS_10]); return NULL; }
@@ -1689,26 +1689,26 @@ sequence *stop_atmo_parr_house() { audio_sample_stop_and_free(mus[ATMO_PARR_HOUS
 sequence *stop_bowltest() { audio_sample_stop_and_free(mus[BOWLTEST]); return NULL; }
 sequence *stop_atmo_parr_end() { audio_sample_stop_and_free(mus[ATMO_PARR_END]); return NULL; }
 sequence *stop_atmo_street() { audio_sample_stop_and_free(mus[ATMO_STREET]); return NULL; }
-sequence *start_requiem_win() { mus[REQUIEM_WIN] = audio_sample_start("EP10 Requiem Win", 0, 0.09886219f); return NULL; }
-sequence *start_atmo_parr_end() { mus[ATMO_PARR_END] = audio_sample_start("EP10 Atmo Ext Parr End", 0, 1.0f); return NULL; }
-sequence *start_done_stinger() { mus[DONE_STINGER] = audio_sample_start("EP10 Done Stinger", 0, 0.1416847f); return NULL; }
-sequence *start_requiem_broken() { mus[REQUIEM_BROKEN] = audio_sample_start("EP10 Requiem Broken", 0, 0.1273758f); return NULL; }
-sequence *start_bowltest() { mus[BOWLTEST] = audio_sample_start("EP10 Bowltest", 0, 0.08948381f); return NULL; }
-sequence *start_bowltest_fail() { mus[BOWLTEST_FAIL] = audio_sample_start("EP10 Bowltest Fail", 0, 0.08883473f); return NULL; }
-sequence *start_bowltest_riser_short() { mus[BOWLTEST_RISER_SHORT] = audio_sample_start("EP10 Bowltest Riser Short", 0, 0.1173763f); return NULL; }
-sequence *start_awareness_downlifter_9_2() { mus[AWARENESS_DOWNLIFTER_9] = audio_sample_start("EP09 Awareness Downlifter", 0, 0.09940945f); return NULL; }
-sequence *start_vo_westminster_or_bethnal() { if (game_vars.go_home) { mus[VO_WESTMINSTER_PLEASE] = audio_voice_sample_start("EP10 VO Westminster Please", 0, 0.4052885f); } else { mus[VO_BETHNAL_GREEN] = audio_voice_sample_start("EP10 VO Bethnal Green", 0, 0.3967226f); } return NULL; }
-sequence *maybe_start_intentess_end() { if (game_vars.go_home) { mus[INTENTNESS_END_SHORT] = audio_sample_start("EP10 Intentness Ende Ep10 short", 0, 0.124175f); } return NULL; }
-sequence *start_intentness_alt() { mus[INTENTESS_ALTERNATE] = audio_sample_start("EP11 Intentness Alternate Ending Home", 0, 0.1772928f); return NULL; }
-sequence *start_showdown_riser_more() { mus[SHOWDOWN_RISER_MORE] = audio_sample_start("EP11 Showdown Riser More", 0, 0.05590255f); return NULL; }
-sequence *start_showdown_riser_more2() { mus[SHOWDOWN_RISER_MORE] = audio_sample_start("EP11 Showdown Riser More", 0, 0.07153846f); return NULL; }
-sequence *start_showdown_safe_accent() { mus[SHOWDOWN_SAFE_ACCENT] = audio_sample_start("EP11 Showdown Safe Accent", 0, 0.1783531f); return NULL; }
-sequence *start_showdown_safe_accent2() { mus[SHOWDOWN_SAFE_ACCENT] = audio_sample_start("EP11 Showdown Safe Accent", 0, 0.2517211f); return NULL; }
-sequence *start_requiem_where() { mus[REQUIEM_WHERE] = audio_sample_start("EP11 Requiem Where Nu", 0, 0.04485771f); return NULL; }
-sequence *start_requiem_after_where() { mus[REQUIEM_AFTER_WHERE] = audio_sample_start("EP11 Requiem After Where Nu", 0, 0.0715887f); return NULL; }
-sequence *start_showdown() { mus[SHOWDOWN] = audio_sample_start("EP11 Showdown", 0, 0.08878937f); return NULL; }
-sequence *start_atmo_parr() { mus[ATMO_PARR] = audio_sample_start("EP11 Atmo Int Parr", 1, 1.0f); return NULL; }
-sequence *start_intentness_11() { mus[INTENTNESS_11] = audio_sample_start("EP11 Intentness", 0, 0.2514518f); return NULL; }
+sequence *start_requiem_win() { mus[REQUIEM_WIN] = audio_sample_start("EP10/EP10 Requiem Win", 0, 0.09886219f); return NULL; }
+sequence *start_atmo_parr_end() { mus[ATMO_PARR_END] = audio_sample_start("EP10/EP10 Atmo Ext Parr End", 0, 1.0f); return NULL; }
+sequence *start_done_stinger() { mus[DONE_STINGER] = audio_sample_start("EP10/EP10 Done Stinger", 0, 0.1416847f); return NULL; }
+sequence *start_requiem_broken() { mus[REQUIEM_BROKEN] = audio_sample_start("EP10/EP10 Requiem Broken", 0, 0.1273758f); return NULL; }
+sequence *start_bowltest() { mus[BOWLTEST] = audio_sample_start("EP10/EP10 Bowltest", 0, 0.08948381f); return NULL; }
+sequence *start_bowltest_fail() { mus[BOWLTEST_FAIL] = audio_sample_start("EP10/EP10 Bowltest Fail", 0, 0.08883473f); return NULL; }
+sequence *start_bowltest_riser_short() { mus[BOWLTEST_RISER_SHORT] = audio_sample_start("EP10/EP10 Bowltest Riser Short", 0, 0.1173763f); return NULL; }
+sequence *start_awareness_downlifter_9_2() { mus[AWARENESS_DOWNLIFTER_9] = audio_sample_start("EP09/EP09 Awareness Downlifter", 0, 0.09940945f); return NULL; }
+sequence *start_vo_westminster_or_bethnal() { if (game_vars.go_home) { mus[VO_WESTMINSTER_PLEASE] = audio_voice_sample_start("EP10/EP10 VO Westminster Please", 0, 0.4052885f); } else { mus[VO_BETHNAL_GREEN] = audio_voice_sample_start("EP10/EP10 VO Bethnal Green", 0, 0.3967226f); } return NULL; }
+sequence *maybe_start_intentess_end() { if (game_vars.go_home) { mus[INTENTNESS_END_SHORT] = audio_sample_start("EP10/EP10 Intentness Ende Ep10 short", 0, 0.124175f); } return NULL; }
+sequence *start_intentness_alt() { mus[INTENTESS_ALTERNATE] = audio_sample_start("EP11/EP11 Intentness Alternate Ending Home", 0, 0.1772928f); return NULL; }
+sequence *start_showdown_riser_more() { mus[SHOWDOWN_RISER_MORE] = audio_sample_start("EP11/EP11 Showdown Riser More", 0, 0.05590255f); return NULL; }
+sequence *start_showdown_riser_more2() { mus[SHOWDOWN_RISER_MORE] = audio_sample_start("EP11/EP11 Showdown Riser More", 0, 0.07153846f); return NULL; }
+sequence *start_showdown_safe_accent() { mus[SHOWDOWN_SAFE_ACCENT] = audio_sample_start("EP11/EP11 Showdown Safe Accent", 0, 0.1783531f); return NULL; }
+sequence *start_showdown_safe_accent2() { mus[SHOWDOWN_SAFE_ACCENT] = audio_sample_start("EP11/EP11 Showdown Safe Accent", 0, 0.2517211f); return NULL; }
+sequence *start_requiem_where() { mus[REQUIEM_WHERE] = audio_sample_start("EP11/EP11 Requiem Where Nu", 0, 0.04485771f); return NULL; }
+sequence *start_requiem_after_where() { mus[REQUIEM_AFTER_WHERE] = audio_sample_start("EP11/EP11 Requiem After Where Nu", 0, 0.0715887f); return NULL; }
+sequence *start_showdown() { mus[SHOWDOWN] = audio_sample_start("EP11/EP11 Showdown", 0, 0.08878937f); return NULL; }
+sequence *start_atmo_parr() { mus[ATMO_PARR] = audio_sample_start("EP11/EP11 Atmo Int Parr", 1, 1.0f); return NULL; }
+sequence *start_intentness_11() { mus[INTENTNESS_11] = audio_sample_start("EP11/EP11 Intentness", 0, 0.2514518f); return NULL; }
 sequence *fade_lonliness_riser() { audio_sample_fade(mus[LONLINESS_RISER], 0.1589053f, 0.0f, 2083, 6000); return NULL; }
 sequence *fade_payback_stairwell() { audio_sample_fade(mus[PAYBACK_STAIRWELL], 0.2504725f, 0.0f, 37125, 52958); return NULL; }
 sequence *fade_intentness_11() { audio_sample_fade(mus[INTENTNESS_11], 0.2514518f, 0.0f, 31000, 37125); return NULL; }
@@ -1728,17 +1728,17 @@ sequence *stop_showdown() { audio_sample_stop_and_free(mus[SHOWDOWN]); return NU
 sequence *stop_escape() { audio_sample_stop_and_free(mus[ESCAPE]); return NULL; }
 sequence *stop_intentness_11() { audio_sample_stop_and_free(mus[INTENTNESS_11]); return NULL; }
 sequence *stop_atmo_parr() { audio_sample_stop_and_free(mus[ATMO_PARR]); return NULL; }
-sequence *start_requiem_may2() { mus[REQUIEM_MAY] = audio_sample_start("EP11 Requiem May", 0, 0.1127764f); return NULL; }
-sequence *start_requiem_may3() { mus[REQUIEM_MAY] = audio_sample_start("EP11 Requiem May", 0, 0.07111956f); return NULL; }
-sequence *start_showdown_violence() { mus[SHOWDOWN_VIOLENCE] = audio_sample_start("EP11 Showdown Violence", 0, 0.1003221f); return NULL; }
-sequence *maybe_start_showdown_riser_more() { if (game_vars.passed_by_seg1106 || game_vars.passed_by_seg1110) { mus[SHOWDOWN_RISER_MORE] = audio_sample_start("EP11 Showdown Riser More", 0, game_vars.passed_by_seg1106 ? 0.08880557f : 0.09776077); } return NULL; }
-sequence *start_requiem_parr() { mus[REQUIEM_PARR] = audio_sample_start("EP11 Requiem Parr", 0, 0.07072285f); return NULL; }
+sequence *start_requiem_may2() { mus[REQUIEM_MAY] = audio_sample_start("EP11/EP11 Requiem May", 0, 0.1127764f); return NULL; }
+sequence *start_requiem_may3() { mus[REQUIEM_MAY] = audio_sample_start("EP11/EP11 Requiem May", 0, 0.07111956f); return NULL; }
+sequence *start_showdown_violence() { mus[SHOWDOWN_VIOLENCE] = audio_sample_start("EP11/EP11 Showdown Violence", 0, 0.1003221f); return NULL; }
+sequence *maybe_start_showdown_riser_more() { if (game_vars.passed_by_seg1106 || game_vars.passed_by_seg1110) { mus[SHOWDOWN_RISER_MORE] = audio_sample_start("EP11/EP11 Showdown Riser More", 0, game_vars.passed_by_seg1106 ? 0.08880557f : 0.09776077); } return NULL; }
+sequence *start_requiem_parr() { mus[REQUIEM_PARR] = audio_sample_start("EP11/EP11 Requiem Parr", 0, 0.07072285f); return NULL; }
 sequence *fade_requiem_parr() { audio_sample_fade(mus[REQUIEM_PARR], 0.07072285f, 0.08955154f, 58958, 62958); return NULL; }
-sequence *start_requiem_matt() { mus[REQUIEM_MATT] = audio_sample_start("EP11 Requiem Matt", 0, 0.089039f); return NULL; }
+sequence *start_requiem_matt() { mus[REQUIEM_MATT] = audio_sample_start("EP11/EP11 Requiem Matt", 0, 0.089039f); return NULL; }
 sequence *maybe_seg1116_a() { return game_vars.finish_ep7_target == PAYBACK_EP11 ? seg1116_a() : NULL; }
-sequence *start_wanted() { mus[WANTED] = audio_sample_start("EP11 Wanted", 0, 0.07094079f); return NULL; }
-sequence *start_requiem_arrival2() { mus[REQUIEM_ARRIVAL] = audio_sample_start("EP11 Requiem Arrival", 0, 0.07094572f); return NULL; }
-sequence *start_requiem_sorry() { mus[REQUIEM_SORRY] = audio_sample_start("EP11 Requiem Sorry", 0, 0.07070231f); return NULL; }
+sequence *start_wanted() { mus[WANTED] = audio_sample_start("EP11/EP11 Wanted", 0, 0.07094079f); return NULL; }
+sequence *start_requiem_arrival2() { mus[REQUIEM_ARRIVAL] = audio_sample_start("EP11/EP11 Requiem Arrival", 0, 0.07094572f); return NULL; }
+sequence *start_requiem_sorry() { mus[REQUIEM_SORRY] = audio_sample_start("EP11/EP11 Requiem Sorry", 0, 0.07070231f); return NULL; }
 sequence *unlock_cause_and_effect() { trophies_unlock(CAUSE_AND_EFFECT); return NULL; }
 sequence *unlock_fair_share() { trophies_unlock(FAIR_SHARE); return NULL; }
 sequence *unlock_shill_bidder() { trophies_unlock(SHILL_BIDDER); return NULL; }
@@ -4082,7 +4082,7 @@ void game_main_menu() {
 		decisions_bg = load_image("app0:data/choices.png");
 	}
 	int bg_audio_handle;
-	void *bg_audio = audio_track_play("EP01 Car Park Melody", 1, 1.0f, &bg_audio_handle);
+	void *bg_audio = audio_track_play("EP01/EP01 Car Park Melody", 1, 1.0f, &bg_audio_handle);
 	
 	SceIoStat st;
 	int has_save = sceIoGetstat(PLAYTHROUGH_SAVE_FILE, &st) ? 0 : 1;

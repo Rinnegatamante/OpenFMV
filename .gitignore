@@ -9,3 +9,4 @@ data/*.ttf
 data/lang
 data/*.ogg
 data/*.png
+release/*
