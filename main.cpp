@@ -131,6 +131,11 @@ int main(int argc, char *argv[]) {
 	}
 #endif
 
+	// Show game splashscreen
+	while (game_splashscreen()) {
+		vglSwapBuffers(GL_FALSE);
+	}
+
 	// Initing audio player and menu audio sounds
 	audio_init();
 	snd_hover = audio_sound_load("app0:data/menu_move.ogg");

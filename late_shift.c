@@ -2336,7 +2336,7 @@ void fill_events() {
 	// seg434
 	install_timed_event(&sequences[153], 2250, 0, EVENT_ONESHOT, change_get_away_short7);
 	install_timed_event(&sequences[153], 2250, 0, EVENT_ONESHOT, change_get_away_long5);
-	install_timed_event(&sequences[153], 31083, 32042, EVENT_DURATION, seg435_a_event);
+	install_timed_event(&sequences[153], 31083, 0, EVENT_ONESHOT, seg435_a_event);
 	// seg435_a
 	install_timed_event(&sequences[154], 0, 0, EVENT_ONESHOT, start_ford_transit);
 	// seg435_b
@@ -4046,6 +4046,16 @@ void game_pause_menu(int *first_call) {
 		}
 		end_menu();
 	}
+}
+
+int game_splashscreen() {
+	static int first_call = 1;
+	if (first_call) {
+		load_video("/Converted/36b86986ce8a80602188ff9a5f55ba83.mp4", 0);
+		first_call = 0;
+	}
+	draw_video_frame();
+	return player_state == PLAYER_ACTIVE;
 }
 
 void game_post_run() {

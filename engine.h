@@ -185,6 +185,7 @@ extern playstate game_vars;
 extern gamestate global_vars;
 
 void load_animated_bg(const char *fname, int needs_hash);
+void load_video(const char *fname, int needs_hash);
 uint32_t load_image(const char *fname);
 void free_image(uint32_t image);
 void fill_sequence(char *name, sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump);
@@ -205,6 +206,7 @@ void game_pause_menu(int *state);
 void game_setup();
 void game_prepare();
 void game_post_run();
+int game_splashscreen();
 
 audio_sample *audio_sample_start(const char *fname, int looping, float vol);
 audio_sample *audio_voice_sample_start(const char *fname, int looping, float vol);

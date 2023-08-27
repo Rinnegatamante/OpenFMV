@@ -271,6 +271,17 @@ void load_animated_bg(const char *fname, int needs_hash) {
 	video_open(fname, 1);
 }
 
+void load_video(const char *fname, int needs_hash) {
+	char tmp[128];
+	if (needs_hash) {
+		char hash[64];
+		spooky_hash128(fname, strlen(fname), hash);
+		sprintf(tmp, "/Converted/%s.mp4", hash);
+		fname = tmp;
+	}
+	video_open(fname, 0);
+}
+
 uint32_t load_image(const char *fname) {
 	uint32_t w, h, res;
 	uint8_t *data = stbi_load(fname, &w, &h, NULL, 4);

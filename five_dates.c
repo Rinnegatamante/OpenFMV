@@ -122,6 +122,10 @@ void menu_setup() {
 	set_theme_color(colors.btn_hover_text, 1.0f, 1.0f, 1.0f, 1.0f);
 }
 
+int game_splashscreen() {
+	// TODO
+}
+
 void game_pause_menu(int *first_call) {
 	// TODO
 }
