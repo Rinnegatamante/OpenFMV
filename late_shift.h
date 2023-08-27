@@ -2,7 +2,7 @@
 #define __LATE_SHIFT_H__
 
 #ifdef LATE_SHIFT
-#define NUM_SEQUENCES 508
+#define NUM_SEQUENCES 507
 #define NUM_GAME_STRINGS 443
 #define NUM_AUDIO_SOURCES 215
 #define PLAYTHROUGH_SAVE_FILE "ux0:data/Late Shift/progress.sav"
@@ -13,7 +13,7 @@
 #define TROPHIES_FILE "ux0:data/Late Shift/trophies.chk"
 #define SUBTITLE_NEWLINE "\n\n"
 
-#define GAME_VER "0.9.6"
+#define GAME_VER "1.0.0"
 
 #ifdef __cplusplus
 extern "C" {
@@ -69,6 +69,9 @@ typedef struct {
 	uint8_t passed_by_seg739;
 	uint8_t go_home;
 	uint8_t cut_end_seg1078;
+	uint8_t passed_by_seg1110;
+	uint8_t beat_up;
+	uint8_t passed_by_seg1106;
 } playstate;
 
 typedef struct {

@@ -491,6 +491,7 @@ handle_event:
 				start_sequence(cur_seq->d());
 			} else { // If no default choice is set, we return to main menu
 				audio_sample_stop_all();
+				game_post_run();
 				goto main_menu;
 			}
 		}

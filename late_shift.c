@@ -11,11 +11,14 @@
 #include "trophies.h"
 
 #ifdef LATE_SHIFT
+int force_decisions = 0;
+
 char game_strings[NUM_GAME_STRINGS][128];
 
 // Prototypes
 sequence *seg951_1_951_2();
 sequence *seg1000();
+sequence *eval_from_ep9_to_ep11();
 
 #define NUM_TROPHIES 21
 uint8_t num_unlocked_endings = 0;
@@ -56,9 +59,9 @@ enum {
 	THE_LIONS_DEN, // Implemented
 	THE_PLOY, // Implemented
 	THE_FOOL, // Implemented
-	THE_DELIVERY,
-	THE_BRIBE,
-	THE_FRENZY,
+	THE_DELIVERY, // Implemented
+	THE_BRIBE, // Implemented
+	THE_FRENZY, // Implemented
 	CAUSE_AND_EFFECT, // Implemented
 	FAIR_SHARE, // Implemented
 	PROFICIENT_STORYTELLER, // Implemented
@@ -297,6 +300,20 @@ char *toss_bowl() { return game_strings[363]; }
 char *place_on_table() { return game_strings[364]; }
 char *go_home() { return game_strings[370]; }
 char *maybe_go_to_tchois() { if (!game_vars.cut_end_seg1078) return game_strings[357]; else return NULL; }
+char *intimidate_him() { return game_strings[372]; }
+char *keep_intimidating() { return game_strings[374]; }
+char *open_yourself() { return game_strings[381]; }
+char *use_force() { return game_strings[373]; }
+char *force_him() { return game_strings[375]; }
+char *stop_him() { return game_strings[376]; }
+char *let_him() { return game_strings[377]; }
+char *hit_him() { return game_strings[379]; }
+char *reject() { return game_strings[393]; }
+char *shoot_him() { return game_strings[387]; }
+char *surrender() { return game_strings[388]; }
+char *let_him_alive() { return game_strings[386]; }
+char *tell_him() { return game_strings[390]; }
+char *fuck_you() { return game_strings[391]; }
 
 // Game possible variable values
 enum {
@@ -533,6 +550,7 @@ enum {
 	SHOWDOWN_RISER_MORE,
 	INTENTNESS_11,
 	REQUIEM_WHERE,
+	REQUIEM_AFTER_WHERE,
 	SHOWDOWN,
 	SHOWDOWN_VIOLENCE,
 	REQUIEM_SORRY,
@@ -543,7 +561,7 @@ enum {
 	SHOWDOWN_SAFE_ACCENT,
 	REQUIREM_AFTER,
 	ATMO_PARR,
-	REQUIREM_MATT
+	REQUIEM_MATT
 };
 audio_sample *mus[NUM_AUDIO_SOURCES];
 
@@ -619,7 +637,7 @@ void purge_from_ep6b() {
 void purge_from_ep7() {
 	if (!fake_pass) {
 		for (int i = FORGED; i <= INTENTNESS_MOOD; i++) {
-			if (i != INTENTNESS_MOOD && i != AFTER_FIGHT_TRANS && i != POLICE_EVERYWHERE_2) {
+			if (i != INTENTNESS_MOOD && i != AFTER_FIGHT_TRANS && i != POLICE_EVERYWHERE_2 && i != AFTER_FIGHT) {
 				audio_sample_stop_and_free(mus[i]);
 			}
 		}
@@ -628,7 +646,7 @@ void purge_from_ep7() {
 void purge_from_ep9() {
 	if (!fake_pass) {
 		for (int i = TORMENT_SEBASTIAN; i <= ATMO_HEARTBEAT_SEB_SLOW; i++) {
-			if (i != AWARENESS_DOWNLIFTER_9 && i != DESPERATION && i != WAKE_UP_CALL && i != DESPERATION_RISER) {
+			if (i != AWARENESS_DOWNLIFTER_9 && i != DESPERATION && i != WAKE_UP_CALL && i != DESPERATION_RISER && i != LONLINESS_RISER) {
 				audio_sample_stop_and_free(mus[i]);
 			}
 		}
@@ -637,7 +655,7 @@ void purge_from_ep9() {
 void purge_from_ep10() {
 	if (!fake_pass) {
 		for (int i = REQUIEM_BROKEN; i <= ATMO_STREET; i++) {
-			if (i != REQUIEM_MAY) {
+			if (i != REQUIEM_MAY && i != PAYBACK_STAIRWELL && i != PAYBACK_FRONT && i != GETOUT && i != EXIT && i != ESCAPE) {
 				audio_sample_stop_and_free(mus[i]);
 			}
 		}
@@ -994,7 +1012,7 @@ sequence *seg937_a_938() { game_vars.got_keycard = 1; game_vars.aware_of_chest =
 sequence *seg937_b_938() { game_vars.aware_of_chest = 1; return &sequences[361]; }
 sequence *seg939() { game_vars.payback_time = 0; game_vars.called_parr = 1; return &sequences[362]; }
 sequence *seg945() { return &sequences[363]; }
-sequence *eval_payback_time() { return game_vars.payback_time ? /* ep11 */ NULL : seg1000(); }
+sequence *eval_payback_time() { return game_vars.payback_time ? eval_from_ep9_to_ep11() : seg1000(); }
 // EPISODE 9B
 sequence *seg951_1_951_2() { exec_save(EPISODE_09B); purge_from_ep7(); return &sequences[364]; }
 sequence *eval_knows_about_party2() { return game_vars.know_about_party ? &sequences[365] : &sequences[366]; }
@@ -1031,8 +1049,8 @@ sequence *seg977_978() { return &sequences[405]; }
 sequence *eval_thumb_pain() { game_vars.got_keycard = 1; return game_vars.thumb_pain ? &sequences[406] : &sequences[407]; }
 sequence *seg994() { return &sequences[408]; }
 sequence *eval_cross_exam3() { if (game_vars.cross_exam) { game_vars.from_ep9_to_ep11 = 0; return seg1000(); } return seg994(); }
-sequence *eval_cross_exam2() { if (game_vars.cross_exam) { game_vars.from_ep9_to_ep11 = 1; return NULL; /* ep11 */ } return seg994(); }
-sequence *eval_payback_time2() { if (game_vars.payback_time) { game_vars.from_ep9_to_ep11 = 1; return NULL; /* ep 11 */ } game_vars.from_ep9_to_ep11 = 0; return seg1000(); }
+sequence *eval_cross_exam2() { if (game_vars.cross_exam) { game_vars.from_ep9_to_ep11 = 1; return eval_from_ep9_to_ep11(); } return seg994(); }
+sequence *eval_payback_time2() { if (game_vars.payback_time) { game_vars.from_ep9_to_ep11 = 1; return eval_from_ep9_to_ep11(); } game_vars.from_ep9_to_ep11 = 0; return seg1000(); }
 sequence *seg988_984_2() { game_vars.payback_time = 1; return &sequences[409]; }
 sequence *seg974_2() { return &sequences[410]; }
 sequence *seg977_979() { game_vars.aware_of_chest = 1; return &sequences[411]; }
@@ -1094,7 +1112,42 @@ sequence *set_go_home_true() { game_vars.go_home = 1; return NULL; }
 sequence *seg1081_a_1069_2() { return &sequences[467]; }
 sequence *seg1081_b() { return &sequences[468]; }
 // EPISODE 11
-
+sequence *seg1103() { return &sequences[474]; }
+sequence *seg1104() { return &sequences[475]; }
+sequence *seg1101_2() { return &sequences[470]; }
+sequence *eval_from_ep9_to_ep11() { purge_from_ep7(); purge_from_ep9(); purge_from_ep10(); exec_save(EPISODE_11); return game_vars.from_ep9_to_ep11 ? &sequences[469] : seg1101_2(); }
+sequence *eval_called_parr2() { return game_vars.called_parr ? &sequences[471] : &sequences[472]; }
+sequence *eval_aware_of_chest() { return game_vars.aware_of_chest ? &sequences[473] : seg1103(); }
+sequence *eval_gone_to_woe3() { return game_vars.gone_to_woe ? &sequences[476] : &sequences[477]; }
+sequence *seg1106() { game_vars.passed_by_seg1106 = 1; return &sequences[478]; }
+sequence *seg1107() { return &sequences[479]; }
+sequence *seg1117_1() { return &sequences[480]; }
+sequence *seg1108() { return &sequences[481]; }
+sequence *seg1117() { return &sequences[482]; }
+sequence *seg1118_1122() { return &sequences[483]; }
+sequence *seg1083_1084_alt() { return &sequences[484]; }
+sequence *seg1068_1_1068_3_alt() { return &sequences[485]; }
+sequence *seg1110() { game_vars.beat_up = 1; game_vars.passed_by_seg1110 = 1; return &sequences[486]; }
+sequence *seg1111() { return &sequences[487]; }
+sequence *seg1113() { return &sequences[488]; }
+sequence *seg1112_2() { return &sequences[489]; }
+sequence *seg1114_a() { return &sequences[490]; }
+sequence *seg1114_b() { return &sequences[491]; }
+sequence *seg1115() { return &sequences[492]; }
+sequence *seg1116_a() { return &sequences[493]; }
+sequence *seg1116_b() { return &sequences[494]; }
+sequence *seg1109() { return &sequences[495]; }
+sequence *seg1112() { return &sequences[496]; }
+sequence *seg1112_1() { return &sequences[497]; }
+sequence *eval_beat_up() { return game_vars.beat_up ? seg1113() : seg1112_2(); }
+sequence *seg1123_1125() { return &sequences[498]; }
+sequence *eval_from_ep7_to_ep11() { return game_vars.from_ep7_to_ep11 ? &sequences[499] : &sequences[500]; }
+sequence *seg1127_1129() { return &sequences[501]; }
+sequence *seg1130_1130_1() { return &sequences[502]; }
+sequence *seg1131_1_1131_2() { return &sequences[503]; }
+// END
+sequence *endcredits() { return &sequences[504]; }
+	
 // Game event funcs
 sequence *seg435_a_event() { if (game_vars.may_likes_matt >= 4) { return seg435_a(); } return NULL; }
 sequence *start_op_bgm() { mus[OPENING] = audio_sample_start("EP01 Opening", 0, 0.20033f); return NULL; }
@@ -1646,6 +1699,46 @@ sequence *start_bowltest_riser_short() { mus[BOWLTEST_RISER_SHORT] = audio_sampl
 sequence *start_awareness_downlifter_9_2() { mus[AWARENESS_DOWNLIFTER_9] = audio_sample_start("EP09 Awareness Downlifter", 0, 0.09940945f); return NULL; }
 sequence *start_vo_westminster_or_bethnal() { if (game_vars.go_home) { mus[VO_WESTMINSTER_PLEASE] = audio_voice_sample_start("EP10 VO Westminster Please", 0, 0.4052885f); } else { mus[VO_BETHNAL_GREEN] = audio_voice_sample_start("EP10 VO Bethnal Green", 0, 0.3967226f); } return NULL; }
 sequence *maybe_start_intentess_end() { if (game_vars.go_home) { mus[INTENTNESS_END_SHORT] = audio_sample_start("EP10 Intentness Ende Ep10 short", 0, 0.124175f); } return NULL; }
+sequence *start_intentness_alt() { mus[INTENTESS_ALTERNATE] = audio_sample_start("EP11 Intentness Alternate Ending Home", 0, 0.1772928f); return NULL; }
+sequence *start_showdown_riser_more() { mus[SHOWDOWN_RISER_MORE] = audio_sample_start("EP11 Showdown Riser More", 0, 0.05590255f); return NULL; }
+sequence *start_showdown_riser_more2() { mus[SHOWDOWN_RISER_MORE] = audio_sample_start("EP11 Showdown Riser More", 0, 0.07153846f); return NULL; }
+sequence *start_showdown_safe_accent() { mus[SHOWDOWN_SAFE_ACCENT] = audio_sample_start("EP11 Showdown Safe Accent", 0, 0.1783531f); return NULL; }
+sequence *start_showdown_safe_accent2() { mus[SHOWDOWN_SAFE_ACCENT] = audio_sample_start("EP11 Showdown Safe Accent", 0, 0.2517211f); return NULL; }
+sequence *start_requiem_where() { mus[REQUIEM_WHERE] = audio_sample_start("EP11 Requiem Where Nu", 0, 0.04485771f); return NULL; }
+sequence *start_requiem_after_where() { mus[REQUIEM_AFTER_WHERE] = audio_sample_start("EP11 Requiem After Where Nu", 0, 0.0715887f); return NULL; }
+sequence *start_showdown() { mus[SHOWDOWN] = audio_sample_start("EP11 Showdown", 0, 0.08878937f); return NULL; }
+sequence *start_atmo_parr() { mus[ATMO_PARR] = audio_sample_start("EP11 Atmo Int Parr", 1, 1.0f); return NULL; }
+sequence *start_intentness_11() { mus[INTENTNESS_11] = audio_sample_start("EP11 Intentness", 0, 0.2514518f); return NULL; }
+sequence *fade_lonliness_riser() { audio_sample_fade(mus[LONLINESS_RISER], 0.1589053f, 0.0f, 2083, 6000); return NULL; }
+sequence *fade_payback_stairwell() { audio_sample_fade(mus[PAYBACK_STAIRWELL], 0.2504725f, 0.0f, 37125, 52958); return NULL; }
+sequence *fade_intentness_11() { audio_sample_fade(mus[INTENTNESS_11], 0.2514518f, 0.0f, 31000, 37125); return NULL; }
+sequence *fade_showdown() { audio_sample_fade(mus[SHOWDOWN], 0.08878937f, 0.0f, 9708, 14708); return NULL; }
+sequence *fade_showdown2() { audio_sample_fade(mus[SHOWDOWN], 0.08878937f, 0.0f, 28625, 42625); return NULL; }
+sequence *fade_showdown3() { audio_sample_fade(mus[SHOWDOWN], 0.08878937f, 0.0f, 1083, 6083); return NULL; }
+sequence *fade_showdown4() { audio_sample_fade(mus[SHOWDOWN], 0.08878937f, 0.0f, 17667, 22667); return NULL; }
+sequence *fade_showdown5() { audio_sample_fade(mus[SHOWDOWN], 0.08878937f, 0.0f, 42, 10000); return NULL; }
+sequence *fade_requiem_where() { audio_sample_fade(mus[REQUIEM_WHERE], 0.04485771f, 0.08927047f, 43625, 67042); return NULL; }
+sequence *stop_lonliness_riser() { audio_sample_stop_and_free(mus[LONLINESS_RISER]); return NULL; }
+sequence *stop_payback_front() { audio_sample_stop_and_free(mus[PAYBACK_FRONT]); return NULL; }
+sequence *stop_payback_stairwell() { audio_sample_stop_and_free(mus[PAYBACK_STAIRWELL]); return NULL; }
+sequence *stop_exit() { audio_sample_stop_and_free(mus[EXIT]); return NULL; }
+sequence *stop_getout() { audio_sample_stop_and_free(mus[GETOUT]); return NULL; }
+sequence *stop_after_fight() { audio_sample_stop_and_free(mus[AFTER_FIGHT]); return NULL; }
+sequence *stop_showdown() { audio_sample_stop_and_free(mus[SHOWDOWN]); return NULL; }
+sequence *stop_escape() { audio_sample_stop_and_free(mus[ESCAPE]); return NULL; }
+sequence *stop_intentness_11() { audio_sample_stop_and_free(mus[INTENTNESS_11]); return NULL; }
+sequence *stop_atmo_parr() { audio_sample_stop_and_free(mus[ATMO_PARR]); return NULL; }
+sequence *start_requiem_may2() { mus[REQUIEM_MAY] = audio_sample_start("EP11 Requiem May", 0, 0.1127764f); return NULL; }
+sequence *start_requiem_may3() { mus[REQUIEM_MAY] = audio_sample_start("EP11 Requiem May", 0, 0.07111956f); return NULL; }
+sequence *start_showdown_violence() { mus[SHOWDOWN_VIOLENCE] = audio_sample_start("EP11 Showdown Violence", 0, 0.1003221f); return NULL; }
+sequence *maybe_start_showdown_riser_more() { if (game_vars.passed_by_seg1106 || game_vars.passed_by_seg1110) { mus[SHOWDOWN_RISER_MORE] = audio_sample_start("EP11 Showdown Riser More", 0, game_vars.passed_by_seg1106 ? 0.08880557f : 0.09776077); } return NULL; }
+sequence *start_requiem_parr() { mus[REQUIEM_PARR] = audio_sample_start("EP11 Requiem Parr", 0, 0.07072285f); return NULL; }
+sequence *fade_requiem_parr() { audio_sample_fade(mus[REQUIEM_PARR], 0.07072285f, 0.08955154f, 58958, 62958); return NULL; }
+sequence *start_requiem_matt() { mus[REQUIEM_MATT] = audio_sample_start("EP11 Requiem Matt", 0, 0.089039f); return NULL; }
+sequence *maybe_seg1116_a() { return game_vars.finish_ep7_target == PAYBACK_EP11 ? seg1116_a() : NULL; }
+sequence *start_wanted() { mus[WANTED] = audio_sample_start("EP11 Wanted", 0, 0.07094079f); return NULL; }
+sequence *start_requiem_arrival2() { mus[REQUIEM_ARRIVAL] = audio_sample_start("EP11 Requiem Arrival", 0, 0.07094572f); return NULL; }
+sequence *start_requiem_sorry() { mus[REQUIEM_SORRY] = audio_sample_start("EP11 Requiem Sorry", 0, 0.07070231f); return NULL; }
 sequence *unlock_cause_and_effect() { trophies_unlock(CAUSE_AND_EFFECT); return NULL; }
 sequence *unlock_fair_share() { trophies_unlock(FAIR_SHARE); return NULL; }
 sequence *unlock_shill_bidder() { trophies_unlock(SHILL_BIDDER); return NULL; }
@@ -1657,6 +1750,9 @@ sequence *unlock_even_tempered() { trophies_unlock(EVEN_TEMPERED); return NULL; 
 sequence *unlock_interrogation() { trophies_unlock(INTERROGATION); return NULL; }
 sequence *unlock_good_karma() { trophies_unlock(GOOD_KARMA); return NULL; }
 sequence *unlock_the_fool() { unlock_ending(THE_FOOL); return NULL; }
+sequence *unlock_the_delivery() { unlock_ending(THE_DELIVERY); return NULL; }
+sequence *unlock_the_frenzy() { unlock_ending(THE_FRENZY); return NULL; }
+sequence *unlock_the_bribe() { unlock_ending(THE_BRIBE); return NULL; }
 sequence *unlock_the_ploy() { unlock_ending(THE_PLOY); return NULL; }
 
 void fill_events() {
@@ -3109,6 +3205,95 @@ void fill_events() {
 	// seg1081_b
 	install_timed_event(&sequences[468], 0, 0, EVENT_ONESHOT, stop_atmo_street);
 	// EPISODE 11
+	// seg1101_1
+	install_timed_event(&sequences[469], 0, 0, EVENT_ONESHOT, stop_wake_up_call);
+	install_timed_event(&sequences[469], 1000, 0, EVENT_ONESHOT, stop_desperation_riser);
+	install_timed_event(&sequences[469], 1000, 0, EVENT_ONESHOT, stop_auction_guy);
+	install_timed_event(&sequences[469], 1000, 0, EVENT_ONESHOT, stop_after_fight);
+	install_timed_event(&sequences[469], 2083, 0, EVENT_ONESHOT, start_intentness_11);
+	install_timed_event(&sequences[469], 2083, 6000, EVENT_DURATION, fade_lonliness_riser);
+	install_timed_event(&sequences[469], 6000, 0, EVENT_ONESHOT, stop_lonliness_riser);
+	// seg1101_2
+	install_timed_event(&sequences[470], 30000, 0, EVENT_ONESHOT, stop_payback_front);
+	install_timed_event(&sequences[470], 31000, 0, EVENT_ONESHOT, stop_exit);
+	install_timed_event(&sequences[470], 31000, 0, EVENT_ONESHOT, stop_getout);
+	install_timed_event(&sequences[470], 31000, 0, EVENT_ONESHOT, stop_escape);
+	install_timed_event(&sequences[470], 31000, 37125, EVENT_DURATION, fade_intentness_11);
+	install_timed_event(&sequences[470], 37125, 0, EVENT_ONESHOT, stop_intentness_11);
+	install_timed_event(&sequences[470], 37125, 0, EVENT_ONESHOT, start_atmo_parr);
+	install_timed_event(&sequences[470], 37125, 52958, EVENT_DURATION, fade_payback_stairwell);
+	install_timed_event(&sequences[470], 52958, 0, EVENT_ONESHOT, stop_payback_stairwell);
+	// seg1102_a (empty)
+	// seg1102_b1 (empty)
+	// seg1102_b2 (empty)
+	// seg1103
+	install_timed_event(&sequences[474], 0, 0, EVENT_ONESHOT, start_showdown);
+	// seg1104 (empty)
+	// seg1105 (empty)
+	// seg1105_2 (empty)
+	// seg1106
+	install_timed_event(&sequences[478], 5750, 0, EVENT_ONESHOT, start_showdown_safe_accent);
+	// seg1107
+	install_timed_event(&sequences[479], 9708, 0, EVENT_ONESHOT, start_showdown_riser_more);
+	install_timed_event(&sequences[479], 9708, 14708, EVENT_DURATION, fade_showdown);
+	install_timed_event(&sequences[479], 14708, 0, EVENT_ONESHOT, stop_showdown);
+	// seg1117_1 (empty)
+	// seg1108 (empty)
+	// seg1117 (empty)
+	// seg1118_1122
+	install_timed_event(&sequences[483], 27000, 0, EVENT_ONESHOT, unlock_the_delivery);
+	install_timed_event(&sequences[483], 28625, 42625, EVENT_DURATION, fade_showdown2);
+	install_timed_event(&sequences[483], 42625, 0, EVENT_ONESHOT, stop_showdown);
+	install_timed_event(&sequences[483], 43625, 0, EVENT_ONESHOT, start_requiem_where);
+	install_timed_event(&sequences[483], 43625, 67042, EVENT_DURATION, fade_requiem_where);
+	install_timed_event(&sequences[483], 67042, 0, EVENT_ONESHOT, stop_atmo_parr);
+	// seg1083_1084_alt
+	install_timed_event(&sequences[484], 0, 0, EVENT_ONESHOT, start_intentness_alt);
+	// seg1068_1_1068_3_alt
+	install_timed_event(&sequences[485], 0, 0, EVENT_ONESHOT, start_requiem_after_where);
+	install_timed_event(&sequences[485], 68042, 0, EVENT_ONESHOT, start_requiem_may2);
+	// seg1110
+	install_timed_event(&sequences[486], 0, 0, EVENT_ONESHOT, start_showdown_violence);
+	install_timed_event(&sequences[486], 35875, 0, EVENT_ONESHOT, start_showdown_safe_accent2);
+	// seg1111
+	install_timed_event(&sequences[487], 1083, 0, EVENT_ONESHOT, maybe_start_showdown_riser_more);
+	install_timed_event(&sequences[487], 1083, 6083, EVENT_DURATION, fade_showdown3);
+	install_timed_event(&sequences[487], 6083, 0, EVENT_ONESHOT, stop_showdown);
+	// seg1113
+	install_timed_event(&sequences[488], 10000, 0, EVENT_ONESHOT, unlock_the_frenzy);
+	install_timed_event(&sequences[488], 10375, 0, EVENT_ONESHOT, start_requiem_parr);
+	install_timed_event(&sequences[488], 58958, 62958, EVENT_DURATION, fade_requiem_parr);
+	install_timed_event(&sequences[488], 99417, 0, EVENT_ONESHOT, stop_atmo_parr);
+	// seg1112_2 (empty)
+	// seg1114_a (empty)
+	// seg1114_b (empty)
+	// seg1115
+	install_timed_event(&sequences[492], 5542, 0, EVENT_ONESHOT, start_requiem_matt);
+	install_timed_event(&sequences[492], 19083, 0, EVENT_ONESHOT, maybe_seg1116_a);
+	// seg1116_a (empty)
+	// seg1116_b (empty)
+	// seg1109 (empty)
+	// seg1112
+	install_timed_event(&sequences[496], 17667, 0, EVENT_ONESHOT, start_showdown_riser_more2);
+	install_timed_event(&sequences[496], 17667, 22667, EVENT_ONESHOT, fade_showdown4);
+	install_timed_event(&sequences[496], 22667, 0, EVENT_ONESHOT, stop_showdown);
+	// seg1112_1 (empty)
+	// seg1123_1125
+	install_timed_event(&sequences[498], 42, 10000, EVENT_DURATION, fade_showdown5);
+	install_timed_event(&sequences[498], 10000, 0, EVENT_ONESHOT, unlock_the_bribe);
+	install_timed_event(&sequences[498], 11042, 0, EVENT_ONESHOT, stop_showdown);
+	install_timed_event(&sequences[498], 34333, 0, EVENT_ONESHOT, start_wanted);
+	install_timed_event(&sequences[498], 42333, 0, EVENT_ONESHOT, stop_atmo_parr);
+	// seg1126_2 (empty)
+	// seg1126_1 (empty)
+	// seg1127_1129
+	install_timed_event(&sequences[501], 53917, 0, EVENT_ONESHOT, start_requiem_arrival2);
+	// seg1130_1130_1
+	install_timed_event(&sequences[502], 45375, 0, EVENT_ONESHOT, start_requiem_may3);
+	// seg1131_1_1131_2
+	install_timed_event(&sequences[503], 27292, 0, EVENT_ONESHOT, start_requiem_sorry);
+	// END
+	// endcredits (empty)
 }
 
 void fill_sequences() {
@@ -3420,7 +3605,7 @@ void fill_sequences() {
 	fill_sequence("seg739_2", &sequences[294], seg739_a, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg739_2
 	fill_sequence("seg739_1", &sequences[295], eval_cross_exam, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg739_1
 	fill_sequence("seg739_a", &sequences[296], seg747_2_749_750, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg739_a
-	fill_sequence("seg739_b", &sequences[297], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg739_b (END OF EPISODE -> 11)
+	fill_sequence("seg739_b", &sequences[297], eval_from_ep9_to_ep11, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg739_b (END OF EPISODE -> 11)
 	fill_sequence("seg733", &sequences[298], seg734, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg733
 	fill_sequence("seg715", &sequences[299], seg716_723, will, wont, NULL, seg716_723, eval_turned_away, NULL, 8917, 13417, 10417); // seg715
 	fill_sequence("seg717_720", &sequences[300], seg733, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg717_720
@@ -3487,7 +3672,7 @@ void fill_sequences() {
 	fill_sequence("seg937_a_938", &sequences[360], seg945, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg937_a_938
 	fill_sequence("seg937_b_938", &sequences[361], seg945, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg937_b_938
 	fill_sequence("seg939", &sequences[362], seg933_2_937_a_938, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg939
-	fill_sequence("seg945", &sequences[363], eval_payback_time, maybe_hainsworths, parr, NULL, seg1000, /* ep11 */ NULL, NULL, 64292, 70250, 70250); // seg945 (END OF EPISODE -> 11/10)
+	fill_sequence("seg945", &sequences[363], eval_payback_time, maybe_hainsworths, parr, NULL, seg1000, eval_from_ep9_to_ep11, NULL, 64292, 70250, 70250); // seg945 (END OF EPISODE -> 11/10)
 	// EPISODE 9B
 	fill_sequence("seg951_1_951_2", &sequences[364], eval_knows_about_party2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg951_1_951_2
 	fill_sequence("seg952_b", &sequences[365], eval_freak2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg952_b
@@ -3561,25 +3746,25 @@ void fill_sequences() {
 	fill_sequence("seg1041", &sequences[432], seg1042, elevator, stairwell, NULL, seg1042, seg1045_1044, NULL, 6375, 10875, 9125); // seg1041
 	fill_sequence("seg1046_k", &sequences[433], seg1046, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1046_k
 	fill_sequence("seg1042", &sequences[434], seg1043_1044, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1042
-	fill_sequence("seg1043_1044", &sequences[435], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1043_1044 (END OF EPISODE -> 11)
-	fill_sequence("seg1045_1044", &sequences[436], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1045_1044 (END OF EPISODE -> 11)
+	fill_sequence("seg1043_1044", &sequences[435], eval_from_ep9_to_ep11, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1043_1044 (END OF EPISODE -> 11)
+	fill_sequence("seg1045_1044", &sequences[436], eval_from_ep9_to_ep11, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1045_1044 (END OF EPISODE -> 11)
 	fill_sequence("seg1046", &sequences[437], seg1047_b, no, yes, NULL, seg1047_a_1045, seg1047_b, NULL, 16417, 19917, 18167); // seg1046
 	fill_sequence("seg1047_a_1045", &sequences[438], seg1048, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1047_a_1045
 	fill_sequence("seg1048", &sequences[439], seg1057, wait, go, NULL, seg1057, seg1058, NULL, 27417, 30958, 29708); // seg1048
 	fill_sequence("seg1047_b", &sequences[440], seg1049_a, yes, carpark, NULL, seg1049_a, seg1049_b, NULL, 4250, 7792, 6708); // seg1047_b
 	fill_sequence("seg1049_a", &sequences[441], seg1048, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1049_a
 	fill_sequence("seg1049_b", &sequences[442], seg1050_a_1051_1052_b_1054_b, continue_as_normal, shut_him_up, NULL, seg1050_a_1051_1052_b_1054_b, seg1050_b, NULL, 10417, 14917, 14917); // seg1049_b
-	fill_sequence("seg1050_b", &sequences[443], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1050_b (END OF EPISODE -> 11)
+	fill_sequence("seg1050_b", &sequences[443], eval_from_ep9_to_ep11, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1050_b (END OF EPISODE -> 11)
 	fill_sequence("seg1050_a_1051_1052_b_1054_b", &sequences[444], seg1059_1_1060, hide, go_excl, NULL, seg1054_a_1056, seg1059_1_1060, NULL, 37333, 42292, 42292); // seg1050_a_1051_1052_b_1054_b
 	fill_sequence("seg1054_a_1056", &sequences[445], seg1057, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1049_a
-	fill_sequence("seg1057", &sequences[446], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1057 (END OF EPISODE -> 11)
+	fill_sequence("seg1057", &sequences[446], eval_from_ep9_to_ep11, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1057 (END OF EPISODE -> 11)
 	fill_sequence("seg1058", &sequences[447], seg1059_1_1060, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1058
 	fill_sequence("seg1059_1_1060", &sequences[448], seg1061_a_1069_1069_1, accept, decline, NULL, seg1061_a_1069_1069_1, seg1063_1078, NULL, 60042, 64583, 60042); // seg1059_1_1060
 	fill_sequence("seg1061_a_1069_1069_1", &sequences[449], seg1069_3, go_to_parrs, go_to_the_tchois, NULL, do_nothing, seg1067_3, NULL, 34250, 43125, 43167); // seg1061_a_1069_1069_1
 	fill_sequence("seg1063_1078", &sequences[450], seg1081_a_1069_2, call_her, cut_and_run, NULL, do_nothing, seg1079, NULL, 27208, 32167, 32208); // seg1063_1078
 	add_extra_choice(&sequences[450], go_to_parrs, go_to_the_tchois, cut_and_run, seg1081_a_1069_2, seg1081_b, seg1079_special, 63333, 70875, 63333);
 	fill_sequence("seg1067_3", &sequences[451], seg1068_1_1068_3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1067_3
-	fill_sequence("seg1068_1_1068_3", &sequences[452], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1068_1_1068_3 (END OF EPISODE -> END)
+	fill_sequence("seg1068_1_1068_3", &sequences[452], endcredits, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1068_1_1068_3 (END OF EPISODE -> END)
 	fill_sequence("seg1069_3", &sequences[453], eval_called_parr, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1069_3
 	fill_sequence("seg1070_a", &sequences[454], seg1072_b_1073_1_1073_2, toss_bowl, place_on_table, NULL, seg1072_a, seg1072_b_1073_1_1073_2, NULL, 38208, 42750, 42750); // seg1070_a
 	fill_sequence("seg1070_b", &sequences[455], seg1072_b_1073_1_1073_2, toss_bowl, place_on_table, NULL, seg1072_a, seg1072_b_1073_1_1073_2, NULL, 38042, 42583, 42583); // seg1070_b
@@ -3590,14 +3775,51 @@ void fill_sequences() {
 	fill_sequence("seg1075_4", &sequences[460], seg1075_6_1075_2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1075_4
 	fill_sequence("seg1075_5", &sequences[461], seg1075_6_1075_2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1075_5
 	fill_sequence("seg1075_3", &sequences[462], seg1075_6_1075_2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1075_3
-	fill_sequence("seg1083_1084", &sequences[463], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1083_1084 (END OF EPISODE -> END)
+	fill_sequence("seg1083_1084", &sequences[463], endcredits, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1083_1084 (END OF EPISODE -> END)
 	fill_sequence("seg1075_6_1075_2", &sequences[464], eval_may_stabbed, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1075_6_1075_2
-	fill_sequence("seg1076_a", &sequences[465], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1076_a (END OF EPISODE -> END)
-	fill_sequence("seg1076_b", &sequences[466], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1076_b (END OF EPISODE -> END)
+	fill_sequence("seg1076_a", &sequences[465], endcredits, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1076_a (END OF EPISODE -> END)
+	fill_sequence("seg1076_b", &sequences[466], endcredits, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1076_b (END OF EPISODE -> END)
 	fill_sequence("seg1081_a_1069_2", &sequences[467], seg1069_3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1081_a_1069_2
 	fill_sequence("seg1081_b", &sequences[468], seg1068_1_1068_3, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1081_b
 	// EPISODE 11
-	
+	fill_sequence("seg1101_1", &sequences[469], seg1101_2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1101_1
+	fill_sequence("seg1101_2", &sequences[470], eval_called_parr2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1101_2
+	fill_sequence("seg1102_a", &sequences[471], seg1103, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1102_a
+	fill_sequence("seg1102_b1", &sequences[472], eval_aware_of_chest, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1102_b1
+	fill_sequence("seg1102_b2", &sequences[473], seg1103, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1102_b2
+	fill_sequence("seg1103", &sequences[474], seg1108, intimidate_him, use_force, NULL, seg1104, seg1108, NULL, 46958, 51000, 48958); // seg1103
+	fill_sequence("seg1104", &sequences[475], seg1108, keep_intimidating, force_him, NULL, eval_gone_to_woe3, seg1108, NULL, 9958, 13750, 12042); // seg1104
+	fill_sequence("seg1105", &sequences[476], seg1106, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1105
+	fill_sequence("seg1105_2", &sequences[477], seg1106, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1105_2
+	fill_sequence("seg1106", &sequences[478], seg1111, stop_him, let_him, NULL, seg1107, seg1111, NULL, 5750, 10708, 10708); // seg1106
+	fill_sequence("seg1107", &sequences[479], seg1117_1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1107
+	fill_sequence("seg1117_1", &sequences[480], seg1117, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1117_1
+	fill_sequence("seg1108", &sequences[481], seg1110, intimidate_him, hit_him, NULL, seg1109, seg1110, NULL, 32792, 37167, 35208); // seg1108
+	fill_sequence("seg1117", &sequences[482], seg1118_1122, accept, reject, NULL, seg1123_1125, seg1118_1122, NULL, 27125, 32917, 32417); // seg1117
+	fill_sequence("seg1118_1122", &sequences[483], seg1068_1_1068_3_alt, go_home, go_to_the_tchois, NULL, seg1083_1084_alt, seg1068_1_1068_3_alt, NULL, 123917, 127917, 127042); // seg1118_1122
+	fill_sequence("seg1083_1084_alt", &sequences[484], endcredits, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1083_1084_alt (END OF EPISODE -> END)
+	fill_sequence("seg1068_1_1068_3_alt", &sequences[485], endcredits, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1068_1_1068_3_alt (END OF EPISODE -> END)
+	fill_sequence("seg1110", &sequences[486], seg1111, let_him, open_yourself, NULL, seg1111, seg1112, NULL, 32542, 38500, 38500); // seg1110
+	fill_sequence("seg1111", &sequences[487], eval_beat_up, shoot_him, dont, NULL, seg1113, seg1112_2, NULL, 9250, 12292, 12292); // seg1111
+	fill_sequence("seg1113", &sequences[488], seg1114_a, surrender, fight, NULL, seg1114_b, seg1114_a, NULL, 96667, 99417, 96667); // seg1113
+	fill_sequence("seg1112_2", &sequences[489], seg1113, let_him_alive, shoot_him, NULL, seg1112_1, seg1113, NULL, 13750, 17292, 16625); // seg1112_2
+	fill_sequence("seg1114_a", &sequences[490], seg1115, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1114_a
+	fill_sequence("seg1114_b", &sequences[491], seg1115, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1114_b
+	fill_sequence("seg1115", &sequences[492], seg1116_a, tell_him, fuck_you, NULL, seg1116_b, seg1116_a, NULL, 16250, 20750, 18292); // seg1115
+	fill_sequence("seg1116_a", &sequences[493], endcredits, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1116_a (END OF EPISODE -> END)
+	fill_sequence("seg1116_b", &sequences[494], endcredits, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1116_b (END OF EPISODE -> END)
+	fill_sequence("seg1109", &sequences[495], seg1106, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1109
+	fill_sequence("seg1112", &sequences[496], seg1113, let_him_alive, shoot_him, NULL, seg1112_1, seg1113, NULL, 36792, 40333, 39375); // seg1112
+	fill_sequence("seg1112_1", &sequences[497], seg1117_1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1112_1
+	fill_sequence("seg1123_1125", &sequences[498], eval_from_ep7_to_ep11, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1123_1125
+	fill_sequence("seg1126_2", &sequences[499], seg1127_1129, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1126_2
+	fill_sequence("seg1126_1", &sequences[500], seg1127_1129, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1126_1
+	fill_sequence("seg1127_1129", &sequences[501], seg1131_1_1131_2, yes, no, NULL, seg1130_1130_1, seg1131_1_1131_2, NULL, 150708, 155250, 153375); // seg1127_1129
+	fill_sequence("seg1130_1130_1", &sequences[502], endcredits, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1130_1130_1 (END OF EPISODE -> END)
+	fill_sequence("seg1131_1_1131_2", &sequences[503], endcredits, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // seg1131_1_1131_2 (END OF EPISODE -> END)
+	// END
+	fill_sequence("endcredits", &sequences[504], NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0); // endcredits
+
 	fill_events();
 }
 
@@ -3826,6 +4048,22 @@ void game_pause_menu(int *first_call) {
 	}
 }
 
+void game_post_run() {
+	// Force 'Your Decisions' screen
+	force_decisions = 1;
+	
+	// Set run_finished to 1 and update taken_decisions with last episode values
+	global_vars.run_finished = 1;
+	global_vars.taken_decisions += choices_num;
+	choices_num = 0;
+	
+	// Delete completed run save and update global save
+	sceIoRemove(PLAYTHROUGH_SAVE_FILE);
+	FILE *f = fopen(GLOBAL_SAVE_FILE, "w");
+	fwrite(&global_vars, 1, sizeof(gamestate), f);
+	fclose(f);
+}
+
 void game_main_menu() {
 	// Loading animated background, image backgrounds and audio background
 	load_animated_bg("000_MenuBackground", 1);
@@ -3840,7 +4078,8 @@ void game_main_menu() {
 	int has_save = sceIoGetstat(PLAYTHROUGH_SAVE_FILE, &st) ? 0 : 1;
 	int btns_state[16];
 	int in_options = 0;
-	int in_decisions = 0;
+	int in_decisions = force_decisions;
+	force_decisions = 0;
 	int request_new_game = 0;
 	uint32_t num_episodes_seen = get_num_episodes_seen();
 	num_unlocked_endings = get_num_seen_endings();
@@ -3990,9 +4229,9 @@ void game_main_menu() {
 				draw_centered_text(170, str, 0.7f);
 				draw_progressbar(352, 190, 256, 6, (float)num_unlocked_endings / 7.0f, "##barendings");	
 				draw_centered_italic_text(250, game_strings[20], 0.8f);
-				sprintf(str, "%hhu / 14", num_episodes_seen);
+				sprintf(str, "%u / 14", num_episodes_seen);
 				draw_centered_text(270, str, 0.7f);
-				draw_progressbar(352, 290, 256, 6, (float)num_unlocked_endings / 14.0f, "##barchapters");
+				draw_progressbar(352, 290, 256, 6, (float)num_episodes_seen / 14.0f, "##barchapters");
 				draw_centered_italic_text(350, game_strings[21], 0.8f);
 				sprintf(str, "%u", global_vars.taken_decisions);
 				draw_centered_text(370, str, 0.7f);

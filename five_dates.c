@@ -126,6 +126,10 @@ void game_pause_menu(int *first_call) {
 	// TODO
 }
 
+void game_post_run() {
+	// TODO
+}
+
 void game_main_menu() {
 	// TODO
 	

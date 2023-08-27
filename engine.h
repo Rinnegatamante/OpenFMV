@@ -204,6 +204,7 @@ void game_main_menu();
 void game_pause_menu(int *state);
 void game_setup();
 void game_prepare();
+void game_post_run();
 
 audio_sample *audio_sample_start(const char *fname, int looping, float vol);
 audio_sample *audio_voice_sample_start(const char *fname, int looping, float vol);
