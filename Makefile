@@ -12,6 +12,9 @@ CFLAGS  = -fno-lto -g -Wl,-q
 LIBS := -limgui
 
 # Available audio backends
+# ALmixer
+#CFLAGS += -DHAVE_ALMIXER -I${VITASDK}/arm-vita-eabi/include/AL
+#LIBS += -lALmixer -lopenal -lmpg123 -lvorbisfile -lvorbis -logg -lSceAudioIn_stub
 # SoLoud
 CFLAGS += -DHAVE_SOLOUD
 LIBS += -lsoloud

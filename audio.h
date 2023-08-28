@@ -12,6 +12,9 @@ enum {
 #ifdef HAVE_SDL2_MIXER_EXT
 	AUDIO_SDL2_MIXER_EXT,
 #endif
+#ifdef HAVE_ALMIXER
+	AUDIO_ALMIXER,
+#endif
 	AUDIO_BACKENDS_NUM
 };
 
@@ -23,7 +26,7 @@ extern void (*audio_resume)();
 extern void (*audio_set_global_volume)(float vol);
 extern void *(*audio_track_play)(const char *fname, int looping, float vol, int *h);
 extern void *(*audio_voice_track_play)(const char *fname, int looping, float vol, int *h);
-extern void (*audio_track_stop)(void *s);
+extern void (*audio_track_stop)(void *s, int handle);
 extern void (*audio_track_set_volume)(int h, float vol);
 extern float (*audio_track_fade)(int h, float volume_start, float volume_end, uint32_t time_start, uint32_t time_end);
 extern void *(*audio_sound_load)(const char *fname);
@@ -38,7 +41,7 @@ void audio_sdl2_resume();
 void audio_sdl2_set_global_volume(float vol);
 void *audio_sdl2_track_play(const char *fname, int looping, float vol, int *h);
 void *audio_sdl2_voice_track_play(const char *fname, int looping, float vol, int *h);
-void audio_sdl2_track_stop(void *s);
+void audio_sdl2_track_stop(void *s, int handle);
 void audio_sdl2_track_set_volume(int h, float vol);
 float audio_sdl2_track_fade(int h, float volume_start, float volume_end, uint32_t time_start, uint32_t time_end);
 void *audio_sdl2_sound_load(const char *fname);
@@ -52,11 +55,25 @@ void audio_soloud_resume();
 void audio_soloud_set_global_volume(float vol);
 void *audio_soloud_track_play(const char *fname, int looping, float vol, int *h);
 void *audio_soloud_voice_track_play(const char *fname, int looping, float vol, int *h);
-void audio_soloud_track_stop(void *s);
+void audio_soloud_track_stop(void *s, int handle);
 void audio_soloud_track_set_volume(int h, float vol);
 float audio_soloud_track_fade(int h, float volume_start, float volume_end, uint32_t time_start, uint32_t time_end);
 void *audio_soloud_sound_load(const char *fname);
 void audio_soloud_sound_play(void *s);
+#endif
+
+#ifdef HAVE_ALMIXER
+void audio_almixer_init();
+void audio_almixer_pause();
+void audio_almixer_resume();
+void audio_almixer_set_global_volume(float vol);
+void *audio_almixer_track_play(const char *fname, int looping, float vol, int *h);
+void *audio_almixer_voice_track_play(const char *fname, int looping, float vol, int *h);
+void audio_almixer_track_stop(void *s, int handle);
+void audio_almixer_track_set_volume(int h, float vol);
+float audio_almixer_track_fade(int h, float volume_start, float volume_end, uint32_t time_start, uint32_t time_end);
+void *audio_almixer_sound_load(const char *fname);
+void audio_almixer_sound_play(void *s);
 #endif
 
 #ifdef __cplusplus

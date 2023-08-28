@@ -10,7 +10,7 @@ void (*audio_resume)();
 void (*audio_set_global_volume)(float vol);
 void *(*audio_track_play)(const char *fname, int looping, float vol, int *h);
 void *(*audio_voice_track_play)(const char *fname, int looping, float vol, int *h);
-void (*audio_track_stop)(void *s);
+void (*audio_track_stop)(void *s, int handle);
 void (*audio_track_set_volume)(int h, float vol);
 float (*audio_track_fade)(int h, float volume_start, float volume_end, uint32_t time_start, uint32_t time_end);
 void *(*audio_sound_load)(const char *fname);
@@ -22,6 +22,9 @@ char *audio_backends[] = {
 #endif
 #ifdef HAVE_SDL2_MIXER_EXT
 	"SDL2 Mixer X",
+#endif
+#ifdef HAVE_ALMIXER
+	"ALmixer",
 #endif
 };
 
@@ -57,6 +60,22 @@ void audio_system_init() {
 		audio_track_fade = audio_sdl2_track_fade;
 		audio_sound_load = audio_sdl2_sound_load;
 		audio_sound_play = audio_sdl2_sound_play;
+		break;
+#endif
+#ifdef HAVE_ALMIXER
+	case AUDIO_ALMIXER:
+		debug_log("Using ALmixer audio backend\n");
+		audio_init = audio_almixer_init;
+		audio_pause = audio_almixer_pause;
+		audio_resume = audio_almixer_resume;
+		audio_set_global_volume = audio_almixer_set_global_volume;
+		audio_track_play = audio_almixer_track_play;
+		audio_voice_track_play = audio_almixer_voice_track_play;
+		audio_track_stop = audio_almixer_track_stop;
+		audio_track_set_volume = audio_almixer_track_set_volume;
+		audio_track_fade = audio_almixer_track_fade;
+		audio_sound_load = audio_almixer_sound_load;
+		audio_sound_play = audio_almixer_sound_play;
 		break;
 #endif
 	default:

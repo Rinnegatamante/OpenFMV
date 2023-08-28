@@ -49,7 +49,7 @@ void *audio_soloud_voice_track_play(const char *fname, int looping, float vol, i
 	return w;
 }
 
-void audio_soloud_track_stop(void *s) {
+void audio_soloud_track_stop(void *s, int handle) {
 	auto *w = (SoLoud::WavStream *)s;
 	w->stop();
 	delete w;

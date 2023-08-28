@@ -4275,7 +4275,7 @@ void game_main_menu() {
 		}
 	}
 	
-	audio_track_stop(bg_audio);
+	audio_track_stop(bg_audio, bg_audio_handle);
 	set_subs_window(0, 474, 960, 70);
 	start_first_sequence(out);
 }

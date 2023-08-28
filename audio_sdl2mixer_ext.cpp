@@ -43,7 +43,7 @@ void *audio_sdl2_voice_track_play(const char *fname, int looping, float vol, int
 	return res;
 }
 
-void audio_sdl2_track_stop(void *s) {
+void audio_sdl2_track_stop(void *s, int handle) {
 	Mix_HaltMusicStream((Mix_Music *)s);
 	Mix_FreeMusic((Mix_Music *)s);
 }

@@ -330,7 +330,7 @@ audio_sample *audio_voice_sample_start(const char *fname, int looping, float vol
 
 void audio_sample_stop(audio_sample *s) {
 	if (s) {
-		audio_track_stop(s->src);
+		audio_track_stop(s->src, s->handle);
 		s->active = 0;
 	}
 }
