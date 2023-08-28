@@ -30,6 +30,7 @@ Five Dates: `make FIVE_DATES=1`
 
 ## Setting up the game
 ### Late Shift
+- Install `libshacccg.suprx`, if you don't have it already, by following [this guide](https://samilops2.gitbook.io/vita-troubleshooting-guide/shader-compiler/extract-libshacccg.suprx).
 - Install `lateshift.vpk`.
 - Grab the `Subtitles` folder from your purchased copy of the game and place it in `ux0:data/Late Shift`.
 - Place `video_process.bat` inside the folder of your purchased copy of the game and run it (you'll need to install [ffmpeg](https://ffmpeg.org/) if you don't have it already).
