@@ -487,7 +487,7 @@ handle_event:
 					chosen_path = DONE_CHOICE;
 				}
 			}
-			if (cur_delta > cur_choice->end) {
+			if (cur_delta > cur_choice->end && cur_delta > cur_choice->jump_time) {
 				cur_choice = &cur_seq->aux_choice;
 				chosen_path = NO_CHOICE;
 				btns_state = BTNS_CALC_SIZE;
