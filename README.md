@@ -47,6 +47,7 @@ Five Dates: `make FIVE_DATES=1`
 - Click on `Export -> All assets` and select an empty folder where to extract the assets.
 - Place `audio_process.exe` and `msys-2.0.dll` in the same folder where you extracted the assets and run it.
 - Copy the resulting `oggs` folder in `ux0:data/Late Shift`.
+- (Optional) For trophies to be unlockable, install [NoTrpDRM](https://github.com/Rinnegatamante/NoTrpDrm).
 
 ## Credits
 - hatoving: Helping with setting up tools and giving an hand with initial Late Shift rewrite.
