@@ -2336,7 +2336,7 @@ void fill_events() {
 	// seg434
 	install_timed_event(&sequences[153], 2250, 0, EVENT_ONESHOT, change_get_away_short7);
 	install_timed_event(&sequences[153], 2250, 0, EVENT_ONESHOT, change_get_away_long5);
-	install_timed_event(&sequences[153], 31083, 0, EVENT_ONESHOT, seg435_a_event);
+	install_timed_event(&sequences[153], 31500, 0, EVENT_ONESHOT, seg435_a_event);
 	// seg435_a
 	install_timed_event(&sequences[154], 0, 0, EVENT_ONESHOT, start_ford_transit);
 	// seg435_b
