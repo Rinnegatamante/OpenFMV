@@ -500,7 +500,7 @@ handle_event:
 				last_delta = cur_delta;
 				last_tick = sceKernelGetProcessTimeLow();
 			} else {
-				if (sceKernelGetProcessTimeLow() - last_tick > 500000 and cur_delta > 5000) {
+				if (sceKernelGetProcessTimeLow() - last_tick > 500000 and cur_delta > 1000) {
 					debug_log("sceAvPlayer lock bug. Skipping to next sequence.\n");
 					goto next_sequence;
 				}
