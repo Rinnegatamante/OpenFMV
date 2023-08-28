@@ -13,7 +13,6 @@
 #include "stb_image.h"
 
 #define MEM_BUFFER_SIZE (2 * 1024 * 1024)
-//#define DBG_SAVE // Enable saving at each sequence change for debugging
 
 static char generic_mem_buffer[MEM_BUFFER_SIZE];
 static char generic_buf[512], subtitle_buf[512];
@@ -103,6 +102,8 @@ int subs_loader(SceSize args, void *argp) {
 		}
 		sceKernelSignalSema(subs_delivered_mutex, 1);
 	}
+	
+	return 0;
 }
 
 void fill_sequence(char *name, sequence *s, sequence *(*d)(), char *(*ltext)(), char *(*rtext)(), char *(*etext)(), sequence *(*l)(), sequence *(*r)(), sequence *(*e)(), uint32_t start, uint32_t end, uint32_t jump) {
@@ -296,6 +297,22 @@ void free_image(uint32_t image) {
 	glDeleteTextures(1, &image);
 }
 
+volatile audio_sample *audio_to_load;
+SceUID audio_request_mutex, audio_delivered_mutex;
+int audio_loader(SceSize args, void *argp) {
+	for (;;) {
+		sceKernelWaitSema(audio_request_mutex, 1, NULL);
+		if (audio_to_load->is_voice) {
+			audio_to_load->src = audio_voice_track_play((const char *)audio_to_load->fname, audio_to_load->looping, audio_to_load->volume, (int *)&audio_to_load->handle);
+		} else {
+			audio_to_load->src = audio_track_play((const char *)audio_to_load->fname, audio_to_load->looping, audio_to_load->volume, (int *)&audio_to_load->handle);
+		}
+		sceKernelSignalSema(audio_delivered_mutex, 1);
+	}
+	
+	return 0;
+}
+
 audio_sample *audio_sample_start(const char *fname, int looping, float vol) {
 	audio_sample *r = NULL;
 	for (int i = 0; i < NUM_AUDIO_SAMPLES; i++) {
@@ -307,9 +324,22 @@ audio_sample *audio_sample_start(const char *fname, int looping, float vol) {
 			break;
 		}
 	}
+#ifndef SYNC_AUDIO_LOAD
+	sceKernelWaitSema(audio_delivered_mutex, 1, NULL);
+	strcpy(r->fname, fname);
+	r->src = NULL;
+	r->handle = 0;
+	r->volume = vol;
+	r->looping = looping;
+	r->is_voice = 0;
+	audio_to_load = r;
+	sceKernelSignalSema(audio_request_mutex, 1);
+#else
 	r->src = audio_track_play(fname, looping, vol, &r->handle);
 	r->volume = vol;
+#endif
 	r->active = 1;
+	return r;
 }
 
 audio_sample *audio_voice_sample_start(const char *fname, int looping, float vol) {
@@ -323,9 +353,22 @@ audio_sample *audio_voice_sample_start(const char *fname, int looping, float vol
 			break;
 		}
 	}
+#ifndef SYNC_AUDIO_LOAD
+	sceKernelWaitSema(audio_delivered_mutex, 1, NULL);
+	strcpy(r->fname, fname);
+	r->src = NULL;
+	r->handle = 0;
+	r->volume = vol;
+	r->looping = looping;
+	r->is_voice = 1;
+	audio_to_load = r;
+	sceKernelSignalSema(audio_request_mutex, 1);
+#else
 	r->src = audio_voice_track_play(fname, looping, vol, &r->handle);
 	r->volume = vol;
+#endif
 	r->active = 1;
+	return r;
 }
 
 void audio_sample_stop(audio_sample *s) {
@@ -352,11 +395,17 @@ void audio_sample_reset_volume_all() {
 	}
 }
 
-void start_subs_loader() {
+void start_async_loaders() {
 	subs_request_mutex = sceKernelCreateSema("subs request", 0, 0, 1, NULL);
 	subs_delivered_mutex = sceKernelCreateSema("subs delivery", 0, 1, 1, NULL);
 	SceUID subs_loader_thd = sceKernelCreateThread("subs loader", &subs_loader, 0x10000100, 0x10000, 0, 0, NULL);
 	sceKernelStartThread(subs_loader_thd, 0, NULL);
+#ifndef SYNC_AUDIO_LOAD
+	audio_request_mutex = sceKernelCreateSema("audio request", 0, 0, 1, NULL);
+	audio_delivered_mutex = sceKernelCreateSema("audio delivery", 0, 1, 1, NULL);
+	SceUID audio_loader_thd = sceKernelCreateThread("audio loader", &audio_loader, 0x10000100, 0x10000, 0, 0, NULL);
+	sceKernelStartThread(audio_loader_thd, 0, NULL);
+#endif
 }
 
 void set_subs_window(float x, float y, float w, float h) {

@@ -8,13 +8,16 @@ extern "C" {
 #include "games.h"
 #include "unzip.h"
 
-#define ENGINE_VER "1.0.0"
+#define ENGINE_VER "1.1.0"
 
 #define NUM_AUDIO_SAMPLES 32
 
 #define Color4(x) ImVec4(x[0], x[1], x[2], x[3])
 #define set_theme_color(x, a, b, c, d) \
 	x[0] = a; x[1] = b; x[2] = c; x[3] = d;
+
+//#define DBG_SAVE // Enable saving at each sequence change for debugging
+//#define SYNC_AUDIO_LOAD // Makes audio samples loading be synchronous
 
 enum {
 	LANG_JA,
@@ -48,6 +51,11 @@ typedef struct {
 	float volume;
 	int handle;
 	uint8_t active;
+#ifndef SYNC_AUDIO_LOAD
+	int looping;
+	char fname[256];
+	int is_voice;
+#endif
 } audio_sample;
 
 typedef struct {
@@ -196,7 +204,7 @@ void start_first_sequence(sequence *s);
 void install_timed_event(sequence *t, uint32_t start, uint32_t end, uint8_t type, sequence *(*s)());
 void load_subtitles(sequence *s);
 void reload_subtitles(sequence *s);
-void start_subs_loader();
+void start_async_loaders();
 void set_subs_window(float x, float y, float w, float h);
 
 void spooky_hash128(const void *buf, int len, char *out);
