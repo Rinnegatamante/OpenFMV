@@ -52,4 +52,4 @@ Five Dates: `make FIVE_DATES=1`
 
 ## Credits
 - hatoving: Helping with setting up tools and giving an hand with initial Late Shift rewrite.
-- CatoTheYounfer: Testing Late Shift rewrite.
+- CatoTheYounger: Testing Late Shift rewrite.
