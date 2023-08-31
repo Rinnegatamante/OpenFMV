@@ -44,16 +44,24 @@ int fios_init(void) {
 	params.threadPriority[SCE_FIOS_DECOMPRESSOR_THREAD] = 191;
 
 	res = sceFiosInitialize(&params);
-	if (res < 0)
+	if (res < 0) {
+#ifdef DEBUG
+		printf("Failed to init sceFios: 0x%08X\n", res);
+#endif
 		return res;
+	}
 	
 	sceClibMemset(&g_PsarcContext, 0, sizeof(SceFiosPsarcDearchiverContext));
 	g_PsarcContext.size = sizeof(SceFiosPsarcDearchiverContext);
 	g_PsarcContext.pWorkBuffer = memalign(64, PSARCCACHEBLOCKSIZE);
 	g_PsarcContext.workBufferSize = PSARCCACHEBLOCKSIZE;
 	res = sceFiosIOFilterAdd(0, sceFiosIOFilterPsarcDearchiver, &g_PsarcContext);
-	if (res < 0)
+	if (res < 0) {
+#ifdef DEBUG
+		printf("Failed to init sceFios dearchiver: 0x%08X\n", res);
+#endif
 		return res;
+	}
 	
 	res = sceFiosArchiveGetMountBufferSizeSync(NULL, VIDEOS_FILE, NULL);
 	if (res < 0)
@@ -63,8 +71,12 @@ int fios_init(void) {
 	g_MountBuffer.pPtr = malloc(res);
 
 	res = sceFiosArchiveMountSync(NULL, &g_PsarcHandle, VIDEOS_FILE, "/", g_MountBuffer, NULL);
-	if (res < 0)
+	if (res < 0) {
+#ifdef DEBUG
+		printf("Failed to mount %s: 0x%08X\n", VIDEOS_FILE, res);
+#endif
 		return res;
+	}
 	
 	g_RamCacheWorkBuffer = memalign(8, RAMCACHEBLOCKNUM * RAMCACHEBLOCKSIZE);
 	if (!g_RamCacheWorkBuffer)
