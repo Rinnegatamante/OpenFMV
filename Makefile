@@ -58,7 +58,6 @@ all: $(TARGET).vpk
 	vita-mksfoex -s TITLE_ID=$(TITLEID) -d ATTRIBUTE2=12 $(APP_NAME) param.sfo
 	vita-pack-vpk -s param.sfo -b eboot.bin $@ \
 		-a assets/$(TARGET)/bg.png=sce_sys/livearea/contents/bg.png \
-		-a assets/$(TARGET)/pic0.png=sce_sys/pic0.png \
 		-a assets/$(TARGET)/template.xml=sce_sys/livearea/contents/template.xml \
 		-a assets/$(TARGET)/startup.png=sce_sys/livearea/contents/startup.png \
 		-a assets/$(TARGET)/icon0.png=sce_sys/icon0.png \
