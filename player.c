@@ -1,6 +1,7 @@
 #include <vitasdk.h>
 #include <vitaGL.h>
 #include <stdio.h>
+#include <string.h>
 #include <malloc.h>
 #include "engine.h"
 #include "fios.h"

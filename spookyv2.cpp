@@ -11,7 +11,7 @@
 
 #include <memory.h>
 #include <stdio.h>
-#include "SpookyV2.h"
+#include "spookyv2.h"
 
 #define ALLOW_UNALIGNED_READS 1
 

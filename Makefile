@@ -8,8 +8,11 @@ OBJS     := $(addsuffix .o,$(BINFILES)) $(CFILES:.c=.o) $(CPPFILES:.cpp=.o)
 PREFIX  = arm-vita-eabi
 CC      = $(PREFIX)-gcc
 CXX      = $(PREFIX)-g++
-CFLAGS  = -fno-lto -g -Wl,-q
-LIBS := -limgui
+PKG_CONFIG = arm-vita-eabi-pkg-config
+MEDIA_CFLAGS := $(shell $(PKG_CONFIG) --cflags SDL2_mixer_ext sndfile)
+MEDIA_LIBS := $(shell $(PKG_CONFIG) --static --libs SDL2_mixer_ext sndfile)
+CFLAGS  = -fno-lto -g -Wl,-q $(MEDIA_CFLAGS)
+LIBS := -limgui $(MEDIA_LIBS)
 
 # Available audio backends
 # ALmixer
@@ -20,14 +23,14 @@ CFLAGS += -DHAVE_SOLOUD
 LIBS += -lsoloud
 # SDL2 Mixer X
 CFLAGS += -DHAVE_SDL2_MIXER_EXT
-LIBS += -lSDL2_Mixer_ext -lSDL2 -lSceMotion_stub -lSceIme_stub -lSceHid_stub -lmpg123 -lvorbisfile -lvorbis \
-	-lmikmod -lflac -lSceAudioIn_stub -lopusfile -lopus -logg -lxmp -lModplug
+LIBS += -lSDL2_mixer_ext -lSDL2 -lSceMotion_stub -lSceIme_stub -lSceHid_stub -lmpg123 -lvorbisfile -lvorbis \
+	-lmikmod -lFLAC -lSceAudioIn_stub -lopusfile -lopus -logg -lxmp -lmodplug
 
 LIBS += -lz -lm -lvitaGL -lvitashark -lSceShaccCgExt -lmathneon -ltaihen_stub \
   -lSceAppMgr_stub -lSceAppUtil_stub -lSceAudio_stub -lSceCtrl_stub -lSceCommonDialog_stub \
   -lSceDisplay_stub -lSceFios2_stub -lSceGxm_stub -lSceShaccCg_stub -lSceSysmodule_stub \
-  -lScePower_stub -lSceKernelDmacmgr_stub -lSceAvPlayer_stub -lSceTouch_stub \
-  -Wl,--whole-archive -lpthread -Wl,--no-whole-archive -lSceNpTrophy_stub
+  -lScePower_stub -lSceKernelDmacMgr_stub -lSceAvPlayer_stub -lSceTouch_stub \
+  -pthread -lSceNpTrophy_stub
 
 ifeq ($(LATE_SHIFT),1)
 CFLAGS += -DLATE_SHIFT -DHAVE_TROPHIES
